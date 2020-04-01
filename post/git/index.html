@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Git | Gridea</title>
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1585704201492">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1585706959229">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Git | Gridea - Atom Feed" href="https://cutezhangq.github.io/atom.xml">
@@ -32,13 +32,13 @@ Git三种状态..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://cutezhangq.github.io">
-  <img class="avatar" src="https://cutezhangq.github.io/images/avatar.png?v=1585704201492" alt="">
+  <img class="avatar" src="https://cutezhangq.github.io/images/avatar.png?v=1585706959229" alt="">
   </a>
   <h1 class="site-title">
     Gridea
   </h1>
   <p class="site-description">
-    温故而知新
+    温故知新
   </p>
   <div class="menu-container">
     
@@ -92,7 +92,7 @@ Git三种状态..." />
                 2020-03-22
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
               
                 <a href="https://cutezhangq.github.io/tag/rmYfCmsqU/" class="post-tag">
@@ -128,10 +128,83 @@ Git三种状态..." />
 </li>
 </ul>
 <h2 id="对应关系">对应关系</h2>
-<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1584859929232.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1585704345724.jpg" alt="" loading="lazy"></figure>
 <h1 id="git文件内容结构">.Git文件内容结构</h1>
-<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1584859938138.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1585704336057.png" alt="" loading="lazy"></figure>
 <h1 id="git命令">Git命令</h1>
+<h2 id="搭建git仓库">搭建Git仓库</h2>
+<h3 id="两种场景">两种场景：</h3>
+<p>使用<code>init</code>初始化，将本地的目录变成git<code>本地仓库</code></p>
+<ul>
+<li>1.已有项目，将项目纳入Git管理</li>
+</ul>
+<pre><code class="language-cmd">cd 项目所在文件夹
+git init
+</code></pre>
+<ul>
+<li>2.没有项目，新建用Git管理的项目</li>
+</ul>
+<pre><code class="language-cmd">cd 项目所在文件夹
+git init your_project   #会在当前路径下创建和项目名称同名的文件夹
+</code></pre>
+<h3 id="查看本地目录的状态信息">查看本地目录的状态信息</h3>
+<pre><code class="language-cmd">git status
+</code></pre>
+<h3 id="将本地仓库与码云上的远程仓库关联起来">将本地仓库与码云上的远程仓库关联起来</h3>
+<p>与<code>远程仓库</code>关联，（此前已在码云等上注册远程仓库）</p>
+<pre><code class="language-cmd">git add origin 远程仓库地址
+</code></pre>
+<hr>
+<h2 id="准备上传你的项目之前最好更新一下项目确保没有和远程仓库的代码有冲突">准备上传你的项目之前，最好更新一下项目，确保没有和远程仓库的代码有冲突</h2>
+<pre><code class="language-cmd">git pull --rebase origin master
+</code></pre>
+<hr>
+<h2 id="提交项目">提交项目</h2>
+<pre><code class="language-cmd">git add .           #添加目录下所有发生改变的文件
+git commit -m           #'注释信息'
+git push -u origin master       #本地仓库代码提交至远程仓库(有时候会提交失败，可以尝试git push -u origin master -f 强制提交,只建议在第一次提交中使用)
+</code></pre>
+<hr>
+<h2 id="克隆项目">克隆项目</h2>
+<pre><code class="language-cmd">git clone 远程仓库地址
+</code></pre>
+<hr>
+<h2 id="分支相关命令">分支相关命令</h2>
+<ul>
+<li>查看所有分支</li>
+</ul>
+<pre><code class="language-cmd">git branch  -a
+</code></pre>
+<ul>
+<li>创建分支</li>
+</ul>
+<pre><code class="language-cmd">git branch 分支名
+</code></pre>
+<ul>
+<li>切换到某一分支</li>
+</ul>
+<pre><code class="language-cmd">git checkout  分支名
+</code></pre>
+<ul>
+<li><code>合并分支</code></li>
+</ul>
+<pre><code class="language-cmd">git merge 分支名
+</code></pre>
+<ul>
+<li><code>创建远程的分支,并且把本地分支推送到远程分支上</code></li>
+</ul>
+<pre><code class="language-cmd">git push origin 分支名
+</code></pre>
+<ul>
+<li>删除本地分支</li>
+</ul>
+<pre><code class="language-cmd">git branch -d 分支名
+</code></pre>
+<ul>
+<li>查看本地分支状态</li>
+</ul>
+<pre><code class="language-cmd">git branch
+</code></pre>
 
               </div>
               <div class="toc-container">
@@ -146,7 +219,21 @@ Git三种状态..." />
 </ul>
 </li>
 <li><a href="#git%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%BB%93%E6%9E%84">.Git文件内容结构</a></li>
-<li><a href="#git%E5%91%BD%E4%BB%A4">Git命令</a></li>
+<li><a href="#git%E5%91%BD%E4%BB%A4">Git命令</a>
+<ul>
+<li><a href="#%E6%90%AD%E5%BB%BAgit%E4%BB%93%E5%BA%93">搭建Git仓库</a>
+<ul>
+<li><a href="#%E4%B8%A4%E7%A7%8D%E5%9C%BA%E6%99%AF">两种场景：</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E6%9C%AC%E5%9C%B0%E7%9B%AE%E5%BD%95%E7%9A%84%E7%8A%B6%E6%80%81%E4%BF%A1%E6%81%AF">查看本地目录的状态信息</a></li>
+<li><a href="#%E5%B0%86%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E4%B8%8E%E7%A0%81%E4%BA%91%E4%B8%8A%E7%9A%84%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E5%85%B3%E8%81%94%E8%B5%B7%E6%9D%A5">将本地仓库与码云上的远程仓库关联起来</a></li>
+</ul>
+</li>
+<li><a href="#%E5%87%86%E5%A4%87%E4%B8%8A%E4%BC%A0%E4%BD%A0%E7%9A%84%E9%A1%B9%E7%9B%AE%E4%B9%8B%E5%89%8D%E6%9C%80%E5%A5%BD%E6%9B%B4%E6%96%B0%E4%B8%80%E4%B8%8B%E9%A1%B9%E7%9B%AE%E7%A1%AE%E4%BF%9D%E6%B2%A1%E6%9C%89%E5%92%8C%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E7%9A%84%E4%BB%A3%E7%A0%81%E6%9C%89%E5%86%B2%E7%AA%81">准备上传你的项目之前，最好更新一下项目，确保没有和远程仓库的代码有冲突</a></li>
+<li><a href="#%E6%8F%90%E4%BA%A4%E9%A1%B9%E7%9B%AE">提交项目</a></li>
+<li><a href="#%E5%85%8B%E9%9A%86%E9%A1%B9%E7%9B%AE">克隆项目</a></li>
+<li><a href="#%E5%88%86%E6%94%AF%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4">分支相关命令</a></li>
+</ul>
+</li>
 </ul>
 
               </div>

@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cutezhangq.github.io</id>
     <title>Gridea</title>
-    <updated>2020-04-01T01:23:25.021Z</updated>
+    <updated>2020-04-01T02:09:21.650Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cutezhangq.github.io"/>
     <link rel="self" href="https://cutezhangq.github.io/atom.xml"/>
-    <subtitle>温故而知新</subtitle>
+    <subtitle>温故知新</subtitle>
     <logo>https://cutezhangq.github.io/images/avatar.png</logo>
     <icon>https://cutezhangq.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Gridea</rights>
@@ -50,10 +50,83 @@
 </li>
 </ul>
 <h2 id="对应关系">对应关系</h2>
-<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1584859929232.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1585704345724.jpg" alt="" loading="lazy"></figure>
 <h1 id="git文件内容结构">.Git文件内容结构</h1>
-<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1584859938138.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1585704336057.png" alt="" loading="lazy"></figure>
 <h1 id="git命令">Git命令</h1>
+<h2 id="搭建git仓库">搭建Git仓库</h2>
+<h3 id="两种场景">两种场景：</h3>
+<p>使用<code>init</code>初始化，将本地的目录变成git<code>本地仓库</code></p>
+<ul>
+<li>1.已有项目，将项目纳入Git管理</li>
+</ul>
+<pre><code class="language-cmd">cd 项目所在文件夹
+git init
+</code></pre>
+<ul>
+<li>2.没有项目，新建用Git管理的项目</li>
+</ul>
+<pre><code class="language-cmd">cd 项目所在文件夹
+git init your_project   #会在当前路径下创建和项目名称同名的文件夹
+</code></pre>
+<h3 id="查看本地目录的状态信息">查看本地目录的状态信息</h3>
+<pre><code class="language-cmd">git status
+</code></pre>
+<h3 id="将本地仓库与码云上的远程仓库关联起来">将本地仓库与码云上的远程仓库关联起来</h3>
+<p>与<code>远程仓库</code>关联，（此前已在码云等上注册远程仓库）</p>
+<pre><code class="language-cmd">git add origin 远程仓库地址
+</code></pre>
+<hr>
+<h2 id="准备上传你的项目之前最好更新一下项目确保没有和远程仓库的代码有冲突">准备上传你的项目之前，最好更新一下项目，确保没有和远程仓库的代码有冲突</h2>
+<pre><code class="language-cmd">git pull --rebase origin master
+</code></pre>
+<hr>
+<h2 id="提交项目">提交项目</h2>
+<pre><code class="language-cmd">git add .           #添加目录下所有发生改变的文件
+git commit -m           #'注释信息'
+git push -u origin master       #本地仓库代码提交至远程仓库(有时候会提交失败，可以尝试git push -u origin master -f 强制提交,只建议在第一次提交中使用)
+</code></pre>
+<hr>
+<h2 id="克隆项目">克隆项目</h2>
+<pre><code class="language-cmd">git clone 远程仓库地址
+</code></pre>
+<hr>
+<h2 id="分支相关命令">分支相关命令</h2>
+<ul>
+<li>查看所有分支</li>
+</ul>
+<pre><code class="language-cmd">git branch  -a
+</code></pre>
+<ul>
+<li>创建分支</li>
+</ul>
+<pre><code class="language-cmd">git branch 分支名
+</code></pre>
+<ul>
+<li>切换到某一分支</li>
+</ul>
+<pre><code class="language-cmd">git checkout  分支名
+</code></pre>
+<ul>
+<li><code>合并分支</code></li>
+</ul>
+<pre><code class="language-cmd">git merge 分支名
+</code></pre>
+<ul>
+<li><code>创建远程的分支,并且把本地分支推送到远程分支上</code></li>
+</ul>
+<pre><code class="language-cmd">git push origin 分支名
+</code></pre>
+<ul>
+<li>删除本地分支</li>
+</ul>
+<pre><code class="language-cmd">git branch -d 分支名
+</code></pre>
+<ul>
+<li>查看本地分支状态</li>
+</ul>
+<pre><code class="language-cmd">git branch
+</code></pre>
 ]]></content>
     </entry>
     <entry>
