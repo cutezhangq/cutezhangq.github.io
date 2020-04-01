@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Git | Gridea</title>
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1585708069794">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1585725594142">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Git | Gridea - Atom Feed" href="https://cutezhangq.github.io/atom.xml">
@@ -14,15 +14,11 @@
     <meta name="description" content="定义
 是一个分布式版本控制工具（系统）。
 Git特点
-1.存储能力
-2.开源免费
-3.容易备份
-4.良好性能，支持离线
-5.制定工作流
-6.分布式仓库
-Git官网
-https://git-scm.com/book/zh/v2
-Git三种状态..." />
+1.尽可能添加数据而不是删除或修改数据，存储能力强，容易备份
+2.完整性保证（对于每次提交做Hash的操作）
+3.与linux命令全面兼容
+4.良好性能，支持离线（在本地完成）
+5.制定..." />
     <meta name="keywords" content="Git" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -32,7 +28,7 @@ Git三种状态..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://cutezhangq.github.io">
-  <img class="avatar" src="https://cutezhangq.github.io/images/avatar.png?v=1585708069794" alt="">
+  <img class="avatar" src="https://cutezhangq.github.io/images/avatar.png?v=1585725594142" alt="">
   </a>
   <h1 class="site-title">
     Gridea
@@ -92,7 +88,7 @@ Git三种状态..." />
                 2020-03-22
               </span>
               <span>
-                2 min read
+                3 min read
               </span>
               
                 <a href="https://cutezhangq.github.io/tag/rmYfCmsqU/" class="post-tag">
@@ -106,10 +102,10 @@ Git三种状态..." />
                 <h1 id="定义">定义</h1>
 <p>是一个分布式版本控制工具（系统）。</p>
 <h1 id="git特点">Git特点</h1>
-<p>1.存储能力</p>
-<p>2.开源免费</p>
-<p>3.容易备份</p>
-<p>4.良好性能，支持离线</p>
+<p>1.尽可能添加数据而不是删除或修改数据，存储能力强，容易备份</p>
+<p>2.完整性保证（对于每次提交做Hash的操作）</p>
+<p>3.与linux命令全面兼容</p>
+<p>4.良好性能，支持离线（在本地完成）</p>
 <p>5.制定工作流</p>
 <p>6.分布式仓库</p>
 <h1 id="git官网">Git官网</h1>
@@ -127,6 +123,8 @@ Git三种状态..." />
 <p>committed(已提交)</p>
 </li>
 </ul>
+<h2 id="三种分区">三种分区</h2>
+<p>git分为：<code>工作区</code>，<code>暂存区</code>，<code>本地库</code>，<code>远程区</code>  四块大区域</p>
 <h2 id="对应关系">对应关系</h2>
 <figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1585704345724.jpg" alt="" loading="lazy"></figure>
 <h1 id="git文件内容结构">.Git文件内容结构</h1>
@@ -216,6 +214,7 @@ git push -u origin master       #本地仓库代码提交至远程仓库(有时�
 <li><a href="#git%E4%B8%89%E7%A7%8D%E7%8A%B6%E6%80%81%E4%B8%89%E4%B8%AA%E9%80%BB%E8%BE%91%E5%8C%BA%E5%9F%9F">Git三种状态,三个逻辑区域</a>
 <ul>
 <li><a href="#%E4%B8%89%E7%A7%8D%E7%8A%B6%E6%80%81">三种状态</a></li>
+<li><a href="#%E4%B8%89%E7%A7%8D%E5%88%86%E5%8C%BA">三种分区</a></li>
 <li><a href="#%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB">对应关系</a></li>
 </ul>
 </li>

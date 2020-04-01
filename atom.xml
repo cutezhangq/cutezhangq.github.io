@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cutezhangq.github.io</id>
     <title>Gridea</title>
-    <updated>2020-04-01T02:27:58.789Z</updated>
+    <updated>2020-04-01T07:20:11.618Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cutezhangq.github.io"/>
     <link rel="self" href="https://cutezhangq.github.io/atom.xml"/>
@@ -30,10 +30,10 @@
         <content type="html"><![CDATA[<h1 id="定义">定义</h1>
 <p>是一个分布式版本控制工具（系统）。</p>
 <h1 id="git特点">Git特点</h1>
-<p>1.存储能力</p>
-<p>2.开源免费</p>
-<p>3.容易备份</p>
-<p>4.良好性能，支持离线</p>
+<p>1.尽可能添加数据而不是删除或修改数据，存储能力强，容易备份</p>
+<p>2.完整性保证（对于每次提交做Hash的操作）</p>
+<p>3.与linux命令全面兼容</p>
+<p>4.良好性能，支持离线（在本地完成）</p>
 <p>5.制定工作流</p>
 <p>6.分布式仓库</p>
 <h1 id="git官网">Git官网</h1>
@@ -51,6 +51,8 @@
 <p>committed(已提交)</p>
 </li>
 </ul>
+<h2 id="三种分区">三种分区</h2>
+<p>git分为：<code>工作区</code>，<code>暂存区</code>，<code>本地库</code>，<code>远程区</code>  四块大区域</p>
 <h2 id="对应关系">对应关系</h2>
 <figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1585704345724.jpg" alt="" loading="lazy"></figure>
 <h1 id="git文件内容结构">.Git文件内容结构</h1>
