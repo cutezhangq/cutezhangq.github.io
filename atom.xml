@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cutezhangq.github.io</id>
     <title>Gridea</title>
-    <updated>2020-04-01T09:46:36.518Z</updated>
+    <updated>2020-04-18T17:06:52.198Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cutezhangq.github.io"/>
     <link rel="self" href="https://cutezhangq.github.io/atom.xml"/>
@@ -109,7 +109,33 @@
 <p>key是给每一个vnode的唯一id,可以依靠key,<code>更准确</code>, <code>更快</code>的拿到oldVnode中对应的vnode节点。<br>
 更快 体现在：利用key的唯一性生成map对象来获取对应节点，比遍历方式更快。(这个观点，就是我最初的那个观点。从这个角度看，map会比遍历更快。</p>
 <h2 id="扩展"><strong>扩展</strong>：</h2>
+<h3 id="diff算法">diff算法</h3>
 <h3 id="vue源码">vue源码</h3>
+<h1 id="第-2-题1-2-3mapparseint-what-why">第 2 题：['1', '2', '3'].map(parseInt) what &amp; why ?</h1>
+<p>emm..map是es6中涉及到的方法，是指不重复的Key-value形式的数据，parseInt是....返回整数的，然并卵...orz🤒</p>
+<h2 id="答案-2"><strong>答案</strong></h2>
+<p>真正的答案是[1, NaN, NaN]<br>
+这题的主要考察，还是arr.map（）方法，和parseInt，对它们一定要深入理解。下面附上MDN官方解释：<br>
+📃MDN：</p>
+<ul>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/map">Array.prototype.map()</a></li>
+</ul>
+<pre><code class="language-js">    var new_array = arr.map(function callback(currentValue[, index[, array]]) {     }[, thisArg])
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1585987454821.png" alt="" width="400" height="300" loading="lazy"></figure>
+<h3 id="map方法定义">map方法定义</h3>
+<p>将数组中的值按顺序调用callback函数，然后由callback返回的数按顺序组成新数组；没有赋值或删除掉的索引不会调用。</p>
+<h3 id="map方法使用">map方法使用</h3>
+<p>map方法针对<code>新数组</code>的，<code>不会修改原数组</code>，若是对原数组进行操作则使用for-of或forEach。<br>
+callback 函数会被自动传入三个参数：<code>数组元素</code>，<code>元素索引</code>，<code>原数组本身</code>。</p>
+<p>🙄其实这里主要难度是parseInt，下面一起来研究下叭~<br>
+📃MDN：</p>
+<ul>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/parseInt">parseInt</a></li>
+</ul>
+<pre><code class="language-js">parseInt(string, radix);
+</code></pre>
+<p>将一个字符串 string 转换为 radix 进制的整数， radix 为介于2-36之间的数。</p>
 ]]></content>
     </entry>
     <entry>
@@ -222,6 +248,11 @@ git push -u origin master       #本地仓库代码提交至远程仓库(有时�
 <li>查看本地分支状态</li>
 </ul>
 <pre><code class="language-cmd">git branch
+</code></pre>
+<ul>
+<li>删除远程分支</li>
+</ul>
+<pre><code class="language-cmd">git push origin --delete [branch_name]
 </code></pre>
 ]]></content>
     </entry>

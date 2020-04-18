@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>面试100问 | Gridea</title>
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1585734392636">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1587229607822">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="面试100问 | Gridea - Atom Feed" href="https://cutezhangq.github.io/atom.xml">
@@ -24,7 +24,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://cutezhangq.github.io">
-  <img class="avatar" src="https://cutezhangq.github.io/images/avatar.png?v=1585734392636" alt="">
+  <img class="avatar" src="https://cutezhangq.github.io/images/avatar.png?v=1587229607822" alt="">
   </a>
   <h1 class="site-title">
     Gridea
@@ -84,7 +84,7 @@
                 2020-04-01
               </span>
               <span>
-                5 min read
+                6 min read
               </span>
               
                 <a href="https://cutezhangq.github.io/tag/gEYVGztSN/" class="post-tag">
@@ -188,7 +188,33 @@
 <p>key是给每一个vnode的唯一id,可以依靠key,<code>更准确</code>, <code>更快</code>的拿到oldVnode中对应的vnode节点。<br>
 更快 体现在：利用key的唯一性生成map对象来获取对应节点，比遍历方式更快。(这个观点，就是我最初的那个观点。从这个角度看，map会比遍历更快。</p>
 <h2 id="扩展"><strong>扩展</strong>：</h2>
+<h3 id="diff算法">diff算法</h3>
 <h3 id="vue源码">vue源码</h3>
+<h1 id="第-2-题1-2-3mapparseint-what-why">第 2 题：['1', '2', '3'].map(parseInt) what &amp; why ?</h1>
+<p>emm..map是es6中涉及到的方法，是指不重复的Key-value形式的数据，parseInt是....返回整数的，然并卵...orz🤒</p>
+<h2 id="答案-2"><strong>答案</strong></h2>
+<p>真正的答案是[1, NaN, NaN]<br>
+这题的主要考察，还是arr.map（）方法，和parseInt，对它们一定要深入理解。下面附上MDN官方解释：<br>
+📃MDN：</p>
+<ul>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/map">Array.prototype.map()</a></li>
+</ul>
+<pre><code class="language-js">    var new_array = arr.map(function callback(currentValue[, index[, array]]) {     }[, thisArg])
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1585987454821.png" alt="" width="400" height="300" loading="lazy"></figure>
+<h3 id="map方法定义">map方法定义</h3>
+<p>将数组中的值按顺序调用callback函数，然后由callback返回的数按顺序组成新数组；没有赋值或删除掉的索引不会调用。</p>
+<h3 id="map方法使用">map方法使用</h3>
+<p>map方法针对<code>新数组</code>的，<code>不会修改原数组</code>，若是对原数组进行操作则使用for-of或forEach。<br>
+callback 函数会被自动传入三个参数：<code>数组元素</code>，<code>元素索引</code>，<code>原数组本身</code>。</p>
+<p>🙄其实这里主要难度是parseInt，下面一起来研究下叭~<br>
+📃MDN：</p>
+<ul>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/parseInt">parseInt</a></li>
+</ul>
+<pre><code class="language-js">parseInt(string, radix);
+</code></pre>
+<p>将一个字符串 string 转换为 radix 进制的整数， radix 为介于2-36之间的数。</p>
 
               </div>
               <div class="toc-container">
@@ -198,7 +224,18 @@
 <li><a href="#%E7%AD%94%E6%A1%88"><strong>答案</strong></a></li>
 <li><a href="#%E6%89%A9%E5%B1%95"><strong>扩展</strong>：</a>
 <ul>
+<li><a href="#diff%E7%AE%97%E6%B3%95">diff算法</a></li>
 <li><a href="#vue%E6%BA%90%E7%A0%81">vue源码</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E7%AC%AC-2-%E9%A2%981-2-3mapparseint-what-why">第 2 题：['1', '2', '3'].map(parseInt) what &amp; why ?</a>
+<ul>
+<li><a href="#%E7%AD%94%E6%A1%88-2"><strong>答案</strong></a>
+<ul>
+<li><a href="#map%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89">map方法定义</a></li>
+<li><a href="#map%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8">map方法使用</a></li>
 </ul>
 </li>
 </ul>
