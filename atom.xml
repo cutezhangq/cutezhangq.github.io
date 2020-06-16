@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cutezhangq.github.io</id>
     <title>cutezhangq</title>
-    <updated>2020-05-13T15:22:30.501Z</updated>
+    <updated>2020-06-16T06:54:25.929Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cutezhangq.github.io"/>
     <link rel="self" href="https://cutezhangq.github.io/atom.xml"/>
@@ -10,6 +10,44 @@
     <logo>https://cutezhangq.github.io/images/avatar.png</logo>
     <icon>https://cutezhangq.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, cutezhangq</rights>
+    <entry>
+        <title type="html"><![CDATA[js重点整理复习]]></title>
+        <id>https://cutezhangq.github.io/post/js-chong-dian-zheng-li-fu-xi/</id>
+        <link href="https://cutezhangq.github.io/post/js-chong-dian-zheng-li-fu-xi/">
+        </link>
+        <updated>2020-06-16T06:05:13.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="基本数据类型">基本数据类型</h1>
+<p>js共有9种数据类型：5种基本数据类型，3种引用类型，1种es6新增类型<br>
+👉<code>基本数据类型</code>：Number、String、Null、Undefined、Boolean<br>
+👉<code>引用类型</code>：Function、Array、Object<br>
+👉<code>es6新增类型</code>：Symbol</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="基本数据类型">基本数据类型</h1>
+<p>js共有9种数据类型：5种基本数据类型，3种引用类型，1种es6新增类型<br>
+👉<code>基本数据类型</code>：Number、String、Null、Undefined、Boolean<br>
+👉<code>引用类型</code>：Function、Array、Object<br>
+👉<code>es6新增类型</code>：Symbol</p>
+<!-- more -->
+<p>当然有些可以合并，引用类型部分也可以归为Object类型一种，故也称7种数据类型（5+1+1）<br>
+其中，基本数据类型存储的是实际数据的值；引用数据类型存储的是数据的引用（引用存储在<code>栈</code>里，实际内容存储在<code>堆</code>里）<br>
+那么，为啥要分几种不同的数据类型呢？因为我们最终的目的是要使用数据来搞事情~😀，面对庞大的数据必然有许多重复，如果不分类的存储不然会造成混乱。这就需要我们对数据进行分类存储了。</p>
+<!-- more -->
+<ul>
+<li>
+<p>有的数据是直接存储起来，用的时候直接使用就行了，不需要对数据进行改变，这种类型的往往比较简单，所以统称为<strong>基本数据类型</strong>。</p>
+</li>
+<li>
+<p>有的数据存储了之后，再进行使用需要对数据进行改动，可以原始数据就进行改动，也可只对引用的数据进行改动，这种情况就比较复杂了，所以对数据的结构就分出来栈和堆，栈中的数据指向堆中最终存储的数据。这种统称为<strong>引用数据类型</strong>。</p>
+</li>
+</ul>
+<!-- more -->
+<p>那么分好了存储，接下来还要👊使用数据，一般是定义变量来使用存储的数据。但是因为存储类型不同，所以在使用变量定义数据是也有不同的特性：</p>
+<ul>
+<li>基本数据类型：一个变量要复制另一个变量时，采用 <code>深拷贝</code> ，会开辟一块新的内存空间进行存储，所以数据改变不影响原始数据。变量存放的就是数据值。</li>
+<li>引用数据类型：给变量添加属性，采用 点 的方式。一个变量复制引用类型时，采用 <code>浅拷贝</code> ，所以数据改变会影响原数据的值。变量存放的是数据的引用（指针）。</li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[vue知识点理解]]></title>
         <id>https://cutezhangq.github.io/post/vue-zhi-shi-dian-li-jie/</id>

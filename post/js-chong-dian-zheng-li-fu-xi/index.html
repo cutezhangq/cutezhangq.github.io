@@ -2,24 +2,21 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Hello Gridea | cutezhangq</title>
+<title>js重点整理复习 | cutezhangq</title>
 <link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1592290458507">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Hello Gridea | cutezhangq - Atom Feed" href="https://cutezhangq.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="js重点整理复习 | cutezhangq - Atom Feed" href="https://cutezhangq.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="👏  欢迎使用 Gridea ！
-✍️  Gridea 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...
-
-Github
-Gridea 主页
-示例网站
-特性👇
-📝  你可以使用最酷的 Markdo..." />
-    <meta name="keywords" content="Gridea" />
+    <meta name="description" content="基本数据类型
+js共有9种数据类型：5种基本数据类型，3种引用类型，1种es6新增类型
+👉基本数据类型：Number、String、Null、Undefined、Boolean
+👉引用类型：Function、Array、Object
+�..." />
+    <meta name="keywords" content="js" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -81,54 +78,53 @@ Gridea 主页
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Hello Gridea
+              js重点整理复习
             </h2>
             <div class="post-info">
               <span>
-                2018-12-12
+                2020-06-16
               </span>
               <span>
                 2 min read
               </span>
               
-                <a href="https://cutezhangq.github.io/tag/G0NoiJNrq/" class="post-tag">
-                  # Gridea
+                <a href="https://cutezhangq.github.io/tag/WVA2bQkO73/" class="post-tag">
+                  # js
                 </a>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+                <h1 id="基本数据类型">基本数据类型</h1>
+<p>js共有9种数据类型：5种基本数据类型，3种引用类型，1种es6新增类型<br>
+👉<code>基本数据类型</code>：Number、String、Null、Undefined、Boolean<br>
+👉<code>引用类型</code>：Function、Array、Object<br>
+👉<code>es6新增类型</code>：Symbol</p>
 <!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+<p>当然有些可以合并，引用类型部分也可以归为Object类型一种，故也称7种数据类型（5+1+1）<br>
+其中，基本数据类型存储的是实际数据的值；引用数据类型存储的是数据的引用（引用存储在<code>栈</code>里，实际内容存储在<code>堆</code>里）<br>
+那么，为啥要分几种不同的数据类型呢？因为我们最终的目的是要使用数据来搞事情~😀，面对庞大的数据必然有许多重复，如果不分类的存储不然会造成混乱。这就需要我们对数据进行分类存储了。</p>
+<!-- more -->
+<ul>
+<li>
+<p>有的数据是直接存储起来，用的时候直接使用就行了，不需要对数据进行改变，这种类型的往往比较简单，所以统称为<strong>基本数据类型</strong>。</p>
+</li>
+<li>
+<p>有的数据存储了之后，再进行使用需要对数据进行改动，可以原始数据就进行改动，也可只对引用的数据进行改动，这种情况就比较复杂了，所以对数据的结构就分出来栈和堆，栈中的数据指向堆中最终存储的数据。这种统称为<strong>引用数据类型</strong>。</p>
+</li>
+</ul>
+<!-- more -->
+<p>那么分好了存储，接下来还要👊使用数据，一般是定义变量来使用存储的数据。但是因为存储类型不同，所以在使用变量定义数据是也有不同的特性：</p>
+<ul>
+<li>基本数据类型：一个变量要复制另一个变量时，采用 <code>深拷贝</code> ，会开辟一块新的内存空间进行存储，所以数据改变不影响原始数据。变量存放的就是数据值。</li>
+<li>引用数据类型：给变量添加属性，采用 点 的方式。一个变量复制引用类型时，采用 <code>浅拷贝</code> ，所以数据改变会影响原数据的值。变量存放的是数据的引用（指针）。</li>
+</ul>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E7%89%B9%E6%80%A7">特性👇</a></li>
-</ul>
-</li>
+<li><a href="#%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">基本数据类型</a></li>
 </ul>
 
               </div>
@@ -136,6 +132,15 @@ Gridea 主页
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://cutezhangq.github.io/post/vue-zhi-shi-dian-li-jie/">
+              <h3 class="post-title">
+                vue知识点理解
+              </h3>
+            </a>
+          </div>
         
 
         
