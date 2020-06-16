@@ -1,13 +1,22 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" >
+
 <title>Git | cutezhangq</title>
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1592292020292">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.0/css/all.min.css">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1592292650015">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Git | cutezhangq - Atom Feed" href="https://cutezhangq.github.io/atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 
 
@@ -20,88 +29,86 @@ Git特点
 4.良好性能，支持离线（在本地完成）
 5.制定..." />
     <meta name="keywords" content="Git" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
   <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://cutezhangq.github.io">
-  <img class="avatar" src="https://cutezhangq.github.io/images/avatar.png?v=1592292020292" alt="">
-  </a>
-  <h1 class="site-title">
-    cutezhangq
-  </h1>
-  <p class="site-description">
-    温故知新
-  </p>
-  <div class="menu-container">
-    
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://cutezhangq.github.io">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1592292650015" class="site-logo">
+        <h1 class="site-title">cutezhangq</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
       
-        <a href="/" class="menu">
-          首页
-        </a>
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
       
-    
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
       
-        <a href="/archives" class="menu">
-          归档
-        </a>
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
       
-    
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
       
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
+    </div>
   </div>
-  <div class="social-container">
-    
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
       
-    
+        
       
-    
+        
       
-    
+        
       
-    
+        
       
-    
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://cutezhangq.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
   </div>
 </div>
 
-        <div class="post-detail">
-          <article class="post">
-            <h2 class="post-title">
-              Git
-            </h2>
-            <div class="post-info">
-              <span>
-                2020-03-22
-              </span>
-              <span>
-                3 min read
-              </span>
-              
-                <a href="https://cutezhangq.github.io/tag/rmYfCmsqU/" class="post-tag">
-                  # Git
-                </a>
-              
-            </div>
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Git</h2>
+            <div class="post-date">2020-03-22</div>
             
-              <img class="post-feature-image" src="https://cutezhangq.github.io/post-images/git.jpg" alt="">
+              <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/git.jpg')">
+              </div>
             
-            <div class="post-content-wrapper">
-              <div class="post-content">
-                <h1 id="定义">定义</h1>
+            <div class="post-content" v-pre>
+              <h1 id="定义">定义</h1>
 <p>是一个分布式版本控制工具（系统）。</p>
 <h1 id="git特点">Git特点</h1>
 <p>1.尽可能添加数据而不是删除或修改数据，存储能力强，容易备份</p>
@@ -212,104 +219,53 @@ git push -u origin master       #本地仓库代码提交至远程仓库(有时�
 <pre><code class="language-cmd">git push origin --delete [branch_name]
 </code></pre>
 
-              </div>
-              <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li><a href="#%E5%AE%9A%E4%B9%89">定义</a></li>
-<li><a href="#git%E7%89%B9%E7%82%B9">Git特点</a></li>
-<li><a href="#git%E5%AE%98%E7%BD%91">Git官网</a></li>
-<li><a href="#git%E4%B8%89%E7%A7%8D%E7%8A%B6%E6%80%81%E4%B8%89%E4%B8%AA%E9%80%BB%E8%BE%91%E5%8C%BA%E5%9F%9F">Git三种状态,三个逻辑区域</a>
-<ul>
-<li><a href="#%E4%B8%89%E7%A7%8D%E7%8A%B6%E6%80%81">三种状态</a></li>
-<li><a href="#%E4%B8%89%E7%A7%8D%E5%88%86%E5%8C%BA">三种分区</a></li>
-<li><a href="#%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB">对应关系</a></li>
-</ul>
-</li>
-<li><a href="#git%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%BB%93%E6%9E%84">.Git文件内容结构</a></li>
-<li><a href="#git%E5%91%BD%E4%BB%A4">Git命令</a>
-<ul>
-<li><a href="#%E6%90%AD%E5%BB%BAgit%E4%BB%93%E5%BA%93">搭建Git仓库</a>
-<ul>
-<li><a href="#%E4%B8%A4%E7%A7%8D%E5%9C%BA%E6%99%AF">两种场景：</a></li>
-<li><a href="#%E6%9F%A5%E7%9C%8B%E6%9C%AC%E5%9C%B0%E7%9B%AE%E5%BD%95%E7%9A%84%E7%8A%B6%E6%80%81">查看本地目录的状态</a></li>
-<li><a href="#%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E4%B8%8E%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E5%85%B3%E8%81%94">本地仓库与远程仓库关联</a></li>
-</ul>
-</li>
-<li><a href="#%E6%9B%B4%E6%96%B0%E9%A1%B9%E7%9B%AE">更新项目</a></li>
-<li><a href="#%E6%8F%90%E4%BA%A4%E9%A1%B9%E7%9B%AE">提交项目</a></li>
-<li><a href="#%E5%85%8B%E9%9A%86%E9%A1%B9%E7%9B%AE">克隆项目</a></li>
-<li><a href="#%E5%88%86%E6%94%AF%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4">分支相关命令</a></li>
-</ul>
-</li>
-</ul>
-
-              </div>
             </div>
-          </article>
-        </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://cutezhangq.github.io/tag/rmYfCmsqU/" class="tag">
+                    Git
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/hello-gridea/">
+                  <h3 class="post-title">
+                    Hello
+                  </h3>
+                </a>
+              </div>
+            
 
-        
-          <div class="next-post">
-            <div class="next">下一篇</div>
-            <a href="https://cutezhangq.github.io/post/hello-gridea/">
-              <h3 class="post-title">
-                Hello
-              </h3>
-            </a>
+            
+
           </div>
-        
 
-        
-
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://cutezhangq.github.io/atom.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
-</div>
-
+        </div>
       </div>
     </div>
 
-    <script>
-      hljs.initHighlightingOnLoad()
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+<script type="application/javascript">
 
-      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+AOS.init();
 
-      // This should probably be throttled.
-      // Especially because it triggers during smooth scrolling.
-      // https://lodash.com/docs/4.17.10#throttle
-      // You could do like...
-      // window.addEventListener("scroll", () => {
-      //    _.throttle(doThatStuff, 100);
-      // });
-      // Only not doing it here to keep this Pen dependency-free.
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
-      window.addEventListener("scroll", event => {
-        let fromTop = window.scrollY;
+</script>
 
-        mainNavLinks.forEach((link, index) => {
-          let section = document.getElementById(decodeURI(link.hash).substring(1));
-          let nextSection = null
-          if (mainNavLinks[index + 1]) {
-            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-          }
-          if (section.offsetTop <= fromTop) {
-            if (nextSection) {
-              if (nextSection.offsetTop > fromTop) {
-                link.classList.add("current");
-              } else {
-                link.classList.remove("current");    
-              }
-            } else {
-              link.classList.add("current");
-            }
-          } else {
-            link.classList.remove("current");
-          }
-        });
-      });
 
-    </script>
+
+
+
+
   </body>
 </html>

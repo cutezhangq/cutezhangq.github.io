@@ -1,13 +1,22 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" >
+
 <title>vue知识点理解 | cutezhangq</title>
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1592292020292">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.0/css/all.min.css">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1592292650015">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="vue知识点理解 | cutezhangq - Atom Feed" href="https://cutezhangq.github.io/atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 
 
@@ -18,84 +27,86 @@ $('#result').append(
  'There are &lt;b&gt;' + basket.count + '&lt;/b&gt; ' +
  'items..." />
     <meta name="keywords" content="" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
   <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://cutezhangq.github.io">
-  <img class="avatar" src="https://cutezhangq.github.io/images/avatar.png?v=1592292020292" alt="">
-  </a>
-  <h1 class="site-title">
-    cutezhangq
-  </h1>
-  <p class="site-description">
-    温故知新
-  </p>
-  <div class="menu-container">
-    
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://cutezhangq.github.io">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1592292650015" class="site-logo">
+        <h1 class="site-title">cutezhangq</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
       
-        <a href="/" class="menu">
-          首页
-        </a>
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
       
-    
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
       
-        <a href="/archives" class="menu">
-          归档
-        </a>
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
       
-    
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
       
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
+    </div>
   </div>
-  <div class="social-container">
-    
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
       
-    
+        
       
-    
+        
       
-    
+        
       
-    
+        
       
-    
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://cutezhangq.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
   </div>
 </div>
 
-        <div class="post-detail">
-          <article class="post">
-            <h2 class="post-title">
-              vue知识点理解
-            </h2>
-            <div class="post-info">
-              <span>
-                2020-05-13
-              </span>
-              <span>
-                2 min read
-              </span>
-              
-            </div>
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">vue知识点理解</h2>
+            <div class="post-date">2020-05-13</div>
             
-              <img class="post-feature-image" src="https://cutezhangq.github.io/post-images/vue-zhi-shi-dian-li-jie.jpg" alt="">
+              <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/vue-zhi-shi-dian-li-jie.jpg')">
+              </div>
             
-            <div class="post-content-wrapper">
-              <div class="post-content">
-                <h1 id="模板字符串的前世今生">模板字符串的前世今生</h1>
+            <div class="post-content" v-pre>
+              <h1 id="模板字符串的前世今生">模板字符串的前世今生</h1>
 <h2 id="js">JS</h2>
 <p>js中，输出模板是这样写的。通过<code>字符串</code>拼接</p>
 <pre><code class="language-js">$('#result').append(
@@ -163,93 +174,45 @@ new Vue({
 }).$mount('#app')
 </code></pre>
 
-              </div>
-              <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li><a href="#%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F">模板字符串的前世今生</a>
-<ul>
-<li><a href="#js">JS</a></li>
-<li><a href="#es6">es6</a></li>
-<li><a href="#vue">Vue</a></li>
-<li><a href="#vue20%E6%A8%A1%E6%9D%BF%E7%9A%84%E4%B8%89%E7%A7%8D%E5%86%99%E6%B3%95">Vue2.0模板的三种写法</a>
-<ul>
-<li><a href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E5%88%A9%E7%94%A8%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2">第一种：利用模板字符串</a></li>
-<li><a href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E5%88%A9%E7%94%A8template%E6%A0%87%E7%AD%BE%E5%AE%9E%E7%8E%B0%E5%86%85%E5%AE%B9%E5%A1%AB%E5%85%85%E9%80%9A%E8%BF%87-id-%E6%88%96%E8%80%85%E5%85%B6%E4%BB%96%E7%9A%84%E9%80%89%E6%8B%A9%E5%99%A8%E6%8C%82%E8%BD%BD%E5%88%B0template%E4%B8%8A">第二种：利用template标签实现内容填充,通过 id 或者其他的选择器挂载到template上</a></li>
-<li><a href="#%E6%94%B9%E5%8F%98script%E4%B8%AD%E7%9A%84type%E5%8F%98%E4%B8%BAtypex-template%E7%BB%99%E5%AE%83id%E6%9C%80%E7%BB%88%E6%8C%82%E8%BD%BD%E5%88%B0template%E4%B8%AD">改变script中的type.变为type=&quot;x-template&quot;,给它id,最终挂载到template中</a></li>
-</ul>
-</li>
-<li><a href="#vue30%E6%A8%A1%E6%9D%BF%E7%9A%84%E5%86%99%E6%B3%95">Vue3.0模板的写法</a></li>
-</ul>
-</li>
-</ul>
-
-              </div>
             </div>
-          </article>
-        </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/vue/">
+                  <h3 class="post-title">
+                    vue
+                  </h3>
+                </a>
+              </div>
+            
 
-        
-          <div class="next-post">
-            <div class="next">下一篇</div>
-            <a href="https://cutezhangq.github.io/post/vue/">
-              <h3 class="post-title">
-                vue
-              </h3>
-            </a>
+            
+
           </div>
-        
 
-        
-
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://cutezhangq.github.io/atom.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
-</div>
-
+        </div>
       </div>
     </div>
 
-    <script>
-      hljs.initHighlightingOnLoad()
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+<script type="application/javascript">
 
-      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+AOS.init();
 
-      // This should probably be throttled.
-      // Especially because it triggers during smooth scrolling.
-      // https://lodash.com/docs/4.17.10#throttle
-      // You could do like...
-      // window.addEventListener("scroll", () => {
-      //    _.throttle(doThatStuff, 100);
-      // });
-      // Only not doing it here to keep this Pen dependency-free.
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
-      window.addEventListener("scroll", event => {
-        let fromTop = window.scrollY;
+</script>
 
-        mainNavLinks.forEach((link, index) => {
-          let section = document.getElementById(decodeURI(link.hash).substring(1));
-          let nextSection = null
-          if (mainNavLinks[index + 1]) {
-            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-          }
-          if (section.offsetTop <= fromTop) {
-            if (nextSection) {
-              if (nextSection.offsetTop > fromTop) {
-                link.classList.add("current");
-              } else {
-                link.classList.remove("current");    
-              }
-            } else {
-              link.classList.add("current");
-            }
-          } else {
-            link.classList.remove("current");
-          }
-        });
-      });
 
-    </script>
+
+
+
+
   </body>
 </html>
