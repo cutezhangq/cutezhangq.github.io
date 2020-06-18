@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1592464558400">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1592488933587">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -31,7 +31,7 @@ js共有9种数据类型：5种基本数据类型，3种引用类型，1种es6�
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1592464558400" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1592488933587" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -173,11 +173,56 @@ js共有9种数据类型：5种基本数据类型，3种引用类型，1种es6�
 注：&amp;还可以用来判断 奇偶:</p>
 </li>
 </ul>
-<pre><code class="language-js">const n = 11;
+<pre><code class="language-javascript">const n = 11;
   if(n &amp; 1){    // 取代 n % 2 == 1 的判断，因为其还要转成二进制的判断
     console.log('奇数')
   }else{
     console.log('偶数')
+  }
+</code></pre>
+<h1 id="数据类型的判断">数据类型的判断</h1>
+<p>👉基本数据类型中<strong>null</strong>：采用<strong>String（）<strong>判断<br>
+👉</strong>基本数据类型</strong>中除了null的：采用**typeof()<strong>判断<br>
+👉  <strong>引用数据类型</strong>中如object、array、Data等：采用</strong>toString()**判断<br>
+一种很稳的判断数据类型方法：💖</p>
+<pre><code class="language-javascript">let class2type = {};
+'Array Date RegExp Object Error'.splice('').forEach(e =&gt; class2type['[object'+e+']'] = e.toLowerCase())
+function type(obj){
+    if(obj == null){
+        return String(obj)
+    }
+    return typeof obj ==='object'?  class2type[Object.prototype.toString.call(obj)] || 'object': typeof(obj)
+}
+</code></pre>
+<h2 id="判断对象为空的3中方法">判断对象为空的3中方法</h2>
+<ul>
+<li>JSON.stringify(obj) == ‘{}’</li>
+<li>for(var a in obj) == true</li>
+<li>Object.keys(obj).length() == 0<br>
+具体如下：</li>
+</ul>
+<pre><code class="language-javascript"> //方法1：JSON.stringify(xxx)=='{}'    转成字符串，看值是不是空对象
+  c = {};
+  if(JSON.stringify(c)=='{}'){
+    console.log('空对象');  //空对象
+  }
+
+  //方法2：for in  有没有数据在它的里面
+  obj = {};
+  function abc(obj){
+    for(var a in obj){
+      console.log('不是空对象');
+    }
+    console.log('空对象');  
+  }
+  abc();  //空对象
+
+  //方法3：Object.keys(xxx).length == 0    对象转成数组，再看数组的长度
+  t = {};
+  if(Object.keys(t).length == 0){   //方法会返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和正常循环遍历该对象时返回的顺序一致 。
+    console.log('空对象');    //空对象
+  }else{
+    console.log('不是空对象');
   }
 </code></pre>
 

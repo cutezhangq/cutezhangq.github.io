@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cutezhangq.github.io</id>
     <title>cutezhangq</title>
-    <updated>2020-06-18T07:16:29.287Z</updated>
+    <updated>2020-06-18T14:02:16.393Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cutezhangq.github.io"/>
     <link rel="self" href="https://cutezhangq.github.io/atom.xml"/>
@@ -95,11 +95,56 @@
 注：&amp;还可以用来判断 奇偶:</p>
 </li>
 </ul>
-<pre><code class="language-js">const n = 11;
+<pre><code class="language-javascript">const n = 11;
   if(n &amp; 1){    // 取代 n % 2 == 1 的判断，因为其还要转成二进制的判断
     console.log('奇数')
   }else{
     console.log('偶数')
+  }
+</code></pre>
+<h1 id="数据类型的判断">数据类型的判断</h1>
+<p>👉基本数据类型中<strong>null</strong>：采用<strong>String（）<strong>判断<br>
+👉</strong>基本数据类型</strong>中除了null的：采用**typeof()<strong>判断<br>
+👉  <strong>引用数据类型</strong>中如object、array、Data等：采用</strong>toString()**判断<br>
+一种很稳的判断数据类型方法：💖</p>
+<pre><code class="language-javascript">let class2type = {};
+'Array Date RegExp Object Error'.splice('').forEach(e =&gt; class2type['[object'+e+']'] = e.toLowerCase())
+function type(obj){
+    if(obj == null){
+        return String(obj)
+    }
+    return typeof obj ==='object'?  class2type[Object.prototype.toString.call(obj)] || 'object': typeof(obj)
+}
+</code></pre>
+<h2 id="判断对象为空的3中方法">判断对象为空的3中方法</h2>
+<ul>
+<li>JSON.stringify(obj) == ‘{}’</li>
+<li>for(var a in obj) == true</li>
+<li>Object.keys(obj).length() == 0<br>
+具体如下：</li>
+</ul>
+<pre><code class="language-javascript"> //方法1：JSON.stringify(xxx)=='{}'    转成字符串，看值是不是空对象
+  c = {};
+  if(JSON.stringify(c)=='{}'){
+    console.log('空对象');  //空对象
+  }
+
+  //方法2：for in  有没有数据在它的里面
+  obj = {};
+  function abc(obj){
+    for(var a in obj){
+      console.log('不是空对象');
+    }
+    console.log('空对象');  
+  }
+  abc();  //空对象
+
+  //方法3：Object.keys(xxx).length == 0    对象转成数组，再看数组的长度
+  t = {};
+  if(Object.keys(t).length == 0){   //方法会返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和正常循环遍历该对象时返回的顺序一致 。
+    console.log('空对象');    //空对象
+  }else{
+    console.log('不是空对象');
   }
 </code></pre>
 ]]></content>
