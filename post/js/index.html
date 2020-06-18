@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1592293190369">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1592464558400">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -18,11 +18,10 @@
 
 
 
-    <meta name="description" content="基本数据类型
+    <meta name="description" content="js中的数据类型
 js共有9种数据类型：5种基本数据类型，3种引用类型，1种es6新增类型
 👉基本数据类型：Number、String、Null、Undefined、Boolean
-👉引用类型：Function、Array、Object
-�..." />
+👉引用类型：Function、Array、Object..." />
     <meta name="keywords" content="js" />
   </head>
   <body>
@@ -32,7 +31,7 @@ js共有9种数据类型：5种基本数据类型，3种引用类型，1种es6�
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1592293190369" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1592464558400" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -101,7 +100,7 @@ js共有9种数据类型：5种基本数据类型，3种引用类型，1种es6�
               </div>
             
             <div class="post-content" v-pre>
-              <h1 id="基本数据类型">基本数据类型</h1>
+              <h1 id="js中的数据类型">js中的数据类型</h1>
 <p>js共有9种数据类型：5种基本数据类型，3种引用类型，1种es6新增类型<br>
 👉<code>基本数据类型</code>：Number、String、Null、Undefined、Boolean<br>
 👉<code>引用类型</code>：Function、Array、Object<br>
@@ -119,12 +118,68 @@ js共有9种数据类型：5种基本数据类型，3种引用类型，1种es6�
 <p>有的数据存储了之后，再进行使用需要对数据进行改动，可以原始数据就进行改动，也可只对引用的数据进行改动，这种情况就比较复杂了，所以对数据的结构就分出来栈和堆，栈中的数据指向堆中最终存储的数据。这种统称为<strong>引用数据类型</strong>。</p>
 </li>
 </ul>
+<p>🔶局部变量存放在<code>栈</code>中(该方法中声明的变量随着栈的销毁而结束，局部变量只能在方法中有效)；<br>
+🔷全局变量存放在<code>堆</code>中(不会随着某个方法执行结束而销毁)</p>
 <!-- more -->
-<p>那么分好了存储，接下来还要👊使用数据，一般是定义变量来使用存储的数据。但是因为存储类型不同，所以在使用变量定义数据是也有不同的特性：</p>
+<p>那么分好了存储，接下来还要👊使用数据，一般是定义变量来使用存储的数据。但是因为存储类型不同，所以在使用<code>变量</code>定义数据是也有不同的特性(变量的类型是根据其内部存储的数据类型来决定的)：</p>
 <ul>
-<li>基本数据类型：一个变量要复制另一个变量时，采用 <code>深拷贝</code> ，会开辟一块新的内存空间进行存储，所以数据改变不影响原始数据。变量存放的就是数据值。</li>
-<li>引用数据类型：给变量添加属性，采用 点 的方式。一个变量复制引用类型时，采用 <code>浅拷贝</code> ，所以数据改变会影响原数据的值。变量存放的是数据的引用（指针）。</li>
+<li>基本变量类型：一个变量要复制另一个变量时，采用 <code>深拷贝</code> ，会开辟一块新的内存空间进行存储，所以数据改变不影响原始数据。变量存放的就是数据值。</li>
+<li>引用变量类型：给变量添加属性，采用 点 的方式。一个变量复制引用类型时，采用 <code>浅拷贝</code> ，所以数据改变会影响原数据的值。变量存放的是数据的引用（指针）。</li>
 </ul>
+<h1 id="不同数据类型之间的运算及比较">不同数据类型之间的运算及比较</h1>
+<h2 id="和-的区别">=== 和 == 的区别</h2>
+<p>===这种先比较数据的类型，再比较数据的值。<strong>类型</strong>和<strong>值</strong>要完全一样才相等。（不转换类型）<br>
+==这种比较值，当类型不同，可先进行转换，<strong>转换完</strong>再比较<strong>值</strong>。<br>
+注：==中转换情况如下几种情况：</p>
+<ul>
+<li><strong>String和Number</strong>：将String按照ASCII转换为数字再进行比较。</li>
+<li><strong>Undefined和Null</strong>：这两个实际的值都是false，它们==是<strong>相等</strong>的。</li>
+<li><strong>NaN</strong>：只能使用isNaN来检测类型。</li>
+<li><strong>boolean与其他类型</strong>：boolean先转为 0 或 1 再进行比较。</li>
+<li>如果是<strong>对象和数字比较</strong>：会将对象先转换为基础数据类型。js中🙆一般valueof优先于tostring类型，采用valueof内置类进行转换，🤷‍♀但在data中是tostring采用转换。</li>
+</ul>
+<h2 id="不同数据类型间运算">不同数据类型间运算</h2>
+<ul>
+<li>执行 **- 、*、/、%**运算时，都转换为数字进行运算。</li>
+<li>执行**+**运算时，分为几种情况：
+<ul>
+<li>number + String --&gt;String</li>
+<li>number + object --&gt;String ，优先调用tostring转换了
+<ul>
+<li>如：[1].toString() === '1'</li>
+<li>如：{}.toString() === '[object Object]'</li>
+</ul>
+</li>
+<li>number + null/boolean --&gt; <strong>数字</strong></li>
+<li>number + undefined --&gt; <strong>NaN</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="和-和">&amp;&amp;和||、&amp;和|</h2>
+<p>&amp;&amp;和||是逻辑运算符。</p>
+<ul>
+<li>
+<p>&amp;&amp;表示逻辑与，当左边为真时，才执行右边；左边为假，不执行右边。（会短路）</p>
+</li>
+<li>
+<p>| | 表示逻辑或，当左边为真时，执行左边；左边为假，执行右边。<br>
+&amp;和|是位运算符。</p>
+</li>
+<li>
+<p>&amp;表示与运算，转换为二进制逐位进行比较，相同位为1，不同位为0，最后输出的二进制再转为十进制输出最后结果。</p>
+</li>
+<li>
+<p>| 表示或运算，转换为二进制逐位进行比较，只要位上有1就为1，位上都为0则为0，最后输出的二进制再转为十进制输出最后结果。<br>
+注：&amp;还可以用来判断 奇偶:</p>
+</li>
+</ul>
+<pre><code class="language-js">const n = 11;
+  if(n &amp; 1){    // 取代 n % 2 == 1 的判断，因为其还要转成二进制的判断
+    console.log('奇数')
+  }else{
+    console.log('偶数')
+  }
+</code></pre>
 
             </div>
             
