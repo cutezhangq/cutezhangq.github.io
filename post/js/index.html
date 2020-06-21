@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1592488933587">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1592743654583">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -31,7 +31,7 @@ js共有9种数据类型：5种基本数据类型，3种引用类型，1种es6�
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1592488933587" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1592743654583" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -138,10 +138,11 @@ js共有9种数据类型：5种基本数据类型，3种引用类型，1种es6�
 <li><strong>boolean与其他类型</strong>：boolean先转为 0 或 1 再进行比较。</li>
 <li>如果是<strong>对象和数字比较</strong>：会将对象先转换为基础数据类型。js中🙆一般valueof优先于tostring类型，采用valueof内置类进行转换，🤷‍♀但在data中是tostring采用转换。</li>
 </ul>
+<p>😃注：即基本的数据类型间比较时，都是转为数字进行比较（ASCII码转）；涉及到对象这种引用变量时，则是转换为字符串进行比较。</p>
 <h2 id="不同数据类型间运算">不同数据类型间运算</h2>
 <ul>
-<li>执行 **- 、*、/、%**运算时，都转换为数字进行运算。</li>
-<li>执行**+**运算时，分为几种情况：
+<li>执行<code>- 、*、/、%</code> 运算时，都转换为数字进行运算。</li>
+<li>执行<code>+</code>运算时，分为几种情况：
 <ul>
 <li>number + String --&gt;String</li>
 <li>number + object --&gt;String ，优先调用tostring转换了
@@ -181,9 +182,9 @@ js共有9种数据类型：5种基本数据类型，3种引用类型，1种es6�
   }
 </code></pre>
 <h1 id="数据类型的判断">数据类型的判断</h1>
-<p>👉基本数据类型中<strong>null</strong>：采用<strong>String（）<strong>判断<br>
-👉</strong>基本数据类型</strong>中除了null的：采用**typeof()<strong>判断<br>
-👉  <strong>引用数据类型</strong>中如object、array、Data等：采用</strong>toString()**判断<br>
+<p>👉基本数据类型中<strong>null</strong>：采用 <code>String（）</code> 判断<br>
+👉<strong>基本数据类型</strong>中除了null的：采用 <code>typeof()</code> 判断<br>
+👉<strong>引用数据类型</strong> 中如object、array、Data等：采用 <code>toString()</code> 判断<br>
 一种很稳的判断数据类型方法：💖</p>
 <pre><code class="language-javascript">let class2type = {};
 'Array Date RegExp Object Error'.splice('').forEach(e =&gt; class2type['[object'+e+']'] = e.toLowerCase())
@@ -225,6 +226,146 @@ function type(obj){
     console.log('不是空对象');
   }
 </code></pre>
+<h1 id="不同数据类型的保存">不同数据类型的保存</h1>
+<ul>
+<li>基本数据类型：保存在 <code>堆</code>中</li>
+<li>引用数据类型：保存在<code>栈</code>中</li>
+<li>变量：可能是基本数据也可能是地址值。</li>
+</ul>
+<h1 id="内存-变量的生命周期">内存、变量的生命周期</h1>
+<p>内存：是内存条通电后产生的一定的存储空间。<br>
+变量的生命周期：当js引擎访问变量的时候，要经历：变量声明===》变量初始化===》变量赋值<br>
+经历从 产生 到 销毁 的过程。<br>
+🌰举例：<br>
+<code>var</code>变量的生命周期：其中<strong>变量声明</strong>和<strong>变量初始化</strong>这2个阶段没有间隙，<br>
+<code>函数声明</code>的生命周期：<strong>变量声明</strong>和<strong>变量初始化</strong>和<strong>变量赋值</strong>这3个阶段没有间隙，<br>
+<code>let</code>:变量的生命周期：每段都有间隙，其中<strong>变量声明</strong>和<strong>变量初始化</strong>之间还有<strong>暂时性死区</strong></p>
+<h2 id="为什么-提升-在let的生命周期里无效">为什么 提升 在let的生命周期里无效？</h2>
+<p><code>提升：就是变量在作用域顶部进行 声明和初始化。</code><br>
+因为let中每个阶段都有间隙，<strong>变量声明</strong>和<strong>变量初始化</strong>是解耦的（解耦让提升这个术语失效了），还存在暂时性死区，在这里，变量不能被访问。</p>
+<h2 id="new的执行过程">new的执行过程</h2>
+<p>1.创建一个对象<br>
+2.将对象挂载到原型上<code>obj.__proto__ = Con.prototype</code><br>
+3.this的指向<br>
+4.返回新对象(如果构造函数有自己 retrun 时，则返回该值)</p>
+<h1 id="对象">对象</h1>
+<h2 id="访问对象内部数据的方法">访问对象内部数据的方法</h2>
+<p>当访问json数据内部值时，一般采用 <code>点</code>的形式；当访问数组中数据时，一般采用<code>[ ]</code>的形式。<br>
+其中，<strong>必须</strong>采用<code>[ ]</code>形式的情况有：属性中有特殊字符，如 - 空格 等的，有关键字的，是未定义的属性的。其余的都可采用这2中方式。</p>
+<h2 id="创建对象的四种方法">创建对象的四种方法</h2>
+<pre><code class="language-javascript">//1.采用系统的构造函数
+var obj = new Object();
+obj.name = 'zq';
+obj.age = 20;
+console.log(obj.name+','+obj.age);//zq,20
+
+//2.自定义构造函数
+function stu(name,age){
+  this.name = name;
+  this.age = age;
+  this.mmm = 'koko';  //都是this.的形式，此处的this指代stu对象
+  console.log(this.name+','+this.age);  //pk,22
+}
+var p1 = new stu('pk',22);  
+console.log(p1.mmm);  //koko
+
+//3.字面量形式
+var tea = {
+  name:'bobo',
+  age:50,
+  say:function(){
+    console.log('hello js');
+  }
+}
+console.log(tea.name);  //bobo
+tea.say();  //hello js
+
+//4.工厂模式    类似于封装了 系统的构造函数，批量生产对象
+function createObject(name,age){
+  var obj = new Object();
+  obj.name = name;
+  obj.age = age;
+  return obj; //别忘了返回
+} 
+var stu1 = createObject('stu1',12);
+var stu2 = createObject('stu2',13);
+console.log(stu1.name+','+stu1.age);//stu1,12
+console.log(stu2.name+','+stu2.age);//stu2,13
+</code></pre>
+<h1 id="函数">函数</h1>
+<h2 id="几种常见的回调函数">几种常见的回调函数</h2>
+<p>👉dom中的回调函数</p>
+<pre><code class="language-javascript"> //1.dom中时间回调函数，包括Node.js中的
+  document.getElementById('btn').onclick = function(){
+    console.log('诶呀，被点了!');
+  }//诶呀，被点了!
+</code></pre>
+<p>👉定时器</p>
+<pre><code class="language-javascript"> //2.定时器
+  setTimeout(function(){
+    console.log('我是一个定时器');
+  },2000)
+  console.log('——————');  
+  //——————
+  //我是一个定时器
+</code></pre>
+<p>👉ajax请求中的回调函数（包括promise）</p>
+<pre><code class="language-javascript">  $.ajax({
+    url:'xxx',
+    type:'get',
+    data:data,
+    success:function(data){
+      console.log(data);
+    }
+  })
+</code></pre>
+<p>👉生命周期中的回调函数</p>
+<pre><code class="language-javascript">//如vue中的
+
+</code></pre>
+<h2 id="钩子函数和回调函数">钩子函数和回调函数</h2>
+<p>两者都是事件处理函数，不同的是：<br>
+<strong>钩子函数</strong>：函数<code>调用时触发</code>，本质上是监听函数。<br>
+<strong>回调函数</strong>：函数调用<code>结束时触发</code>。</p>
+<h2 id="iife">IIFE</h2>
+<p>立即调用函数<br>
+形式：<code>( 匿名函数自调用 )( )</code>        或者       <code>( 匿名函数自调用 )(参数)</code><br>
+作用：</p>
+<ul>
+<li>隐藏内部内容代码</li>
+<li>防止污染全局（外部）命名空间</li>
+<li>进行js编码</li>
+<li>解决闭包问题（闭包中变量一直无法释放，占用内存）</li>
+</ul>
+<p>其他几种也是立即执行函数</p>
+<pre><code class="language-javascript">(function(){alert('我是匿名函数')} ()) // 用括号把整个表达式包起来
+(function(){alert('我是匿名函数')}) () //用括号把函数包起来
+!function(){alert('我是匿名函数')}() // 求反，我们不在意值是多少，只想通过语法检查。
++function(){alert('我是匿名函数')}()
+-function(){alert('我是匿名函数')}()
+~function(){alert('我是匿名函数')}()
+void function(){alert('我是匿名函数')}()
+new function(){alert('我是匿名函数')}()
+</code></pre>
+<h2 id="函数声明与函数表达式">函数声明与函数表达式</h2>
+<p>一、所能放置的 **位置 ** 不同<br>
+函数声明：由于有<code>函数提升</code>，所以可以在任意地方声明</p>
+<pre><code class="language-javascript">  fnName();
+  //函数声明
+  function fnName() { 
+  }
+  //正常，因为‘提升’了函数声明，函数调用可在函数声明之前
+</code></pre>
+<pre><code class="language-javascript">var fnName = function () {     
+    alert('11');
+  }();
+    //函数表达式后面加括号，当javascript引擎解析到此处时能立即调用函数
+</code></pre>
+<p>二、是否 可以<strong>进行函数立即调用</strong></p>
+<ul>
+<li>函数声明不可以，只能以fnName()形式调用 。</li>
+<li>函数表达式后面可以加括号立即调用该函数。</li>
+</ul>
 
             </div>
             
