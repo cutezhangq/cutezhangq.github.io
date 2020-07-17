@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cutezhangq.github.io</id>
     <title>cutezhangq</title>
-    <updated>2020-06-21T12:47:38.713Z</updated>
+    <updated>2020-07-17T01:40:19.778Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cutezhangq.github.io"/>
     <link rel="self" href="https://cutezhangq.github.io/atom.xml"/>
@@ -10,6 +10,24 @@
     <logo>https://cutezhangq.github.io/images/avatar.png</logo>
     <icon>https://cutezhangq.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, cutezhangq</rights>
+    <entry>
+        <title type="html"><![CDATA[笔试题]]></title>
+        <id>https://cutezhangq.github.io/post/bi-shi-ti/</id>
+        <link href="https://cutezhangq.github.io/post/bi-shi-ti/">
+        </link>
+        <updated>2020-07-15T15:04:10.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="q标准盒子模型与ie怪异盒子模型">Q：标准盒子模型与IE怪异盒子模型</h1>
+<p>这个问题主要会出现在笔试题上面，比如：</p>
+<pre><code class="language-javascript">&lt;div style=&quot;width:100px;height=&quot;100px;border:10px;padding:10px;&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>这个盒子在w3c标准盒子模型和IE的怪异盒子模型下面它的宽度分别是多少？</p>
+<pre><code class="language-javascript">标准盒子模型：总宽度=content100px+border 10px*2+padding 10px*2 //140px
+怪异盒子模型: 总宽度=content60px+ border 10px*2+padding 10px*2 //100px
+</code></pre>
+<p>怪异盒子：box-sizing：border-box将div的width就是width赋值的宽<br>
+标准盒子：宽度为width的宽加上border和padding</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[js重点整理复习]]></title>
         <id>https://cutezhangq.github.io/post/js/</id>
@@ -117,6 +135,19 @@ function type(obj){
     return typeof obj ==='object'?  class2type[Object.prototype.toString.call(obj)] || 'object': typeof(obj)
 }
 </code></pre>
+<h1 id="如何判断一个变量是对象还是数组">如何判断一个变量是对象还是数组</h1>
+<p>判断数组和对象分别都有好几种方法，其中用prototype.toString.call()兼容性最好。</p>
+<pre><code class="language-javascript">  function isObjArr(value) {
+    if (Object.prototype.toString.call(value) === &quot;[object Array]&quot;) {
+      console.log('value是数组');
+    } else if (Object.prototype.toString.call(value) === '[object Object]') { //这个方法兼容性好一点
+      console.log('value是对象');
+    } else {
+      console.log('value不是数组也不是对象')
+    }
+  }
+</code></pre>
+<p>ps：千万不能使用typeof来判断对象和数组，因为这两种类型都会返回&quot;object&quot;。</p>
 <h2 id="判断对象为空的3中方法">判断对象为空的3中方法</h2>
 <ul>
 <li>JSON.stringify(obj) == ‘{}’</li>
@@ -288,6 +319,48 @@ new function(){alert('我是匿名函数')}()
 <li>函数声明不可以，只能以fnName()形式调用 。</li>
 <li>函数表达式后面可以加括号立即调用该函数。</li>
 </ul>
+<h1 id="原型">原型</h1>
+<h1 id="数组">数组</h1>
+<h2 id="q如何对一个数组去重">Q：如何对一个数组去重？</h2>
+<pre><code class="language-javascript">//1、Set结构去重。
+let set = new Set([1,2,3,4,3,2,1,6,'1',NaN,NaN]);
+console.log(set);
+//Set(6)
+// 0: 1
+// 1: 2
+// 2: 3
+// 3: 4
+// 4: 6
+// 5: &quot;1&quot;
+//6: NaN
+
+//2、遍历，将值添加到新数组，用indexOf()判断值是否存在，已存在就不添加，达到去重效果。
+let a = ['1','2','3',1,NaN,NaN,undefined,undefined,null,null, 'a','b','b'];
+  let unique = arr =&gt;{
+    let newA = [];
+    arr.forEach(key =&gt; {
+      if(newA.indexOf(key)&lt;0){  //遍历newA是否存在key，如果存在key会大于0就跳过push的那一步
+        newA.push(key);
+      }
+    });
+    return newA;
+  }
+  console.log(unique(a)) ;//[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, 1, NaN, NaN, undefined, null, &quot;a&quot;, &quot;b&quot;]
+  //ps:这个方法不能分辨NaN,会出现两个NaN。是有问题的，下面那个方法好一点。
+
+  //3、遍历，将数组的值添加到一个对象的属性名里，并给属性赋值，对象不能添加相同属性名，
+  //以这个为依据可以实现数组去重，然后用Object.keys(对象)返回这个对象可枚举属性组成的数组，这个数组就是去重后的数组。
+//注意：这个方法会将 number,NaN,undefined,null，变为字符串形式，因为对象的属性名就是一个字符串，根据需求来吧，想想还是Set去重最简单也最有效。
+  let b = ['1', '2', '3', 1,NaN,NaN,undefined,undefined,null,null, 'a', 'b', 'b'];
+  const unique2 = arr =&gt; {
+        var obj = {}
+        arr.forEach(value =&gt; {
+            obj[value] = 0;//这步新添加一个属性，并赋值，如果不赋值的话，属性会添加不上去
+        })
+        return Object.keys(obj);//`Object.keys(对象)`返回这个对象可枚举属性组成的数组，这个数组就是去重后的数组
+    }
+    console.log(unique2(b));//[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;NaN&quot;, &quot;undefined&quot;, &quot;null&quot;, &quot;a&quot;, &quot;b&quot;]
+</code></pre>
 ]]></content>
     </entry>
     <entry>
@@ -366,7 +439,7 @@ new Vue({
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[vue]]></title>
+        <title type="html"><![CDATA[vue注意点]]></title>
         <id>https://cutezhangq.github.io/post/vue/</id>
         <link href="https://cutezhangq.github.io/post/vue/">
         </link>
@@ -391,7 +464,7 @@ new Vue({
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[面试100问]]></title>
+        <title type="html"><![CDATA[面试题]]></title>
         <id>https://cutezhangq.github.io/post/interview-question/</id>
         <link href="https://cutezhangq.github.io/post/interview-question/">
         </link>
