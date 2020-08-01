@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8" >
 
-<title>vue注意点 | cutezhangq</title>
+<title>vue 复习 | cutezhangq</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1595561180641">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596272993249">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -18,12 +18,12 @@
 
 
 
-    <meta name="description" content="注意点
-路由动画
-💥出现问题：动画滑动时，最上面的header元素没有置顶，导致最后动画完成时突然向上移动。
-✔️解决：
-&lt;transition :name=&quot;transitionName&quot;&gt;
-    &l..." />
+    <meta name="description" content="Vue 简介
+2014年诞生vue、2013年react、2009年angular
+核心：
+组件化、
+双向数据流（js内存属性变化导致页面的变化、页面的变化影响js内存属性变化）：因为vue是响应式的，会自动更新。
+常用指令：v-text、..." />
     <meta name="keywords" content="vue" />
   </head>
   <body>
@@ -33,7 +33,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1595561180641" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596272993249" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -95,30 +95,45 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">vue注意点</h2>
+            <h2 class="post-title">vue 复习</h2>
             <div class="post-date">2020-05-13</div>
             
               <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/vue.jpg')">
               </div>
             
             <div class="post-content" v-pre>
-              <h1 id="注意点">注意点</h1>
-<h2 id="路由动画">路由动画</h2>
-<p>💥出现问题：动画滑动时，最上面的header元素没有置顶，导致最后动画完成时突然向上移动。<br>
-✔️解决：</p>
-<pre><code class="language-html">&lt;transition :name=&quot;transitionName&quot;&gt;
-    &lt;router-view :Event_Play=&quot;Event_Play&quot; class=&quot;transitionBody&quot;&gt;&lt;router-view&gt;
-&lt;/transition&gt;
-&lt;style lang=&quot;less&quot;&gt;
-.transitionBody {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
- }
- &lt;/style&gt;
+              <h1 id="vue-简介">Vue 简介</h1>
+<p>2014年诞生vue、2013年react、2009年angular<br>
+核心：<br>
+组件化、<br>
+双向数据流（js内存属性变化导致页面的变化、页面的变化影响js内存属性变化）：因为vue是响应式的，会自动更新。<br>
+常用指令：v-text、v-html、v-if、v-show<br>
+把 vue.js 换成 vue.min.js：可以避免刷新后有时渲染有时不渲染的情况</p>
+<pre><code class="language-javascript">&lt;body&gt;
+  &lt;div id=&quot;app&quot;&gt;  
+    &lt;h1&gt;{{message}}&lt;/h1&gt;
+    &lt;h1&gt;{{name}}&lt;/h1&gt;
+  &lt;/div&gt;
+ 
+  &lt;script type=&quot;text/javascript&quot; src=&quot;js/vue.js&quot;&gt;&lt;/script&gt;
+  &lt;script type=&quot;text/javascript&quot;&gt;
+    //模型数据Model
+    var exeData = {
+      message: &quot;Hello World&quot;,
+      name: &quot;我是Vue&quot;
+    };
+    //View实例，也就是View-Model(VM)
+    new Vue({
+      el: &quot;#app&quot;,
+      data: exeData
+    })
+  &lt;/script&gt;
 </code></pre>
+<p>一个 渐进式 JS框架（核心库，插件）。官网 https://cn.vuejs.org/</p>
+<ul>
+<li>作用: 动态构建用户界面</li>
+</ul>
+<h2 id="vue-的特点">Vue 的特点</h2>
 
             </div>
             
