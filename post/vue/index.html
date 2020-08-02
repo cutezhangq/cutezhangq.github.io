@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8" >
 
-<title>vue 复习 | cutezhangq</title>
+<title>vue 整理 | cutezhangq</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596338554062">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596357476557">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -33,7 +33,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596338554062" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596357476557" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -95,7 +95,7 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">vue 复习</h2>
+            <h2 class="post-title">vue 整理</h2>
             <div class="post-date">2020-05-13</div>
             
               <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/vue.jpg')">
@@ -133,7 +133,23 @@
 <ul>
 <li>作用: 动态构建用户界面</li>
 </ul>
-<h2 id="vue-的特点">Vue 的特点</h2>
+<h1 id="注意点">注意点</h1>
+<h2 id="路由动画">路由动画</h2>
+<p>💥出现问题：动画滑动时，最上面的header元素没有置顶，导致最后动画完成时突然向上移动。<br>
+✔️解决：</p>
+<pre><code class="language-html">&lt;transition :name=&quot;transitionName&quot;&gt;
+    &lt;router-view :Event_Play=&quot;Event_Play&quot; class=&quot;transitionBody&quot;&gt;&lt;router-view&gt;
+&lt;/transition&gt;
+&lt;style lang=&quot;less&quot;&gt;
+.transitionBody {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+ }
+ &lt;/style&gt;
+</code></pre>
 
             </div>
             

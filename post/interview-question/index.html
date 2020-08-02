@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596338554062">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596357476557">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -31,7 +31,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596338554062" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596357476557" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -441,7 +441,16 @@ methods: {
   },
 },
 </code></pre>
-<h1 id="14">[14.]</h1>
+<h1 id="14-q标准盒子模型与ie怪异盒子模型">[14.]# Q：标准盒子模型与IE怪异盒子模型</h1>
+<p>这个问题主要会出现在笔试题上面，比如：</p>
+<pre><code class="language-javascript">&lt;div style=&quot;width:100px;height=&quot;100px;border:10px;padding:10px;&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>这个盒子在w3c标准盒子模型和IE的怪异盒子模型下面它的宽度分别是多少？</p>
+<pre><code class="language-javascript">标准盒子模型：总宽度=content100px+border 10px*2+padding 10px*2 //140px
+怪异盒子模型: 总宽度=content60px+ border 10px*2+padding 10px*2 //100px
+</code></pre>
+<p>怪异盒子：box-sizing：border-box将div的width就是width赋值的宽<br>
+标准盒子：宽度为width的宽加上border和padding</p>
 
             </div>
             
@@ -458,7 +467,7 @@ methods: {
                 <div class="next">下一篇</div>
                 <a href="https://cutezhangq.github.io/post/git/">
                   <h3 class="post-title">
-                    Git
+                    Git使用
                   </h3>
                 </a>
               </div>

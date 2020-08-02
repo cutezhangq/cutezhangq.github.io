@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cutezhangq.github.io</id>
     <title>cutezhangq</title>
-    <updated>2020-08-02T03:22:37.939Z</updated>
+    <updated>2020-08-02T08:38:09.321Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cutezhangq.github.io"/>
     <link rel="self" href="https://cutezhangq.github.io/atom.xml"/>
@@ -11,25 +11,7 @@
     <icon>https://cutezhangq.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, cutezhangq</rights>
     <entry>
-        <title type="html"><![CDATA[笔试题]]></title>
-        <id>https://cutezhangq.github.io/post/bi-shi-ti/</id>
-        <link href="https://cutezhangq.github.io/post/bi-shi-ti/">
-        </link>
-        <updated>2020-07-15T15:04:10.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="q标准盒子模型与ie怪异盒子模型">Q：标准盒子模型与IE怪异盒子模型</h1>
-<p>这个问题主要会出现在笔试题上面，比如：</p>
-<pre><code class="language-javascript">&lt;div style=&quot;width:100px;height=&quot;100px;border:10px;padding:10px;&quot;&gt;&lt;/div&gt;
-</code></pre>
-<p>这个盒子在w3c标准盒子模型和IE的怪异盒子模型下面它的宽度分别是多少？</p>
-<pre><code class="language-javascript">标准盒子模型：总宽度=content100px+border 10px*2+padding 10px*2 //140px
-怪异盒子模型: 总宽度=content60px+ border 10px*2+padding 10px*2 //100px
-</code></pre>
-<p>怪异盒子：box-sizing：border-box将div的width就是width赋值的宽<br>
-标准盒子：宽度为width的宽加上border和padding</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[js重点整理复习]]></title>
+        <title type="html"><![CDATA[js常规问题]]></title>
         <id>https://cutezhangq.github.io/post/js/</id>
         <link href="https://cutezhangq.github.io/post/js/">
         </link>
@@ -320,6 +302,91 @@ new function(){alert('我是匿名函数')}()
 <li>函数表达式后面可以加括号立即调用该函数。</li>
 </ul>
 <h1 id="原型">原型</h1>
+<p>1、所有的 引用类型 都有一个_ _ proto_ _ 属性     ( 隐式原型)。<br>
+它们的_ _ proto_ <em>属性指向 它的构造函数 的 prototype 属性。<br>
+如果对象本身不存在这个属性，那么会去它的</em> _ proto_ _属性 (也就是 它的构造函数的 prototype 属性) 中寻找。<br>
+如：girl 的name,sayHello属性，最终是到它的构造函数（Person）的 prototype  属性中寻找</p>
+<pre><code class="language-js">function Person(name,age){
+      this.name = name;
+      this.age = age;
+      this.sayHello = function(){
+          console.log(this.name + &quot; say hello&quot;);
+      }
+  }
+  var girl = new Person(&quot;bella&quot;,23);
+  console.log(girl.name);  //bella
+  girl.sayHello(); //bella say hello
+
+</code></pre>
+<p>2、所有的 函数 都有一个 prototype 属性    ( 显式原型)。<br>
+（prototype既是属性也是对象）这个属性是在 函数创建 的时候添加上的（定义函数的时候）</p>
+<p>引用类型： 由类型的实际值引用（类似于指针）表示的数据类型（数组、对象、函数）<br>
+构造函数：主要用来在 创建对象时 初始化 对象， 即为 对象成员变量 赋初始值，总与new运算符一起使用在创建对象的语句中。a = new people()<br>
+一个类可以有多个构造函数 ，可根据其参数个数的不同 或 参数类型的不同来区分它们----&gt;构造函数的重载。<br>
+实例化：用 类 创建对象的过程， 是将一个抽象的概念类，具体到该类实物的过程。<br>
+var boy = new Person( );<br>
+实例： 通过构造函数和 new 创建出来的对象，便是实例。</p>
+<pre><code class="language-js">这条线其实是是基于原型进行获取的，可以理解成一条基于原型的映射线
+// 例如: 
+// const o = new Object()
+// o.constructor === Object   --&gt; true
+// o.__proto__ = null;
+// o.constructor === Object   --&gt; false
+</code></pre>
+<p><code>原型、构造函数、实例 关系 图解：</code><br>
+<img src="https://cutezhangq.github.io/post-images/1596356775494.png" alt="" loading="lazy"></p>
+<p>结论：<br>
+1.对象的隐式原型的值__proto__为其 对应 构造函数的显式原型prototype 的值 ——&gt; 实例的__protp__和构造函数的prototype 都是指向原型的</p>
+<pre><code class="language-js">function Person(name,height){
+     this.name=name;
+ }
+var boy = new Person('keith');
+console.log(boy.__proto__ === Person.prototype);     //true
+</code></pre>
+<p>通过 调用构造函数 产生的 实例对象，都拥有一个 内部属性，指向了原型对象。<br>
+实例对象 能够访问 原型对象上 的所有属性和方法（继承）。(girl 能访问 Person 的所有属性和方法)<br>
+如：构造函数：    Person()<br>
+原型：         girl 的 <strong>proto</strong>    、Person.prototype<br>
+实例对象：   girl<br>
+<img src="https://cutezhangq.github.io/post-images/1596356885891.png" alt="" loading="lazy"><br>
+<code>原型链 图示：</code></p>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1596356873816.png" alt="" loading="lazy"></figure>
+<p>使用 原型 自定义方法：</p>
+<pre><code class="language-js">
+1.prototype属性 指向：
+    每个函数 都有一个prototype属性，它默认指向一个object 空对象（原型对象），Object最终是指向 null 空对象的
+        如：Date.prototype  返回的是object    
+               function.prototype  返回的也是object   
+    原型对象 中有一个 属性constructor ,它指向 函数对象（先指向 构造函数，然后 构造函数 最终指向函数对象）
+          如：console.log(Person)
+</code></pre>
+<p><img src="https://cutezhangq.github.io/post-images/1596356964474.png" alt="" loading="lazy"><br>
+2.给原型对象添加属性（一般都是方法）<br>
+作用：函数的 所有实例对象 自动拥有 原型中的属性（方法）<br>
+原型上面的方法是给实例对象使用的<br>
+3.prototype与constructor的关系：    相互引用<br>
+<img src="https://cutezhangq.github.io/post-images/1596357057951.png" alt="" loading="lazy"><br>
+<img src="https://cutezhangq.github.io/post-images/1596357062445.png" alt="" loading="lazy"></p>
+<p>4.prototype与__proto__的关系：<br>
+怎么让两个引用变量指向同一个对象？（如下图）<br>
+让一个引用变量 赋值 给另一个引用变量<br>
+<img src="https://cutezhangq.github.io/post-images/1596357094861.png" alt="" loading="lazy"><br>
+注：new Fn( ) 就是在实例化对象，实例对象的___proto__属性是 js引擎自动添加的</p>
+<p>5.原型链 （隐式原型链）<br>
+定义：原型链是由原型对象组成，每个对象都有 <strong>proto</strong> 属性，指向了创建该对象的构造函数的原型，<strong>proto</strong> 将对象连接起来组成了原型链。</p>
+<p>作用： 共享属性：访问 一个对象的属性<br>
+实现继承 ：构造函数的实例对象自动拥有构造函数原型对象的方法（属性）<br>
+空Object的原型对象（null） 是原型链的尽头<br>
+属性查找机制: 当查找对象的属性时，如果实例对象自身不存在该属性，则沿着原型链往上一级查找，找到时则输出，不存在时，则继续沿着原型链往上一级查找，直至最顶级的原型对象Object.prototype，如还是没找到，则输出undefined；<br>
+属性修改机制: 只会修改实例对象本身的属性，如果不存在，则进行添加该属性，如果需要修改原型的属性时，则可以用: b.prototype.x = 2；但是这样会造成所有继承于该对象的实例的属性发生改变。<br>
+<img src="https://cutezhangq.github.io/post-images/1596357121592.png" alt="" loading="lazy"><br>
+原型链的 属性 问题：1.读取对象 的属性值时，会自动到原型链中查找2.设置对象 的属性值时：不会查找原型链，如果当前对象中没有此属性，直接添加此属性并设置其值3.方法 一般定义在原型中，属性一般通过构造函数定义在对象本身上理解：函数的 prototype属性：在定义函数时 自动添加，默认值是一个空object对象对象的 ___proto__属性：创建对象时 自动添加（产生的）,执行语句this.<strong>proto</strong> = Fn.prototype      ,默认值为构造函数的prototype属性值  程序员能直接操作显式原型，但不能直接操作隐式原型（ES6之前）   :Foo.prototype={ XXX:YYY  }函数大概像抽象的类，是一个高度概括的封装体；                               （抽象的概括）对象则是某个具体的实例，可以使用抽象体的某些特性，通过 对象 点  的方式使用。    （具体的使用）    所以，在使用对象之前要 构造函数 ，即初始化对象   ，相当于创建出一个具体的实例（new 一个对象）              因为：fun = new Function时 自身的显式原型（构造函数）和隐式原型（实例对象）是相等的</p>
+<p>判断某个属性是否 属于原型</p>
+<pre><code class="language-js">//判断某个属性是否属于原型
+function hasPropertyPrototype(object,name){
+  return !object.hasOwnProperty(name) &amp;&amp; (name in object);    //不是object原型上的，但是能在原型链上找到
+}
+</code></pre>
 <h1 id="数组">数组</h1>
 <h2 id="q如何对一个数组去重">Q：如何对一个数组去重？</h2>
 <pre><code class="language-javascript">//1、Set结构去重。
@@ -364,7 +431,7 @@ let a = ['1','2','3',1,NaN,NaN,undefined,undefined,null,null, 'a','b','b'];
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[vue知识点理解]]></title>
+        <title type="html"><![CDATA[vue 模板字符串的前世今生]]></title>
         <id>https://cutezhangq.github.io/post/vue-zhi-shi-dian-li-jie/</id>
         <link href="https://cutezhangq.github.io/post/vue-zhi-shi-dian-li-jie/">
         </link>
@@ -436,27 +503,10 @@ new Vue({
     render: h =&gt; h(App)
 }).$mount('#app')
 </code></pre>
-<h1 id="注意点">注意点</h1>
-<h2 id="路由动画">路由动画</h2>
-<p>💥出现问题：动画滑动时，最上面的header元素没有置顶，导致最后动画完成时突然向上移动。<br>
-✔️解决：</p>
-<pre><code class="language-html">&lt;transition :name=&quot;transitionName&quot;&gt;
-    &lt;router-view :Event_Play=&quot;Event_Play&quot; class=&quot;transitionBody&quot;&gt;&lt;router-view&gt;
-&lt;/transition&gt;
-&lt;style lang=&quot;less&quot;&gt;
-.transitionBody {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
- }
- &lt;/style&gt;
-</code></pre>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[vue 复习]]></title>
+        <title type="html"><![CDATA[vue 整理]]></title>
         <id>https://cutezhangq.github.io/post/vue/</id>
         <link href="https://cutezhangq.github.io/post/vue/">
         </link>
@@ -492,7 +542,23 @@ new Vue({
 <ul>
 <li>作用: 动态构建用户界面</li>
 </ul>
-<h2 id="vue-的特点">Vue 的特点</h2>
+<h1 id="注意点">注意点</h1>
+<h2 id="路由动画">路由动画</h2>
+<p>💥出现问题：动画滑动时，最上面的header元素没有置顶，导致最后动画完成时突然向上移动。<br>
+✔️解决：</p>
+<pre><code class="language-html">&lt;transition :name=&quot;transitionName&quot;&gt;
+    &lt;router-view :Event_Play=&quot;Event_Play&quot; class=&quot;transitionBody&quot;&gt;&lt;router-view&gt;
+&lt;/transition&gt;
+&lt;style lang=&quot;less&quot;&gt;
+.transitionBody {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+ }
+ &lt;/style&gt;
+</code></pre>
 ]]></content>
     </entry>
     <entry>
@@ -842,11 +908,20 @@ methods: {
   },
 },
 </code></pre>
-<h1 id="14">[14.]</h1>
+<h1 id="14-q标准盒子模型与ie怪异盒子模型">[14.]# Q：标准盒子模型与IE怪异盒子模型</h1>
+<p>这个问题主要会出现在笔试题上面，比如：</p>
+<pre><code class="language-javascript">&lt;div style=&quot;width:100px;height=&quot;100px;border:10px;padding:10px;&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>这个盒子在w3c标准盒子模型和IE的怪异盒子模型下面它的宽度分别是多少？</p>
+<pre><code class="language-javascript">标准盒子模型：总宽度=content100px+border 10px*2+padding 10px*2 //140px
+怪异盒子模型: 总宽度=content60px+ border 10px*2+padding 10px*2 //100px
+</code></pre>
+<p>怪异盒子：box-sizing：border-box将div的width就是width赋值的宽<br>
+标准盒子：宽度为width的宽加上border和padding</p>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Git]]></title>
+        <title type="html"><![CDATA[Git使用]]></title>
         <id>https://cutezhangq.github.io/post/git/</id>
         <link href="https://cutezhangq.github.io/post/git/">
         </link>
