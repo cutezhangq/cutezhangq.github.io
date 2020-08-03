@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596357476557">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596444506711">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -35,7 +35,7 @@ Git特点
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596357476557" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596444506711" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -214,6 +214,23 @@ git push -u origin master       #本地仓库代码提交至远程仓库(有时�
 </ul>
 <pre><code class="language-cmd">git push origin --delete [branch_name]
 </code></pre>
+<h1 id="git本地项目代码上传至远程仓库">git本地项目代码上传至远程仓库</h1>
+<h2 id="一-在码云github上创建项目名称为xx的项目">一、在码云/gitHub上创建项目名称为xx的项目</h2>
+<h2 id="二-打开gitbash-用cd命令进入本地项目然后把初始化一下把本地的目录变成git本地仓库-git-status-可以查看本地目录的状态信息">二、打开GitBash ，用cd命令进入本地项目,然后把初始化一下，把本地的目录变成git本地仓库, git status 可以查看本地目录的状态信息</h2>
+<p>git init<br>
+git status<br>
+注意：当git status报红时，是本地的文件没有暂存，选择：暂存本地文件<br>
+<img src="https://cutezhangq.github.io/post-images/1596367654143.png" alt="" loading="lazy"><br>
+(可以使用git add . 进行暂存)暂存完了之后：再次查看git status发现变绿了<br>
+<img src="https://cutezhangq.github.io/post-images/1596367683394.png" alt="" loading="lazy"></p>
+<h2 id="三-将你本地仓库与码云上的远程仓库关联起来">三、将你本地仓库与码云上的远程仓库关联起来</h2>
+<p>git remote add origin https://gitee.com/xxx/xxx.git</p>
+<h2 id="四-在你准备上传你的项目之前最好更新一下项目确保没有和远程仓库的代码有冲突">四、在你准备上传你的项目之前，最好更新一下项目，确保没有和远程仓库的代码有冲突</h2>
+<p>git pull --rebase origin master</p>
+<h2 id="五-把你的项目复制到这个目录下用命令添加你要上传的项目再提交到本地暂存区最后把本地仓库项目提交到远程仓库-git-是强烈建议你在提交代码的时候要写备注注释的所以既然人家是强烈建议你就别懒了">五、把你的项目复制到这个目录下，用命令添加你要上传的项目，再提交到本地暂存区，最后把本地仓库项目提交到远程仓库。git 是强烈建议你在提交代码的时候，要写备注注释的，所以既然人家是强烈建议，你就别懒了。</h2>
+<p>git add . 添加目录下所有发生改变的文件<br>
+git commit -m '注释信息'<br>
+git push -u origin master 本地仓库代码提交至远程仓库(有时候会提交失败，可以尝试$ git push -u origin master -f 强制提交,只建议在第一次提交中使用)</p>
 
             </div>
             

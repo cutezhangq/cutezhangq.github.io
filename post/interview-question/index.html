@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596357476557">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596444506711">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -31,7 +31,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596357476557" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596444506711" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -441,7 +441,7 @@ methods: {
   },
 },
 </code></pre>
-<h1 id="14-q标准盒子模型与ie怪异盒子模型">[14.]# Q：标准盒子模型与IE怪异盒子模型</h1>
+<h1 id="14q标准盒子模型与ie怪异盒子模型">[14.]Q：标准盒子模型与IE怪异盒子模型</h1>
 <p>这个问题主要会出现在笔试题上面，比如：</p>
 <pre><code class="language-javascript">&lt;div style=&quot;width:100px;height=&quot;100px;border:10px;padding:10px;&quot;&gt;&lt;/div&gt;
 </code></pre>
@@ -451,6 +451,48 @@ methods: {
 </code></pre>
 <p>怪异盒子：box-sizing：border-box将div的width就是width赋值的宽<br>
 标准盒子：宽度为width的宽加上border和padding</p>
+<h1 id="15闭包">[15.]闭包</h1>
+<p><img src="https://cutezhangq.github.io/post-images/1596370324100.png" alt="" loading="lazy"><br>
+注：关键看有没有产生新的闭包<br>
+结果：<br>
+<img src="https://cutezhangq.github.io/post-images/1596370348698.png" alt="" loading="lazy"><br>
+补充：<br>
+通过闭包---立即执行函数，生成块级作用域</p>
+<pre><code class="language-js">&lt;body&gt;
+    &lt;button&gt;测试1&lt;/button&gt;
+    &lt;br&gt;
+    &lt;button&gt;测试2&lt;/button&gt;
+    &lt;br&gt;
+    &lt;button&gt;测试3&lt;/button&gt;
+    &lt;br&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+//使用var:
+    let bottons = document.getElementsByTagName('button');
+    //1.
+    for(var j = 0;j&lt;  bottons.length;j++){
+      var botton = bottons[j];
+      botton.onclick = function(){
+        alert(j)    //输出都是3
+        //点击事件对应回调函数，回调函数会被放入事件队列中，等主线程代码执行完了，才将回调函数&quot;钩&quot;出来去执行
+        //回调函数（钩子函数）
+      }
+    }
+    //2.使用闭包解决问题：
+        //----闭包产生条件：1.函数嵌套  2调用外部函数
+    for(var k= 0;k&lt; bottons.length;k++){
+      var botton = bottons[k];
+      (function(k){     //()()立即执行函数
+        botton.onclick = function(){
+        alert(k)         //点击每个按钮一次输出0,1,2   
+        }
+      })(k) //立即执行函数有其自己的作用于（私有作用域），每执行一次有一个自己的函数作用域
+    }
+&lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+<p>使用闭包的注意点1.由于闭包会使得函数中的变量都被保存在内存中，内存消耗很大，所以不能滥用闭包，否则会造成网页的性能问题，在IE中可能导致内存泄露。解决方法是，在退     出函数之前，将不使用的局部变量全部删除.<br>
+2.闭包会在父函数外部，改变父函数内部变量的值。所以，如果你把父函数当作对象（object）使用，把闭包当作它的公用方法（Public Method），把内部变量当     作它的私有属性（private value），这时一定要小心，不要随便改变父函数内部变量的值。</p>
 
             </div>
             

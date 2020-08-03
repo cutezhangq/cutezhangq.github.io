@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>变量的生命周期 let、var、const | cutezhangq</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596444506711">
+<link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="具体let、var、consts区别见es6中内容
+变量的生命周期
+当引擎（如：浏览器中的js引擎）访问变量的时候，它们的生命周期包括下面几个阶段：
+1.声明 阶段：在作用域中注册一个变量
+2.初始化 阶段：分配内存，给作用域中的变量创建绑..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://cutezhangq.github.io">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596444506711" class="site-logo">
+        <h1 class="site-title">cutezhangq</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://cutezhangq.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">变量的生命周期 let、var、const</h2>
+            <div class="post-date">2020-08-02</div>
+            
+            <div class="post-content" v-pre>
+              <p>具体let、var、consts区别见es6中内容</p>
+<h1 id="变量的生命周期">变量的生命周期</h1>
+<p>当引擎（如：浏览器中的js引擎）访问变量的时候，它们的生命周期包括下面几个阶段：<br>
+1.<strong>声明 阶段</strong>：在作用域中注册一个变量<br>
+2.<strong>初始化 阶段</strong>：分配内存，给作用域中的变量创建绑定。在这个阶段，变量自动地被初始化为 undefined<br>
+3.<strong>赋值 阶段</strong>：给已经初始化过的变量赋值<br>
+通过声明阶段但是没有到达初始化阶段的变量是处于未定义的状态。<br>
+<img src="https://cutezhangq.github.io/post-images/1596368154142.png" alt="" loading="lazy"><br>
+注意，根据变量的生命周期，声明阶段和一般说的变量声明是不同的术语。<br>
+简言之，引擎在这三个阶段处理变量声明：声明阶段、初始化阶段和赋值阶段。</p>
+<h1 id="var-变量-的生命周期">var 变量 的生命周期</h1>
+<p><img src="https://cutezhangq.github.io/post-images/1596368206711.png" alt="" loading="lazy"><br>
+严格来说，提升的概念是在函数作用域的顶部 声明和初始化 变量。在 声明和初始化 阶段之间 没有间隙。</p>
+<pre><code class="language-js">function multiplyByTen(number) {  
+  console.log(ten); // =&gt; undefined
+  var ten;
+  ten = 10;
+  console.log(ten); // =&gt; 10
+  return number * ten;
+}
+multiplyByTen(4); // =&gt; 40
+</code></pre>
+<h1 id="函数声明的生命周期">函数声明的生命周期</h1>
+<p><img src="https://cutezhangq.github.io/post-images/1596368259214.png" alt="" loading="lazy"><br>
+声明、初始化、赋值阶段在 函数作用域 的开始 立刻执行（只有一步）。<br>
+funcName()可以在该作用域的任何地方调用，不依赖于声明语句的位置（甚至可以在最后）。</p>
+<h1 id="let-变量的生命周期">let 变量的生命周期</h1>
+<p>let变量的处理方式和 var 不同。最主要的区别就是声明和初始化阶段被分开了。<br>
+<img src="https://cutezhangq.github.io/post-images/1596368317409.png" alt="" loading="lazy"><br>
+<img src="https://cutezhangq.github.io/post-images/1596368337198.png" alt="" loading="lazy"></p>
+<pre><code class="language-js">  let condition = true;  
+  // console.log(number); // =&gt; Throws ReferenceError
+  let number;
+  console.log(number); // =&gt; undefined
+  number = 5;
+  console.log(number); // =&gt; 5
+</code></pre>
+<p>const和class类型 和let有相同的生命周期，除了赋值只能发生一次。</p>
+<h3 id="为什么提升在let的生命周期里无效">为什么提升在let的生命周期里无效</h3>
+<p>如上所述，<code>提升就是变量在作用域顶部进行声明和初始化。</code><br>
+但是<code>let的生命周期</code>将 <code>声明和初始化</code> 两个阶段 <code>解耦</code> 了。<code>解耦让提升这个术语失效了</code>。<br>
+两个阶段中间的间隙创建了暂时性死区，在这里，变量不能被访问。</p>
+<h3 id="暂时性死区">暂时性死区</h3>
+<p>只要块级作用域内存在let命令，它所声明的变量就“绑定”（binding）这个区域，不再受外部的影响。</p>
+<pre><code class="language-js">var tmp = 123;
+if (true) {
+  tmp = 'abc'; // ReferenceError
+  let tmp;
+}
+</code></pre>
+<p>上面代码中，存在全局变量tmp，但是块级作用域内let又声明了一个局部变量tmp，导致后者绑定这个块级作用域，所以在let声明变量前，对tmp赋值会报错。<br>
+在代码块内，使用let命令声明变量之前，该变量都是不可用的。这在语法上，称为“暂时性死区”（temporal dead zone，简称 TDZ）</p>
+<p>随意使用var声明变量容易犯错。基于这个教训，ES2015创建了let。它使用一种改进的算法来声明变量，并且使用块级作用域。<br>
+由于声明和定义两个阶段解耦，提升对于一个let声明的变量（包括包括const和class）无效。在初始化之前，变量处于暂时性死区并且不可以访问。<br>
+保持稳定的变量声明，有如下建议：</p>
+<ul>
+<li>声明、初始化，然后再使用变量。这个流程正确并且容易遵守；</li>
+<li>尽可能隐藏变量。变量暴露的越少，代码就越模块化。</li>
+</ul>
+<p>new运算符的执行过程<br>
+*  新生成一个对象<br>
+*  链接到原型: obj.<strong>proto</strong> = Con.prototype<br>
+*  绑定this:  apply<br>
+* 返回新对象(如果构造函数有自己 retrun 时，则返回该值)</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/js/">
+                  <h3 class="post-title">
+                    js常规问题
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596357476557">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596444506711">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -28,7 +28,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596357476557" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596444506711" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -89,6 +89,149 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://cutezhangq.github.io/post/ju-zhong-fang-an-shui-ping-ju-zhong-chui-zhi-ju-zhong-shui-ping-chui-zhi-ju-zhong/">
+                  <h2 class="post-title">居中方案（水平居中、垂直居中、水平垂直居中）</h2>
+                </a>
+                <div class="post-date">
+                  2020-08-03
+                </div>
+                <div class="post-abstract">
+                  <h1 id="案例内容">案例内容</h1>
+<pre><code class="language-html"> &lt;style&gt;
+    .fu{
+      width: 200px;
+      height: 200px;
+      background-color: powderblue;
+    }
+
+  &lt;/style&gt;
+
+    &lt;body style=&quot;background-color: antiquewhite;&quot;&gt;
+      &lt;div class=&quot;fu&quot;&gt;
+        &lt;h2&gt;这是标题哦&lt;/h2&gt;
+        &lt;div class=&quot;zi&quot;&gt;
+          &lt;p&gt;哈哈&lt;/p&gt;
+          &lt;form action=&quot;&quot;&gt;
+            姓名:&lt;input type=&quot;text&quot;&gt;&lt;br /&gt;
+            性别:&lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;女&quot;&gt;女
+            &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;男&quot;&gt;男&lt;br /&gt;
+            爱好:&lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;篮球
+            &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;下棋
+            &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;画画
+             &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;写作&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;
+             &lt;img src=&quot;../bootstrap/img/1.png&quot; alt=&quot;&quot; width=&quot;150px&quot;&gt;
+          &lt;/form&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/body&gt;
+</code></pre>
+<h1 id="水平垂直-居中方案1">水平垂直 居中方案1</h1>
+<h3 id="需要知道-宽高">需要知道 宽高</h3>
+<pre><code class="language-css">        .fu{
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          top: 0;
+          margin: auto;
+        }
+</code></pre>
+<h1 id="水平垂直-居中方案2">水平垂直 居中方案2</h1>
+<h3 id="可用于-不知道宽高-的情况下使用">可用于 不知道宽高 的情况下使用</h3>
+<p>缺点：transform的兼容性不高</p>
+<ul>
+<li>translate()函数是css3的新特性,在不知道自身宽高的情况下,可以利用它来进行水平垂直居中</li>
+<li>当使用: top: 50%;left: 50%；是以左上角为原点，故不处于中心位置</li>
+<li>translate(-50%,-50%)作用是：往上(x轴),左(y轴)移动自身长宽的50%,以使其居于中心位置。</li>
+</ul>
+<pre><code class="language-css">.fu{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);   //百分比是相对于自身宽高的百分比
+}
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1596418063196.png" alt="" loading="lazy"></figure>
+<h1 id="对于仅文本内容的需要居中的也可使img标签对于div标签-水平居中">对于仅文本内容的，需要居中的：(也可使Img标签对于div标签 水平居中)</h1>
+<pre><code class="language-css">h2{
+    text-align: center;
+}
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1596417930705.png" alt="" loading="lazy"></figure>
+<h1 id="表格中内容水平垂直居中">表格中内容水平垂直居中：</h1>
+<pre><code class="language-css">.table&gt;tbody&gt;tr&gt;td{
+  vertical-align: middle;
+  text-align: center;
+}
+</code></pre>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://cutezhangq.github.io/post/jin-cheng-xian-cheng-liu-lan-qi-nei-he-js-zhi-xing-shun-xu/">
+                  <h2 class="post-title">进程, 线程, 浏览器内核, js执行顺序 WebWorkers</h2>
+                </a>
+                <div class="post-date">
+                  2020-08-02
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://cutezhangq.github.io/post/nei-cun-yi-chu-yu-nei-cun-xie-lou/">
+                  <h2 class="post-title">内存溢出与内存泄漏</h2>
+                </a>
+                <div class="post-date">
+                  2020-08-02
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://cutezhangq.github.io/post/chuang-jian-dui-xiang-4-chong-fang-shi/">
+                  <h2 class="post-title">创建对象4种方式</h2>
+                </a>
+                <div class="post-date">
+                  2020-08-02
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://cutezhangq.github.io/post/js-bian-liang-de-sheng-ming-zhou-qi-letvarconst/">
+                  <h2 class="post-title">变量的生命周期 let、var、const</h2>
+                </a>
+                <div class="post-date">
+                  2020-08-02
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
           
             <article class="post-item">
               <div class="left">
@@ -195,31 +338,11 @@
               
             </article>
           
-            <article class="post-item">
-              <div class="left">
-                <a href="https://cutezhangq.github.io/post/hello-gridea/">
-                  <h2 class="post-title">Hello</h2>
-                </a>
-                <div class="post-date">
-                  2018-12-12
-                </div>
-                <div class="post-abstract">
-                  <p>👏  欢迎来到我的博客 ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-
-                </div>
-              </div>
-              
-                <a class="right" href="https://cutezhangq.github.io/post/hello-gridea/">
-                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/hello-gridea.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
 
           <div class="pagination-container">
   
+  
+    <a href="https://cutezhangq.github.io/page/2" class="next">下一页 <i class="icon-arrow-ios-forward-outline"></i></a>
   
 </div>
 

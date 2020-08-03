@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>内存溢出与内存泄漏 | cutezhangq</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596444506711">
+<link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="闭包的缺点：
+1.函数执行完后，函数内的局部变量没有被释放，占用内存时间会变长
+2.容易造成内存泄漏（内存被占用着，但用不上里面的内容）
+解决：
+1.尽量不用闭包
+2.及时释放（让内部函数成为垃圾对象--&gt;就收闭包） 即 f = nu..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://cutezhangq.github.io">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596444506711" class="site-logo">
+        <h1 class="site-title">cutezhangq</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://cutezhangq.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">内存溢出与内存泄漏</h2>
+            <div class="post-date">2020-08-02</div>
+            
+            <div class="post-content" v-pre>
+              <p>闭包的缺点：<br>
+1.函数执行完后，函数内的局部变量没有被释放，占用内存时间会变长<br>
+2.容易造成内存泄漏（内存被占用着，但用不上里面的内容）<br>
+解决：<br>
+1.尽量不用闭包<br>
+2.及时释放（让内部函数成为垃圾对象--&gt;就收闭包） 即 f = null<br>
+<img src="https://cutezhangq.github.io/post-images/1596375551223.png" alt="" loading="lazy"><br>
+内存溢出与内存泄漏:内存溢出：<br>
+一种程序运行出现的错误。<br>
+当程序运行的内存超过了剩余的内存时，就抛出内存溢出的错误<br>
+<img src="https://cutezhangq.github.io/post-images/1596375576188.png" alt="" loading="lazy"><br>
+注：是一种抛出错误，浏览器会崩溃</p>
+<p>内存泄漏：<br>
+占用的内存没有及时释放<br>
+内存泄漏积累多了就容易导致内存溢出<br>
+常见的内存泄漏：<br>
+1.意外的全局变量<br>
+2.没有及时清理的计时器或回调函数<br>
+3.闭包</p>
+<p><code>1.意外的全局变量</code><br>
+<img src="https://cutezhangq.github.io/post-images/1596375625382.png" alt="" loading="lazy"><br>
+<code>2.没有及时清理的计时器或回调函数，清理定时器</code>：clearInterval( )<br>
+<img src="https://cutezhangq.github.io/post-images/1596375657343.png" alt="" loading="lazy"><br>
+<code>3.闭包</code><br>
+<img src="https://cutezhangq.github.io/post-images/1596375936764.png" alt="" loading="lazy"><br>
+面试重点：<br>
+1.this的指向<br>
+<img src="https://cutezhangq.github.io/post-images/1596375977020.png" alt="" loading="lazy"><br>
+输出：The window<br>
+注：不属于闭包（有函数嵌套，但没有内部函数引用外部函数）</p>
+<ol start="2">
+<li>var that = this    指定局部作用域<br>
+<img src="https://cutezhangq.github.io/post-images/1596376032467.png" alt="" loading="lazy"><br>
+输出：My Object<br>
+注：属于闭包</li>
+</ol>
+<p>3.闭包问题</p>
+<pre><code class="language-js">function fun(n,o){
+  console.log(o);
+  return {
+    fun:function(m){
+      return fun(m,n);
+    }
+  }
+}
+var a = fun(0); a.fun(1); a.fun(2); a.fun(3); //undefined ,0 ,0 ,0
+console.log('——————————');
+var b = fun(0).fun(1).fun(2).fun(3);  //undefined ,0 ,1 ,2
+console.log('——————————');
+var c = fun(0).fun(1); c.fun(2);  c.fun(3); //undefined ,0 ,1 ,1
+
+</code></pre>
+<p>分析：<br>
+a中，<br>
+a.fun(1)时m=1,n=0（闭包，内部n调用外部传入的0）,然后内部的fun:function这个走完回到外面函数，将0传给o，然后console.log(o)得到 0<br>
+a.fun(2)时m=2,n=0，然后到外面函数中n=2,o=0，然后console.log(o)得到 0</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/chuang-jian-dui-xiang-4-chong-fang-shi/">
+                  <h3 class="post-title">
+                    创建对象4种方式
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

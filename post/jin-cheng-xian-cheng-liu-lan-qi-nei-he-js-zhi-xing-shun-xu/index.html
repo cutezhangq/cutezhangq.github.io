@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>进程, 线程, 浏览器内核, js执行顺序 WebWorkers | cutezhangq</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596444506711">
+<link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="进程process ：程序的一次执行，它占有一片独有的内存空间
+可以通过windows任务管理器查看进程
+线程thread：是进程内的一个独立执行单元
+是程序执行的一个完整流程
+是CPU的最小的调度单元
+多线程：一个进程里面有多个线程，一个..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://cutezhangq.github.io">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596444506711" class="site-logo">
+        <h1 class="site-title">cutezhangq</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://cutezhangq.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">进程, 线程, 浏览器内核, js执行顺序 WebWorkers</h2>
+            <div class="post-date">2020-08-02</div>
+            
+            <div class="post-content" v-pre>
+              <p>进程process ：程序的一次执行，它占有一片独有的内存空间<br>
+可以通过windows任务管理器查看进程</p>
+<p>线程thread：是进程内的一个独立执行单元<br>
+是程序执行的一个完整流程<br>
+是CPU的最小的调度单元</p>
+<p>多线程：一个进程里面有多个线程，一个程序可以同时启动对个实例运行。<br>
+单线程：一个进程里面只有一个线程。（JS是单线程的，但是用H5中的Web Workers可以多线程运行）<br>
+<strong>js执行顺序</strong><br>
+1、js是单线程，执行模式有两种：同步，异步<br>
+　　单线程：只有一条流水线<br>
+　　同步：依次再流水线上执行<br>
+　　异步：流水线旁加了一个临时储物台（任务队列），会把某些模块拿到临时储物台，或者会把临时储物台的某些模块插队到流水线<br>
+2、js默认模式是同步模式，按流水线执行:A,B,C，不管A里边代码运行时间多长，都要先执行完A，再执行B，再执行C<br>
+3、实现异步模式的几种方法<br>
+　　①回调函数（把临时储物台的模块插入到流水线）<br>
+　　②setTimeout（把流水线的模块拿到临时储物台，过一段时间再插入回去）<br>
+　　③Promise对象（把临时储物台的模块插入到流水线）<br>
+4、小程序中所有的wx.xxx()接口，也都是异步模式（先执行流水线上非wx.xxx的模块，把流水线上所有的wx.xxx模块先拿到临时储物台执行，等哪个有了返回结果，并且流水线上有空了，也就是流水线上非wx.xxx的模块执行完了，再把哪个插回去）<br>
+5、async函数中，代码的执行模式是异步模式，所有的模块都放在临时储物台上执行，哪个模块执行完了，就先把哪个模块拿到流水线上执行<br>
+6、举例</p>
+<pre><code class="language-js">  jobs.add({
+      data: {
+        userName: 'aaa'
+      }
+    })
+    .then(res =&gt; {
+      wx.hideLoading({
+        success: res =&gt; {
+          console.log('hideLoading')
+        }
+      })
+      wx.showToast({
+        title: '提交成功',
+        icon: 'success',
+        duration: 2000
+      })
+      wx.switchTab({
+        url: '../my/my',
+      })
+      console.log('aaaa')
+    })
+    .catch(err =&gt; {
+      console.log(err)
+    })
+</code></pre>
+<p>执行顺序分析：<br>
+把wx.hideLoading，wx.showToast，wx.switchTap先放到临时储物台，并执行执行流水线上的console.log('aaaa')，流水线上有空了，把临时储物台上最先有了返回结果的wx.hideLoading插入回流水线执行，流水线上有空了，又把第二个有了返回结果的wx.switchTab插入回流水线执行<br>
+显示顺序：aaaa，hideLoading，跳转<br>
+7、if...else if....else会按照顺序执行，先执行if，再执行else if，再执行else<br>
+8、for循环是先执行完内部的循环，再跳出循环，for循环后面的代码，必须for循环完成后才能执行</p>
+<h1 id="js引擎j">js引擎j</h1>
+<p>js引擎执行代码的基本流程：    初始化代码---&gt;回调代码script 引入方式</p>
+<pre><code>* html 静态&lt;script&gt;引入
+* js 动态插入&lt;script&gt;
+* &lt;script defer&gt;: 延迟加载，元素解析完成后执行
+* &lt;script async&gt;: 异步加载，但执行时会阻塞元素渲染
+</code></pre>
+<h1 id="web-workers">Web Workers</h1>
+<p>1.H5规范了js 分线程的实现，取名为:Web Workers    （但是 js 仍然是 单线程 的）</p>
+<p>2.相关API:<br>
+Worker:  构造函数，加载分线程执行的js文件<br>
+Worker.prototype.onmessage： 用于接收另一个线程的回调函数<br>
+Worker.protptype.postMessage:  向另一个线程发送消息</p>
+<p>3.不足：</p>
+<ol>
+<li>Worker内代码不能操作DOM（更新UI）：因为他的全局变量不再是window</li>
+<li>不能跨域加载JS</li>
+<li>不是每个浏览器都支持这个新特性</li>
+</ol>
+<p>Web Workers使用：<br>
+在主线程的JS中 发消息并设置回调：</p>
+<p>主线程中的代码：</p>
+<pre><code class="language-js">&lt;body&gt;
+  &lt;input type=&quot;text&quot; placeholder=&quot;数值&quot; id=&quot;number&quot;/&gt;
+  &lt;button id=&quot;btn&quot;&gt;计算&lt;/button&gt;
+&lt;/body&gt;
+&lt;script&gt;
+  //斐波那契数 1 1 2 3 5 8  f(n)=f(n-1)+f(n-2)
+  function fibonacci(n){
+    return n&lt;2? 1 : fibonacci(n-1) + fibonacci(n-2)
+  }
+  var input = document.getElementById('number');
+  document.getElementById('btn').onclick = function(){
+    var number = input.value;
+    //创建一个Worker对象，并向它传递在新线程中脚本的URL
+    var worker = new Worker('worker.js');
+    //绑定接收消息的监听
+    worker.onmessage = function(event){ //onmessage当接收到消息时，自动回调
+      console.log('主线程接收分线程返回的数据'+event.data);
+      // console.log(event.data);
+    }
+    //向分线程发送消息
+    worker.postMessage(number);
+    console.log('主线程向分线程发送数据'+number);
+  }
+</code></pre>
+<p>分线程中的代码：<br>
+分线程不能更新界面，因为在分线程中看不到window<br>
+<img src="https://cutezhangq.github.io/post-images/1596377870491.png" alt="" loading="lazy"><br>
+<img src="https://cutezhangq.github.io/post-images/1596377904673.png" alt="" loading="lazy"><br>
+总结：</p>
+<ol>
+<li>分线程中的全局对象不再是window，所以在分线程中不可能更新界面</li>
+<li>postMessage可以双向发送消息，一个一个发送<br>
+<img src="https://cutezhangq.github.io/post-images/1596377925811.png" alt="" loading="lazy"></li>
+</ol>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/nei-cun-yi-chu-yu-nei-cun-xie-lou/">
+                  <h3 class="post-title">
+                    内存溢出与内存泄漏
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

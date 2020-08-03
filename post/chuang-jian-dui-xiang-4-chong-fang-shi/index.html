@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>创建对象4种方式 | cutezhangq</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596444506711">
+<link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="变量与对象的区别
+变量：只能存一个数据
+对象：可以存多个数据（属性、封装...）
+对象的组成：
+属性（属性名 String类型，属性值 任意类型）
+方法（一种特别的属性，属性值是函数）
+访问 对象内部数据 的方法    (中括号运算符总是能..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://cutezhangq.github.io">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596444506711" class="site-logo">
+        <h1 class="site-title">cutezhangq</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://cutezhangq.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">创建对象4种方式</h2>
+            <div class="post-date">2020-08-02</div>
+            
+            <div class="post-content" v-pre>
+              <p>变量与对象的区别<br>
+变量：只能存一个数据<br>
+对象：可以存多个数据（属性、封装...）<br>
+对象的组成：<br>
+属性（属性名 String类型，属性值 任意类型）<br>
+方法（一种特别的属性，属性值是函数）</p>
+<p>访问 对象内部数据 的方法    (中括号运算符总是能代替点运算符。但点运算符却不一定能全部代替中括号运算符。)<br>
+. 点 属性名        后面加静态标志符<br>
+当对象内部没有定义该属性时不能使用。<br>
+[' 属性名 ']        后面可以加动态标志符<br>
+当属性名包含特殊字符：-  空格，必须使用[' ']；<br>
+当属性名 不确定时，必须使用[' ']；</p>
+<p>常用：点是访问json对象。而方括号是数组。   obj.name='xx'  ;  arr[0] = 1</p>
+<pre><code class="language-js">//访问对象内部属性
+var person = {
+  name:'cutezhangq',
+  age:20,
+  setName:function(name){
+    this.name = name      //改变person对象的name属性，this是局部作用域内的对象，即person
+  },
+  setAge:function(age){
+    this.age = age
+  }
+}
+console.log(person)                 //Object {name: &quot;cutezhangq&quot;, age: 20, setName: , setAge: }
+//采用 点 的方式，访问对象内部属性
+person.setName('zhuangzhou');  
+console.log(person)                 //Object {name: &quot;zhuangzhou&quot;, age: 20, setName: , setAge: }
+//采用['']的方式，[''](值)  这种是给该属性赋值
+person['setAge'](100);
+console.log(person)                 //Object {name: &quot;zhuangzhou&quot;, age: 100, setName: , setAge: } 
+
+</code></pre>
+<p><img src="https://cutezhangq.github.io/post-images/1596370140753.png" alt="" loading="lazy"><br>
+什么时候必须使用['属性名']？<br>
+中括号运算符可以用字符串变量的内容作为属性名。点运算符不能。<br>
+中括号运算符可以用纯数字为属性名。点运算符不能。<br>
+中括号运算符可以用js的关键字和保留字作为属性名。点运算符不能。</p>
+<pre><code class="language-js">var p= {},b = {};
+//给对象添加属性：content-type:text/json
+//p.content-type不可以使用,含义特殊字符 - 
+p['content-type'] = 'text/json';
+console.log(p['content-type']);   //text/json
+//属性名 不确定
+var propName = 'age';
+var value = 20;
+// p.propName = value;  //报错
+b[propName] = value;
+console.log(b);   //Object {age: 20}
+//——————————————————————————————————————————————————————
+var obj={
+         say1:1,
+         say2:2,
+         say3:3
+        }
+ 
+for(let i=1; i&lt;Object.keys(obj).length+1; i++){
+    console.log(obj[&quot;say&quot;+i]);  
+}
+//  1
+//  2
+//  3
+</code></pre>
+<p>创建对象的四种方式：<br>
+<strong>系统的构造函数Object</strong><br>
+<strong>自定义构造函数</strong><br>
+<strong>字面量的方式</strong><br>
+<strong>工厂化模式</strong></p>
+<pre><code class="language-js">//创建对象的4中方式
+//1.调用 系统的构造函数Object 创建对象（per2.name=&quot; &quot;）
+var person = new Object();
+person.name = 'cutezhangq';
+person.age = 20;
+person.key = function(i){
+  console.log('给实例自定义方法'+i);
+}
+console.log(person);  //Object {name: &quot;cutezhangq&quot;, age: 20, key: }
+person.key(123)       //给实例自定义方法123
+
+
+
+//2.自定义构造函数    (申请一块空闲的空间,首字母一般大写)
+function stu(name,age){
+  this.name = name;
+  this.age = age;
+  this.say = function(){
+    return console.log(&quot;我叫：&quot;+this.name,&quot;,年龄是:&quot;+this.age);
+  };
+}
+var stu_zq = new stu('ccc',22);
+stu_zq.say();    //我叫：ccc ,年龄是:22
+for(var key in stu_zq){
+  console.log('key:'+key+',value:'+stu_zq[key])
+}
+//  key:name,value:ccc
+//  key:age,value:22
+//  key:say,value:function(){ return console.log(&quot;我叫：&quot;+this.name,&quot;,年龄是:&quot;+this.age);  }
+
+
+
+//3.字面量的方式创建对象
+var obj = {
+  name:'piu',
+  age:20,
+  eat:function(){
+    console.log('wowowo');
+  }
+}
+obj.eat();  //wowowo
+console.log(obj.name);  //piu
+//3.1
+var b1 = {
+  b2:[1,'aaa',console.log],
+  b3:function(){
+    console.log('b3');
+    return function(){
+      return 'yiny';
+    }
+  }
+}
+console.log(typeof b1.b2[2])  //function  说明console.log是函数
+console.log(b1.b3()())  //yiny
+//b1.b3() 找到b3属性里的函数
+//b1.b3()() 找到函数里的return的函数
+
+
+
+//4.工厂化模式创建对象（批量制作对象）  采用createObject批量化生产，能实例化多个具有相似属性和方法的对象
+function createObject(name,age){
+  var obj = new Object;
+  obj.name = name;
+  obj.age = age;
+  return obj;
+}
+var per1 = createObject(&quot;xixi&quot;,23);
+var per2 = createObject(&quot;hihi&quot;,53);
+console.log(per1);  //Object {name: &quot;xixi&quot;, age: 23}
+console.log(per2);  //Object {name: &quot;hihi&quot;, age: 53}
+console.log(createObject);
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/js-bian-liang-de-sheng-ming-zhou-qi-letvarconst/">
+                  <h3 class="post-title">
+                    变量的生命周期 let、var、const
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

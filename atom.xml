@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cutezhangq.github.io</id>
     <title>cutezhangq</title>
-    <updated>2020-08-02T08:38:09.321Z</updated>
+    <updated>2020-08-03T08:48:37.837Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cutezhangq.github.io"/>
     <link rel="self" href="https://cutezhangq.github.io/atom.xml"/>
@@ -10,6 +10,701 @@
     <logo>https://cutezhangq.github.io/images/avatar.png</logo>
     <icon>https://cutezhangq.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, cutezhangq</rights>
+    <entry>
+        <title type="html"><![CDATA[居中方案（水平居中、垂直居中、水平垂直居中）]]></title>
+        <id>https://cutezhangq.github.io/post/ju-zhong-fang-an-shui-ping-ju-zhong-chui-zhi-ju-zhong-shui-ping-chui-zhi-ju-zhong/</id>
+        <link href="https://cutezhangq.github.io/post/ju-zhong-fang-an-shui-ping-ju-zhong-chui-zhi-ju-zhong-shui-ping-chui-zhi-ju-zhong/">
+        </link>
+        <updated>2020-08-03T01:10:23.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="案例内容">案例内容</h1>
+<pre><code class="language-html"> &lt;style&gt;
+    .fu{
+      width: 200px;
+      height: 200px;
+      background-color: powderblue;
+    }
+
+  &lt;/style&gt;
+
+    &lt;body style=&quot;background-color: antiquewhite;&quot;&gt;
+      &lt;div class=&quot;fu&quot;&gt;
+        &lt;h2&gt;这是标题哦&lt;/h2&gt;
+        &lt;div class=&quot;zi&quot;&gt;
+          &lt;p&gt;哈哈&lt;/p&gt;
+          &lt;form action=&quot;&quot;&gt;
+            姓名:&lt;input type=&quot;text&quot;&gt;&lt;br /&gt;
+            性别:&lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;女&quot;&gt;女
+            &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;男&quot;&gt;男&lt;br /&gt;
+            爱好:&lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;篮球
+            &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;下棋
+            &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;画画
+             &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;写作&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;
+             &lt;img src=&quot;../bootstrap/img/1.png&quot; alt=&quot;&quot; width=&quot;150px&quot;&gt;
+          &lt;/form&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/body&gt;
+</code></pre>
+<h1 id="水平垂直-居中方案1">水平垂直 居中方案1</h1>
+<h3 id="需要知道-宽高">需要知道 宽高</h3>
+<pre><code class="language-css">        .fu{
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          top: 0;
+          margin: auto;
+        }
+</code></pre>
+<h1 id="水平垂直-居中方案2">水平垂直 居中方案2</h1>
+<h3 id="可用于-不知道宽高-的情况下使用">可用于 不知道宽高 的情况下使用</h3>
+<p>缺点：transform的兼容性不高</p>
+<ul>
+<li>translate()函数是css3的新特性,在不知道自身宽高的情况下,可以利用它来进行水平垂直居中</li>
+<li>当使用: top: 50%;left: 50%；是以左上角为原点，故不处于中心位置</li>
+<li>translate(-50%,-50%)作用是：往上(x轴),左(y轴)移动自身长宽的50%,以使其居于中心位置。</li>
+</ul>
+<pre><code class="language-css">.fu{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);   //百分比是相对于自身宽高的百分比
+}
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1596418063196.png" alt="" loading="lazy"></figure>
+<h1 id="对于仅文本内容的需要居中的也可使img标签对于div标签-水平居中">对于仅文本内容的，需要居中的：(也可使Img标签对于div标签 水平居中)</h1>
+<pre><code class="language-css">h2{
+    text-align: center;
+}
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1596417930705.png" alt="" loading="lazy"></figure>
+<h1 id="表格中内容水平垂直居中">表格中内容水平垂直居中：</h1>
+<pre><code class="language-css">.table&gt;tbody&gt;tr&gt;td{
+  vertical-align: middle;
+  text-align: center;
+}
+</code></pre>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="案例内容">案例内容</h1>
+<pre><code class="language-html"> &lt;style&gt;
+    .fu{
+      width: 200px;
+      height: 200px;
+      background-color: powderblue;
+    }
+
+  &lt;/style&gt;
+
+    &lt;body style=&quot;background-color: antiquewhite;&quot;&gt;
+      &lt;div class=&quot;fu&quot;&gt;
+        &lt;h2&gt;这是标题哦&lt;/h2&gt;
+        &lt;div class=&quot;zi&quot;&gt;
+          &lt;p&gt;哈哈&lt;/p&gt;
+          &lt;form action=&quot;&quot;&gt;
+            姓名:&lt;input type=&quot;text&quot;&gt;&lt;br /&gt;
+            性别:&lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;女&quot;&gt;女
+            &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;男&quot;&gt;男&lt;br /&gt;
+            爱好:&lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;篮球
+            &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;下棋
+            &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;画画
+             &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;写作&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;
+             &lt;img src=&quot;../bootstrap/img/1.png&quot; alt=&quot;&quot; width=&quot;150px&quot;&gt;
+          &lt;/form&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/body&gt;
+</code></pre>
+<h1 id="水平垂直-居中方案1">水平垂直 居中方案1</h1>
+<h3 id="需要知道-宽高">需要知道 宽高</h3>
+<pre><code class="language-css">        .fu{
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          top: 0;
+          margin: auto;
+        }
+</code></pre>
+<h1 id="水平垂直-居中方案2">水平垂直 居中方案2</h1>
+<h3 id="可用于-不知道宽高-的情况下使用">可用于 不知道宽高 的情况下使用</h3>
+<p>缺点：transform的兼容性不高</p>
+<ul>
+<li>translate()函数是css3的新特性,在不知道自身宽高的情况下,可以利用它来进行水平垂直居中</li>
+<li>当使用: top: 50%;left: 50%；是以左上角为原点，故不处于中心位置</li>
+<li>translate(-50%,-50%)作用是：往上(x轴),左(y轴)移动自身长宽的50%,以使其居于中心位置。</li>
+</ul>
+<pre><code class="language-css">.fu{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);   //百分比是相对于自身宽高的百分比
+}
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1596418063196.png" alt="" loading="lazy"></figure>
+<h1 id="对于仅文本内容的需要居中的也可使img标签对于div标签-水平居中">对于仅文本内容的，需要居中的：(也可使Img标签对于div标签 水平居中)</h1>
+<pre><code class="language-css">h2{
+    text-align: center;
+}
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1596417930705.png" alt="" loading="lazy"></figure>
+<h1 id="表格中内容水平垂直居中">表格中内容水平垂直居中：</h1>
+<pre><code class="language-css">.table&gt;tbody&gt;tr&gt;td{
+  vertical-align: middle;
+  text-align: center;
+}
+</code></pre>
+<!-- more -->
+<h1 id="10种-水平垂直居中对齐方式">10种 水平垂直居中对齐方式</h1>
+<p>测试代码</p>
+<pre><code class="language-html"> &lt;div class=&quot;wp&quot;&gt;
+    &lt;div class=&quot;box size&quot;&gt;123123&lt;/div&gt;
+ &lt;/div&gt;
+</code></pre>
+<pre><code class="language-css">/* 公共代码 */
+.wp {
+border: 1px solid red;
+width: 300px;
+height: 300px;
+}
+
+.box {
+background: green;
+}
+
+.box.size{
+width: 100px;
+height: 100px;
+}
+/* 公共代码 */
+</code></pre>
+<h2 id="absolute-负margin-需要知道子元素的宽高">absolute + 负margin 需要知道子元素的宽高</h2>
+<ul>
+<li>绝对定位的百分比是相对于父元素的宽高，通过这个特性可以让子元素的居中显示。</li>
+<li>但绝对定位是基于子元素的左上角，期望的效果是子元素的中心居中显示</li>
+<li>为了修正这个问题，可以借助外边距的负值，负的外边距可以让元素向相反方向定位，通过指定子元素的外边距为子元素宽度一半的负值，就可以让子元素居中了</li>
+</ul>
+<pre><code class="language-css">/* 定位代码 */
+.wp {
+    position: relative;
+}
+.box {
+    position: absolute;;
+    top: 50%;
+    left: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+}
+</code></pre>
+<h2 id="absolute-margin-auto-见上面内容">absolute + margin auto 见上面内容</h2>
+<h2 id="absolute-transform-见上面内容">absolute + transform 见上面内容</h2>
+<h2 id="absolute-calc-这种方法兼容性依赖calc的兼容性缺点是需要知道子元素的宽高">absolute + calc        这种方法兼容性依赖calc的兼容性，缺点是需要知道子元素的宽高</h2>
+<p>感谢css3带来了calc 计算属性，既然top的百分比是基于元素的左上角，那么在减去宽度的一半就好了</p>
+<pre><code class="language-css">.wp {
+position: relative;
+}
+.box {
+position: absolute;;
+top: calc(50% - 50px);
+left: calc(50% - 50px);
+}
+</code></pre>
+<h2 id="lineheight">lineheight</h2>
+<p>利用行内元素 居中属性也可以做到水平垂直 居中，<br>
+把box设置为行内元素，通过text-align就可以做到水平居中，但很多同学可能不知道通过通过vertical-align也可以在垂直方向做到居中</p>
+<p>/* 定位代</p>
+<pre><code class="language-css">/* 定位代码 */
+.wp {
+line-height: 300px;
+text-align: center;
+font-size: 0px;
+}
+.box {
+font-size: 16px;
+display: inline-block;
+vertical-align: middle;
+line-height: initial;
+text-align: left; /* 修正文字 */
+}
+</code></pre>
+<p>这种方法需要在子元素中将文字显示重置为想要的效果<br>
+<img src="https://cutezhangq.github.io/post-images/1596444057505.png" alt="" loading="lazy"></p>
+<h2 id="writing-mode">writing-mode</h2>
+<p>简单来说writing-mode可以改变文字的显示方向，比如可以通过writing-mode让文字的显示变为垂直方向</p>
+<pre><code class="language-html">&lt;div class=&quot;div1&quot;&gt;水平方向&lt;/div&gt;
+&lt;div class=&quot;div2&quot;&gt;垂直方向&lt;/div&gt;
+</code></pre>
+<pre><code class="language-css">.div2 {
+   writing-mode: vertical-lr;
+}
+</code></pre>
+<p><img src="https://cutezhangq.github.io/post-images/1596444154555.png" alt="" loading="lazy"><br>
+更神奇的是所有水平方向上的css属性，都会变为垂直方向上的属性，比如text-align，通过writing-mode和text-align就可以做到水平和垂直方向的居中了，只不过要稍微麻烦一点</p>
+<pre><code class="language-css">/* 此处引用上面的公共代码 */
+/* 此处引用上面的公共代码 */
+
+/* 定位代码 */
+.wp {
+writing-mode: vertical-lr;
+text-align: center;
+}
+.wp-inner {
+writing-mode: horizontal-tb;
+display: inline-block;
+text-align: center;
+width: 100%;
+}
+.box {
+display: inline-block;
+margin: auto;
+text-align: left;
+}
+</code></pre>
+<h2 id="table">table</h2>
+<p>曾经table被用来做页面布局，现在没人这么做了，但table也能够实现水平垂直居中，但是会增加很多冗余代码</p>
+<pre><code class="language-css">.wp {
+text-align: center;
+}
+.box {
+display: inline-block;
+}
+</code></pre>
+<h2 id="css-table">css-table</h2>
+<p>css新增的table属性，可以让我们把普通元素，变为table元素的现实效果，通过这个特性也可以实现水平垂直居中<br>
+下面通过css属性，可以让div显示的和table一样<br>
+这种方法和table一样的原理，但却没有那么多冗余代码，兼容性也还不错</p>
+<pre><code class="language-css">.wp {
+display: table-cell;
+text-align: center;
+vertical-align: middle;
+}
+.box {
+display: inline-block;
+}
+</code></pre>
+<h2 id="flex">flex</h2>
+<p>flex作为现代的布局方案，颠覆了过去的经验，只需几行代码就可以优雅的做到水平垂直居中</p>
+<pre><code class="language-css">.wp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+</code></pre>
+<h2 id="grid">grid</h2>
+<p>css新出的网格布局，由于兼容性不太好，一直没太关注，通过grid也可以实现水平垂直居中</p>
+<pre><code class="language-css">.wp {
+    display: grid;
+}
+.box {
+    align-self: center;
+    justify-self: center;
+}
+</code></pre>
+<h1 id="总结">总结</h1>
+<pre><code>* PC端有兼容性要求，宽高固定，推荐absolute + 负margin
+* PC端有兼容要求，宽高不固定，推荐css-table
+* PC端无兼容性要求，推荐flex
+* 移动端推荐使用flex
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[进程, 线程, 浏览器内核, js执行顺序 WebWorkers]]></title>
+        <id>https://cutezhangq.github.io/post/jin-cheng-xian-cheng-liu-lan-qi-nei-he-js-zhi-xing-shun-xu/</id>
+        <link href="https://cutezhangq.github.io/post/jin-cheng-xian-cheng-liu-lan-qi-nei-he-js-zhi-xing-shun-xu/">
+        </link>
+        <updated>2020-08-02T13:48:44.000Z</updated>
+        <content type="html"><![CDATA[<p>进程process ：程序的一次执行，它占有一片独有的内存空间<br>
+可以通过windows任务管理器查看进程</p>
+<p>线程thread：是进程内的一个独立执行单元<br>
+是程序执行的一个完整流程<br>
+是CPU的最小的调度单元</p>
+<p>多线程：一个进程里面有多个线程，一个程序可以同时启动对个实例运行。<br>
+单线程：一个进程里面只有一个线程。（JS是单线程的，但是用H5中的Web Workers可以多线程运行）<br>
+<strong>js执行顺序</strong><br>
+1、js是单线程，执行模式有两种：同步，异步<br>
+　　单线程：只有一条流水线<br>
+　　同步：依次再流水线上执行<br>
+　　异步：流水线旁加了一个临时储物台（任务队列），会把某些模块拿到临时储物台，或者会把临时储物台的某些模块插队到流水线<br>
+2、js默认模式是同步模式，按流水线执行:A,B,C，不管A里边代码运行时间多长，都要先执行完A，再执行B，再执行C<br>
+3、实现异步模式的几种方法<br>
+　　①回调函数（把临时储物台的模块插入到流水线）<br>
+　　②setTimeout（把流水线的模块拿到临时储物台，过一段时间再插入回去）<br>
+　　③Promise对象（把临时储物台的模块插入到流水线）<br>
+4、小程序中所有的wx.xxx()接口，也都是异步模式（先执行流水线上非wx.xxx的模块，把流水线上所有的wx.xxx模块先拿到临时储物台执行，等哪个有了返回结果，并且流水线上有空了，也就是流水线上非wx.xxx的模块执行完了，再把哪个插回去）<br>
+5、async函数中，代码的执行模式是异步模式，所有的模块都放在临时储物台上执行，哪个模块执行完了，就先把哪个模块拿到流水线上执行<br>
+6、举例</p>
+<pre><code class="language-js">  jobs.add({
+      data: {
+        userName: 'aaa'
+      }
+    })
+    .then(res =&gt; {
+      wx.hideLoading({
+        success: res =&gt; {
+          console.log('hideLoading')
+        }
+      })
+      wx.showToast({
+        title: '提交成功',
+        icon: 'success',
+        duration: 2000
+      })
+      wx.switchTab({
+        url: '../my/my',
+      })
+      console.log('aaaa')
+    })
+    .catch(err =&gt; {
+      console.log(err)
+    })
+</code></pre>
+<p>执行顺序分析：<br>
+把wx.hideLoading，wx.showToast，wx.switchTap先放到临时储物台，并执行执行流水线上的console.log('aaaa')，流水线上有空了，把临时储物台上最先有了返回结果的wx.hideLoading插入回流水线执行，流水线上有空了，又把第二个有了返回结果的wx.switchTab插入回流水线执行<br>
+显示顺序：aaaa，hideLoading，跳转<br>
+7、if...else if....else会按照顺序执行，先执行if，再执行else if，再执行else<br>
+8、for循环是先执行完内部的循环，再跳出循环，for循环后面的代码，必须for循环完成后才能执行</p>
+<h1 id="js引擎j">js引擎j</h1>
+<p>js引擎执行代码的基本流程：    初始化代码---&gt;回调代码script 引入方式</p>
+<pre><code>* html 静态&lt;script&gt;引入
+* js 动态插入&lt;script&gt;
+* &lt;script defer&gt;: 延迟加载，元素解析完成后执行
+* &lt;script async&gt;: 异步加载，但执行时会阻塞元素渲染
+</code></pre>
+<h1 id="web-workers">Web Workers</h1>
+<p>1.H5规范了js 分线程的实现，取名为:Web Workers    （但是 js 仍然是 单线程 的）</p>
+<p>2.相关API:<br>
+Worker:  构造函数，加载分线程执行的js文件<br>
+Worker.prototype.onmessage： 用于接收另一个线程的回调函数<br>
+Worker.protptype.postMessage:  向另一个线程发送消息</p>
+<p>3.不足：</p>
+<ol>
+<li>Worker内代码不能操作DOM（更新UI）：因为他的全局变量不再是window</li>
+<li>不能跨域加载JS</li>
+<li>不是每个浏览器都支持这个新特性</li>
+</ol>
+<p>Web Workers使用：<br>
+在主线程的JS中 发消息并设置回调：</p>
+<p>主线程中的代码：</p>
+<pre><code class="language-js">&lt;body&gt;
+  &lt;input type=&quot;text&quot; placeholder=&quot;数值&quot; id=&quot;number&quot;/&gt;
+  &lt;button id=&quot;btn&quot;&gt;计算&lt;/button&gt;
+&lt;/body&gt;
+&lt;script&gt;
+  //斐波那契数 1 1 2 3 5 8  f(n)=f(n-1)+f(n-2)
+  function fibonacci(n){
+    return n&lt;2? 1 : fibonacci(n-1) + fibonacci(n-2)
+  }
+  var input = document.getElementById('number');
+  document.getElementById('btn').onclick = function(){
+    var number = input.value;
+    //创建一个Worker对象，并向它传递在新线程中脚本的URL
+    var worker = new Worker('worker.js');
+    //绑定接收消息的监听
+    worker.onmessage = function(event){ //onmessage当接收到消息时，自动回调
+      console.log('主线程接收分线程返回的数据'+event.data);
+      // console.log(event.data);
+    }
+    //向分线程发送消息
+    worker.postMessage(number);
+    console.log('主线程向分线程发送数据'+number);
+  }
+</code></pre>
+<p>分线程中的代码：<br>
+分线程不能更新界面，因为在分线程中看不到window<br>
+<img src="https://cutezhangq.github.io/post-images/1596377870491.png" alt="" loading="lazy"><br>
+<img src="https://cutezhangq.github.io/post-images/1596377904673.png" alt="" loading="lazy"><br>
+总结：</p>
+<ol>
+<li>分线程中的全局对象不再是window，所以在分线程中不可能更新界面</li>
+<li>postMessage可以双向发送消息，一个一个发送<br>
+<img src="https://cutezhangq.github.io/post-images/1596377925811.png" alt="" loading="lazy"></li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[内存溢出与内存泄漏]]></title>
+        <id>https://cutezhangq.github.io/post/nei-cun-yi-chu-yu-nei-cun-xie-lou/</id>
+        <link href="https://cutezhangq.github.io/post/nei-cun-yi-chu-yu-nei-cun-xie-lou/">
+        </link>
+        <updated>2020-08-02T13:38:29.000Z</updated>
+        <content type="html"><![CDATA[<p>闭包的缺点：<br>
+1.函数执行完后，函数内的局部变量没有被释放，占用内存时间会变长<br>
+2.容易造成内存泄漏（内存被占用着，但用不上里面的内容）<br>
+解决：<br>
+1.尽量不用闭包<br>
+2.及时释放（让内部函数成为垃圾对象--&gt;就收闭包） 即 f = null<br>
+<img src="https://cutezhangq.github.io/post-images/1596375551223.png" alt="" loading="lazy"><br>
+内存溢出与内存泄漏:内存溢出：<br>
+一种程序运行出现的错误。<br>
+当程序运行的内存超过了剩余的内存时，就抛出内存溢出的错误<br>
+<img src="https://cutezhangq.github.io/post-images/1596375576188.png" alt="" loading="lazy"><br>
+注：是一种抛出错误，浏览器会崩溃</p>
+<p>内存泄漏：<br>
+占用的内存没有及时释放<br>
+内存泄漏积累多了就容易导致内存溢出<br>
+常见的内存泄漏：<br>
+1.意外的全局变量<br>
+2.没有及时清理的计时器或回调函数<br>
+3.闭包</p>
+<p><code>1.意外的全局变量</code><br>
+<img src="https://cutezhangq.github.io/post-images/1596375625382.png" alt="" loading="lazy"><br>
+<code>2.没有及时清理的计时器或回调函数，清理定时器</code>：clearInterval( )<br>
+<img src="https://cutezhangq.github.io/post-images/1596375657343.png" alt="" loading="lazy"><br>
+<code>3.闭包</code><br>
+<img src="https://cutezhangq.github.io/post-images/1596375936764.png" alt="" loading="lazy"><br>
+面试重点：<br>
+1.this的指向<br>
+<img src="https://cutezhangq.github.io/post-images/1596375977020.png" alt="" loading="lazy"><br>
+输出：The window<br>
+注：不属于闭包（有函数嵌套，但没有内部函数引用外部函数）</p>
+<ol start="2">
+<li>var that = this    指定局部作用域<br>
+<img src="https://cutezhangq.github.io/post-images/1596376032467.png" alt="" loading="lazy"><br>
+输出：My Object<br>
+注：属于闭包</li>
+</ol>
+<p>3.闭包问题</p>
+<pre><code class="language-js">function fun(n,o){
+  console.log(o);
+  return {
+    fun:function(m){
+      return fun(m,n);
+    }
+  }
+}
+var a = fun(0); a.fun(1); a.fun(2); a.fun(3); //undefined ,0 ,0 ,0
+console.log('——————————');
+var b = fun(0).fun(1).fun(2).fun(3);  //undefined ,0 ,1 ,2
+console.log('——————————');
+var c = fun(0).fun(1); c.fun(2);  c.fun(3); //undefined ,0 ,1 ,1
+
+</code></pre>
+<p>分析：<br>
+a中，<br>
+a.fun(1)时m=1,n=0（闭包，内部n调用外部传入的0）,然后内部的fun:function这个走完回到外面函数，将0传给o，然后console.log(o)得到 0<br>
+a.fun(2)时m=2,n=0，然后到外面函数中n=2,o=0，然后console.log(o)得到 0</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[创建对象4种方式]]></title>
+        <id>https://cutezhangq.github.io/post/chuang-jian-dui-xiang-4-chong-fang-shi/</id>
+        <link href="https://cutezhangq.github.io/post/chuang-jian-dui-xiang-4-chong-fang-shi/">
+        </link>
+        <updated>2020-08-02T12:07:55.000Z</updated>
+        <content type="html"><![CDATA[<p>变量与对象的区别<br>
+变量：只能存一个数据<br>
+对象：可以存多个数据（属性、封装...）<br>
+对象的组成：<br>
+属性（属性名 String类型，属性值 任意类型）<br>
+方法（一种特别的属性，属性值是函数）</p>
+<p>访问 对象内部数据 的方法    (中括号运算符总是能代替点运算符。但点运算符却不一定能全部代替中括号运算符。)<br>
+. 点 属性名        后面加静态标志符<br>
+当对象内部没有定义该属性时不能使用。<br>
+[' 属性名 ']        后面可以加动态标志符<br>
+当属性名包含特殊字符：-  空格，必须使用[' ']；<br>
+当属性名 不确定时，必须使用[' ']；</p>
+<p>常用：点是访问json对象。而方括号是数组。   obj.name='xx'  ;  arr[0] = 1</p>
+<pre><code class="language-js">//访问对象内部属性
+var person = {
+  name:'cutezhangq',
+  age:20,
+  setName:function(name){
+    this.name = name      //改变person对象的name属性，this是局部作用域内的对象，即person
+  },
+  setAge:function(age){
+    this.age = age
+  }
+}
+console.log(person)                 //Object {name: &quot;cutezhangq&quot;, age: 20, setName: , setAge: }
+//采用 点 的方式，访问对象内部属性
+person.setName('zhuangzhou');  
+console.log(person)                 //Object {name: &quot;zhuangzhou&quot;, age: 20, setName: , setAge: }
+//采用['']的方式，[''](值)  这种是给该属性赋值
+person['setAge'](100);
+console.log(person)                 //Object {name: &quot;zhuangzhou&quot;, age: 100, setName: , setAge: } 
+
+</code></pre>
+<p><img src="https://cutezhangq.github.io/post-images/1596370140753.png" alt="" loading="lazy"><br>
+什么时候必须使用['属性名']？<br>
+中括号运算符可以用字符串变量的内容作为属性名。点运算符不能。<br>
+中括号运算符可以用纯数字为属性名。点运算符不能。<br>
+中括号运算符可以用js的关键字和保留字作为属性名。点运算符不能。</p>
+<pre><code class="language-js">var p= {},b = {};
+//给对象添加属性：content-type:text/json
+//p.content-type不可以使用,含义特殊字符 - 
+p['content-type'] = 'text/json';
+console.log(p['content-type']);   //text/json
+//属性名 不确定
+var propName = 'age';
+var value = 20;
+// p.propName = value;  //报错
+b[propName] = value;
+console.log(b);   //Object {age: 20}
+//——————————————————————————————————————————————————————
+var obj={
+         say1:1,
+         say2:2,
+         say3:3
+        }
+ 
+for(let i=1; i&lt;Object.keys(obj).length+1; i++){
+    console.log(obj[&quot;say&quot;+i]);  
+}
+//  1
+//  2
+//  3
+</code></pre>
+<p>创建对象的四种方式：<br>
+<strong>系统的构造函数Object</strong><br>
+<strong>自定义构造函数</strong><br>
+<strong>字面量的方式</strong><br>
+<strong>工厂化模式</strong></p>
+<pre><code class="language-js">//创建对象的4中方式
+//1.调用 系统的构造函数Object 创建对象（per2.name=&quot; &quot;）
+var person = new Object();
+person.name = 'cutezhangq';
+person.age = 20;
+person.key = function(i){
+  console.log('给实例自定义方法'+i);
+}
+console.log(person);  //Object {name: &quot;cutezhangq&quot;, age: 20, key: }
+person.key(123)       //给实例自定义方法123
+
+
+
+//2.自定义构造函数    (申请一块空闲的空间,首字母一般大写)
+function stu(name,age){
+  this.name = name;
+  this.age = age;
+  this.say = function(){
+    return console.log(&quot;我叫：&quot;+this.name,&quot;,年龄是:&quot;+this.age);
+  };
+}
+var stu_zq = new stu('ccc',22);
+stu_zq.say();    //我叫：ccc ,年龄是:22
+for(var key in stu_zq){
+  console.log('key:'+key+',value:'+stu_zq[key])
+}
+//  key:name,value:ccc
+//  key:age,value:22
+//  key:say,value:function(){ return console.log(&quot;我叫：&quot;+this.name,&quot;,年龄是:&quot;+this.age);  }
+
+
+
+//3.字面量的方式创建对象
+var obj = {
+  name:'piu',
+  age:20,
+  eat:function(){
+    console.log('wowowo');
+  }
+}
+obj.eat();  //wowowo
+console.log(obj.name);  //piu
+//3.1
+var b1 = {
+  b2:[1,'aaa',console.log],
+  b3:function(){
+    console.log('b3');
+    return function(){
+      return 'yiny';
+    }
+  }
+}
+console.log(typeof b1.b2[2])  //function  说明console.log是函数
+console.log(b1.b3()())  //yiny
+//b1.b3() 找到b3属性里的函数
+//b1.b3()() 找到函数里的return的函数
+
+
+
+//4.工厂化模式创建对象（批量制作对象）  采用createObject批量化生产，能实例化多个具有相似属性和方法的对象
+function createObject(name,age){
+  var obj = new Object;
+  obj.name = name;
+  obj.age = age;
+  return obj;
+}
+var per1 = createObject(&quot;xixi&quot;,23);
+var per2 = createObject(&quot;hihi&quot;,53);
+console.log(per1);  //Object {name: &quot;xixi&quot;, age: 23}
+console.log(per2);  //Object {name: &quot;hihi&quot;, age: 53}
+console.log(createObject);
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[变量的生命周期 let、var、const]]></title>
+        <id>https://cutezhangq.github.io/post/js-bian-liang-de-sheng-ming-zhou-qi-letvarconst/</id>
+        <link href="https://cutezhangq.github.io/post/js-bian-liang-de-sheng-ming-zhou-qi-letvarconst/">
+        </link>
+        <updated>2020-08-02T11:34:39.000Z</updated>
+        <content type="html"><![CDATA[<p>具体let、var、consts区别见es6中内容</p>
+<h1 id="变量的生命周期">变量的生命周期</h1>
+<p>当引擎（如：浏览器中的js引擎）访问变量的时候，它们的生命周期包括下面几个阶段：<br>
+1.<strong>声明 阶段</strong>：在作用域中注册一个变量<br>
+2.<strong>初始化 阶段</strong>：分配内存，给作用域中的变量创建绑定。在这个阶段，变量自动地被初始化为 undefined<br>
+3.<strong>赋值 阶段</strong>：给已经初始化过的变量赋值<br>
+通过声明阶段但是没有到达初始化阶段的变量是处于未定义的状态。<br>
+<img src="https://cutezhangq.github.io/post-images/1596368154142.png" alt="" loading="lazy"><br>
+注意，根据变量的生命周期，声明阶段和一般说的变量声明是不同的术语。<br>
+简言之，引擎在这三个阶段处理变量声明：声明阶段、初始化阶段和赋值阶段。</p>
+<h1 id="var-变量-的生命周期">var 变量 的生命周期</h1>
+<p><img src="https://cutezhangq.github.io/post-images/1596368206711.png" alt="" loading="lazy"><br>
+严格来说，提升的概念是在函数作用域的顶部 声明和初始化 变量。在 声明和初始化 阶段之间 没有间隙。</p>
+<pre><code class="language-js">function multiplyByTen(number) {  
+  console.log(ten); // =&gt; undefined
+  var ten;
+  ten = 10;
+  console.log(ten); // =&gt; 10
+  return number * ten;
+}
+multiplyByTen(4); // =&gt; 40
+</code></pre>
+<h1 id="函数声明的生命周期">函数声明的生命周期</h1>
+<p><img src="https://cutezhangq.github.io/post-images/1596368259214.png" alt="" loading="lazy"><br>
+声明、初始化、赋值阶段在 函数作用域 的开始 立刻执行（只有一步）。<br>
+funcName()可以在该作用域的任何地方调用，不依赖于声明语句的位置（甚至可以在最后）。</p>
+<h1 id="let-变量的生命周期">let 变量的生命周期</h1>
+<p>let变量的处理方式和 var 不同。最主要的区别就是声明和初始化阶段被分开了。<br>
+<img src="https://cutezhangq.github.io/post-images/1596368317409.png" alt="" loading="lazy"><br>
+<img src="https://cutezhangq.github.io/post-images/1596368337198.png" alt="" loading="lazy"></p>
+<pre><code class="language-js">  let condition = true;  
+  // console.log(number); // =&gt; Throws ReferenceError
+  let number;
+  console.log(number); // =&gt; undefined
+  number = 5;
+  console.log(number); // =&gt; 5
+</code></pre>
+<p>const和class类型 和let有相同的生命周期，除了赋值只能发生一次。</p>
+<h3 id="为什么提升在let的生命周期里无效">为什么提升在let的生命周期里无效</h3>
+<p>如上所述，<code>提升就是变量在作用域顶部进行声明和初始化。</code><br>
+但是<code>let的生命周期</code>将 <code>声明和初始化</code> 两个阶段 <code>解耦</code> 了。<code>解耦让提升这个术语失效了</code>。<br>
+两个阶段中间的间隙创建了暂时性死区，在这里，变量不能被访问。</p>
+<h3 id="暂时性死区">暂时性死区</h3>
+<p>只要块级作用域内存在let命令，它所声明的变量就“绑定”（binding）这个区域，不再受外部的影响。</p>
+<pre><code class="language-js">var tmp = 123;
+if (true) {
+  tmp = 'abc'; // ReferenceError
+  let tmp;
+}
+</code></pre>
+<p>上面代码中，存在全局变量tmp，但是块级作用域内let又声明了一个局部变量tmp，导致后者绑定这个块级作用域，所以在let声明变量前，对tmp赋值会报错。<br>
+在代码块内，使用let命令声明变量之前，该变量都是不可用的。这在语法上，称为“暂时性死区”（temporal dead zone，简称 TDZ）</p>
+<p>随意使用var声明变量容易犯错。基于这个教训，ES2015创建了let。它使用一种改进的算法来声明变量，并且使用块级作用域。<br>
+由于声明和定义两个阶段解耦，提升对于一个let声明的变量（包括包括const和class）无效。在初始化之前，变量处于暂时性死区并且不可以访问。<br>
+保持稳定的变量声明，有如下建议：</p>
+<ul>
+<li>声明、初始化，然后再使用变量。这个流程正确并且容易遵守；</li>
+<li>尽可能隐藏变量。变量暴露的越少，代码就越模块化。</li>
+</ul>
+<p>new运算符的执行过程<br>
+*  新生成一个对象<br>
+*  链接到原型: obj.<strong>proto</strong> = Con.prototype<br>
+*  绑定this:  apply<br>
+* 返回新对象(如果构造函数有自己 retrun 时，则返回该值)</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[js常规问题]]></title>
         <id>https://cutezhangq.github.io/post/js/</id>
@@ -301,7 +996,7 @@ new function(){alert('我是匿名函数')}()
 <li>函数声明不可以，只能以fnName()形式调用 。</li>
 <li>函数表达式后面可以加括号立即调用该函数。</li>
 </ul>
-<h1 id="原型">原型</h1>
+<h1 id="原型原理">原型原理</h1>
 <p>1、所有的 引用类型 都有一个_ _ proto_ _ 属性     ( 隐式原型)。<br>
 它们的_ _ proto_ <em>属性指向 它的构造函数 的 prototype 属性。<br>
 如果对象本身不存在这个属性，那么会去它的</em> _ proto_ _属性 (也就是 它的构造函数的 prototype 属性) 中寻找。<br>
@@ -908,7 +1603,7 @@ methods: {
   },
 },
 </code></pre>
-<h1 id="14-q标准盒子模型与ie怪异盒子模型">[14.]# Q：标准盒子模型与IE怪异盒子模型</h1>
+<h1 id="14q标准盒子模型与ie怪异盒子模型">[14.]Q：标准盒子模型与IE怪异盒子模型</h1>
 <p>这个问题主要会出现在笔试题上面，比如：</p>
 <pre><code class="language-javascript">&lt;div style=&quot;width:100px;height=&quot;100px;border:10px;padding:10px;&quot;&gt;&lt;/div&gt;
 </code></pre>
@@ -918,6 +1613,48 @@ methods: {
 </code></pre>
 <p>怪异盒子：box-sizing：border-box将div的width就是width赋值的宽<br>
 标准盒子：宽度为width的宽加上border和padding</p>
+<h1 id="15闭包">[15.]闭包</h1>
+<p><img src="https://cutezhangq.github.io/post-images/1596370324100.png" alt="" loading="lazy"><br>
+注：关键看有没有产生新的闭包<br>
+结果：<br>
+<img src="https://cutezhangq.github.io/post-images/1596370348698.png" alt="" loading="lazy"><br>
+补充：<br>
+通过闭包---立即执行函数，生成块级作用域</p>
+<pre><code class="language-js">&lt;body&gt;
+    &lt;button&gt;测试1&lt;/button&gt;
+    &lt;br&gt;
+    &lt;button&gt;测试2&lt;/button&gt;
+    &lt;br&gt;
+    &lt;button&gt;测试3&lt;/button&gt;
+    &lt;br&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+//使用var:
+    let bottons = document.getElementsByTagName('button');
+    //1.
+    for(var j = 0;j&lt;  bottons.length;j++){
+      var botton = bottons[j];
+      botton.onclick = function(){
+        alert(j)    //输出都是3
+        //点击事件对应回调函数，回调函数会被放入事件队列中，等主线程代码执行完了，才将回调函数&quot;钩&quot;出来去执行
+        //回调函数（钩子函数）
+      }
+    }
+    //2.使用闭包解决问题：
+        //----闭包产生条件：1.函数嵌套  2调用外部函数
+    for(var k= 0;k&lt; bottons.length;k++){
+      var botton = bottons[k];
+      (function(k){     //()()立即执行函数
+        botton.onclick = function(){
+        alert(k)         //点击每个按钮一次输出0,1,2   
+        }
+      })(k) //立即执行函数有其自己的作用于（私有作用域），每执行一次有一个自己的函数作用域
+    }
+&lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+<p>使用闭包的注意点1.由于闭包会使得函数中的变量都被保存在内存中，内存消耗很大，所以不能滥用闭包，否则会造成网页的性能问题，在IE中可能导致内存泄露。解决方法是，在退     出函数之前，将不使用的局部变量全部删除.<br>
+2.闭包会在父函数外部，改变父函数内部变量的值。所以，如果你把父函数当作对象（object）使用，把闭包当作它的公用方法（Public Method），把内部变量当     作它的私有属性（private value），这时一定要小心，不要随便改变父函数内部变量的值。</p>
 ]]></content>
     </entry>
     <entry>
@@ -1036,38 +1773,23 @@ git push -u origin master       #本地仓库代码提交至远程仓库(有时�
 </ul>
 <pre><code class="language-cmd">git push origin --delete [branch_name]
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hello]]></title>
-        <id>https://cutezhangq.github.io/post/hello-gridea/</id>
-        <link href="https://cutezhangq.github.io/post/hello-gridea/">
-        </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎来到我的博客 ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎来到我的博客 ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+<h1 id="git本地项目代码上传至远程仓库">git本地项目代码上传至远程仓库</h1>
+<h2 id="一-在码云github上创建项目名称为xx的项目">一、在码云/gitHub上创建项目名称为xx的项目</h2>
+<h2 id="二-打开gitbash-用cd命令进入本地项目然后把初始化一下把本地的目录变成git本地仓库-git-status-可以查看本地目录的状态信息">二、打开GitBash ，用cd命令进入本地项目,然后把初始化一下，把本地的目录变成git本地仓库, git status 可以查看本地目录的状态信息</h2>
+<p>git init<br>
+git status<br>
+注意：当git status报红时，是本地的文件没有暂存，选择：暂存本地文件<br>
+<img src="https://cutezhangq.github.io/post-images/1596367654143.png" alt="" loading="lazy"><br>
+(可以使用git add . 进行暂存)暂存完了之后：再次查看git status发现变绿了<br>
+<img src="https://cutezhangq.github.io/post-images/1596367683394.png" alt="" loading="lazy"></p>
+<h2 id="三-将你本地仓库与码云上的远程仓库关联起来">三、将你本地仓库与码云上的远程仓库关联起来</h2>
+<p>git remote add origin https://gitee.com/xxx/xxx.git</p>
+<h2 id="四-在你准备上传你的项目之前最好更新一下项目确保没有和远程仓库的代码有冲突">四、在你准备上传你的项目之前，最好更新一下项目，确保没有和远程仓库的代码有冲突</h2>
+<p>git pull --rebase origin master</p>
+<h2 id="五-把你的项目复制到这个目录下用命令添加你要上传的项目再提交到本地暂存区最后把本地仓库项目提交到远程仓库-git-是强烈建议你在提交代码的时候要写备注注释的所以既然人家是强烈建议你就别懒了">五、把你的项目复制到这个目录下，用命令添加你要上传的项目，再提交到本地暂存区，最后把本地仓库项目提交到远程仓库。git 是强烈建议你在提交代码的时候，要写备注注释的，所以既然人家是强烈建议，你就别懒了。</h2>
+<p>git add . 添加目录下所有发生改变的文件<br>
+git commit -m '注释信息'<br>
+git push -u origin master 本地仓库代码提交至远程仓库(有时候会提交失败，可以尝试$ git push -u origin master -f 强制提交,只建议在第一次提交中使用)</p>
 ]]></content>
     </entry>
 </feed>
