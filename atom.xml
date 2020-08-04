@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cutezhangq.github.io</id>
     <title>cutezhangq</title>
-    <updated>2020-08-04T13:41:58.500Z</updated>
+    <updated>2020-08-04T13:47:52.305Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cutezhangq.github.io"/>
     <link rel="self" href="https://cutezhangq.github.io/atom.xml"/>
@@ -1735,6 +1735,35 @@ Proxy 作为新标准将受到浏览器厂商重点持续的性能优化，也�
   return map
 }
 
+</code></pre>
+<h2 id="2v-for-遍历避免同时使用-v-if">（2）v-for 遍历避免同时使用 v-if</h2>
+<p>v-for 比 v-if 优先级高，如果每一次都需要遍历整个数组，将会影响速度，尤其是当之需要渲染很小一部分的时候，必要情况下应该替换成 computed 属性。<br>
+<strong>推荐：</strong></p>
+<pre><code class="language-js">&lt;ul&gt;
+  &lt;li
+    v-for=&quot;user in activeUsers&quot;
+    :key=&quot;user.id&quot;&gt;
+    {{ user.name }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+computed: {
+  activeUsers: function () {
+    return this.users.filter(function (user) {
+	 return user.isActive
+    })
+  }
+}
+
+</code></pre>
+<p><strong>不推荐：</strong></p>
+<pre><code class="language-html">&lt;ul&gt;
+  &lt;li
+    v-for=&quot;user in users&quot;
+    v-if=&quot;user.isActive&quot;
+    :key=&quot;user.id&quot;&gt;
+    {{ user.name }}
+  &lt;/li&gt;
+&lt;/ul&gt;
 </code></pre>
 <h2 id="扩展"><strong>扩展</strong>：</h2>
 <h3 id="diff算法">diff算法</h3>
