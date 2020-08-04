@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596444506711">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596544280048">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -31,7 +31,7 @@ js共有9种数据类型：5种基本数据类型，3种引用类型，1种es6�
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596444506711" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596544280048" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -506,6 +506,29 @@ let a = ['1','2','3',1,NaN,NaN,undefined,undefined,null,null, 'a','b','b'];
     }
     console.log(unique2(b));//[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;NaN&quot;, &quot;undefined&quot;, &quot;null&quot;, &quot;a&quot;, &quot;b&quot;]
 </code></pre>
+<h1 id="js中-new-操作符干了什么">js中 new 操作符干了什么？</h1>
+<ul>
+<li>
+<ol>
+<li>创建了一个空对象</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>将空对象赋值给this，并将this的__proto__指向构造方法对象的原型</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>对this这个对象进行属性的添加，并初始化</li>
+</ol>
+</li>
+<li>
+<ol start="4">
+<li>将this对象返回</li>
+</ol>
+</li>
+</ul>
 
             </div>
             
@@ -520,9 +543,9 @@ let a = ['1','2','3',1,NaN,NaN,undefined,undefined,null,null, 'a','b','b'];
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://cutezhangq.github.io/post/vue-zhi-shi-dian-li-jie/">
+                <a href="https://cutezhangq.github.io/post/js-bian-liang-de-sheng-ming-zhou-qi-letvarconst/">
                   <h3 class="post-title">
-                    vue 模板字符串的前世今生
+                    变量的生命周期 let、var、const
                   </h3>
                 </a>
               </div>

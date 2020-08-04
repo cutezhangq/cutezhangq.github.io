@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596444506711">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596544280048">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -32,7 +32,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596444506711" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596544280048" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -95,7 +95,10 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">变量的生命周期 let、var、const</h2>
-            <div class="post-date">2020-08-02</div>
+            <div class="post-date">2020-05-19</div>
+            
+              <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/js-bian-liang-de-sheng-ming-zhou-qi-letvarconst.jpg')">
+              </div>
             
             <div class="post-content" v-pre>
               <p>具体let、var、consts区别见es6中内容</p>
@@ -162,15 +165,30 @@ if (true) {
 *  链接到原型: obj.<strong>proto</strong> = Con.prototype<br>
 *  绑定this:  apply<br>
 * 返回新对象(如果构造函数有自己 retrun 时，则返回该值)</p>
+<h1 id="let-const-var的区别">let const var的区别：</h1>
+<h2 id="第一个是声明过程">第一个是声明过程：</h2>
+<pre><code>var：遇到有var的作用域，在任何语句执行器都已经完成了声明和初始化，也就是变量提升并且拿到undefined的原因。
+let：解析器进入一个块级作用域，发现let关键字，变量只是先完成声明，并没有到初始化那一步。如果此时在作用域提前访问，会报错 xx is not defined，这就是暂时性死区的由来。等到解析到有let那一行时，才会进入初始化阶段。如果let那一行是赋值操作，则初始化和赋值同时进行。
+const和 let一样。
+</code></pre>
+<h2 id="第二个是内存分配">第二个是内存分配：</h2>
+<pre><code> var：会直接在栈内存里预分配内存空间，然后等到实际语句执行时，再存储对应的变量，如果传的是引用类型，则在堆内存里开辟一个内存空间存储实际内容，栈内存会存储一个指向堆内存的指针
+ let：不会在栈内存里预分配内存空间，而且在栈内存分配变量的时候，会检查，如果有相同变量名存在就会报错
+const：不会分预配内存空间，栈内存分配变量时也会做同样的检测。const存储的变量是不可修改的，所以对于基本类型来说无法修改定义的值，对于引用类型来说无法修改栈内存里分配的指针，但是可以修改指针指向的对象里面的属性
+</code></pre>
+<h2 id="第三个是变量提升">第三个是变量提升：</h2>
+<pre><code>let只是创建过程中提升，初始化过程并没有提升，所以会产生暂时性死区。
+var的创建和初始化过程都提升了，所以赋值前访问会得到undefined
+</code></pre>
 
             </div>
             
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://cutezhangq.github.io/post/js/">
+                <a href="https://cutezhangq.github.io/post/vue-zhi-shi-dian-li-jie/">
                   <h3 class="post-title">
-                    js常规问题
+                    vue 模板字符串的前世今生
                   </h3>
                 </a>
               </div>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>MVVM设计模式 | cutezhangq</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596544280048">
+<link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="Model–View–ViewModel （MVVM） 是一个软件架构设计模式，由微软 WPF 和 Silverlight 的架构师 Ken Cooper 和 Ted Peters 开发，是一种简化用户界面的事件驱动编程方式。由 John ..." />
+    <meta name="keywords" content="MVVM" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://cutezhangq.github.io">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596544280048" class="site-logo">
+        <h1 class="site-title">cutezhangq</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://cutezhangq.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">MVVM设计模式</h2>
+            <div class="post-date">2020-07-07</div>
+            
+              <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/mvvm.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>Model–View–ViewModel （MVVM） 是一个软件架构设计模式，由微软 WPF 和 Silverlight 的架构师 Ken Cooper 和 Ted Peters 开发，是一种简化用户界面的事件驱动编程方式。由 John Gossman（同样也是 WPF 和 Silverlight 的架构师）于2005年在他的博客上发表</p>
+<p>MVVM 源自于经典的 Model–View–Controller（MVC）模式  ，MVVM 的出现促进了前端开发与后端业务逻辑的分离，极大地提高了前端开发效率，MVVM 的核心是 ViewModel 层，它就像是一个中转站（value converter），负责转换 Model 中的数据对象来让数据变得更容易管理和使用，该层向上与视图层进行双向数据绑定，向下与 Model 层通过接口请求进行数据交互，起呈上启下作用。如下图所示：<br>
+<img src="https://cutezhangq.github.io/post-images/1596524698651.png" alt="" loading="lazy"><br>
+（1）View 层<br>
+View 是视图层，也就是用户界面。前端主要由 HTML 和 CSS 来构建 。<br>
+（2）Model 层<br>
+Model 是指数据模型，泛指后端进行的各种业务逻辑处理和数据操控，对于前端来说就是后端提供的 api 接口。<br>
+（3）ViewModel 层<br>
+ViewModel 是由前端开发人员组织生成和维护的视图数据层。在这一层，前端开发者对从后端获取的 Model 数据进行转换处理，做二次封装，以生成符合 View 层使用预期的视图数据模型。需要注意的是 ViewModel 所封装出来的数据模型包括视图的状态和行为两部分，而 Model 层的数据模型是只包含状态的，比如页面的这一块展示什么，而页面加载进来时发生什么，点击这一块发生什么，这一块滚动时发生什么这些都属于视图行为（交互），视图状态和行为都封装在了 ViewModel 里。这样的封装使得 ViewModel 可以完整地去描述 View 层。<br>
+MVVM 框架实现了双向绑定，这样 ViewModel 的内容会实时展现在 View 层，前端开发者再也不必低效又麻烦地通过操纵 DOM 去更新视图，MVVM 框架已经把最脏最累的一块做好了，我们开发者只需要处理和维护 ViewModel，更新数据视图就会自动得到相应更新。这样 View 层展现的不是 Model 层的数据，而是 ViewModel 的数据，由 ViewModel 负责与 Model 层交互，这就完全解耦了 View 层和 Model 层，这个解耦是至关重要的，它是前后端分离方案实施的重要一环。<br>
+我们以下通过一个 Vue 实例来说明 MVVM 的具体实现，有 Vue 开发经验的同学应该一目了然：<br>
+（1）View 层</p>
+<pre><code class="language-html">&lt;div id=&quot;app&quot;&gt;
+    &lt;p&gt;{{message}}&lt;/p&gt;
+    &lt;button v-on:click=&quot;showMessage()&quot;&gt;Click me&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+<p>（2）ViewModel 层</p>
+<pre><code class="language-js">var app = new Vue({
+    el: '#app',
+    data: {  // 用于描述视图状态   
+        message: 'Hello Vue!', 
+    },
+    methods: {  // 用于描述视图行为  
+        showMessage(){
+            let vm = this;
+            alert(vm.message);
+        }
+    },
+    created(){
+        let vm = this;
+        // Ajax 获取 Model 层的数据
+        ajax({
+            url: '/your/server/data/api',
+            success(res){
+                vm.message = res;
+            }
+        });
+    }
+})
+</code></pre>
+<p>（3）Model 层</p>
+<pre><code class="language-json">{
+    &quot;url&quot;: &quot;/your/server/data/api&quot;,
+    &quot;res&quot;: {
+        &quot;success&quot;: true,
+        &quot;name&quot;: &quot;IoveC&quot;,
+        &quot;domain&quot;: &quot;www.cnblogs.com&quot;
+    }
+}
+
+</code></pre>
+<p><strong>MVVM.js</strong></p>
+<pre><code class="language-js">/*
+相关于Vue的构造函数
+ */
+function MVVM(options) {
+  // 将选项对象保存到vm
+  this.$options = options;
+  // 将data对象保存到vm和data变量中
+  var data = this._data = this.$options.data;
+  //将vm保存在me变量中
+  var me = this;
+  // 遍历data中所有属性
+  Object.keys(data).forEach(function (key) { // key是data的某个属性名: name
+    // 对指定属性实现代理
+    me._proxy(key);
+  });
+
+  // 对data中所有层次的属性通过 数据劫持 实现 数据绑定。进行监视
+  observe(data, this);
+
+  // 创建一个编译对象，来解析模板 的compile对象
+  //如果左边有值传左边的，没有则传右边的
+  this.$compile = new Compile(options.el || document.body, this)
+}
+
+MVVM.prototype = {
+  $watch: function (key, cb, options) {
+    new Watcher(this, key, cb);
+  },
+
+  // 对指定属性实现代理
+  _proxy: function (key) {
+    // 保存vm
+    var me = this;
+    // 给vm添加指定属性名的属性(使用属性描述)
+    Object.defineProperty(me, key, {
+      configurable: false,    // 不能再重新定义
+      enumerable: true,       // 可以枚举
+      // 当通过vm.name读取属性值时自动调用,从data中获取对应的属性值返回
+      get: function proxyGetter() {
+        // 读取data中对应属性值返回(实现代理 读 操作)
+        return me._data[key];
+      },
+      // 当通过vm.name = 'xxx'时自动调用
+      set: function proxySetter(newVal) {
+        // 将xxx最新的值保存到data中对应的属性上(实现代理 写 操作)
+        me._data[key] = newVal;
+      }
+    });
+  }
+};
+
+</code></pre>
+<p><strong>MVVM 原理图分析</strong><br>
+<img src="https://cutezhangq.github.io/post-images/1596524937242.png" alt="" loading="lazy"></p>
+<p><strong>实现了 数据初始化 和 数据更新：</strong><br>
+<img src="https://cutezhangq.github.io/post-images/1596524952690.png" alt="" loading="lazy"></p>
+<p>双向数据绑定双向数据绑定=单向数据绑定+input 监听<br>
+1.<br>
+双向数据绑定是建立在单向数据绑定(model==&gt;View)的基础之上的<br>
+2.<br>
+双向数据绑定的实现流程:<br>
+a. 在解析 v-model 指令时, 给当前元素添加 input 监听 （从View==&gt;model）<br>
+b. 当 input 的 value 发生改变时, 将最新的值赋值给当前表达式所对应的 data 属性</p>
+<pre><code class="language-js">&lt;div id=&quot;test&quot;&gt;
+&lt;input type=&quot;text&quot; v-model=&quot;msg&quot;&gt;
+&lt;p&gt;{{msg}}&lt;/p&gt;
+&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+new MVVM({
+el: '#test',
+data: {
+msg: 'haha'
+}
+})
+&lt;/script&gt;
+</code></pre>
+<h3 id="数据劫持observedata-this">数据劫持observe(data, this);</h3>
+<pre><code>1. 数据劫持是 vue 中用来实现数据绑定的一种 技术
+2. 基本思想: 通过 defineProperty()来监视 data 中所有属性(任意层次)数据的变化, 一旦变化就去更新界面
+</code></pre>
+<p>即，给data中的属性添加set(监视变化)，get方法</p>
+<p>例如:this.xxx = 3,此时this是vm,改变vm的set的值，然后这里的set变化了，会改变data中xxx的值。(vm——&gt;M)<br>
+当data中xxx的值改变时，data的set值也发生变化，就会去更新界面了。(数据绑定：M——&gt;V)<br>
+即：<br>
+vm中的set是用来实现 数据代理的<br>
+data中的set是用来实现 数据绑定 的（界面会变）</p>
+<h2 id="四个重要对象">四个重要对象</h2>
+<h3 id="1-observer-观察到了然后去劫持数据定义getset创建dep对象">1) Observer        （观察到了然后去“劫持”数据，定义get/set，创建dep对象）</h3>
+<p>a. 用来对 data 所有属性数据进行劫持的构造函数<br>
+b. 给 data 中所有属性重新定义属性描述(get/set)<br>
+c. 为 data 中的每个属性创建对应的 dep 对象</p>
+<h3 id="2-depdepend-存放watcher的数组即subscribessubs">2) Dep(Depend)    （存放watcher的数组，即subscribes——subs）</h3>
+<p>a. data 中的每个属性(所有层次)都对应一个 dep 对象<br>
+b. 创建的时机:<br>
+* 在初始化 definedata 中各个属性时创建对应的 dep 对象<br>
+* 在 data 中的某个属性值被设置为新的对象时</p>
+<p>c. 对象的结构</p>
+<pre><code class="language-js">{
+     id,            // 每个 dep 都有一个唯一的 id
+    subs        //包含 n 个对应 watcher 的 数组 (subscribes 的简写)
+}
+</code></pre>
+<p>d. subs 属性说明<br>
+* 当 watcher 被创建时, 内部将当前 watcher对象添加到对应的 dep对象的 subs中<br>
+* 当此 data 属性的值发生改变时,subs 中所有的 watcher 都会收到更新的通知,从而最终更新对应的界面</p>
+<h3 id="3-compiler">3) Compiler        ()</h3>
+<p>a. 用来解析模板页面的对象的构造函数(一个实例)<br>
+b. 利用 compile 对象解析模板页面<br>
+c. 每解析一个表达式(非事件指令)都会创建一个对应的watcher对象, 并建立watcher 与 dep 的关系<br>
+d. complie 与 watcher 关系: 一对多的关系</p>
+<h3 id="4-watcher">4) Watcher</h3>
+<p>更新显示的<br>
+a. 模板中每个非事件指令或表达式都对应一个 watcher 对象<br>
+b. 监视当前表达式数据的变化<br>
+c. 创建的时机: 在初始化编译模板时<br>
+d. 对象的组成</p>
+<p>{<br>
+vm,           //vm 对象<br>
+exp,          //对应指令的表达式<br>
+cb,            //当表达式所对应的数据发生改变的回调函数    （更新界面的回调函数）<br>
+value,        //表达式当前的值<br>
+depIds        //表达式中各级属性所对应的 dep 对象的集合对象         //属性名为 dep 的 &gt; id, 属性值为 dep<br>
+}5) 总结:dep 与 watcher 的关系: 多对多</p>
+<p>a. data 中的一个属性对应一个 dep, 一个 dep 中可能包含多个 watcher(模板中有几个 表达式使用到了同一个属性)<br>
+b. 模板中一个非事件表达式对应一个 watcher, 一个 watcher 中可能包含多个 dep(表 达式是多层:a.b)<br>
+c. 数据绑定使用到 2 个核心技术<br>
+* defineProperty()<br>
+* 消息订阅与发布<br>
+<img src="https://cutezhangq.github.io/post-images/1596525197350.png" alt="" loading="lazy"></p>
+<p><strong>Dep与Watch之间的关系    ：多对多</strong><br>
+dep先创建，watcher后创建。一旦watcher创建，关系就有限制条件了</p>
+<pre><code>* 1data属性 ---&gt;1Dep ---&gt; n个watcher(模板中有多个表达式使用了此属性)
+
+* 例如：在模板中写了多次表达式：{{name}}/ v-text=&quot;name&quot; ,则此时1个name ---&gt;1个Dep ---&gt; 2个watcher
+* 1表达式---&gt;1Watcher---&gt;n个Dep(多层表达式)
+
+* 例如：a.b.c对应1个watcher，但对应3个dep(a.b.c有3层)
+</code></pre>
+<p>同一个属性对应同一个dep<br>
+如何建立的？<br>
+data中属性的get()中建立<br>
+vm.name = 'abc' ---&gt;data中的name属性值变化 ---&gt; name的set()调用 ---&gt; dep ---&gt;相关的所有watcher ---&gt;cb() ---&gt;updater<br>
+什么时候建立？<br>
+初始化的解析模板中的表达式创建watcher对象时<br>
+通过get:建立dep与watcher的关系</p>
+<pre><code class="language-js">
+Object.defineProperty(data, key, {
+enumerable: true, // 可枚举
+configurable: false, // 不能再define
+get: function() {
+// 建立dep与watcher的关系
+if (Dep.target) {
+dep.depend();
+}
+// 返回属性值
+return val;
+},
+set: function(newVal) {
+if (newVal === val) {
+return;
+}
+val = newVal;
+// 新的值是object的话，进行监听
+childObj = observe(newVal);//observe观察data中的所有属性
+// 通过dep ,通知订阅者
+dep.notify();
+}
+});
+</code></pre>
+<h1 id="vue-是如何实现数据双向绑定的">Vue 是如何实现数据双向绑定的？</h1>
+<p>Vue 数据双向绑定主要是指：数据变化更新视图，视图变化更新数据，如下图所示：<br>
+<img src="https://cutezhangq.github.io/post-images/1596527367288.png" alt="" loading="lazy"><br>
+即：</p>
+<p>输入框内容变化时，Data 中的数据同步变化。即 View =&gt; Data 的变化。<br>
+Data 中的数据变化时，文本节点的内容同步变化。即 Data =&gt; View 的变化。</p>
+<p>其中，View 变化更新 Data ，可以通过事件监听的方式来实现，所以 Vue 的数据双向绑定的工作主要是如何根据 Data 变化更新 View。<br>
+Vue 主要通过以下 4 个步骤来实现数据双向绑定的：<br>
+实现一个监听器 Observer：对数据对象进行遍历，包括子属性对象的属性，利用 Object.defineProperty() 对属性都加上 setter 和 getter。这样的话，给这个对象的某个值赋值，就会触发 setter，那么就能监听到了数据变化。<br>
+实现一个解析器 Compile：解析 Vue 模板指令，将模板中的变量都替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者，一旦数据有变动，收到通知，调用更新函数进行数据更新。<br>
+实现一个订阅者 Watcher：Watcher 订阅者是 Observer 和 Compile 之间通信的桥梁 ，主要的任务是订阅 Observer 中的属性值变化的消息，当收到属性值变化的消息时，触发解析器 Compile 中对应的更新函数。<br>
+实现一个订阅器 Dep：订阅器采用 发布-订阅 设计模式，用来收集订阅者 Watcher，对监听器 Observer 和 订阅者 Watcher 进行统一管理。<br>
+<img src="https://cutezhangq.github.io/post-images/1596527393627.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://cutezhangq.github.io/tag/oDJom1ywc/" class="tag">
+                    MVVM
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/ju-zhong-fang-an-shui-ping-ju-zhong-chui-zhi-ju-zhong-shui-ping-chui-zhi-ju-zhong/">
+                  <h3 class="post-title">
+                    居中方案（水平居中、垂直居中、水平垂直居中）
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

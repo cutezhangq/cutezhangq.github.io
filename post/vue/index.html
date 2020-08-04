@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596444506711">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596544280048">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -33,7 +33,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596444506711" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596544280048" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -150,6 +150,68 @@
  }
  &lt;/style&gt;
 </code></pre>
+<h1 id="vue-框架怎么实现对象和数组的监听">Vue 框架怎么实现对象和数组的监听？</h1>
+<p>如果被问到 Vue 怎么实现数据双向绑定，大家肯定都会回答 通过 Object.defineProperty() 对数据进行劫持，但是  Object.defineProperty() 只能对属性进行数据劫持，不能对整个对象进行劫持，同理无法对数组进行劫持，但是我们在使用 Vue 框架中都知道，Vue 能检测到对象和数组（部分方法的操作）的变化，那它是怎么实现的呢？我们查看相关代码如下：</p>
+<pre><code class="language-js">/**
+   * Observe a list of Array items.
+   */
+  observeArray (items: Array&lt;any&gt;) {
+    for (let i = 0, l = items.length; i &lt; l; i++) {
+      observe(items[i])  // observe 功能为监测数据的变化
+    }
+  }
+
+  /**
+   * 对属性进行递归遍历
+   */
+  let childOb = !shallow &amp;&amp; observe(val) // observe 功能为监测数据的变化
+
+</code></pre>
+<p>通过以上 Vue 源码部分查看，我们就能知道 Vue 框架是通过遍历数组 和递归遍历对象，从而达到利用 Object.defineProperty() 也能对对象和数组（部分方法的操作）进行监听。</p>
+<h1 id="proxy-与-objectdefineproperty-优劣对比">Proxy 与 Object.defineProperty 优劣对比</h1>
+<p><strong>Proxy 的优势如下:</strong></p>
+<p>Proxy 可以直接监听对象而非属性；<br>
+Proxy 可以直接监听数组的变化；<br>
+Proxy 有多达 13 种拦截方法,不限于 apply、ownKeys、deleteProperty、has 等等是 Object.defineProperty 不具备的；<br>
+Proxy 返回的是一个新对象,我们可以只操作新的对象达到目的,而 Object.defineProperty 只能遍历对象属性直接修改；<br>
+Proxy 作为新标准将受到浏览器厂商重点持续的性能优化，也就是传说中的新标准的性能红利；</p>
+<p><strong>Object.defineProperty 的优势如下:</strong></p>
+<p>兼容性好，支持 IE9，而 Proxy 的存在浏览器兼容性问题,而且无法用 polyfill 磨平，因此 Vue 的作者才声明需要等到下个大版本( 3.0 )才能用 Proxy 重写。</p>
+<h1 id="vue-怎么用-vmset-解决对象新增属性不能响应的问题">Vue 怎么用 vm.$set() 解决对象新增属性不能响应的问题 ？</h1>
+<p>受现代 JavaScript 的限制 ，Vue 无法检测到对象属性的添加或删除。由于 Vue 会在初始化实例时对属性执行 getter/setter 转化，所以属性必须在 data 对象上存在才能让 Vue 将它转换为响应式的。但是 Vue 提供了 Vue.set (object, propertyName, value) / vm.$set (object, propertyName, value)  来实现为对象添加响应式属性，那框架本身是如何实现的呢？<br>
+我们查看对应的 Vue 源码：vue/src/core/instance/index.js</p>
+<pre><code class="language-js">export function set (target: Array&lt;any&gt; | Object, key: any, val: any): any {
+  // target 为数组  
+  if (Array.isArray(target) &amp;&amp; isValidArrayIndex(key)) {
+    // 修改数组的长度, 避免索引&gt;数组长度导致splcie()执行有误
+    target.length = Math.max(target.length, key)
+    // 利用数组的splice变异方法触发响应式  
+    target.splice(key, 1, val)
+    return val
+  }
+  // key 已经存在，直接修改属性值  
+  if (key in target &amp;&amp; !(key in Object.prototype)) {
+    target[key] = val
+    return val
+  }
+  const ob = (target: any).__ob__
+  // target 本身就不是响应式数据, 直接赋值
+  if (!ob) {
+    target[key] = val
+    return val
+  }
+  // 对属性进行响应式处理
+  defineReactive(ob.value, key, val)
+  ob.dep.notify()
+  return val
+}
+
+</code></pre>
+<p>我们阅读以上源码可知，vm.$set 的实现原理是：</p>
+<ul>
+<li>如果目标是数组，直接使用数组的 splice 方法触发相应式；</li>
+<li>如果目标是对象，会先判读属性是否存在、对象是否是响应式，最终如果要对属性进行响应式处理，则是通过调用   defineReactive 方法进行响应式处理（ defineReactive 方法就是  Vue 在初始化对象时，给对象属性采用 Object.defineProperty 动态添加 getter 和 setter 的功能所调用的方法）</li>
+</ul>
 
             </div>
             

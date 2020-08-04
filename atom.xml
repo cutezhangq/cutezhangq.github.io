@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cutezhangq.github.io</id>
     <title>cutezhangq</title>
-    <updated>2020-08-03T10:24:40.879Z</updated>
+    <updated>2020-08-04T12:31:37.791Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cutezhangq.github.io"/>
     <link rel="self" href="https://cutezhangq.github.io/atom.xml"/>
@@ -10,303 +10,6 @@
     <logo>https://cutezhangq.github.io/images/avatar.png</logo>
     <icon>https://cutezhangq.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, cutezhangq</rights>
-    <entry>
-        <title type="html"><![CDATA[居中方案（水平居中、垂直居中、水平垂直居中）]]></title>
-        <id>https://cutezhangq.github.io/post/ju-zhong-fang-an-shui-ping-ju-zhong-chui-zhi-ju-zhong-shui-ping-chui-zhi-ju-zhong/</id>
-        <link href="https://cutezhangq.github.io/post/ju-zhong-fang-an-shui-ping-ju-zhong-chui-zhi-ju-zhong-shui-ping-chui-zhi-ju-zhong/">
-        </link>
-        <updated>2020-08-03T01:10:23.000Z</updated>
-        <summary type="html"><![CDATA[<h1 id="案例内容">案例内容</h1>
-<pre><code class="language-html"> &lt;style&gt;
-    .fu{
-      width: 200px;
-      height: 200px;
-      background-color: powderblue;
-    }
-
-  &lt;/style&gt;
-
-    &lt;body style=&quot;background-color: antiquewhite;&quot;&gt;
-      &lt;div class=&quot;fu&quot;&gt;
-        &lt;h2&gt;这是标题哦&lt;/h2&gt;
-        &lt;div class=&quot;zi&quot;&gt;
-          &lt;p&gt;哈哈&lt;/p&gt;
-          &lt;form action=&quot;&quot;&gt;
-            姓名:&lt;input type=&quot;text&quot;&gt;&lt;br /&gt;
-            性别:&lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;女&quot;&gt;女
-            &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;男&quot;&gt;男&lt;br /&gt;
-            爱好:&lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;篮球
-            &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;下棋
-            &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;画画
-             &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;写作&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;
-             &lt;img src=&quot;../bootstrap/img/1.png&quot; alt=&quot;&quot; width=&quot;150px&quot;&gt;
-          &lt;/form&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/body&gt;
-</code></pre>
-<h1 id="水平垂直-居中方案1">水平垂直 居中方案1</h1>
-<h3 id="需要知道-宽高">需要知道 宽高</h3>
-<pre><code class="language-css">        .fu{
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          top: 0;
-          margin: auto;
-        }
-</code></pre>
-<h1 id="水平垂直-居中方案2">水平垂直 居中方案2</h1>
-<h3 id="可用于-不知道宽高-的情况下使用">可用于 不知道宽高 的情况下使用</h3>
-<p>缺点：transform的兼容性不高</p>
-<ul>
-<li>translate()函数是css3的新特性,在不知道自身宽高的情况下,可以利用它来进行水平垂直居中</li>
-<li>当使用: top: 50%;left: 50%；是以左上角为原点，故不处于中心位置</li>
-<li>translate(-50%,-50%)作用是：往上(x轴),左(y轴)移动自身长宽的50%,以使其居于中心位置。</li>
-</ul>
-<pre><code class="language-css">.fu{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);   //百分比是相对于自身宽高的百分比
-}
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1596418063196.png" alt="" loading="lazy"></figure>
-<h1 id="对于仅文本内容的需要居中的也可使img标签对于div标签-水平居中">对于仅文本内容的，需要居中的：(也可使Img标签对于div标签 水平居中)</h1>
-<pre><code class="language-css">h2{
-    text-align: center;
-}
-</code></pre>
-<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1596417930705.png" alt="" loading="lazy"></figure>
-<h1 id="表格中内容水平垂直居中">表格中内容水平垂直居中：</h1>
-<pre><code class="language-css">.table&gt;tbody&gt;tr&gt;td{
-  vertical-align: middle;
-  text-align: center;
-}
-</code></pre>
-]]></summary>
-        <content type="html"><![CDATA[<h1 id="案例内容">案例内容</h1>
-<pre><code class="language-html"> &lt;style&gt;
-    .fu{
-      width: 200px;
-      height: 200px;
-      background-color: powderblue;
-    }
-
-  &lt;/style&gt;
-
-    &lt;body style=&quot;background-color: antiquewhite;&quot;&gt;
-      &lt;div class=&quot;fu&quot;&gt;
-        &lt;h2&gt;这是标题哦&lt;/h2&gt;
-        &lt;div class=&quot;zi&quot;&gt;
-          &lt;p&gt;哈哈&lt;/p&gt;
-          &lt;form action=&quot;&quot;&gt;
-            姓名:&lt;input type=&quot;text&quot;&gt;&lt;br /&gt;
-            性别:&lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;女&quot;&gt;女
-            &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;男&quot;&gt;男&lt;br /&gt;
-            爱好:&lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;篮球
-            &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;下棋
-            &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;画画
-             &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;写作&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;
-             &lt;img src=&quot;../bootstrap/img/1.png&quot; alt=&quot;&quot; width=&quot;150px&quot;&gt;
-          &lt;/form&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/body&gt;
-</code></pre>
-<h1 id="水平垂直-居中方案1">水平垂直 居中方案1</h1>
-<h3 id="需要知道-宽高">需要知道 宽高</h3>
-<pre><code class="language-css">        .fu{
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          top: 0;
-          margin: auto;
-        }
-</code></pre>
-<h1 id="水平垂直-居中方案2">水平垂直 居中方案2</h1>
-<h3 id="可用于-不知道宽高-的情况下使用">可用于 不知道宽高 的情况下使用</h3>
-<p>缺点：transform的兼容性不高</p>
-<ul>
-<li>translate()函数是css3的新特性,在不知道自身宽高的情况下,可以利用它来进行水平垂直居中</li>
-<li>当使用: top: 50%;left: 50%；是以左上角为原点，故不处于中心位置</li>
-<li>translate(-50%,-50%)作用是：往上(x轴),左(y轴)移动自身长宽的50%,以使其居于中心位置。</li>
-</ul>
-<pre><code class="language-css">.fu{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);   //百分比是相对于自身宽高的百分比
-}
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1596418063196.png" alt="" loading="lazy"></figure>
-<h1 id="对于仅文本内容的需要居中的也可使img标签对于div标签-水平居中">对于仅文本内容的，需要居中的：(也可使Img标签对于div标签 水平居中)</h1>
-<pre><code class="language-css">h2{
-    text-align: center;
-}
-</code></pre>
-<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1596417930705.png" alt="" loading="lazy"></figure>
-<h1 id="表格中内容水平垂直居中">表格中内容水平垂直居中：</h1>
-<pre><code class="language-css">.table&gt;tbody&gt;tr&gt;td{
-  vertical-align: middle;
-  text-align: center;
-}
-</code></pre>
-<!-- more -->
-<h1 id="10种-水平垂直居中对齐方式">10种 水平垂直居中对齐方式</h1>
-<p>测试代码</p>
-<pre><code class="language-html"> &lt;div class=&quot;wp&quot;&gt;
-    &lt;div class=&quot;box size&quot;&gt;123123&lt;/div&gt;
- &lt;/div&gt;
-</code></pre>
-<pre><code class="language-css">/* 公共代码 */
-.wp {
-border: 1px solid red;
-width: 300px;
-height: 300px;
-}
-
-.box {
-background: green;
-}
-
-.box.size{
-width: 100px;
-height: 100px;
-}
-/* 公共代码 */
-</code></pre>
-<h2 id="absolute-负margin-需要知道子元素的宽高">absolute + 负margin 需要知道子元素的宽高</h2>
-<ul>
-<li>绝对定位的百分比是相对于父元素的宽高，通过这个特性可以让子元素的居中显示。</li>
-<li>但绝对定位是基于子元素的左上角，期望的效果是子元素的中心居中显示</li>
-<li>为了修正这个问题，可以借助外边距的负值，负的外边距可以让元素向相反方向定位，通过指定子元素的外边距为子元素宽度一半的负值，就可以让子元素居中了</li>
-</ul>
-<pre><code class="language-css">/* 定位代码 */
-.wp {
-    position: relative;
-}
-.box {
-    position: absolute;;
-    top: 50%;
-    left: 50%;
-    margin-left: -50px;
-    margin-top: -50px;
-}
-</code></pre>
-<h2 id="absolute-margin-auto-见上面内容">absolute + margin auto 见上面内容</h2>
-<h2 id="absolute-transform-见上面内容">absolute + transform 见上面内容</h2>
-<h2 id="absolute-calc-这种方法兼容性依赖calc的兼容性缺点是需要知道子元素的宽高">absolute + calc        这种方法兼容性依赖calc的兼容性，缺点是需要知道子元素的宽高</h2>
-<p>感谢css3带来了calc 计算属性，既然top的百分比是基于元素的左上角，那么在减去宽度的一半就好了</p>
-<pre><code class="language-css">.wp {
-position: relative;
-}
-.box {
-position: absolute;;
-top: calc(50% - 50px);
-left: calc(50% - 50px);
-}
-</code></pre>
-<h2 id="lineheight">lineheight</h2>
-<p>利用行内元素 居中属性也可以做到水平垂直 居中，<br>
-把box设置为行内元素，通过text-align就可以做到水平居中，但很多同学可能不知道通过通过vertical-align也可以在垂直方向做到居中</p>
-<p>/* 定位代</p>
-<pre><code class="language-css">/* 定位代码 */
-.wp {
-line-height: 300px;
-text-align: center;
-font-size: 0px;
-}
-.box {
-font-size: 16px;
-display: inline-block;
-vertical-align: middle;
-line-height: initial;
-text-align: left; /* 修正文字 */
-}
-</code></pre>
-<p>这种方法需要在子元素中将文字显示重置为想要的效果<br>
-<img src="https://cutezhangq.github.io/post-images/1596444057505.png" alt="" loading="lazy"></p>
-<h2 id="writing-mode">writing-mode</h2>
-<p>简单来说writing-mode可以改变文字的显示方向，比如可以通过writing-mode让文字的显示变为垂直方向</p>
-<pre><code class="language-html">&lt;div class=&quot;div1&quot;&gt;水平方向&lt;/div&gt;
-&lt;div class=&quot;div2&quot;&gt;垂直方向&lt;/div&gt;
-</code></pre>
-<pre><code class="language-css">.div2 {
-   writing-mode: vertical-lr;
-}
-</code></pre>
-<p><img src="https://cutezhangq.github.io/post-images/1596444154555.png" alt="" loading="lazy"><br>
-更神奇的是所有水平方向上的css属性，都会变为垂直方向上的属性，比如text-align，通过writing-mode和text-align就可以做到水平和垂直方向的居中了，只不过要稍微麻烦一点</p>
-<pre><code class="language-css">/* 此处引用上面的公共代码 */
-/* 此处引用上面的公共代码 */
-
-/* 定位代码 */
-.wp {
-writing-mode: vertical-lr;
-text-align: center;
-}
-.wp-inner {
-writing-mode: horizontal-tb;
-display: inline-block;
-text-align: center;
-width: 100%;
-}
-.box {
-display: inline-block;
-margin: auto;
-text-align: left;
-}
-</code></pre>
-<h2 id="table">table</h2>
-<p>曾经table被用来做页面布局，现在没人这么做了，但table也能够实现水平垂直居中，但是会增加很多冗余代码</p>
-<pre><code class="language-css">.wp {
-text-align: center;
-}
-.box {
-display: inline-block;
-}
-</code></pre>
-<h2 id="css-table">css-table</h2>
-<p>css新增的table属性，可以让我们把普通元素，变为table元素的现实效果，通过这个特性也可以实现水平垂直居中<br>
-下面通过css属性，可以让div显示的和table一样<br>
-这种方法和table一样的原理，但却没有那么多冗余代码，兼容性也还不错</p>
-<pre><code class="language-css">.wp {
-display: table-cell;
-text-align: center;
-vertical-align: middle;
-}
-.box {
-display: inline-block;
-}
-</code></pre>
-<h2 id="flex">flex</h2>
-<p>flex作为现代的布局方案，颠覆了过去的经验，只需几行代码就可以优雅的做到水平垂直居中</p>
-<pre><code class="language-css">.wp {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-</code></pre>
-<h2 id="grid">grid</h2>
-<p>css新出的网格布局，由于兼容性不太好，一直没太关注，通过grid也可以实现水平垂直居中</p>
-<pre><code class="language-css">.wp {
-    display: grid;
-}
-.box {
-    align-self: center;
-    justify-self: center;
-}
-</code></pre>
-<h1 id="总结">总结</h1>
-<pre><code>* PC端有兼容性要求，宽高固定，推荐absolute + 负margin
-* PC端有兼容要求，宽高不固定，推荐css-table
-* PC端无兼容性要求，推荐flex
-* 移动端推荐使用flex
-</code></pre>
-]]></content>
-    </entry>
     <entry>
         <title type="html"><![CDATA[进程, 线程, 浏览器内核, js执行顺序 WebWorkers]]></title>
         <id>https://cutezhangq.github.io/post/jin-cheng-xian-cheng-liu-lan-qi-nei-he-js-zhi-xing-shun-xu/</id>
@@ -634,75 +337,555 @@ console.log(createObject);
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[变量的生命周期 let、var、const]]></title>
-        <id>https://cutezhangq.github.io/post/js-bian-liang-de-sheng-ming-zhou-qi-letvarconst/</id>
-        <link href="https://cutezhangq.github.io/post/js-bian-liang-de-sheng-ming-zhou-qi-letvarconst/">
+        <title type="html"><![CDATA[MVVM设计模式]]></title>
+        <id>https://cutezhangq.github.io/post/mvvm/</id>
+        <link href="https://cutezhangq.github.io/post/mvvm/">
         </link>
-        <updated>2020-08-02T11:34:39.000Z</updated>
-        <content type="html"><![CDATA[<p>具体let、var、consts区别见es6中内容</p>
-<h1 id="变量的生命周期">变量的生命周期</h1>
-<p>当引擎（如：浏览器中的js引擎）访问变量的时候，它们的生命周期包括下面几个阶段：<br>
-1.<strong>声明 阶段</strong>：在作用域中注册一个变量<br>
-2.<strong>初始化 阶段</strong>：分配内存，给作用域中的变量创建绑定。在这个阶段，变量自动地被初始化为 undefined<br>
-3.<strong>赋值 阶段</strong>：给已经初始化过的变量赋值<br>
-通过声明阶段但是没有到达初始化阶段的变量是处于未定义的状态。<br>
-<img src="https://cutezhangq.github.io/post-images/1596368154142.png" alt="" loading="lazy"><br>
-注意，根据变量的生命周期，声明阶段和一般说的变量声明是不同的术语。<br>
-简言之，引擎在这三个阶段处理变量声明：声明阶段、初始化阶段和赋值阶段。</p>
-<h1 id="var-变量-的生命周期">var 变量 的生命周期</h1>
-<p><img src="https://cutezhangq.github.io/post-images/1596368206711.png" alt="" loading="lazy"><br>
-严格来说，提升的概念是在函数作用域的顶部 声明和初始化 变量。在 声明和初始化 阶段之间 没有间隙。</p>
-<pre><code class="language-js">function multiplyByTen(number) {  
-  console.log(ten); // =&gt; undefined
-  var ten;
-  ten = 10;
-  console.log(ten); // =&gt; 10
-  return number * ten;
+        <updated>2020-07-07T07:03:01.000Z</updated>
+        <content type="html"><![CDATA[<p>Model–View–ViewModel （MVVM） 是一个软件架构设计模式，由微软 WPF 和 Silverlight 的架构师 Ken Cooper 和 Ted Peters 开发，是一种简化用户界面的事件驱动编程方式。由 John Gossman（同样也是 WPF 和 Silverlight 的架构师）于2005年在他的博客上发表</p>
+<p>MVVM 源自于经典的 Model–View–Controller（MVC）模式  ，MVVM 的出现促进了前端开发与后端业务逻辑的分离，极大地提高了前端开发效率，MVVM 的核心是 ViewModel 层，它就像是一个中转站（value converter），负责转换 Model 中的数据对象来让数据变得更容易管理和使用，该层向上与视图层进行双向数据绑定，向下与 Model 层通过接口请求进行数据交互，起呈上启下作用。如下图所示：<br>
+<img src="https://cutezhangq.github.io/post-images/1596524698651.png" alt="" loading="lazy"><br>
+（1）View 层<br>
+View 是视图层，也就是用户界面。前端主要由 HTML 和 CSS 来构建 。<br>
+（2）Model 层<br>
+Model 是指数据模型，泛指后端进行的各种业务逻辑处理和数据操控，对于前端来说就是后端提供的 api 接口。<br>
+（3）ViewModel 层<br>
+ViewModel 是由前端开发人员组织生成和维护的视图数据层。在这一层，前端开发者对从后端获取的 Model 数据进行转换处理，做二次封装，以生成符合 View 层使用预期的视图数据模型。需要注意的是 ViewModel 所封装出来的数据模型包括视图的状态和行为两部分，而 Model 层的数据模型是只包含状态的，比如页面的这一块展示什么，而页面加载进来时发生什么，点击这一块发生什么，这一块滚动时发生什么这些都属于视图行为（交互），视图状态和行为都封装在了 ViewModel 里。这样的封装使得 ViewModel 可以完整地去描述 View 层。<br>
+MVVM 框架实现了双向绑定，这样 ViewModel 的内容会实时展现在 View 层，前端开发者再也不必低效又麻烦地通过操纵 DOM 去更新视图，MVVM 框架已经把最脏最累的一块做好了，我们开发者只需要处理和维护 ViewModel，更新数据视图就会自动得到相应更新。这样 View 层展现的不是 Model 层的数据，而是 ViewModel 的数据，由 ViewModel 负责与 Model 层交互，这就完全解耦了 View 层和 Model 层，这个解耦是至关重要的，它是前后端分离方案实施的重要一环。<br>
+我们以下通过一个 Vue 实例来说明 MVVM 的具体实现，有 Vue 开发经验的同学应该一目了然：<br>
+（1）View 层</p>
+<pre><code class="language-html">&lt;div id=&quot;app&quot;&gt;
+    &lt;p&gt;{{message}}&lt;/p&gt;
+    &lt;button v-on:click=&quot;showMessage()&quot;&gt;Click me&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+<p>（2）ViewModel 层</p>
+<pre><code class="language-js">var app = new Vue({
+    el: '#app',
+    data: {  // 用于描述视图状态   
+        message: 'Hello Vue!', 
+    },
+    methods: {  // 用于描述视图行为  
+        showMessage(){
+            let vm = this;
+            alert(vm.message);
+        }
+    },
+    created(){
+        let vm = this;
+        // Ajax 获取 Model 层的数据
+        ajax({
+            url: '/your/server/data/api',
+            success(res){
+                vm.message = res;
+            }
+        });
+    }
+})
+</code></pre>
+<p>（3）Model 层</p>
+<pre><code class="language-json">{
+    &quot;url&quot;: &quot;/your/server/data/api&quot;,
+    &quot;res&quot;: {
+        &quot;success&quot;: true,
+        &quot;name&quot;: &quot;IoveC&quot;,
+        &quot;domain&quot;: &quot;www.cnblogs.com&quot;
+    }
 }
-multiplyByTen(4); // =&gt; 40
+
 </code></pre>
-<h1 id="函数声明的生命周期">函数声明的生命周期</h1>
-<p><img src="https://cutezhangq.github.io/post-images/1596368259214.png" alt="" loading="lazy"><br>
-声明、初始化、赋值阶段在 函数作用域 的开始 立刻执行（只有一步）。<br>
-funcName()可以在该作用域的任何地方调用，不依赖于声明语句的位置（甚至可以在最后）。</p>
-<h1 id="let-变量的生命周期">let 变量的生命周期</h1>
-<p>let变量的处理方式和 var 不同。最主要的区别就是声明和初始化阶段被分开了。<br>
-<img src="https://cutezhangq.github.io/post-images/1596368317409.png" alt="" loading="lazy"><br>
-<img src="https://cutezhangq.github.io/post-images/1596368337198.png" alt="" loading="lazy"></p>
-<pre><code class="language-js">  let condition = true;  
-  // console.log(number); // =&gt; Throws ReferenceError
-  let number;
-  console.log(number); // =&gt; undefined
-  number = 5;
-  console.log(number); // =&gt; 5
+<p><strong>MVVM.js</strong></p>
+<pre><code class="language-js">/*
+相关于Vue的构造函数
+ */
+function MVVM(options) {
+  // 将选项对象保存到vm
+  this.$options = options;
+  // 将data对象保存到vm和data变量中
+  var data = this._data = this.$options.data;
+  //将vm保存在me变量中
+  var me = this;
+  // 遍历data中所有属性
+  Object.keys(data).forEach(function (key) { // key是data的某个属性名: name
+    // 对指定属性实现代理
+    me._proxy(key);
+  });
+
+  // 对data中所有层次的属性通过 数据劫持 实现 数据绑定。进行监视
+  observe(data, this);
+
+  // 创建一个编译对象，来解析模板 的compile对象
+  //如果左边有值传左边的，没有则传右边的
+  this.$compile = new Compile(options.el || document.body, this)
+}
+
+MVVM.prototype = {
+  $watch: function (key, cb, options) {
+    new Watcher(this, key, cb);
+  },
+
+  // 对指定属性实现代理
+  _proxy: function (key) {
+    // 保存vm
+    var me = this;
+    // 给vm添加指定属性名的属性(使用属性描述)
+    Object.defineProperty(me, key, {
+      configurable: false,    // 不能再重新定义
+      enumerable: true,       // 可以枚举
+      // 当通过vm.name读取属性值时自动调用,从data中获取对应的属性值返回
+      get: function proxyGetter() {
+        // 读取data中对应属性值返回(实现代理 读 操作)
+        return me._data[key];
+      },
+      // 当通过vm.name = 'xxx'时自动调用
+      set: function proxySetter(newVal) {
+        // 将xxx最新的值保存到data中对应的属性上(实现代理 写 操作)
+        me._data[key] = newVal;
+      }
+    });
+  }
+};
+
 </code></pre>
-<p>const和class类型 和let有相同的生命周期，除了赋值只能发生一次。</p>
-<h3 id="为什么提升在let的生命周期里无效">为什么提升在let的生命周期里无效</h3>
-<p>如上所述，<code>提升就是变量在作用域顶部进行声明和初始化。</code><br>
-但是<code>let的生命周期</code>将 <code>声明和初始化</code> 两个阶段 <code>解耦</code> 了。<code>解耦让提升这个术语失效了</code>。<br>
-两个阶段中间的间隙创建了暂时性死区，在这里，变量不能被访问。</p>
-<h3 id="暂时性死区">暂时性死区</h3>
-<p>只要块级作用域内存在let命令，它所声明的变量就“绑定”（binding）这个区域，不再受外部的影响。</p>
-<pre><code class="language-js">var tmp = 123;
-if (true) {
-  tmp = 'abc'; // ReferenceError
-  let tmp;
+<p><strong>MVVM 原理图分析</strong><br>
+<img src="https://cutezhangq.github.io/post-images/1596524937242.png" alt="" loading="lazy"></p>
+<p><strong>实现了 数据初始化 和 数据更新：</strong><br>
+<img src="https://cutezhangq.github.io/post-images/1596524952690.png" alt="" loading="lazy"></p>
+<p>双向数据绑定双向数据绑定=单向数据绑定+input 监听<br>
+1.<br>
+双向数据绑定是建立在单向数据绑定(model==&gt;View)的基础之上的<br>
+2.<br>
+双向数据绑定的实现流程:<br>
+a. 在解析 v-model 指令时, 给当前元素添加 input 监听 （从View==&gt;model）<br>
+b. 当 input 的 value 发生改变时, 将最新的值赋值给当前表达式所对应的 data 属性</p>
+<pre><code class="language-js">&lt;div id=&quot;test&quot;&gt;
+&lt;input type=&quot;text&quot; v-model=&quot;msg&quot;&gt;
+&lt;p&gt;{{msg}}&lt;/p&gt;
+&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+new MVVM({
+el: '#test',
+data: {
+msg: 'haha'
+}
+})
+&lt;/script&gt;
+</code></pre>
+<h3 id="数据劫持observedata-this">数据劫持observe(data, this);</h3>
+<pre><code>1. 数据劫持是 vue 中用来实现数据绑定的一种 技术
+2. 基本思想: 通过 defineProperty()来监视 data 中所有属性(任意层次)数据的变化, 一旦变化就去更新界面
+</code></pre>
+<p>即，给data中的属性添加set(监视变化)，get方法</p>
+<p>例如:this.xxx = 3,此时this是vm,改变vm的set的值，然后这里的set变化了，会改变data中xxx的值。(vm——&gt;M)<br>
+当data中xxx的值改变时，data的set值也发生变化，就会去更新界面了。(数据绑定：M——&gt;V)<br>
+即：<br>
+vm中的set是用来实现 数据代理的<br>
+data中的set是用来实现 数据绑定 的（界面会变）</p>
+<h2 id="四个重要对象">四个重要对象</h2>
+<h3 id="1-observer-观察到了然后去劫持数据定义getset创建dep对象">1) Observer        （观察到了然后去“劫持”数据，定义get/set，创建dep对象）</h3>
+<p>a. 用来对 data 所有属性数据进行劫持的构造函数<br>
+b. 给 data 中所有属性重新定义属性描述(get/set)<br>
+c. 为 data 中的每个属性创建对应的 dep 对象</p>
+<h3 id="2-depdepend-存放watcher的数组即subscribessubs">2) Dep(Depend)    （存放watcher的数组，即subscribes——subs）</h3>
+<p>a. data 中的每个属性(所有层次)都对应一个 dep 对象<br>
+b. 创建的时机:<br>
+* 在初始化 definedata 中各个属性时创建对应的 dep 对象<br>
+* 在 data 中的某个属性值被设置为新的对象时</p>
+<p>c. 对象的结构</p>
+<pre><code class="language-js">{
+     id,            // 每个 dep 都有一个唯一的 id
+    subs        //包含 n 个对应 watcher 的 数组 (subscribes 的简写)
 }
 </code></pre>
-<p>上面代码中，存在全局变量tmp，但是块级作用域内let又声明了一个局部变量tmp，导致后者绑定这个块级作用域，所以在let声明变量前，对tmp赋值会报错。<br>
-在代码块内，使用let命令声明变量之前，该变量都是不可用的。这在语法上，称为“暂时性死区”（temporal dead zone，简称 TDZ）</p>
-<p>随意使用var声明变量容易犯错。基于这个教训，ES2015创建了let。它使用一种改进的算法来声明变量，并且使用块级作用域。<br>
-由于声明和定义两个阶段解耦，提升对于一个let声明的变量（包括包括const和class）无效。在初始化之前，变量处于暂时性死区并且不可以访问。<br>
-保持稳定的变量声明，有如下建议：</p>
+<p>d. subs 属性说明<br>
+* 当 watcher 被创建时, 内部将当前 watcher对象添加到对应的 dep对象的 subs中<br>
+* 当此 data 属性的值发生改变时,subs 中所有的 watcher 都会收到更新的通知,从而最终更新对应的界面</p>
+<h3 id="3-compiler">3) Compiler        ()</h3>
+<p>a. 用来解析模板页面的对象的构造函数(一个实例)<br>
+b. 利用 compile 对象解析模板页面<br>
+c. 每解析一个表达式(非事件指令)都会创建一个对应的watcher对象, 并建立watcher 与 dep 的关系<br>
+d. complie 与 watcher 关系: 一对多的关系</p>
+<h3 id="4-watcher">4) Watcher</h3>
+<p>更新显示的<br>
+a. 模板中每个非事件指令或表达式都对应一个 watcher 对象<br>
+b. 监视当前表达式数据的变化<br>
+c. 创建的时机: 在初始化编译模板时<br>
+d. 对象的组成</p>
+<p>{<br>
+vm,           //vm 对象<br>
+exp,          //对应指令的表达式<br>
+cb,            //当表达式所对应的数据发生改变的回调函数    （更新界面的回调函数）<br>
+value,        //表达式当前的值<br>
+depIds        //表达式中各级属性所对应的 dep 对象的集合对象         //属性名为 dep 的 &gt; id, 属性值为 dep<br>
+}5) 总结:dep 与 watcher 的关系: 多对多</p>
+<p>a. data 中的一个属性对应一个 dep, 一个 dep 中可能包含多个 watcher(模板中有几个 表达式使用到了同一个属性)<br>
+b. 模板中一个非事件表达式对应一个 watcher, 一个 watcher 中可能包含多个 dep(表 达式是多层:a.b)<br>
+c. 数据绑定使用到 2 个核心技术<br>
+* defineProperty()<br>
+* 消息订阅与发布<br>
+<img src="https://cutezhangq.github.io/post-images/1596525197350.png" alt="" loading="lazy"></p>
+<p><strong>Dep与Watch之间的关系    ：多对多</strong><br>
+dep先创建，watcher后创建。一旦watcher创建，关系就有限制条件了</p>
+<pre><code>* 1data属性 ---&gt;1Dep ---&gt; n个watcher(模板中有多个表达式使用了此属性)
+
+* 例如：在模板中写了多次表达式：{{name}}/ v-text=&quot;name&quot; ,则此时1个name ---&gt;1个Dep ---&gt; 2个watcher
+* 1表达式---&gt;1Watcher---&gt;n个Dep(多层表达式)
+
+* 例如：a.b.c对应1个watcher，但对应3个dep(a.b.c有3层)
+</code></pre>
+<p>同一个属性对应同一个dep<br>
+如何建立的？<br>
+data中属性的get()中建立<br>
+vm.name = 'abc' ---&gt;data中的name属性值变化 ---&gt; name的set()调用 ---&gt; dep ---&gt;相关的所有watcher ---&gt;cb() ---&gt;updater<br>
+什么时候建立？<br>
+初始化的解析模板中的表达式创建watcher对象时<br>
+通过get:建立dep与watcher的关系</p>
+<pre><code class="language-js">
+Object.defineProperty(data, key, {
+enumerable: true, // 可枚举
+configurable: false, // 不能再define
+get: function() {
+// 建立dep与watcher的关系
+if (Dep.target) {
+dep.depend();
+}
+// 返回属性值
+return val;
+},
+set: function(newVal) {
+if (newVal === val) {
+return;
+}
+val = newVal;
+// 新的值是object的话，进行监听
+childObj = observe(newVal);//observe观察data中的所有属性
+// 通过dep ,通知订阅者
+dep.notify();
+}
+});
+</code></pre>
+<h1 id="vue-是如何实现数据双向绑定的">Vue 是如何实现数据双向绑定的？</h1>
+<p>Vue 数据双向绑定主要是指：数据变化更新视图，视图变化更新数据，如下图所示：<br>
+<img src="https://cutezhangq.github.io/post-images/1596527367288.png" alt="" loading="lazy"><br>
+即：</p>
+<p>输入框内容变化时，Data 中的数据同步变化。即 View =&gt; Data 的变化。<br>
+Data 中的数据变化时，文本节点的内容同步变化。即 Data =&gt; View 的变化。</p>
+<p>其中，View 变化更新 Data ，可以通过事件监听的方式来实现，所以 Vue 的数据双向绑定的工作主要是如何根据 Data 变化更新 View。<br>
+Vue 主要通过以下 4 个步骤来实现数据双向绑定的：<br>
+实现一个监听器 Observer：对数据对象进行遍历，包括子属性对象的属性，利用 Object.defineProperty() 对属性都加上 setter 和 getter。这样的话，给这个对象的某个值赋值，就会触发 setter，那么就能监听到了数据变化。<br>
+实现一个解析器 Compile：解析 Vue 模板指令，将模板中的变量都替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者，一旦数据有变动，收到通知，调用更新函数进行数据更新。<br>
+实现一个订阅者 Watcher：Watcher 订阅者是 Observer 和 Compile 之间通信的桥梁 ，主要的任务是订阅 Observer 中的属性值变化的消息，当收到属性值变化的消息时，触发解析器 Compile 中对应的更新函数。<br>
+实现一个订阅器 Dep：订阅器采用 发布-订阅 设计模式，用来收集订阅者 Watcher，对监听器 Observer 和 订阅者 Watcher 进行统一管理。<br>
+<img src="https://cutezhangq.github.io/post-images/1596527393627.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[居中方案（水平居中、垂直居中、水平垂直居中）]]></title>
+        <id>https://cutezhangq.github.io/post/ju-zhong-fang-an-shui-ping-ju-zhong-chui-zhi-ju-zhong-shui-ping-chui-zhi-ju-zhong/</id>
+        <link href="https://cutezhangq.github.io/post/ju-zhong-fang-an-shui-ping-ju-zhong-chui-zhi-ju-zhong-shui-ping-chui-zhi-ju-zhong/">
+        </link>
+        <updated>2020-07-01T01:10:23.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="最简单的居中">最简单的居中</h1>
+<pre><code class="language-css">.zi{
+    width: 200px;
+    margin: 0 auto;
+}
+</code></pre>
+<h1 id="案例内容">案例内容</h1>
+<pre><code class="language-html"> &lt;style&gt;
+    .fu{
+      width: 200px;
+      height: 200px;
+      background-color: powderblue;
+    }
+
+  &lt;/style&gt;
+
+    &lt;body style=&quot;background-color: antiquewhite;&quot;&gt;
+      &lt;div class=&quot;fu&quot;&gt;
+        &lt;h2&gt;这是标题哦&lt;/h2&gt;
+        &lt;div class=&quot;zi&quot;&gt;
+          &lt;p&gt;哈哈&lt;/p&gt;
+          &lt;form action=&quot;&quot;&gt;
+            姓名:&lt;input type=&quot;text&quot;&gt;&lt;br /&gt;
+            性别:&lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;女&quot;&gt;女
+            &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;男&quot;&gt;男&lt;br /&gt;
+            爱好:&lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;篮球
+            &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;下棋
+            &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;画画
+             &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;写作&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;
+             &lt;img src=&quot;../bootstrap/img/1.png&quot; alt=&quot;&quot; width=&quot;150px&quot;&gt;
+          &lt;/form&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/body&gt;
+</code></pre>
+<h1 id="水平垂直-居中方案1">水平垂直 居中方案1</h1>
+<h3 id="需要知道-宽高">需要知道 宽高</h3>
+<pre><code class="language-css">        .fu{
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          top: 0;
+          margin: auto;
+        }
+</code></pre>
+<h1 id="水平垂直-居中方案2">水平垂直 居中方案2</h1>
+<h3 id="可用于-不知道宽高-的情况下使用">可用于 不知道宽高 的情况下使用</h3>
+<p>缺点：transform的兼容性不高</p>
 <ul>
-<li>声明、初始化，然后再使用变量。这个流程正确并且容易遵守；</li>
-<li>尽可能隐藏变量。变量暴露的越少，代码就越模块化。</li>
+<li>translate()函数是css3的新特性,在不知道自身宽高的情况下,可以利用它来进行水平垂直居中</li>
+<li>当使用: top: 50%;left: 50%；是以左上角为原点，故不处于中心位置</li>
+<li>translate(-50%,-50%)作用是：往上(x轴),左(y轴)移动自身长宽的50%,以使其居于中心位置。</li>
 </ul>
-<p>new运算符的执行过程<br>
-*  新生成一个对象<br>
-*  链接到原型: obj.<strong>proto</strong> = Con.prototype<br>
-*  绑定this:  apply<br>
-* 返回新对象(如果构造函数有自己 retrun 时，则返回该值)</p>
+<pre><code class="language-css">.fu{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);   //百分比是相对于自身宽高的百分比
+}
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1596418063196.png" alt="" loading="lazy"></figure>
+<h1 id="对于仅文本内容的需要居中的也可使img标签对于div标签-水平居中">对于仅文本内容的，需要居中的：(也可使Img标签对于div标签 水平居中)</h1>
+<pre><code class="language-css">h2{
+    text-align: center;
+}
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1596417930705.png" alt="" loading="lazy"></figure>
+<h1 id="表格中内容水平垂直居中">表格中内容水平垂直居中：</h1>
+<pre><code class="language-css">.table&gt;tbody&gt;tr&gt;td{
+  vertical-align: middle;
+  text-align: center;
+}
+</code></pre>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="最简单的居中">最简单的居中</h1>
+<pre><code class="language-css">.zi{
+    width: 200px;
+    margin: 0 auto;
+}
+</code></pre>
+<h1 id="案例内容">案例内容</h1>
+<pre><code class="language-html"> &lt;style&gt;
+    .fu{
+      width: 200px;
+      height: 200px;
+      background-color: powderblue;
+    }
+
+  &lt;/style&gt;
+
+    &lt;body style=&quot;background-color: antiquewhite;&quot;&gt;
+      &lt;div class=&quot;fu&quot;&gt;
+        &lt;h2&gt;这是标题哦&lt;/h2&gt;
+        &lt;div class=&quot;zi&quot;&gt;
+          &lt;p&gt;哈哈&lt;/p&gt;
+          &lt;form action=&quot;&quot;&gt;
+            姓名:&lt;input type=&quot;text&quot;&gt;&lt;br /&gt;
+            性别:&lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;女&quot;&gt;女
+            &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;男&quot;&gt;男&lt;br /&gt;
+            爱好:&lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;篮球
+            &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;下棋
+            &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;画画
+             &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot;&gt;写作&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;
+             &lt;img src=&quot;../bootstrap/img/1.png&quot; alt=&quot;&quot; width=&quot;150px&quot;&gt;
+          &lt;/form&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/body&gt;
+</code></pre>
+<h1 id="水平垂直-居中方案1">水平垂直 居中方案1</h1>
+<h3 id="需要知道-宽高">需要知道 宽高</h3>
+<pre><code class="language-css">        .fu{
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          top: 0;
+          margin: auto;
+        }
+</code></pre>
+<h1 id="水平垂直-居中方案2">水平垂直 居中方案2</h1>
+<h3 id="可用于-不知道宽高-的情况下使用">可用于 不知道宽高 的情况下使用</h3>
+<p>缺点：transform的兼容性不高</p>
+<ul>
+<li>translate()函数是css3的新特性,在不知道自身宽高的情况下,可以利用它来进行水平垂直居中</li>
+<li>当使用: top: 50%;left: 50%；是以左上角为原点，故不处于中心位置</li>
+<li>translate(-50%,-50%)作用是：往上(x轴),左(y轴)移动自身长宽的50%,以使其居于中心位置。</li>
+</ul>
+<pre><code class="language-css">.fu{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);   //百分比是相对于自身宽高的百分比
+}
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1596418063196.png" alt="" loading="lazy"></figure>
+<h1 id="对于仅文本内容的需要居中的也可使img标签对于div标签-水平居中">对于仅文本内容的，需要居中的：(也可使Img标签对于div标签 水平居中)</h1>
+<pre><code class="language-css">h2{
+    text-align: center;
+}
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1596417930705.png" alt="" loading="lazy"></figure>
+<h1 id="表格中内容水平垂直居中">表格中内容水平垂直居中：</h1>
+<pre><code class="language-css">.table&gt;tbody&gt;tr&gt;td{
+  vertical-align: middle;
+  text-align: center;
+}
+</code></pre>
+<!-- more -->
+<h1 id="10种-水平垂直居中对齐方式">10种 水平垂直居中对齐方式</h1>
+<p>测试代码</p>
+<pre><code class="language-html"> &lt;div class=&quot;wp&quot;&gt;
+    &lt;div class=&quot;box size&quot;&gt;123123&lt;/div&gt;
+ &lt;/div&gt;
+</code></pre>
+<pre><code class="language-css">/* 公共代码 */
+.wp {
+border: 1px solid red;
+width: 300px;
+height: 300px;
+}
+
+.box {
+background: green;
+}
+
+.box.size{
+width: 100px;
+height: 100px;
+}
+/* 公共代码 */
+</code></pre>
+<h2 id="absolute-负margin-需要知道子元素的宽高">absolute + 负margin 需要知道子元素的宽高</h2>
+<ul>
+<li>绝对定位的百分比是相对于父元素的宽高，通过这个特性可以让子元素的居中显示。</li>
+<li>但绝对定位是基于子元素的左上角，期望的效果是子元素的中心居中显示</li>
+<li>为了修正这个问题，可以借助外边距的负值，负的外边距可以让元素向相反方向定位，通过指定子元素的外边距为子元素宽度一半的负值，就可以让子元素居中了</li>
+</ul>
+<pre><code class="language-css">/* 定位代码 */
+.wp {
+    position: relative;
+}
+.box {
+    position: absolute;;
+    top: 50%;
+    left: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+}
+</code></pre>
+<h2 id="absolute-margin-auto-见上面内容">absolute + margin auto 见上面内容</h2>
+<h2 id="absolute-transform-见上面内容">absolute + transform 见上面内容</h2>
+<h2 id="absolute-calc-这种方法兼容性依赖calc的兼容性缺点是需要知道子元素的宽高">absolute + calc        这种方法兼容性依赖calc的兼容性，缺点是需要知道子元素的宽高</h2>
+<p>感谢css3带来了calc 计算属性，既然top的百分比是基于元素的左上角，那么在减去宽度的一半就好了</p>
+<pre><code class="language-css">.wp {
+position: relative;
+}
+.box {
+position: absolute;;
+top: calc(50% - 50px);
+left: calc(50% - 50px);
+}
+</code></pre>
+<h2 id="lineheight">lineheight</h2>
+<p>利用行内元素 居中属性也可以做到水平垂直 居中，<br>
+把box设置为行内元素，通过text-align就可以做到水平居中，但很多同学可能不知道通过通过vertical-align也可以在垂直方向做到居中</p>
+<p>/* 定位代</p>
+<pre><code class="language-css">/* 定位代码 */
+.wp {
+line-height: 300px;
+text-align: center;
+font-size: 0px;
+}
+.box {
+font-size: 16px;
+display: inline-block;
+vertical-align: middle;
+line-height: initial;
+text-align: left; /* 修正文字 */
+}
+</code></pre>
+<p>这种方法需要在子元素中将文字显示重置为想要的效果<br>
+<img src="https://cutezhangq.github.io/post-images/1596444057505.png" alt="" loading="lazy"></p>
+<h2 id="writing-mode">writing-mode</h2>
+<p>简单来说writing-mode可以改变文字的显示方向，比如可以通过writing-mode让文字的显示变为垂直方向</p>
+<pre><code class="language-html">&lt;div class=&quot;div1&quot;&gt;水平方向&lt;/div&gt;
+&lt;div class=&quot;div2&quot;&gt;垂直方向&lt;/div&gt;
+</code></pre>
+<pre><code class="language-css">.div2 {
+   writing-mode: vertical-lr;
+}
+</code></pre>
+<p><img src="https://cutezhangq.github.io/post-images/1596444154555.png" alt="" loading="lazy"><br>
+更神奇的是所有水平方向上的css属性，都会变为垂直方向上的属性，比如text-align，通过writing-mode和text-align就可以做到水平和垂直方向的居中了，只不过要稍微麻烦一点</p>
+<pre><code class="language-css">/* 此处引用上面的公共代码 */
+/* 此处引用上面的公共代码 */
+
+/* 定位代码 */
+.wp {
+writing-mode: vertical-lr;
+text-align: center;
+}
+.wp-inner {
+writing-mode: horizontal-tb;
+display: inline-block;
+text-align: center;
+width: 100%;
+}
+.box {
+display: inline-block;
+margin: auto;
+text-align: left;
+}
+</code></pre>
+<h2 id="table">table</h2>
+<p>曾经table被用来做页面布局，现在没人这么做了，但table也能够实现水平垂直居中，但是会增加很多冗余代码</p>
+<pre><code class="language-css">.wp {
+text-align: center;
+}
+.box {
+display: inline-block;
+}
+</code></pre>
+<h2 id="css-table">css-table</h2>
+<p>css新增的table属性，可以让我们把普通元素，变为table元素的现实效果，通过这个特性也可以实现水平垂直居中<br>
+下面通过css属性，可以让div显示的和table一样<br>
+这种方法和table一样的原理，但却没有那么多冗余代码，兼容性也还不错</p>
+<pre><code class="language-css">.wp {
+display: table-cell;
+text-align: center;
+vertical-align: middle;
+}
+.box {
+display: inline-block;
+}
+</code></pre>
+<h2 id="flex">flex</h2>
+<p>flex作为现代的布局方案，颠覆了过去的经验，只需几行代码就可以优雅的做到水平垂直居中</p>
+<pre><code class="language-css">.wp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+</code></pre>
+<h2 id="grid">grid</h2>
+<p>css新出的网格布局，由于兼容性不太好，一直没太关注，通过grid也可以实现水平垂直居中</p>
+<pre><code class="language-css">.wp {
+    display: grid;
+}
+.box {
+    align-self: center;
+    justify-self: center;
+}
+</code></pre>
+<h1 id="总结">总结</h1>
+<pre><code>* PC端有兼容性要求，宽高固定，推荐absolute + 负margin
+* PC端有兼容要求，宽高不固定，推荐css-table
+* PC端无兼容性要求，推荐flex
+* 移动端推荐使用flex
+</code></pre>
 ]]></content>
     </entry>
     <entry>
@@ -1123,6 +1306,116 @@ let a = ['1','2','3',1,NaN,NaN,undefined,undefined,null,null, 'a','b','b'];
     }
     console.log(unique2(b));//[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;NaN&quot;, &quot;undefined&quot;, &quot;null&quot;, &quot;a&quot;, &quot;b&quot;]
 </code></pre>
+<h1 id="js中-new-操作符干了什么">js中 new 操作符干了什么？</h1>
+<ul>
+<li>
+<ol>
+<li>创建了一个空对象</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>将空对象赋值给this，并将this的__proto__指向构造方法对象的原型</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>对this这个对象进行属性的添加，并初始化</li>
+</ol>
+</li>
+<li>
+<ol start="4">
+<li>将this对象返回</li>
+</ol>
+</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[变量的生命周期 let、var、const]]></title>
+        <id>https://cutezhangq.github.io/post/js-bian-liang-de-sheng-ming-zhou-qi-letvarconst/</id>
+        <link href="https://cutezhangq.github.io/post/js-bian-liang-de-sheng-ming-zhou-qi-letvarconst/">
+        </link>
+        <updated>2020-05-19T11:34:39.000Z</updated>
+        <content type="html"><![CDATA[<p>具体let、var、consts区别见es6中内容</p>
+<h1 id="变量的生命周期">变量的生命周期</h1>
+<p>当引擎（如：浏览器中的js引擎）访问变量的时候，它们的生命周期包括下面几个阶段：<br>
+1.<strong>声明 阶段</strong>：在作用域中注册一个变量<br>
+2.<strong>初始化 阶段</strong>：分配内存，给作用域中的变量创建绑定。在这个阶段，变量自动地被初始化为 undefined<br>
+3.<strong>赋值 阶段</strong>：给已经初始化过的变量赋值<br>
+通过声明阶段但是没有到达初始化阶段的变量是处于未定义的状态。<br>
+<img src="https://cutezhangq.github.io/post-images/1596368154142.png" alt="" loading="lazy"><br>
+注意，根据变量的生命周期，声明阶段和一般说的变量声明是不同的术语。<br>
+简言之，引擎在这三个阶段处理变量声明：声明阶段、初始化阶段和赋值阶段。</p>
+<h1 id="var-变量-的生命周期">var 变量 的生命周期</h1>
+<p><img src="https://cutezhangq.github.io/post-images/1596368206711.png" alt="" loading="lazy"><br>
+严格来说，提升的概念是在函数作用域的顶部 声明和初始化 变量。在 声明和初始化 阶段之间 没有间隙。</p>
+<pre><code class="language-js">function multiplyByTen(number) {  
+  console.log(ten); // =&gt; undefined
+  var ten;
+  ten = 10;
+  console.log(ten); // =&gt; 10
+  return number * ten;
+}
+multiplyByTen(4); // =&gt; 40
+</code></pre>
+<h1 id="函数声明的生命周期">函数声明的生命周期</h1>
+<p><img src="https://cutezhangq.github.io/post-images/1596368259214.png" alt="" loading="lazy"><br>
+声明、初始化、赋值阶段在 函数作用域 的开始 立刻执行（只有一步）。<br>
+funcName()可以在该作用域的任何地方调用，不依赖于声明语句的位置（甚至可以在最后）。</p>
+<h1 id="let-变量的生命周期">let 变量的生命周期</h1>
+<p>let变量的处理方式和 var 不同。最主要的区别就是声明和初始化阶段被分开了。<br>
+<img src="https://cutezhangq.github.io/post-images/1596368317409.png" alt="" loading="lazy"><br>
+<img src="https://cutezhangq.github.io/post-images/1596368337198.png" alt="" loading="lazy"></p>
+<pre><code class="language-js">  let condition = true;  
+  // console.log(number); // =&gt; Throws ReferenceError
+  let number;
+  console.log(number); // =&gt; undefined
+  number = 5;
+  console.log(number); // =&gt; 5
+</code></pre>
+<p>const和class类型 和let有相同的生命周期，除了赋值只能发生一次。</p>
+<h3 id="为什么提升在let的生命周期里无效">为什么提升在let的生命周期里无效</h3>
+<p>如上所述，<code>提升就是变量在作用域顶部进行声明和初始化。</code><br>
+但是<code>let的生命周期</code>将 <code>声明和初始化</code> 两个阶段 <code>解耦</code> 了。<code>解耦让提升这个术语失效了</code>。<br>
+两个阶段中间的间隙创建了暂时性死区，在这里，变量不能被访问。</p>
+<h3 id="暂时性死区">暂时性死区</h3>
+<p>只要块级作用域内存在let命令，它所声明的变量就“绑定”（binding）这个区域，不再受外部的影响。</p>
+<pre><code class="language-js">var tmp = 123;
+if (true) {
+  tmp = 'abc'; // ReferenceError
+  let tmp;
+}
+</code></pre>
+<p>上面代码中，存在全局变量tmp，但是块级作用域内let又声明了一个局部变量tmp，导致后者绑定这个块级作用域，所以在let声明变量前，对tmp赋值会报错。<br>
+在代码块内，使用let命令声明变量之前，该变量都是不可用的。这在语法上，称为“暂时性死区”（temporal dead zone，简称 TDZ）</p>
+<p>随意使用var声明变量容易犯错。基于这个教训，ES2015创建了let。它使用一种改进的算法来声明变量，并且使用块级作用域。<br>
+由于声明和定义两个阶段解耦，提升对于一个let声明的变量（包括包括const和class）无效。在初始化之前，变量处于暂时性死区并且不可以访问。<br>
+保持稳定的变量声明，有如下建议：</p>
+<ul>
+<li>声明、初始化，然后再使用变量。这个流程正确并且容易遵守；</li>
+<li>尽可能隐藏变量。变量暴露的越少，代码就越模块化。</li>
+</ul>
+<p>new运算符的执行过程<br>
+*  新生成一个对象<br>
+*  链接到原型: obj.<strong>proto</strong> = Con.prototype<br>
+*  绑定this:  apply<br>
+* 返回新对象(如果构造函数有自己 retrun 时，则返回该值)</p>
+<h1 id="let-const-var的区别">let const var的区别：</h1>
+<h2 id="第一个是声明过程">第一个是声明过程：</h2>
+<pre><code>var：遇到有var的作用域，在任何语句执行器都已经完成了声明和初始化，也就是变量提升并且拿到undefined的原因。
+let：解析器进入一个块级作用域，发现let关键字，变量只是先完成声明，并没有到初始化那一步。如果此时在作用域提前访问，会报错 xx is not defined，这就是暂时性死区的由来。等到解析到有let那一行时，才会进入初始化阶段。如果let那一行是赋值操作，则初始化和赋值同时进行。
+const和 let一样。
+</code></pre>
+<h2 id="第二个是内存分配">第二个是内存分配：</h2>
+<pre><code> var：会直接在栈内存里预分配内存空间，然后等到实际语句执行时，再存储对应的变量，如果传的是引用类型，则在堆内存里开辟一个内存空间存储实际内容，栈内存会存储一个指向堆内存的指针
+ let：不会在栈内存里预分配内存空间，而且在栈内存分配变量的时候，会检查，如果有相同变量名存在就会报错
+const：不会分预配内存空间，栈内存分配变量时也会做同样的检测。const存储的变量是不可修改的，所以对于基本类型来说无法修改定义的值，对于引用类型来说无法修改栈内存里分配的指针，但是可以修改指针指向的对象里面的属性
+</code></pre>
+<h2 id="第三个是变量提升">第三个是变量提升：</h2>
+<pre><code>let只是创建过程中提升，初始化过程并没有提升，所以会产生暂时性死区。
+var的创建和初始化过程都提升了，所以赋值前访问会得到undefined
+</code></pre>
 ]]></content>
     </entry>
     <entry>
@@ -1254,6 +1547,68 @@ new Vue({
  }
  &lt;/style&gt;
 </code></pre>
+<h1 id="vue-框架怎么实现对象和数组的监听">Vue 框架怎么实现对象和数组的监听？</h1>
+<p>如果被问到 Vue 怎么实现数据双向绑定，大家肯定都会回答 通过 Object.defineProperty() 对数据进行劫持，但是  Object.defineProperty() 只能对属性进行数据劫持，不能对整个对象进行劫持，同理无法对数组进行劫持，但是我们在使用 Vue 框架中都知道，Vue 能检测到对象和数组（部分方法的操作）的变化，那它是怎么实现的呢？我们查看相关代码如下：</p>
+<pre><code class="language-js">/**
+   * Observe a list of Array items.
+   */
+  observeArray (items: Array&lt;any&gt;) {
+    for (let i = 0, l = items.length; i &lt; l; i++) {
+      observe(items[i])  // observe 功能为监测数据的变化
+    }
+  }
+
+  /**
+   * 对属性进行递归遍历
+   */
+  let childOb = !shallow &amp;&amp; observe(val) // observe 功能为监测数据的变化
+
+</code></pre>
+<p>通过以上 Vue 源码部分查看，我们就能知道 Vue 框架是通过遍历数组 和递归遍历对象，从而达到利用 Object.defineProperty() 也能对对象和数组（部分方法的操作）进行监听。</p>
+<h1 id="proxy-与-objectdefineproperty-优劣对比">Proxy 与 Object.defineProperty 优劣对比</h1>
+<p><strong>Proxy 的优势如下:</strong></p>
+<p>Proxy 可以直接监听对象而非属性；<br>
+Proxy 可以直接监听数组的变化；<br>
+Proxy 有多达 13 种拦截方法,不限于 apply、ownKeys、deleteProperty、has 等等是 Object.defineProperty 不具备的；<br>
+Proxy 返回的是一个新对象,我们可以只操作新的对象达到目的,而 Object.defineProperty 只能遍历对象属性直接修改；<br>
+Proxy 作为新标准将受到浏览器厂商重点持续的性能优化，也就是传说中的新标准的性能红利；</p>
+<p><strong>Object.defineProperty 的优势如下:</strong></p>
+<p>兼容性好，支持 IE9，而 Proxy 的存在浏览器兼容性问题,而且无法用 polyfill 磨平，因此 Vue 的作者才声明需要等到下个大版本( 3.0 )才能用 Proxy 重写。</p>
+<h1 id="vue-怎么用-vmset-解决对象新增属性不能响应的问题">Vue 怎么用 vm.$set() 解决对象新增属性不能响应的问题 ？</h1>
+<p>受现代 JavaScript 的限制 ，Vue 无法检测到对象属性的添加或删除。由于 Vue 会在初始化实例时对属性执行 getter/setter 转化，所以属性必须在 data 对象上存在才能让 Vue 将它转换为响应式的。但是 Vue 提供了 Vue.set (object, propertyName, value) / vm.$set (object, propertyName, value)  来实现为对象添加响应式属性，那框架本身是如何实现的呢？<br>
+我们查看对应的 Vue 源码：vue/src/core/instance/index.js</p>
+<pre><code class="language-js">export function set (target: Array&lt;any&gt; | Object, key: any, val: any): any {
+  // target 为数组  
+  if (Array.isArray(target) &amp;&amp; isValidArrayIndex(key)) {
+    // 修改数组的长度, 避免索引&gt;数组长度导致splcie()执行有误
+    target.length = Math.max(target.length, key)
+    // 利用数组的splice变异方法触发响应式  
+    target.splice(key, 1, val)
+    return val
+  }
+  // key 已经存在，直接修改属性值  
+  if (key in target &amp;&amp; !(key in Object.prototype)) {
+    target[key] = val
+    return val
+  }
+  const ob = (target: any).__ob__
+  // target 本身就不是响应式数据, 直接赋值
+  if (!ob) {
+    target[key] = val
+    return val
+  }
+  // 对属性进行响应式处理
+  defineReactive(ob.value, key, val)
+  ob.dep.notify()
+  return val
+}
+
+</code></pre>
+<p>我们阅读以上源码可知，vm.$set 的实现原理是：</p>
+<ul>
+<li>如果目标是数组，直接使用数组的 splice 方法触发相应式；</li>
+<li>如果目标是对象，会先判读属性是否存在、对象是否是响应式，最终如果要对属性进行响应式处理，则是通过调用   defineReactive 方法进行响应式处理（ defineReactive 方法就是  Vue 在初始化对象时，给对象属性采用 Object.defineProperty 动态添加 getter 和 setter 的功能所调用的方法）</li>
+</ul>
 ]]></content>
     </entry>
     <entry>
@@ -1655,141 +2010,75 @@ methods: {
 </code></pre>
 <p>使用闭包的注意点1.由于闭包会使得函数中的变量都被保存在内存中，内存消耗很大，所以不能滥用闭包，否则会造成网页的性能问题，在IE中可能导致内存泄露。解决方法是，在退     出函数之前，将不使用的局部变量全部删除.<br>
 2.闭包会在父函数外部，改变父函数内部变量的值。所以，如果你把父函数当作对象（object）使用，把闭包当作它的公用方法（Public Method），把内部变量当     作它的私有属性（private value），这时一定要小心，不要随便改变父函数内部变量的值。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Git使用]]></title>
-        <id>https://cutezhangq.github.io/post/git/</id>
-        <link href="https://cutezhangq.github.io/post/git/">
-        </link>
-        <updated>2020-03-22T06:51:14.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="定义">定义</h1>
-<p>是一个分布式版本控制工具（系统）。</p>
-<h1 id="git特点">Git特点</h1>
-<p>1.尽可能添加数据而不是删除或修改数据，存储能力强，容易备份</p>
-<p>2.完整性保证（对于每次提交做Hash的操作）</p>
-<p>3.与linux命令全面兼容</p>
-<p>4.良好性能，支持离线（在本地完成）</p>
-<p>5.制定工作流</p>
-<p>6.分布式仓库</p>
-<h1 id="git官网">Git官网</h1>
-<p><a href="https://git-scm.com/book/zh/v2">https://git-scm.com/book/zh/v2</a></p>
-<h1 id="git三种状态三个逻辑区域">Git三种状态,三个逻辑区域</h1>
-<h2 id="三种状态">三种状态</h2>
+<h1 id="16使用过-vue-ssr-吗说说-ssr">[16.]使用过 Vue SSR 吗？说说 SSR？</h1>
+<blockquote>
+<p>Vue.js 是构建客户端应用程序的框架。默认情况下，可以在浏览器中输出 Vue 组件，进行生成 DOM 和操作 DOM。然而，也可以将同一个组件渲染为服务端的 HTML 字符串，将它们直接发送到浏览器，最后将这些静态标记&quot;激活&quot;为客户端上完全可交互的应用程序。<br>
+即：SSR大致的意思就是vue在客户端将标签渲染成的整个 html 片段的工作在服务端完成，服务端形成的html 片段直接返回给客户端这个过程就叫做服务端渲染。</p>
+</blockquote>
+<p>** 服务端渲染 SSR 的优缺点如下：**<br>
+** （1）服务端渲染的优点：**</p>
+<ul>
+<li>更好的 SEO： 因为 SPA 页面的内容是通过 Ajax 获取，而搜索引擎爬取工具并不会等待 Ajax 异步完成后再抓取页面内容，所以在 SPA 中是抓取不到页面通过 Ajax 获取到的内容；而 SSR 是直接由服务端返回已经渲染好的页面（数据已经包含在页面中），所以搜索引擎爬取工具可以抓取渲染好的页面；</li>
+<li>更快的内容到达时间（首屏加载更快）： SPA 会等待所有 Vue 编译后的 js 文件都下载完成后，才开始进行页面的渲染，文件下载等需要一定的时间等，所以首屏渲染需要一定的时间；SSR 直接由服务端渲染好页面直接返回显示，无需等待下载 js 文件及再去渲染等，所以 SSR 有更快的内容到达时间；</li>
+</ul>
+<p>** （2) 服务端渲染的缺点： **</p>
+<ul>
+<li>更多的开发条件限制： 例如服务端渲染只支持 beforCreate 和 created 两个钩子函数，这会导致一些外部扩展库需要特殊处理，才能在服务端渲染应用程序中运行；并且与可以部署在任何静态文件服务器上的完全静态单页面应用程序 SPA 不同，服务端渲染应用程序，需要处于 Node.js server 运行环境；</li>
+<li>更多的服务器负载：在 Node.js  中渲染完整的应用程序，显然会比仅仅提供静态文件的  server 更加大量占用CPU 资源 (CPU-intensive - CPU 密集)，因此如果你预料在高流量环境 ( high traffic ) 下使用，请准备相应的服务器负载，并明智地采用缓存策略。</li>
+</ul>
+<h1 id="17vue-router-路由模式有几种">[17.]vue-router 路由模式有几种？</h1>
+<p>vue-router 有 3 种路由模式：hash、history、abstract，对应的源码如下所示：</p>
+<pre><code class="language-js">switch (mode) {
+  case 'history':
+	this.history = new HTML5History(this, options.base)
+	break
+  case 'hash':
+	this.history = new HashHistory(this, options.base, this.fallback)
+	break
+  case 'abstract':
+	this.history = new AbstractHistory(this, options.base)
+	break
+  default:
+	if (process.env.NODE_ENV !== 'production') {
+	  assert(false, `invalid mode: ${mode}`)
+	}
+}
+</code></pre>
+<p>其中，3 种路由模式的说明如下：</p>
 <ul>
 <li>
-<p>modified(已修改)</p>
+<p>hash:  使用 URL hash 值来作路由。支持所有浏览器，包括不支持 HTML5 History Api 的浏览器；</p>
 </li>
 <li>
-<p>staged(已暂存)</p>
+<p>history :  依赖 HTML5 History API 和服务器配置。具体可以查看 HTML5 History 模式；</p>
 </li>
 <li>
-<p>committed(已提交)</p>
+<p>abstract :  支持所有 JavaScript 运行环境，如 Node.js 服务器端。如果发现没有浏览器的 API，路由会自动强制进入这个模式.</p>
 </li>
 </ul>
-<h2 id="三种分区">三种分区</h2>
-<p>git分为：<code>工作区</code>，<code>暂存区</code>，<code>本地库</code>，<code>远程区</code>  四块大区域</p>
-<h2 id="对应关系">对应关系</h2>
-<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1585704345724.jpg" alt="" loading="lazy"></figure>
-<h1 id="git文件内容结构">.Git文件内容结构</h1>
-<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1585704336057.png" alt="" loading="lazy"></figure>
-<h1 id="git命令">Git命令</h1>
-<h2 id="搭建git仓库">搭建Git仓库</h2>
-<h3 id="两种场景">两种场景：</h3>
-<p>使用<code>init</code>初始化，将本地的目录变成git<code>本地仓库</code></p>
+<h1 id="18能说下-vue-router-中常用的-hash-和-history-路由模式实现原理吗">[18.]能说下 vue-router 中常用的 hash 和 history 路由模式实现原理吗？</h1>
+<p><strong>（1）hash 模式的实现原理</strong><br>
+早期的前端路由的实现就是基于 location.hash 来实现的。其实现原理很简单，location.hash 的值就是 URL 中 # 后面的内容。比如下面这个网站，它的 location.hash 的值为 '#search'：</p>
+<pre><code class="language-cmd">https://www.word.com#search
+</code></pre>
+<p>hash  路由模式的实现主要是基于下面几个特性：</p>
 <ul>
-<li>1.已有项目，将项目纳入Git管理</li>
+<li>URL 中 hash 值只是客户端的一种状态，也就是说当向服务器端发出请求时，hash 部分不会被发送；</li>
+<li>hash 值的改变，都会在浏览器的访问历史中增加一个记录。因此我们能通过浏览器的回退、前进按钮控制hash 的切换；</li>
+<li>可以通过 a 标签，并设置 href 属性，当用户点击这个标签后，URL 的 hash 值会发生改变；或者使用  JavaScript 来对 loaction.hash 进行赋值，改变 URL 的 hash 值；</li>
+<li>我们可以使用 hashchange 事件来监听 hash 值的变化，从而对页面进行跳转（渲染）。<br>
+<strong>（2）history 模式的实现原理</strong><br>
+HTML5 提供了 History API 来实现 URL 的变化。其中做最主要的 API 有以下两个：history.pushState() 和 history.repalceState()。这两个 API 可以在不进行刷新的情况下，操作浏览器的历史纪录。唯一不同的是，前者是新增一个历史记录，后者是直接替换当前的历史记录，如下所示：</li>
 </ul>
-<pre><code class="language-cmd">cd 项目所在文件夹
-git init
+<pre><code class="language-js">window.history.pushState(null, null, path);
+window.history.replaceState(null, null, path);
 </code></pre>
+<p>history 路由模式的实现主要基于存在下面几个特性：</p>
 <ul>
-<li>2.没有项目，新建用Git管理的项目</li>
+<li>pushState 和 repalceState 两个 API 来操作实现 URL 的变化 ；</li>
+<li>我们可以使用 popstate  事件来监听 url 的变化，从而对页面进行跳转（渲染）；</li>
+<li>history.pushState() 或 history.replaceState() 不会触发 popstate 事件，这时我们需要手动触发页面跳转（渲染）。</li>
 </ul>
-<pre><code class="language-cmd">cd 项目所在文件夹
-git init your_project   #会在当前路径下创建和项目名称同名的文件夹
-</code></pre>
-<h3 id="查看本地目录的状态">查看本地目录的状态</h3>
-<pre><code class="language-cmd">git status
-</code></pre>
-<h3 id="本地仓库与远程仓库关联">本地仓库与远程仓库关联</h3>
-<p>与<code>远程仓库</code>关联，（此前已在码云等上注册远程仓库）</p>
-<pre><code class="language-cmd">git add origin 远程仓库地址
-</code></pre>
-<hr>
-<h2 id="更新项目">更新项目</h2>
-<p>准备上传你的项目之前，最好更新一下项目，确保没有和远程仓库的代码有<code>冲突</code></p>
-<pre><code class="language-cmd">git pull --rebase origin master
-</code></pre>
-<hr>
-<h2 id="提交项目">提交项目</h2>
-<pre><code class="language-cmd">git add .           #添加目录下所有发生改变的文件
-git commit -m           #'注释信息'
-git push -u origin master       #本地仓库代码提交至远程仓库(有时候会提交失败，可以尝试git push -u origin master -f 强制提交,只建议在第一次提交中使用)
-</code></pre>
-<hr>
-<h2 id="克隆项目">克隆项目</h2>
-<pre><code class="language-cmd">git clone 远程仓库地址
-</code></pre>
-<hr>
-<h2 id="分支相关命令">分支相关命令</h2>
-<ul>
-<li>查看所有分支</li>
-</ul>
-<pre><code class="language-cmd">git branch  -a
-</code></pre>
-<ul>
-<li>创建分支</li>
-</ul>
-<pre><code class="language-cmd">git branch 分支名
-</code></pre>
-<ul>
-<li>切换到某一分支</li>
-</ul>
-<pre><code class="language-cmd">git checkout  分支名
-</code></pre>
-<ul>
-<li><code>合并分支</code></li>
-</ul>
-<pre><code class="language-cmd">git merge 分支名
-</code></pre>
-<ul>
-<li><code>创建远程的分支,并且把本地分支推送到远程分支上</code></li>
-</ul>
-<pre><code class="language-cmd">git push origin 分支名
-</code></pre>
-<ul>
-<li>删除本地分支</li>
-</ul>
-<pre><code class="language-cmd">git branch -d 分支名
-</code></pre>
-<ul>
-<li>查看本地分支状态</li>
-</ul>
-<pre><code class="language-cmd">git branch
-</code></pre>
-<ul>
-<li>删除远程分支</li>
-</ul>
-<pre><code class="language-cmd">git push origin --delete [branch_name]
-</code></pre>
-<h1 id="git本地项目代码上传至远程仓库">git本地项目代码上传至远程仓库</h1>
-<h2 id="一-在码云github上创建项目名称为xx的项目">一、在码云/gitHub上创建项目名称为xx的项目</h2>
-<h2 id="二-打开gitbash-用cd命令进入本地项目然后把初始化一下把本地的目录变成git本地仓库-git-status-可以查看本地目录的状态信息">二、打开GitBash ，用cd命令进入本地项目,然后把初始化一下，把本地的目录变成git本地仓库, git status 可以查看本地目录的状态信息</h2>
-<p>git init<br>
-git status<br>
-注意：当git status报红时，是本地的文件没有暂存，选择：暂存本地文件<br>
-<img src="https://cutezhangq.github.io/post-images/1596367654143.png" alt="" loading="lazy"><br>
-(可以使用git add . 进行暂存)暂存完了之后：再次查看git status发现变绿了<br>
-<img src="https://cutezhangq.github.io/post-images/1596367683394.png" alt="" loading="lazy"></p>
-<h2 id="三-将你本地仓库与码云上的远程仓库关联起来">三、将你本地仓库与码云上的远程仓库关联起来</h2>
-<p>git remote add origin https://gitee.com/xxx/xxx.git</p>
-<h2 id="四-在你准备上传你的项目之前最好更新一下项目确保没有和远程仓库的代码有冲突">四、在你准备上传你的项目之前，最好更新一下项目，确保没有和远程仓库的代码有冲突</h2>
-<p>git pull --rebase origin master</p>
-<h2 id="五-把你的项目复制到这个目录下用命令添加你要上传的项目再提交到本地暂存区最后把本地仓库项目提交到远程仓库-git-是强烈建议你在提交代码的时候要写备注注释的所以既然人家是强烈建议你就别懒了">五、把你的项目复制到这个目录下，用命令添加你要上传的项目，再提交到本地暂存区，最后把本地仓库项目提交到远程仓库。git 是强烈建议你在提交代码的时候，要写备注注释的，所以既然人家是强烈建议，你就别懒了。</h2>
-<p>git add . 添加目录下所有发生改变的文件<br>
-git commit -m '注释信息'<br>
-git push -u origin master 本地仓库代码提交至远程仓库(有时候会提交失败，可以尝试$ git push -u origin master -f 强制提交,只建议在第一次提交中使用)</p>
 ]]></content>
     </entry>
 </feed>
