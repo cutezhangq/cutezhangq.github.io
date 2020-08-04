@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596544280048">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596548515790">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -31,7 +31,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596544280048" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596548515790" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -191,7 +191,20 @@
   ]
 </code></pre>
 <p>key是给每一个vnode的唯一id,可以依靠key,<code>更准确</code>, <code>更快</code>的拿到oldVnode中对应的vnode节点。<br>
-更快 体现在：利用key的唯一性生成map对象来获取对应节点，比遍历方式更快。(这个观点，就是我最初的那个观点。从这个角度看，map会比遍历更快。</p>
+更快 体现在：利用key的唯一性生成map对象来获取对应节点，比遍历方式更快。(这个观点，就是我最初的那个观点。从这个角度看，map会比遍历更快。<br>
+更准确：因为带 key 就不是就地复用了，在 sameNode 函数 a.key === b.key 对比中可以避免就地复用的情况。所以会更加准确。</p>
+<p>更快速：利用 key 的唯一性生成 map 对象来获取对应节点，比遍历方式更快，源码如下：</p>
+<pre><code class="language-js">function createKeyToOldIdx (children, beginIdx, endIdx) {
+  let i, key
+  const map = {}
+  for (i = beginIdx; i &lt;= endIdx; ++i) {
+    key = children[i].key
+    if (isDef(key)) map[key] = i
+  }
+  return map
+}
+
+</code></pre>
 <h2 id="扩展"><strong>扩展</strong>：</h2>
 <h3 id="diff算法">diff算法</h3>
 <h3 id="vue源码">vue源码</h3>
