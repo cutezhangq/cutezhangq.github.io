@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Vuex中mutations和actions的区别 | cutezhangq</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596769565696">
+<link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化
+Mutation 更改 Vuex 的 store 中的状态的唯一方法是提交 muta..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://cutezhangq.github.io">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596769565696" class="site-logo">
+        <h1 class="site-title">cutezhangq</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://cutezhangq.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Vuex中mutations和actions的区别</h2>
+            <div class="post-date">2020-08-06</div>
+            
+            <div class="post-content" v-pre>
+              <p><strong>Vuex</strong> 是一个专为 Vue.js 应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化</p>
+<p>Mutation 更改 Vuex 的 store 中的状态的<strong>唯一</strong>方法是提交 mutation。事实上在 vuex 里面 actions 只是一个架构性的概念，并不是必须的，只要最后触发 mutation 就行。异步竞态怎么处理那是用户自己的事情。</p>
+<ul>
+<li>
+<p>Action <strong>提交的是 mutation</strong>，而不是直接变更状态。最后<strong>是mutation去修改store里的state</strong></p>
+</li>
+<li>
+<p>Action 可以包含任意<strong>异步</strong>操作。</p>
+</li>
+<li>
+<p><strong>mutation只能进行同步操作</strong>。为什么？请参考下面的例子：</p>
+</li>
+</ul>
+<pre><code class="language-js">mutations: {
+ someMutation (state) {
+   api.callAsyncMethod(() =&gt; {
+     state.count++
+   })
+ }
+}
+</code></pre>
+<p>现在想象，我们正在 debug 一个 app 并且观察 devtool 中的 mutation 日志。每一条 mutation 被记录，devtools 都需要捕捉到前一状态和后一状态的快照。<br>然而，在上面的例子中 mutation 中的异步函数中的回调让这不可能完成：因为当 mutation 触发的时候，回调函数还没有被调用，<br>devtools 不知道什么时候回调函数实际上被调用——实质上任何在回调函数中进行的状态的改变都是不可追踪的。</p>
+<p>mutation的触发通过store.commit来进行</p>
+<p>action的触发通过store.dispatch进行</p>
+<h1 id="安装">安装</h1>
+<blockquote>
+<p>npm install vuex --save</p>
+</blockquote>
+<h1 id="用法一">用法一</h1>
+<pre><code class="language-js">
+/**
+ * 创建完文件后需要去到main.js中引入成全局
+ */
+import Vue from &quot;vue&quot;;
+import Vuex from &quot;vuex&quot;;
+//使用vuex
+Vue.use(Vuex);
+const state = {
+  targetUser: {} //用户详细资料数据
+};
+ 
+const getters = {
+  //获取到用户状态,//实时监听state值的变化(最新状态)
+  targetUser: state =&gt; state.targetUser
+};
+ 
+const mutations = {
+  //自定义改变state初始值的方法
+  SET_TARGET_USER(state, targetUser) {
+    if (targetUser) {
+      state.targetUser = targetUser; //如果targetUser有内容就赋给状态信息
+    } else {
+      //如果没内容就给targetUser赋空对象
+      state.targetUser = {};
+    }
+  }
+};
+ 
+const actions = {
+  //这里面的方法是用来异步触发mutations里面的方法,context与store 实例具有相同方法和属性
+  // 页面定义的setGargetUser,targetUser为页面传过来的值
+  setGargetUser({ commit }, targetUser) {
+    commit(&quot;SET_TARGET_USER&quot;, targetUser);
+  }
+};
+</code></pre>
+<p>存储页面:</p>
+<pre><code class="language-js">
+this.$store.dispatch('setGargetUser',friend)
+</code></pre>
+<p>获取页面:</p>
+<pre><code class="language-js"> computed:{
+        //  提示vuex中存入的用户详细资料
+        targetUser(){
+            return this.$store.getters.targetUser
+        }
+     },
+</code></pre>
+<p>以上方法有一个问题就是如果多人开发;会出现不利于管理,下面用一个方法定义一个常量<br>
+存储:</p>
+<pre><code class="language-js">  this.$store.dispatch('setUser',decode)
+</code></pre>
+<p>store.js</p>
+<pre><code class="language-js">
+/**
+ * 创建完文件后需要去到main.js中引入成全局
+ */
+import Vue from &quot;vue&quot;;
+import Vuex from &quot;vuex&quot;;
+// 持久存储插件
+import createPersistedState from &quot;vuex-persistedstate&quot;;
+ 
+//使用vuex
+Vue.use(Vuex);
+ 
+/**
+ * 在需要多人协作的项目中，我们可以使用常量代替mutation 事件类型。这在各种 Flux 实现中是很常见的模式。同时把这些常量放在单独的文件中可以让协作开发变得清晰。
+ *  定义存储信息
+ *
+ *    */
+ 
+const types = {
+  SET_TARGET_USER: &quot;SET_TARGET_USER&quot; //详细资料
+};
+ 
+const state = {
+  //用户初始化的状态
+  targetUser: {} //用户详细资料数据
+};
+const getters = {
+  //获取到用户状态,//实时监听state值的变化(最新状态)
+  targetUser: state =&gt; state.targetUser
+};
+const mutations = {
+  //自定义改变state初始值的方法
+ 
+  [types.SET_TARGET_USER](state, targetUser) {
+    if (targetUser) {
+      state.targetUser = targetUser; //如果targetUser有内容就赋给状态信息
+    } else {
+      //如果没内容就给targetUser赋空对象
+      state.targetUser = {};
+    }
+  }
+};
+ 
+const actions = {
+  //这里面的方法是用来异步触发mutations里面的方法,context与store 实例具有相同方法和属性
+  setGargetUser({ commit }, targetUser) {
+    commit(types.SET_TARGET_USER, targetUser);
+    // localStorage.setItem(&quot;SET_TARGET_USER&quot;, JSON.stringify(targetUser));
+  }
+};
+export default new Vuex.Store({
+  state,
+  mutations,
+  getters,
+  actions,
+});
+
+</code></pre>
+<p>取值:</p>
+<pre><code class="language-js">this.$store.getters.targetUser
+</code></pre>
+<p>想要获取对应的状态你就可以直接使用this.$store.state获取，当然，也可以利用vuex提供的mapState辅助函数将state映射到计算属性中去，如.</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/mpvue-xing-neng-you-hua-ji-qiao/">
+                  <h3 class="post-title">
+                    mpvue性能优化技巧
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

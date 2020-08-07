@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>小程序框架比较 | cutezhangq</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596769565696">
+<link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="( wepy / mpvue / taro )
+
+
+生命周期
+同为vue规范的mpvue和wepy的生命周期和各种方法不尽相同
+wepy
+　　wepy生命周期基本与原生小程序相同,再此基础上糅合了一些vue的特性; 对于WePY中的meth..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://cutezhangq.github.io">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596769565696" class="site-logo">
+        <h1 class="site-title">cutezhangq</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://cutezhangq.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">小程序框架比较</h2>
+            <div class="post-date">2020-08-05</div>
+            
+            <div class="post-content" v-pre>
+              <p>( wepy / mpvue / taro )<br>
+<img src="https://cutezhangq.github.io/post-images/1596612473597.png" alt="" loading="lazy"><br>
+<img src="https://cutezhangq.github.io/post-images/1596612549046.png" alt="" loading="lazy"></p>
+<h1 id="生命周期">生命周期</h1>
+<p>同为vue规范的mpvue和wepy的生命周期和各种方法不尽相同</p>
+<p><strong>wepy</strong><br>
+　　wepy生命周期基本与原生小程序相同,再此基础上糅合了一些vue的特性; 对于WePY中的methods属性，因为与Vue中的使用习惯不一致，非常容易造成误解，这里需要特别强调一下：WePY中的methods属性只能声明页面wxml标签的bind、catch事件，不能声明自定义方法，这与Vue中的用法是不一致的。</p>
+<pre><code class="language-js">import wepy from 'wepy';
+
+export default class MyPage extends wepy.page {
+// export default class MyComponent extends wepy.component {
+    customData = {}  // 自定义数据
+
+    customFunction ()　{}  //自定义方法
+
+    onLoad () {}  // 在Page和Component共用的生命周期函数
+
+    onShow () {}  // 只在Page中存在的页面生命周期函数
+
+    config = {};  // 只在Page实例中存在的配置数据，对应于原生的page.json文件
+
+    data = {};  // 页面所需数据均需在这里声明，可用于模板数据绑定
+
+    components = {};  // 声明页面中所引用的组件，或声明组件中所引用的子组件
+
+    mixins = [];  // 声明页面所引用的Mixin实例
+
+    computed = {};  // 声明计算属性（详见后文介绍）
+
+    watch = {};  // 声明数据watcher（详见后文介绍）
+
+    methods = {};  // 声明页面wxml中标签的事件处理函数。注意，此处只用于声明页面wxml中标签的bind、catch事件，自定义方法需以自定义方法的方式声明
+
+    events = {};  // 声明组件之间的事件处理函数
+}
+</code></pre>
+<p><strong>mpvue</strong></p>
+<p>mpvue 除了 Vue 本身的生命周期外，还兼容了小程序生命周期，这部分生命周期钩子的来源于微信小程序的 Page， 除特殊情况外，不建议使用小程序的生命周期 钩子。</p>
+<blockquote>
+<p><strong>Vue</strong><br>
+beforeCreate<br>
+created<br>
+beforeMount<br>
+mounted<br>
+beforeUpdate<br>
+updated<br>
+activated<br>
+deactivated<br>
+beforeDestroy<br>
+destroyed</p>
+</blockquote>
+<blockquote>
+<p><strong>app 部分</strong><br>
+onLaunch，初始化<br>
+onShow，当小程序启动，或从后台进入前台显示<br>
+onHide，当小程序从前台进入后台</p>
+</blockquote>
+<blockquote>
+<p><strong>page 部分</strong><br>
+onLoad，监听页面加载<br>
+onShow，监听页面显示<br>
+onReady，监听页面初次渲染完成<br>
+onHide，监听页面隐藏<br>
+onUnload，监听页面卸载<br>
+onPullDownRefresh，监听用户下拉动作<br>
+onReachBottom，页面上拉触底事件的处理函数<br>
+onShareAppMessage，用户点击右上角分享<br>
+onPageScroll，页面滚动<br>
+onTabItemTap, 当前是 tab 页时，点击 tab 时触发 （mpvue 0.0.16 支持）</p>
+</blockquote>
+<p>简单示例</p>
+<pre><code class="language-js">new Vue({
+  data: {
+    a: 1
+  },
+  created () {
+    // `this` 指向 vm 实例
+    console.log('a is: ' + this.a)
+  },
+  onShow () {
+    // `this` 指向 vm 实例
+    console.log('a is: ' + this.a, '小程序触发的 onshow')
+  }
+})
+// =&gt; &quot;a is: 1&quot;
+</code></pre>
+<p>** taro与react生命周期完全相同**</p>
+<pre><code class="language-js">class Clock extends Component {
+  constructor (props) {
+    super(props)
+    this.state = { date: new Date() }
+  }
+
+  componentDidMount() {
+
+  }
+
+  componentWillUnmount() {
+
+  }
+
+  render () {
+    return (
+      &lt;View&gt;
+        &lt;Text&gt;Hello, world!&lt;/Text&gt;
+        &lt;Text&gt;现在的时间是 {this.state.date.toLocaleTimeString()}.&lt;/Text&gt;
+      &lt;/View&gt;
+    )
+  }
+}
+
+</code></pre>
+<h1 id="小程序开发框架">【小程序开发框架】</h1>
+<h2 id="1-官方框架mina">1、官方框架MINA</h2>
+<p>小程序提供的开发框架为MINA框架，它类似于淘宝Weex、Vue框架。MINA框架通过封装微信客户端提供的文件系统、网络通信、任务管理、数据安全等基础功能，对上层提供一整套JavaScript API,让开发者能够非常方便地使用微信客户端提供的各种基础功能与能力，快速构建一个应用。</p>
+<p>地址：<br>
+()[<a href="https://developers.weixin.qq.com/miniprogram/dev/framework/MINA.html">https://developers.weixin.qq.com/miniprogram/dev/framework/MINA.html</a>]</p>
+<h2 id="2-美团小程序框架mpvue">2、美团小程序框架mpvue</h2>
+<p>mpvue 是美团点评开源的一个使用Vue.js开发小程序的前端框架。框架基于 Vue.js 核心，mpvue 修改了 Vue.js 的  runtime 和  compiler 实现，使其可以运行在小程序环境中，从而为小程序开发引入了整套 Vue.js 开发体验。使用  mpvue 开发小程序，你将在小程序技术体系的基础上获取到这样一些能力：</p>
+<p>彻底的组件化开发能力：提高代码复用性</p>
+<p>完整的 Vue.js 开发体验</p>
+<p>方便的 Vuex 数据管理方案：方便构建复杂应用</p>
+<p>快捷的 webpack 构建机制：自定义构建策略、开发阶段 hotReload</p>
+<p>支持使用 npm 外部依赖</p>
+<p>使用 Vue.js 命令行工具 vue-cli 快速初始化项目</p>
+<p>H5 代码转换编译成小程序目标代码的能力</p>
+<p>Github： <br>
+()[<a href="https://github.com/Meituan-Dianping/mpvue">https://github.com/Meituan-Dianping/mpvue</a>]<br>
+官网：<br>
+()[<a href="http://mpvue.com/">http://mpvue.com/</a>]</p>
+<h2 id="3-tinajs-一款轻巧的渐进式微信小程序框架">3、Tina.js 一款轻巧的渐进式微信小程序框架</h2>
+<p>特性： 轻盈小巧。 极易上手，保留 MINA (微信小程序官方框架) 的大部分 API 设计；无论你有无小程序开发经验，都可以轻松过渡上手。 渐进增强，既有状态管理器，也有路由增强，还可以自己编写插件。</p>
+<p>Tina.js 开源框架地址：<br>
+()[<a href="https://github.com/tinajs/tina">https://github.com/tinajs/tina</a>]</p>
+<h2 id="4-组件化开发框架wepy">4、组件化开发框架wepy</h2>
+<p>WePY 是一款让小程序支持组件化开发的框架，通过预编译的手段让开发者可以选择自己喜欢的开发风格去开发小程序。框架的细节优化，Promise，Async Functions的引入都是为了能让开发小程序项目变得更加简单，高效。</p>
+<p>特性：</p>
+<p>类Vue开发风格</p>
+<p>支持自定义组件开发</p>
+<p>支持引入NPM包</p>
+<p>支持Promise</p>
+<p>支持ES2015+特性，如Async Functions</p>
+<p>支持多种编译器，Less/Sass/Styus、Babel/Typescript、Pug</p>
+<p>支持多种插件处理，文件压缩，图片压缩，内容替换等</p>
+<p>支持 Sourcemap，ESLint等</p>
+<p>小程序细节优化，如请求列队，事件优化等</p>
+<p>Github地址: <br>
+()[<a href="https://github.com/Tencent/wepy">https://github.com/Tencent/wepy</a>]</p>
+<p>官网地址：<br>
+()[<a href="https://tencent.github.io/wepy">https://tencent.github.io/wepy</a>]</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/jin-cheng-xian-cheng-liu-lan-qi-nei-he-js-zhi-xing-shun-xu/">
+                  <h3 class="post-title">
+                    进程, 线程, 浏览器内核, js执行顺序 WebWorkers
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

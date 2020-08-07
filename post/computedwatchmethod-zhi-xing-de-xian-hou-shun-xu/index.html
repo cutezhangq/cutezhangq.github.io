@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Hello | cutezhangq</title>
+<title>computed，watch，method执行的先后顺序 | cutezhangq</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,14 +18,11 @@
 
 
 
-    <meta name="description" content="👏  欢迎来到我的博客 ！
-✍️  这是 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...
-
-Github
-码云
-博客地址
-..." />
-    <meta name="keywords" content="Gridea" />
+    <meta name="description" content="computed：
+计算属性将被混入到 Vue 实例中。所有 getter 和 setter 的 this 上下文自动地绑定为 Vue 实例。
+methods：
+methods 将被混入到 Vue 实例中。可以直接通过 VM 实例访问这些方..." />
+    <meta name="keywords" content="" />
   </head>
   <body>
     <div id="app" class="main">
@@ -96,30 +93,36 @@ Github
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Hello</h2>
-            <div class="post-date">2018-12-12</div>
-            
-              <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/hello-gridea.jpg')">
-              </div>
+            <h2 class="post-title">computed，watch，method执行的先后顺序</h2>
+            <div class="post-date">2020-08-06</div>
             
             <div class="post-content" v-pre>
-              <p>👏  欢迎来到我的博客 ！<br>
-✍️  这是 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/cutezhangq">Github</a><br>
-<a href="https://gitee.com/zhuangzhoudekun">码云</a><br>
-<a href="https://cutezhangq.github.io/">博客地址</a></p>
+              <h1 id="computed">computed：</h1>
+<p>计算属性将被混入到 Vue 实例中。所有 getter 和 setter 的 this 上下文自动地绑定为 Vue 实例。</p>
+<h1 id="methods">methods：</h1>
+<p>methods 将被混入到 Vue 实例中。可以直接通过 VM 实例访问这些方法，或者在指令表达式中使用。方法中的 this 自动绑定为 Vue 实例。</p>
+<h1 id="watch">watch：</h1>
+<p>是一种更通用的方式来观察和响应 Vue 实例上的数据变动。一个对象，键是需要观察的表达式，值是对应回调函数。值也可以是方法名，或者包含选项的对象。Vue 实例将会在实例化时调用 $watch()，遍历 watch 对象的每一个属性。</p>
+<p>通俗来讲，</p>
+<p>computed是在HTML DOM加载后马上执行的，如赋值；</p>
+<p>而methods则必须要有一定的触发条件才能执行，如点击事件；</p>
+<p>watch呢？它用于观察Vue实例上的数据变动。对应一个对象，键是观察表达式，值是对应回调。值也可以是方法名，或者是对象，包含选项。</p>
+<p>所以他们的执行顺序为：默认加载的时候先computed再watch，不执行methods；等触发某一事件后，则是：先methods再watch。</p>
+<p>下面的例子可以做为说明。</p>
+<p>computed 属性 vs watched 属性：Vue 确实提供了一种更通用的方式来观察和响应 Vue 实例上的数据变动：watch 属性。当你有一些数据需要随着其它数据变动而变动时，你很容易滥用 watch——特别是如果你之前使用过 AngularJS。然而，通常更好的想法是使用 computed 属性而不是命令式的 watch 回调。</p>
+<p>所以他们的执行顺序为：默认加载的时候先computed再watch，不执行methods；等触发某一事件后，则是：先methods再watch。</p>
 
             </div>
             
-              <div class="tag-container">
-                
-                  <a href="https://cutezhangq.github.io/tag/G0NoiJNrq/" class="tag">
-                    Gridea
-                  </a>
-                
-              </div>
             
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/shu-ju-tong-xin-fang-an-zu-jian-jian-chuan-zhi/">
+                  <h3 class="post-title">
+                    数据通信方案、组件间传值
+                  </h3>
+                </a>
+              </div>
             
 
             

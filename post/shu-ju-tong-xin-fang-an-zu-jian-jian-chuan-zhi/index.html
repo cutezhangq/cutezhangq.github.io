@@ -1,171 +1,106 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://cutezhangq.github.io</id>
-    <title>cutezhangq</title>
-    <updated>2020-08-07T03:06:11.095Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://cutezhangq.github.io"/>
-    <link rel="self" href="https://cutezhangq.github.io/atom.xml"/>
-    <subtitle>温故知新</subtitle>
-    <logo>https://cutezhangq.github.io/images/avatar.png</logo>
-    <icon>https://cutezhangq.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, cutezhangq</rights>
-    <entry>
-        <title type="html"><![CDATA[slot插槽]]></title>
-        <id>https://cutezhangq.github.io/post/slot-cha-cao/</id>
-        <link href="https://cutezhangq.github.io/post/slot-cha-cao/">
-        </link>
-        <updated>2020-08-07T03:04:18.000Z</updated>
-        <content type="html"><![CDATA[<p>11</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ 消息订阅与发布]]></title>
-        <id>https://cutezhangq.github.io/post/xiao-xi-ding-yue-yu-fa-bu/</id>
-        <link href="https://cutezhangq.github.io/post/xiao-xi-ding-yue-yu-fa-bu/">
-        </link>
-        <updated>2020-08-07T03:04:04.000Z</updated>
-        <content type="html"><![CDATA[<p>11</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[双向数据绑定、单向数据流]]></title>
-        <id>https://cutezhangq.github.io/post/shuang-xiang-shu-ju-bang-ding-dan-xiang-shu-ju-liu/</id>
-        <link href="https://cutezhangq.github.io/post/shuang-xiang-shu-ju-bang-ding-dan-xiang-shu-ju-liu/">
-        </link>
-        <updated>2020-08-07T01:30:09.000Z</updated>
-        <content type="html"><![CDATA[<p>1</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[computed，watch，method执行的先后顺序]]></title>
-        <id>https://cutezhangq.github.io/post/computedwatchmethod-zhi-xing-de-xian-hou-shun-xu/</id>
-        <link href="https://cutezhangq.github.io/post/computedwatchmethod-zhi-xing-de-xian-hou-shun-xu/">
-        </link>
-        <updated>2020-08-06T13:57:16.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="computed">computed：</h1>
-<p>计算属性将被混入到 Vue 实例中。所有 getter 和 setter 的 this 上下文自动地绑定为 Vue 实例。</p>
-<h1 id="methods">methods：</h1>
-<p>methods 将被混入到 Vue 实例中。可以直接通过 VM 实例访问这些方法，或者在指令表达式中使用。方法中的 this 自动绑定为 Vue 实例。</p>
-<h1 id="watch">watch：</h1>
-<p>是一种更通用的方式来观察和响应 Vue 实例上的数据变动。一个对象，键是需要观察的表达式，值是对应回调函数。值也可以是方法名，或者包含选项的对象。Vue 实例将会在实例化时调用 $watch()，遍历 watch 对象的每一个属性。</p>
-<p>通俗来讲，</p>
-<p>computed是在HTML DOM加载后马上执行的，如赋值；</p>
-<p>而methods则必须要有一定的触发条件才能执行，如点击事件；</p>
-<p>watch呢？它用于观察Vue实例上的数据变动。对应一个对象，键是观察表达式，值是对应回调。值也可以是方法名，或者是对象，包含选项。</p>
-<p>所以他们的执行顺序为：默认加载的时候先computed再watch，不执行methods；等触发某一事件后，则是：先methods再watch。</p>
-<p>下面的例子可以做为说明。</p>
-<p>computed 属性 vs watched 属性：Vue 确实提供了一种更通用的方式来观察和响应 Vue 实例上的数据变动：watch 属性。当你有一些数据需要随着其它数据变动而变动时，你很容易滥用 watch——特别是如果你之前使用过 AngularJS。然而，通常更好的想法是使用 computed 属性而不是命令式的 watch 回调。</p>
-<p>所以他们的执行顺序为：默认加载的时候先computed再watch，不执行methods；等触发某一事件后，则是：先methods再watch。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[数据通信方案、组件间传值]]></title>
-        <id>https://cutezhangq.github.io/post/shu-ju-tong-xin-fang-an-zu-jian-jian-chuan-zhi/</id>
-        <link href="https://cutezhangq.github.io/post/shu-ju-tong-xin-fang-an-zu-jian-jian-chuan-zhi/">
-        </link>
-        <updated>2020-08-06T13:12:36.000Z</updated>
-        <summary type="html"><![CDATA[<h1 id="组件间通信的特点">组件间通信的特点</h1>
-<pre><code>1. 不要在子组件中直接修改父组件的状态数据
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>数据通信方案、组件间传值 | cutezhangq</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596769565696">
+<link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="组件间通信的特点
+1. 不要在子组件中直接修改父组件的状态数据
 2. 数据在哪, 更新数据的行为(函数)就应该定义在哪
-</code></pre>
-<h1 id="vue-组件数据通信方案总结">Vue 组件数据通信方案总结</h1>
-<p><img src="https://cutezhangq.github.io/post-images/1596720130251.png" alt="" loading="lazy"><br>
-组件 A 与组件 B 、C 之间是父子组件，组件 B 、C 之间是兄弟组件，而组件 A 、D 之间是隔代的关系。<br>
-那么对于这些不同的关系，本文主要分享了他们之间可以采用的几种数据通信方式，<br>
-例如 Props 、$emit / $on 、Vuex 等，大家可以根据自己的使用场景可以选择适合的使用方式。</p>
-<h1 id="一-prop-emit-父子-子父">一、 Prop / $emit    （父——&gt;子        子——&gt;父）</h1>
-<h2 id="prop-通过绑定属性的方式">Prop  通过绑定属性的方式</h2>
-<pre><code class="language-html">// 父组件   &lt;child :title=&quot;title1&quot;&gt;&lt;/child&gt;
-// 子组件   props: { title:Object }
-</code></pre>
-<p>其中，props的用法：<br>
-props 是<strong>单向绑定</strong>的：当父组件的属性变化时，将传导给子组件，但是不会反过来。这是为了防止子组件无意修改父组件的状态。<br>
-所以<code>不应该在子组件中修改 props 中的值，Vue 会报出警告</code>。</p>
-<h2 id="修改-props-数据">修改 props 数据</h2>
-<p>通常有两种原因：</p>
-<ul>
-<li>prop 作为初始值传入后，子组件想把它当做局部数据来用</li>
-<li>prop 作为初始值传入后，由子组件处理成其他数据输出</li>
-</ul>
-<h2 id="应对办法是">应对办法是</h2>
-<ul>
-<li>定义一个<code>局部变量</code>，并用 prop 的值初始化它<br>
-但是由于定义的 ownChildMsg 只能接受 forChildMsg <code>的初始值</code>，当父组件要传递的值变化发生时，ownChildMsg <code>无法收到更新</code>。</li>
-</ul>
-<pre><code class="language-js">let childNode = {
-  template: `
-          &lt;div class=&quot;child&quot;&gt;
-            &lt;div&gt;
-              &lt;span&gt;子组件数据&lt;/span&gt;
-              &lt;input v-model=&quot;forChildMsg&quot;/&gt;
-            &lt;/div&gt;
-            &lt;p&gt;{{forChildMsg}}&lt;/p&gt;
-            &lt;p&gt;ownChildMsg : {{ownChildMsg}}&lt;/p&gt;
-          &lt;/div&gt;`,
-  props: {
-    &quot;for-child-msg&quot;: String
-  },
-  data() {
-    return { ownChildMsg: this.forChildMsg };
-  }
-};
-</code></pre>
-<p>这里我们加了一个<p>用于查看 ownChildMsg 数据是否变化，结果发现只有默认值传递给了 ownChildMsg，父组件改变只会变化到 forChildMsg，不会修改 ownChildMsg。</p>
-<ul>
-<li>定义一个<code>计算属性</code>，处理 prop 的值并返回<br>
-由于是计算属性，所以只能显示值，不能设置值。我们这里设置的是一旦从父组件修改了 forChildMsg 数据，我们就把 forChildMsg 加上一个字符串&quot;---ownChildMsg&quot;，然后显示在屏幕上。这时是可以每当父组件修改了新数据，<code>都会更新</code> ownChildMsg 数据的。</li>
-</ul>
-<pre><code class="language-js">let childNode = {
-  template: `
-          &lt;div class=&quot;child&quot;&gt;
-            &lt;div&gt;
-              &lt;span&gt;子组件数据&lt;/span&gt;
-              &lt;input v-model=&quot;forChildMsg&quot;/&gt;
-            &lt;/div&gt;
-            &lt;p&gt;{{forChildMsg}}&lt;/p&gt;
-            &lt;p&gt;ownChildMsg : {{ownChildMsg}}&lt;/p&gt;
-          &lt;/div&gt;`,
-  props: {
-    &quot;for-child-msg&quot;: String
-  },
-  computed: {
-    ownChildMsg() {
-      return this.forChildMsg + &quot;---ownChildMsg&quot;;
-    }
-  }
-};
-</code></pre>
-<ul>
-<li>更加妥帖的方式是<code>使用变量存储</code> prop 的初始值，并用<code>watch</code>来观察 prop 值得<code>变化</code>。发生变化时，更新变量的值。</li>
-</ul>
-<pre><code class="language-js">let childNode = {
-  template: `
-          &lt;div class=&quot;child&quot;&gt;
-            &lt;div&gt;
-              &lt;span&gt;子组件数据&lt;/span&gt;
-              &lt;input v-model=&quot;forChildMsg&quot;/&gt;
-            &lt;/div&gt;
-            &lt;p&gt;{{forChildMsg}}&lt;/p&gt;
-            &lt;p&gt;ownChildMsg : {{ownChildMsg}}&lt;/p&gt;
-          &lt;/div&gt;`,
-  props: {
-    &quot;for-child-msg&quot;: String
-  },
-  data() {
-    return {
-      ownChildMsg: this.forChildMsg
-    };
-  },
-  watch: {
-    forChildMsg() {
-      this.ownChildMsg = this.forChildMsg;
-    }
-  }
-};
-</code></pre>
-]]></summary>
-        <content type="html"><![CDATA[<h1 id="组件间通信的特点">组件间通信的特点</h1>
+
+Vue 组件数据通信方案总结
+
+组件 A 与组件 B 、C 之间是父子组件，组件 B 、C 之间是兄弟组件，而组件 A..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://cutezhangq.github.io">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596769565696" class="site-logo">
+        <h1 class="site-title">cutezhangq</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://cutezhangq.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">数据通信方案、组件间传值</h2>
+            <div class="post-date">2020-08-06</div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="组件间通信的特点">组件间通信的特点</h1>
 <pre><code>1. 不要在子组件中直接修改父组件的状态数据
 2. 数据在哪, 更新数据的行为(函数)就应该定义在哪
 </code></pre>
@@ -799,761 +734,46 @@ title: '我是子组件2'
 <p>见相关文章</p>
 <h1 id="slot">slot</h1>
 <p>见相关文章</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ new运算符的执行过程]]></title>
-        <id>https://cutezhangq.github.io/post/new-yun-suan-fu-de-zhi-xing-guo-cheng/</id>
-        <link href="https://cutezhangq.github.io/post/new-yun-suan-fu-de-zhi-xing-guo-cheng/">
-        </link>
-        <updated>2020-08-06T12:45:01.000Z</updated>
-        <content type="html"><![CDATA[<p>new运算符的执行过程<br>
-* 创建一个空对象obj<br>
-* 并将这个空对象obj的__proto__连接到构造函数的原型上。链接到原型: obj.<strong>proto</strong> = Con.prototype<br>
-* 绑定this:  apply，创建属性和方法。  用apply绑定对象的this指向（obj作为this的上下文）Con.apply(obj,arguments)<br>
-* 返回新对象this或者叫创建的对象obj(如果构造函数有自己 retrun 时，则返回该值)</p>
-<pre><code class="language-js">  // 传参 New(obj, ...args)
-  function New123() {  
-      let obj = new Object();  // 提取第一个参数并作为构造函数; 
-      let construction = [].shift.call(arguments);  // 新对象的__prop__要链接到原型链  
-      obj.__proto__ = construction.prototype;  // 改变this指向    
-      construction.apply(obj, arguments);   //obj作为this的上下文
-      return obj;   // 返回新对象 
-}
-</code></pre>
-<p>下面对自定义的New方法进行验证：</p>
-<pre><code class="language-js">function People(name,age){
-  this.name = name;
-  this.age = age;
-}
-People.prototype.say = function () {
-  console.log(`My name is ${this.name}.`);
-}
-//通过new创建构造实例
-let people1 = new People('Jack',20);
-console.log(people1.name)  // Jack
-console.log(people1.say()) // My name is Jack.
- 
-//通过New方法创造实例
-let people2 = New123(People,'Rose',18);
-console.log(people2.name)  //Rose
-console.log(people2.say())  //My name is Rose.
-</code></pre>
-<p>过输出结果可以看出来，我们自己定义的New方法，是可以实现跟new运算符同等作用的。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[JSON.stringify与"环"问题]]></title>
-        <id>https://cutezhangq.github.io/post/jsonstringify-yu-huan-wen-ti/</id>
-        <link href="https://cutezhangq.github.io/post/jsonstringify-yu-huan-wen-ti/">
-        </link>
-        <updated>2020-08-06T10:50:32.000Z</updated>
-        <content type="html"><![CDATA[<p>JSON.stringify的功能是，讲一个js字面量对象转化为一个JSON格式的字符串，例如：</p>
-<pre><code class="language-js">const obj = {a:1,b:2}
-JSON.stringify(obj)     //  ‘ {“a”:1,“b”:2}’
-</code></pre>
-<p>当要转化的对象有**“环”**存在时（<strong>子节点属性赋值了父节点的引用</strong>），为了避免死循环，JSON.stringify 会抛出异常，例如：</p>
-<pre><code class="language-js">const obj = {
-  foo: {
-    name: 'foo',
-    bar: {
-      name: 'bar'
-      baz: {
-        name: 'baz',
-        aChild: null  //待会让它指向obj.foo
-      }
-    }
-  }
-}
-obj.foo.bar.baz.aChild = obj.foo // foo-&gt;bar-&gt;baz-&gt;aChild-&gt;foo 形成环
-JSON.stringify(obj) // =&gt; TypeError: Converting circular structure to JSON 类型错误:将循环结构转换为JSON
-</code></pre>
-<p>请完善以下“环”检查器函数 cycleDetector，当入参对象中有环时返回 true，否则返回 false。</p>
-<pre><code class="language-js">function cycleDetector(obj) {   
-  // 请添加代码
-}
-</code></pre>
-<p>“环”的形成是因为对象的子节点属性赋值了父节点的引用，所以我们需要记录下父节点的地址，然后再拿其子节点的属性与之前记录下的父节点地址做一个比较，当结果一致时，就形成了“环”。</p>
-<p>那么，在“环”检测器函数中，我们首先需要遍历这个对象的属性，前面提到了引用，那么我们只需对Object类型的属性进行处理即可（简单数据类型不存在引用关系）。对于Objcet类型的属性，我们先与记录下来的父节点地址做一个对比，如无匹配项，将当前属性地址记录下来，然后遍历其子节点属性，一层一层找下去。下面开始上代码：</p>
-<pre><code class="language-js">function cycleDetector(obj){
-    var hasCircle = false,  //  定义一个变量，标志是否有环
-    cache = [];          //  定义一个数组，来保存对象类型的属性值
-    (function(obj){
-        var keys = Object.keys(obj);    //获取当前对象的属性数组——key是获取属性
-             for (var i = 0; i &lt; keys.length; i++) {
-            var key = keys[i];
-            var value = obj[key];
-            if (typeof value == 'object' &amp;&amp; value !== null) {
-                var index = cache.indexOf(value)
-                if (index !== -1) {
-                    hasCircle = true
-                    break
-                } else {
-                    cache.push(value)
-                    arguments.callee(value)
-                    cache.pop()      //  注意：这里要推出数据，因为递归返回，后面遍历的属性不是这个数据的子属性
-                }
-            }
-        }
-    })(obj)
-}
 
-</code></pre>
-<p>补充：<br>
-<strong>Object.keys</strong> 返回一个所有元素为字符串的数组，其元素来自于从给定的object上面可直接枚举的属性。这些属性的顺序与手动遍历该对象属性时的一致。<br>
-<strong>测试用例</strong></p>
-<pre><code class="language-js">/* 测试一 */
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/new-yun-suan-fu-de-zhi-xing-guo-cheng/">
+                  <h3 class="post-title">
+                     new运算符的执行过程
+                  </h3>
+                </a>
+              </div>
+            
 
-const obj = {
-  foo: {
-    name: 'foo',
-    bar: {
-      name: 'bar'
-      baz: {
-        name: 'baz',
-        aChild: null  //待会让它指向obj.foo
-      }
-    }
-  }
-}
-obj.foo.bar.baz.aChild = obj.foo // foo-&gt;bar-&gt;baz-&gt;aChild-&gt;foo 形成环
-</code></pre>
-<pre><code class="language-js">/* 测试二 */
+            
 
-var obj = {
-    foo: {
-        name: 'foo',
-        bar: {
-            name: 'bar',
-            baz: {
-                name: 'baz',
-                aChild: null
-            }
-        }
-    },
-    aaa: {
-        name: &quot;test&quot;,
-        bbb: null
-    }
-}
-obj.aaa.bbb = obj.foo;   //  aaa-&gt;bbb-&gt;bar-&gt;baz-&gt;aChild-&gt;null 不形成环
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Vuex中mutations和actions的区别]]></title>
-        <id>https://cutezhangq.github.io/post/vuex-zhong-mutations-he-actions-de-qu-bie/</id>
-        <link href="https://cutezhangq.github.io/post/vuex-zhong-mutations-he-actions-de-qu-bie/">
-        </link>
-        <updated>2020-08-06T01:55:07.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>Vuex</strong> 是一个专为 Vue.js 应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化</p>
-<p>Mutation 更改 Vuex 的 store 中的状态的<strong>唯一</strong>方法是提交 mutation。事实上在 vuex 里面 actions 只是一个架构性的概念，并不是必须的，只要最后触发 mutation 就行。异步竞态怎么处理那是用户自己的事情。</p>
-<ul>
-<li>
-<p>Action <strong>提交的是 mutation</strong>，而不是直接变更状态。最后<strong>是mutation去修改store里的state</strong></p>
-</li>
-<li>
-<p>Action 可以包含任意<strong>异步</strong>操作。</p>
-</li>
-<li>
-<p><strong>mutation只能进行同步操作</strong>。为什么？请参考下面的例子：</p>
-</li>
-</ul>
-<pre><code class="language-js">mutations: {
- someMutation (state) {
-   api.callAsyncMethod(() =&gt; {
-     state.count++
-   })
- }
-}
-</code></pre>
-<p>现在想象，我们正在 debug 一个 app 并且观察 devtool 中的 mutation 日志。每一条 mutation 被记录，devtools 都需要捕捉到前一状态和后一状态的快照。<br>然而，在上面的例子中 mutation 中的异步函数中的回调让这不可能完成：因为当 mutation 触发的时候，回调函数还没有被调用，<br>devtools 不知道什么时候回调函数实际上被调用——实质上任何在回调函数中进行的状态的改变都是不可追踪的。</p>
-<p>mutation的触发通过store.commit来进行</p>
-<p>action的触发通过store.dispatch进行</p>
-<h1 id="安装">安装</h1>
-<blockquote>
-<p>npm install vuex --save</p>
-</blockquote>
-<h1 id="用法一">用法一</h1>
-<pre><code class="language-js">
-/**
- * 创建完文件后需要去到main.js中引入成全局
- */
-import Vue from &quot;vue&quot;;
-import Vuex from &quot;vuex&quot;;
-//使用vuex
-Vue.use(Vuex);
-const state = {
-  targetUser: {} //用户详细资料数据
-};
- 
-const getters = {
-  //获取到用户状态,//实时监听state值的变化(最新状态)
-  targetUser: state =&gt; state.targetUser
-};
- 
-const mutations = {
-  //自定义改变state初始值的方法
-  SET_TARGET_USER(state, targetUser) {
-    if (targetUser) {
-      state.targetUser = targetUser; //如果targetUser有内容就赋给状态信息
-    } else {
-      //如果没内容就给targetUser赋空对象
-      state.targetUser = {};
-    }
-  }
-};
- 
-const actions = {
-  //这里面的方法是用来异步触发mutations里面的方法,context与store 实例具有相同方法和属性
-  // 页面定义的setGargetUser,targetUser为页面传过来的值
-  setGargetUser({ commit }, targetUser) {
-    commit(&quot;SET_TARGET_USER&quot;, targetUser);
-  }
-};
-</code></pre>
-<p>存储页面:</p>
-<pre><code class="language-js">
-this.$store.dispatch('setGargetUser',friend)
-</code></pre>
-<p>获取页面:</p>
-<pre><code class="language-js"> computed:{
-        //  提示vuex中存入的用户详细资料
-        targetUser(){
-            return this.$store.getters.targetUser
-        }
-     },
-</code></pre>
-<p>以上方法有一个问题就是如果多人开发;会出现不利于管理,下面用一个方法定义一个常量<br>
-存储:</p>
-<pre><code class="language-js">  this.$store.dispatch('setUser',decode)
-</code></pre>
-<p>store.js</p>
-<pre><code class="language-js">
-/**
- * 创建完文件后需要去到main.js中引入成全局
- */
-import Vue from &quot;vue&quot;;
-import Vuex from &quot;vuex&quot;;
-// 持久存储插件
-import createPersistedState from &quot;vuex-persistedstate&quot;;
- 
-//使用vuex
-Vue.use(Vuex);
- 
-/**
- * 在需要多人协作的项目中，我们可以使用常量代替mutation 事件类型。这在各种 Flux 实现中是很常见的模式。同时把这些常量放在单独的文件中可以让协作开发变得清晰。
- *  定义存储信息
- *
- *    */
- 
-const types = {
-  SET_TARGET_USER: &quot;SET_TARGET_USER&quot; //详细资料
-};
- 
-const state = {
-  //用户初始化的状态
-  targetUser: {} //用户详细资料数据
-};
-const getters = {
-  //获取到用户状态,//实时监听state值的变化(最新状态)
-  targetUser: state =&gt; state.targetUser
-};
-const mutations = {
-  //自定义改变state初始值的方法
- 
-  [types.SET_TARGET_USER](state, targetUser) {
-    if (targetUser) {
-      state.targetUser = targetUser; //如果targetUser有内容就赋给状态信息
-    } else {
-      //如果没内容就给targetUser赋空对象
-      state.targetUser = {};
-    }
-  }
-};
- 
-const actions = {
-  //这里面的方法是用来异步触发mutations里面的方法,context与store 实例具有相同方法和属性
-  setGargetUser({ commit }, targetUser) {
-    commit(types.SET_TARGET_USER, targetUser);
-    // localStorage.setItem(&quot;SET_TARGET_USER&quot;, JSON.stringify(targetUser));
-  }
-};
-export default new Vuex.Store({
-  state,
-  mutations,
-  getters,
-  actions,
-});
+          </div>
 
-</code></pre>
-<p>取值:</p>
-<pre><code class="language-js">this.$store.getters.targetUser
-</code></pre>
-<p>想要获取对应的状态你就可以直接使用this.$store.state获取，当然，也可以利用vuex提供的mapState辅助函数将state映射到计算属性中去，如.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[mpvue性能优化技巧]]></title>
-        <id>https://cutezhangq.github.io/post/mpvue-xing-neng-you-hua-ji-qiao/</id>
-        <link href="https://cutezhangq.github.io/post/mpvue-xing-neng-you-hua-ji-qiao/">
-        </link>
-        <updated>2020-08-05T15:42:43.000Z</updated>
-        <content type="html"><![CDATA[<p>优化前后的图：<br>
-<img src="https://cutezhangq.github.io/post-images/1596642240799.webp" alt="" loading="lazy"></p>
-<p>可以看到打包后的代码量从813KB减少到387KB,Audits体验评分从B到A，效果还是比较明显的。其实这个指标说明不了什么，而且轻易就可以做到，更重要的是优化小程序运行过程中的卡顿感，请耐心往下看。</p>
-<p>常规优化<br>
-常规的Web端优化方法在小程序中也是适用的，而且不可忽视。</p>
-<h1 id="一-压缩图片">一、压缩图片</h1>
-<p>这一步最简单，但是容易被忽视。在tiny上在线压缩，然后下载替换即可。</p>
-<h1 id="二-移除无用的库">二、移除无用的库</h1>
-<p>在项目中使用了Vant Weapp，在static目录下引入了整个库，但实际上我只使用了button,field,dialog等几个组件，实在是没必要。</p>
-<p>所以干脆移除掉了，微信小程序自身提供的button，wx.showModal等一些组件基本可以满足需求，自己手写一下样式也不用花什么时间。<br>
-在微信小程序中，<strong>尽量避免使用过多的依赖库</strong>。</p>
-<h1 id="小程序的优化">小程序的优化</h1>
-<h1 id="一-开启vueconfig_mptrace-true">一、开启Vue.config._mpTrace = true</h1>
-<p>首先得看一下<a href="https://developers.weixin.qq.com/miniprogram/dev/framework/performance/tips.html">官方优化</a>建议，大多是围绕这个建议去做。</p>
-<blockquote>
-<p>这个是mpvue性能优化的一个黑科技<br>
-具体做法是在<code>/src/main.js</code>添加<code>Vue.config._mpTrace = true</code>，如：</p>
-</blockquote>
-<pre><code class="language-js">Vue.config._mpTrace = true
-Vue.config.productionTip = false
-App.mpType = 'app'
-</code></pre>
-<p>添加了<code>Vue.config._mpTrace</code>属性，这样就可以看到console里会打印每500ms更新的数据量。如图：<br>
-<img src="https://cutezhangq.github.io/post-images/1596676060778.webp" alt="" loading="lazy"></p>
-<p>**如果数据更新量很大，会明显感觉小程序运行卡顿，反之就流畅。**因此我们可以根据这个指标，逐步找出性能瓶颈并解决掉。</p>
-<h1 id="二-精简data">二、精简data</h1>
-<h3 id="1-过滤api返回的冗余数据">1. 过滤api返回的冗余数据</h3>
-<p>后端的api可能是需要同时为iOS，Android，H5等提供服务的，往往会有些冗余的数据小程序是用不到的。比如api返回的一个<code>文章列表</code>数据有很多字段：</p>
-<pre><code class="language-js">this.articleList = [
-    {
-        articleId: 1,
-        desc: 'xxxxxx',
-        author: 'fengxianqi',
-        time: 'xxx',
-        comments: [
-            {
-                userId: 2,
-                conent: 'xxx'
-            }
-        ]
-    },
-    {
-        articleId: 2
-        // ...
-    },
-    // ...
-]
-</code></pre>
-<p>假设我们在小程序中只需要用到列表中的部分字段，如果不对数据做处理，将整个articleList都setData进去，是不明智的。</p>
-<blockquote>
-<p>小程序官方文档： 单次设置的数据不能超过1024kB，请尽量避免一次设置过多的数据。</p>
-</blockquote>
-<p>可以看出，内存是很宝贵的，当articleList数据量非常大超过1M时，某些机型就会爆掉(在iOS可能遇到过很多次）</p>
-<p>因此，需要将接口返回的数据剔除掉不需要的，再setData，回到我们上面的articleList例子，假设我们只需要用articleId和author这两个字段，可以这样：</p>
-<pre><code class="language-js">import { getArticleList } from '@/api/article'
-export default {
-    data () {
-        return {
-            articleList: []
-        }
-    }
-    methods: {
-        getList () {
-            getArticleList().then(res =&gt; {
-                let rawList = res.list
-                this.articleList = this.simplifyArticleList(rawList)
-            })
-        },
-        simplifyArticleList (list) {
-            return list.map(item =&gt; {
-                return {
-                    articleId: item.articleId,
-                    author: item.author
-                    // 需要哪些字段就加上哪些字段
-                }
-            })
-        }
-    }
-}
-</code></pre>
-<p>这里我们将返回的数据通过simplifyArticleList来精简数据，此时过滤后的articleList中的数据类似：</p>
-<pre><code class="language-json">[
-    {articleId: 1, author: 'fengxianqi'},
-    {articleId: 2, author: 'others'}
-    // ...
-]
-</code></pre>
-<p>当然，如果你的需求中是所有数据都要用到（或者大部分数据），就没必要做一层精简了，收益不大。毕竟精简数据的函数中具体的字段，是会增加维护成本的。</p>
-<blockquote>
-<p>PS： 有时，做数据过滤虽然增加了维护的成本，但一般收益都很大，因次这个方法比较推荐。</p>
-</blockquote>
-<h3 id="2-data中只放需要的数据">2. data()中只放需要的数据</h3>
-<pre><code class="language-js">import xx from 'xx.js'
-export default {
-    data () {
-        return {
-            xx,
-            otherXX: '2'
-        }
-    }
-}
-</code></pre>
-<p>有些同学可能会习惯将import的东西都先放进data中，再在methods中使用，在小程序中可能是个不好的习惯。</p>
-<p>因为通过Vue.config._mpTrace = true在更新某个数据时，我对比放进data和不放进data中的两种情况会有差别。</p>
-<p>所以猜测可能是data是会一起更新的，比如只是想更新otherXX时，会同时将xx也一起合起来setData了。</p>
-<h3 id="静态图片放进static">静态图片放进static</h3>
-<p>这个问题和上面的问题其实是一样的，有时候我们会通过import的方式引入，比如这样：</p>
-<pre><code class="language-html">&lt;template&gt;
-    &lt;img :src=&quot;UserIcon&quot;&gt;
-&lt;/template&gt;
-&lt;script&gt;
-import UserIcon from '@/assets/images/user_icon.png'
-export default {
-    data () {
-        return {
-            UserIcon
-        }
-    }
-}
-&lt;/script&gt;
-</code></pre>
-<p>这样会导致打包后的代码，图片是base64形式（很长的一段字符串）存放在data中，不利于精简data。同时当该组件多个地方使用时，每个组件实例都会携带这一段很长的base64代码，进一步导致数据的冗余。</p>
-<p>因此，建议将静态图片放到static目录下，这样引用：</p>
-<pre><code class="language-html">&lt;template&gt;
-    &lt;img src=&quot;/static/images/user_icon.png&quot;&gt;
-&lt;/template&gt;
+        </div>
+      </div>
+    </div>
 
-</code></pre>
-<p>代码也更简洁清爽。</p>
-<p>看一下做了上面操作的前后对比图，使用体验上也流畅了很多。</p>
-<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1596676687989.webp" alt="" loading="lazy"></figure>
-<h1 id="三-swiper优化">三、swiper优化</h1>
-<p>小程序自身提供的<code>swiper</code>组件性能上不是很好，使用时要注意。参考着两个思路：</p>
-<ul>
-<li><a href="https://developers.weixin.qq.com/community/develop/doc/000068ff25ccf0bae4e76eab156c04">【优化】解决swiper渲染很多图片时的卡顿</a></li>
-</ul>
-<p>在我使用时，由于需求原因，动态删掉swiper-item的思路不可行（手滑时会造成抖动）。因此只能作罢。但仍然可以优化一下：</p>
-<ul>
-<li>将未显示的<code>swiper-item</code>中的图片用<code>v-if隐藏到</code>，当判断到current时才显示，防止大量图片的渲染导致的性能问题。</li>
-</ul>
-<h1 id="四-vuex使用注意事项">四、vuex使用注意事项</h1>
-<p>一篇<a href="https://juejin.im/post/6844903793964875784#heading-8">mpvue开发音频类小程序踩坑和建议</a>里面有讲如何在小程序中使用vuex。但遇到了个比较严重的性能问题。</p>
-<h3 id="1-问题描述">1. 问题描述</h3>
-<p>我开发的是一个音频类的小程序，所以需要将播放列表playList,当前索引currentIndex和当前时长currentTime放进state.js中：</p>
-<pre><code class="language-js">const state = {
-  currentIndex: 0, // playList当前索引
-  currentTime: 0, // 当前播放的进度
-  playList: [], // {title: '', url: '', singer: ''}
-}
-</code></pre>
-<p>每次用户点击播放音频时，都会先加载音频的播放列表playList,然后播放时更新当前时长currentTime，发现有时候播音频时整个小程序非常卡顿。</p>
-<blockquote>
-<p>注意到，音频需每秒就得更新一次currentTime,即每秒就做一次setData操作，稍微有些卡顿是可以理解的。但我发现是播放列表数据比较多时会特别卡，比如playList的长度是100条以上时。</p>
-</blockquote>
-<h3 id="2-问题原因">2. 问题原因</h3>
-<p>开启Vue.config._mpTrace = true后发现一个规律：</p>
-<p>当palyList数据量小时，console显示造成的数据量更新数值比较小；当playList比较大时，console显示造成的数据量更新数值比较大。(尝试将playList数据量增加到200条，每500ms的数据量更新达到800KB左右。)<br>
-到这里基本可以确定一个事实就是：**更新state中的任何一个字段，将导致整个state全量一起setData。**在我这里的例子，虽然我每次只是更新currentTime这个字段的值，但依然导致将state中的其他字段如playList,currentIndex都一起做了一次setData操作。</p>
-<h3 id="3-解决问题">3. 解决问题</h3>
-<p>有两个思路：</p>
-<ul>
-<li>精简state中保存的数据，即限制playList的数据不能太多，可将一些数据暂存在storage中</li>
-<li>vuex采用Module的写法能改善这个问题，虽然使用时命名空间造成一定的麻烦。</li>
-</ul>
-<p>一般情况下，推荐使用后者。我在项目中尝试使用了前者，同样能达到很好的效果，请继续看下面的分享。</p>
-<h1 id="五-善用storage">五、善用storage</h1>
-<h2 id="1为什么说要善用storage">1.为什么说要善用storage</h2>
-<p>由于小程序的内存非常宝贵，占用内存过大会非常卡顿，因此最好尽可能少的将数据放到内存中，即vuex存的数据要尽可能少。而小程序的storage支持单个 key允许存储的最大数据长度为 1MB，所有数据存储上限为 10MB。<br>
-所以可以将一些相对取用不频繁的数据放进storage中，需要时再将这些数据放进内存，从而缓解内存的紧张，有点类似Windows中虚拟内存的概念。</p>
-<h2 id="2storage换内存的实例">2.storage换内存的实例</h2>
-<p>上面讲到playList数据量太多，播放一条音频时其实只需要最多保证3条数据在内存中即可，即上一首，播放中的，下一首,我们可以将多余的播放列表存放在storage中。</p>
-<blockquote>
-<p>PS: 为了保证更平滑地连续切换下一首，我们可以稍微保存多几条，比如我这里选择保存5条数据在vuex中，播放时始终保证当前播放的音频前后都有两条数据。</p>
-</blockquote>
-<pre><code class="language-js">// 首次播放背景音频的方法
-async function playAudio (audioId) {
-    // 拿到播放列表，此时的playList最多只有5条数据。getPlayList方法看下面
-    const playList = await getPlayList(audioId)
-    // 当前音频在vuex中的currentIndex
-    const currentIndex = playList.findIndex(item =&gt; item.audioId === audioId)
-    
-    // 播放背景音频
-    this.audio = wx.getBackgroundAudioManager()
-    this.audio.title = playList[currentIndex].title
-    this.audio.src = playList[currentIndex].url
-    
-    // 通过mapActions将播放列表和currentIndex更新到vuex中
-    this.updateCurrentIndex(index) 
-    this.updatePlayList(playList) 
-    // updateCurrentIndex和updatePlayList是vuex写好的方法
-}
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
 
-// 播放音频时获取播放列表的方法，将所有数据存在storage，然后返回当前音频的前后2条数据，保证最多5条数据
-import { loadPlayList } from '@/api/audio'
-async function getPlayList (courseId, currentAudioId) {
-    // 从api中请求得到播放列表
-    // loadPlayList是api的方法, courseId是获取列表的参数,表示当前课程下的播放列表
-    let rawList = await loadPlayList(courseId)
-    // simplifyPlayList过滤掉一些字段
-    const list = this.simplifyPlayList(rawList)
-    // 将列表存到storage中
-    wx.setStorage({
-        key: 'playList',
-        data: list
-    })
-    return subPlayList(list, currentAudioId)
-}
-</code></pre>
-<p>重点是subPlayList方法，这个方法保证了拿到的播放列表是<strong>最多5条数据</strong>。</p>
-<pre><code class="language-js">function subPlayList(playList, currentAudioId) {
-  let tempArr = [...playList]
-  const count = 5 // 保持vuex中最多5条数据
-  const middle = parseInt(count / 2) // 中点的索引
-  const len = tempArr.length
-  // 如果整个原始的播放列表本来就少于5条数据，说明不需要裁剪，直接返回
-  if (len &lt;= count) {
-    return tempArr
-  }
-  // 找到当前要播放的音频的所在位置
-  const index = tempArr.findIndex(item =&gt; item.audioId === currentAudioId)
-  // 截取当前音频的前后两条数据
-  tempArr = tempArr.splice(Math.max(0, Math.min(len - count, index - middle)), count)
-  return tempArr
-}
-</code></pre>
-<p>tempArr.splice(Math.max(0, index - middle), count)可能有些同学比较难理解，需要仔细琢磨一下。假设playList有10条数据：<br>
-当前音频是列表中的第1条（索引是0）,截取前5个：playList.splice(0, 5)，此时currentAudio在这5个数据的索引是0,没有上一首，有4个下一首<br>
-当前音频是列表中的第2条（索引是1）,截取前5个：playList.splice(0, 5)，此时currentAudio在这5个数据的索引是1，有1个上一首，3个下一首<br>
-当前音频是列表中的第3条（索引是2）,截取前5个：playList.splice(0, 5)，此时currentAudio在这5个数据的索引是2，有2个上一首，2个下一首<br>
-当前音频是列表中的第4条（索引是3）,截取第1到6个：playList.splice(1, 5)<br>
-，此时currentAudio在这5个数据的索引是2，有2个上一首，2个下一首<br>
-当前音频是列表中的第5条（索引是4），截取第2到7个：playList.splice(2, 5)，此时currentAudio在这5个数据的索引是2，有2个上一首，2个下一首<br>
-...<br>
-当前音频是列表中的第9条（索引是8），截取后5个：playList.splice(4, 5)，此时currentAudio在这5个数据的索引是3，有3个上一首，1个下一首<br>
-当前音频是列表中的最后1条（索引是9），截取后的5个：playList.splice(4, 5)，此时currentAudio在这5个数据的索引是4，有4个上一首，没有下一首</p>
-<p>无论当前音频在哪，都始终保证了拿到当前音频前后的最多5条数据。<br>
-接下来就是维护播放上一首或下一首时保证当前vuex中的playList始终是包含当前音频的前后2条。<br>
-<strong>播放下一首</strong></p>
-<pre><code class="language-js">function playNextAudio() {
-    const nextIndex = this.currentIndex + 1
-    if (nextIndex &lt; this.playList.length) {
-        // 没有超出数组长度，说明在vuex的列表中，可以直接播放
-        this.audio = wx.getBackgroundAudioManager()
-        this.audio.src = this.playList[nextIndex].url
-        this.audio.title = this.playList[nextIndex].title
-        this.updateCurrentIndex(nextIndex)
-        // 当判断到已经到vuex的playList的边界了，重新从storage中拿数据补充到playList
-        if (nextIndex === this.playList.length - 1 || nextIndex === 0) {
-          // 拿到只有当前音频前后最多5条数据的列表
-          const newList = getPlayList(this.playList[nextIndex].courseId, this.playList[nextIndex].audioId)
-          // 当前音频在这5条数据中的索引
-          const index = newList.findIndex(item =&gt; item.audioId === this.playList[nextIndex].audioId)
-          // 更新到vuex
-          this.updateCurrentIndex(index)
-          this.updatePlayList(newList)
-        }
-    }
-}
-</code></pre>
-<p>这里的getPlayList方法是上面讲过的，本来是从api中直接获取的，为了避免每次都从api直接获取，所以需要改一下，先读storage，若无则从api获取：</p>
-<pre><code class="language-js">import { loadPlayList } from '@/api/audio'
-async function getPlayList (courseId, currentAudioId) {
-    // 先从缓存列表中拿
-    const playList = wx.getStorageSync('playList')
-    if (playList &amp;&amp; playList.length &gt; 0 &amp;&amp; courseId === playList[0].courseId) {
-      // 命中缓存，则从直接返回
-      return subPlayList(playList, currentAudioId)
-    } else {
-      // 没有命中缓存，则从api中获取
-      const list = await loadPlayList(courseId)
-      wx.setStorage({
-        key: 'playList',
-        data: list
-      })
-      return subPlayList(list, currentAudioId)
-    }
-}
-</code></pre>
-<p>播放上一首也是同理，就不赘述了。</p>
-<blockquote>
-<p>将vuex中的数据精简后，小程序在播放音频时刷其他页面已经非常流畅啦，效果非常好。</p>
-</blockquote>
-<h1 id="六-动画优化">六、动画优化</h1>
-<p>这个问题在mpvue开发音频类小程序踩坑和建议已经讲过了，感兴趣的可以移步看一眼，这里只写下概述:</p>
-<ul>
-<li>如果要使用动画，尽量用css动画代替wx.createAnimation</li>
-<li>使用css动画时建议开启硬件加速</li>
-</ul>
-<h1 id="最后">最后</h1>
-<p>大致总结一下上面所讲的几个要点：</p>
-<ul>
-<li>开发时打开Vue.config._mpTrace = true。</li>
-<li>谨慎引入第三方库，权衡收益。</li>
-<li>添加数据到data中时要克制，能精简尽量精简。</li>
-<li>图片记得要压缩，图片在显示时才渲染。</li>
-<li>vuex保持数据精简，必要时可先存storage。</li>
-</ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[小程序框架比较]]></title>
-        <id>https://cutezhangq.github.io/post/xiao-cheng-xu-kuang-jia-bi-jiao/</id>
-        <link href="https://cutezhangq.github.io/post/xiao-cheng-xu-kuang-jia-bi-jiao/">
-        </link>
-        <updated>2020-08-05T07:21:50.000Z</updated>
-        <content type="html"><![CDATA[<p>( wepy / mpvue / taro )<br>
-<img src="https://cutezhangq.github.io/post-images/1596612473597.png" alt="" loading="lazy"><br>
-<img src="https://cutezhangq.github.io/post-images/1596612549046.png" alt="" loading="lazy"></p>
-<h1 id="生命周期">生命周期</h1>
-<p>同为vue规范的mpvue和wepy的生命周期和各种方法不尽相同</p>
-<p><strong>wepy</strong><br>
-　　wepy生命周期基本与原生小程序相同,再此基础上糅合了一些vue的特性; 对于WePY中的methods属性，因为与Vue中的使用习惯不一致，非常容易造成误解，这里需要特别强调一下：WePY中的methods属性只能声明页面wxml标签的bind、catch事件，不能声明自定义方法，这与Vue中的用法是不一致的。</p>
-<pre><code class="language-js">import wepy from 'wepy';
+AOS.init();
 
-export default class MyPage extends wepy.page {
-// export default class MyComponent extends wepy.component {
-    customData = {}  // 自定义数据
-
-    customFunction ()　{}  //自定义方法
-
-    onLoad () {}  // 在Page和Component共用的生命周期函数
-
-    onShow () {}  // 只在Page中存在的页面生命周期函数
-
-    config = {};  // 只在Page实例中存在的配置数据，对应于原生的page.json文件
-
-    data = {};  // 页面所需数据均需在这里声明，可用于模板数据绑定
-
-    components = {};  // 声明页面中所引用的组件，或声明组件中所引用的子组件
-
-    mixins = [];  // 声明页面所引用的Mixin实例
-
-    computed = {};  // 声明计算属性（详见后文介绍）
-
-    watch = {};  // 声明数据watcher（详见后文介绍）
-
-    methods = {};  // 声明页面wxml中标签的事件处理函数。注意，此处只用于声明页面wxml中标签的bind、catch事件，自定义方法需以自定义方法的方式声明
-
-    events = {};  // 声明组件之间的事件处理函数
-}
-</code></pre>
-<p><strong>mpvue</strong></p>
-<p>mpvue 除了 Vue 本身的生命周期外，还兼容了小程序生命周期，这部分生命周期钩子的来源于微信小程序的 Page， 除特殊情况外，不建议使用小程序的生命周期 钩子。</p>
-<blockquote>
-<p><strong>Vue</strong><br>
-beforeCreate<br>
-created<br>
-beforeMount<br>
-mounted<br>
-beforeUpdate<br>
-updated<br>
-activated<br>
-deactivated<br>
-beforeDestroy<br>
-destroyed</p>
-</blockquote>
-<blockquote>
-<p><strong>app 部分</strong><br>
-onLaunch，初始化<br>
-onShow，当小程序启动，或从后台进入前台显示<br>
-onHide，当小程序从前台进入后台</p>
-</blockquote>
-<blockquote>
-<p><strong>page 部分</strong><br>
-onLoad，监听页面加载<br>
-onShow，监听页面显示<br>
-onReady，监听页面初次渲染完成<br>
-onHide，监听页面隐藏<br>
-onUnload，监听页面卸载<br>
-onPullDownRefresh，监听用户下拉动作<br>
-onReachBottom，页面上拉触底事件的处理函数<br>
-onShareAppMessage，用户点击右上角分享<br>
-onPageScroll，页面滚动<br>
-onTabItemTap, 当前是 tab 页时，点击 tab 时触发 （mpvue 0.0.16 支持）</p>
-</blockquote>
-<p>简单示例</p>
-<pre><code class="language-js">new Vue({
+var app = new Vue({
+  el: '#app',
   data: {
-    a: 1
+    menuVisible: false,
   },
-  created () {
-    // `this` 指向 vm 实例
-    console.log('a is: ' + this.a)
-  },
-  onShow () {
-    // `this` 指向 vm 实例
-    console.log('a is: ' + this.a, '小程序触发的 onshow')
-  }
 })
-// =&gt; &quot;a is: 1&quot;
-</code></pre>
-<p>** taro与react生命周期完全相同**</p>
-<pre><code class="language-js">class Clock extends Component {
-  constructor (props) {
-    super(props)
-    this.state = { date: new Date() }
-  }
 
-  componentDidMount() {
+</script>
 
-  }
 
-  componentWillUnmount() {
 
-  }
 
-  render () {
-    return (
-      &lt;View&gt;
-        &lt;Text&gt;Hello, world!&lt;/Text&gt;
-        &lt;Text&gt;现在的时间是 {this.state.date.toLocaleTimeString()}.&lt;/Text&gt;
-      &lt;/View&gt;
-    )
-  }
-}
 
-</code></pre>
-<h1 id="小程序开发框架">【小程序开发框架】</h1>
-<h2 id="1-官方框架mina">1、官方框架MINA</h2>
-<p>小程序提供的开发框架为MINA框架，它类似于淘宝Weex、Vue框架。MINA框架通过封装微信客户端提供的文件系统、网络通信、任务管理、数据安全等基础功能，对上层提供一整套JavaScript API,让开发者能够非常方便地使用微信客户端提供的各种基础功能与能力，快速构建一个应用。</p>
-<p>地址：<br>
-()[<a href="https://developers.weixin.qq.com/miniprogram/dev/framework/MINA.html">https://developers.weixin.qq.com/miniprogram/dev/framework/MINA.html</a>]</p>
-<h2 id="2-美团小程序框架mpvue">2、美团小程序框架mpvue</h2>
-<p>mpvue 是美团点评开源的一个使用Vue.js开发小程序的前端框架。框架基于 Vue.js 核心，mpvue 修改了 Vue.js 的  runtime 和  compiler 实现，使其可以运行在小程序环境中，从而为小程序开发引入了整套 Vue.js 开发体验。使用  mpvue 开发小程序，你将在小程序技术体系的基础上获取到这样一些能力：</p>
-<p>彻底的组件化开发能力：提高代码复用性</p>
-<p>完整的 Vue.js 开发体验</p>
-<p>方便的 Vuex 数据管理方案：方便构建复杂应用</p>
-<p>快捷的 webpack 构建机制：自定义构建策略、开发阶段 hotReload</p>
-<p>支持使用 npm 外部依赖</p>
-<p>使用 Vue.js 命令行工具 vue-cli 快速初始化项目</p>
-<p>H5 代码转换编译成小程序目标代码的能力</p>
-<p>Github： <br>
-()[<a href="https://github.com/Meituan-Dianping/mpvue">https://github.com/Meituan-Dianping/mpvue</a>]<br>
-官网：<br>
-()[<a href="http://mpvue.com/">http://mpvue.com/</a>]</p>
-<h2 id="3-tinajs-一款轻巧的渐进式微信小程序框架">3、Tina.js 一款轻巧的渐进式微信小程序框架</h2>
-<p>特性： 轻盈小巧。 极易上手，保留 MINA (微信小程序官方框架) 的大部分 API 设计；无论你有无小程序开发经验，都可以轻松过渡上手。 渐进增强，既有状态管理器，也有路由增强，还可以自己编写插件。</p>
-<p>Tina.js 开源框架地址：<br>
-()[<a href="https://github.com/tinajs/tina">https://github.com/tinajs/tina</a>]</p>
-<h2 id="4-组件化开发框架wepy">4、组件化开发框架wepy</h2>
-<p>WePY 是一款让小程序支持组件化开发的框架，通过预编译的手段让开发者可以选择自己喜欢的开发风格去开发小程序。框架的细节优化，Promise，Async Functions的引入都是为了能让开发小程序项目变得更加简单，高效。</p>
-<p>特性：</p>
-<p>类Vue开发风格</p>
-<p>支持自定义组件开发</p>
-<p>支持引入NPM包</p>
-<p>支持Promise</p>
-<p>支持ES2015+特性，如Async Functions</p>
-<p>支持多种编译器，Less/Sass/Styus、Babel/Typescript、Pug</p>
-<p>支持多种插件处理，文件压缩，图片压缩，内容替换等</p>
-<p>支持 Sourcemap，ESLint等</p>
-<p>小程序细节优化，如请求列队，事件优化等</p>
-<p>Github地址: <br>
-()[<a href="https://github.com/Tencent/wepy">https://github.com/Tencent/wepy</a>]</p>
-<p>官网地址：<br>
-()[<a href="https://tencent.github.io/wepy">https://tencent.github.io/wepy</a>]</p>
-]]></content>
-    </entry>
-</feed>
+
+  </body>
+</html>

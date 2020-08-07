@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>JSON.stringify与&#34;环&#34;问题 | cutezhangq</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596769565696">
+<link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="JSON.stringify的功能是，讲一个js字面量对象转化为一个JSON格式的字符串，例如：
+const obj = {a:1,b:2}
+JSON.stringify(obj)     //  ‘ {“a”:1,“b”:2}’
+
+当要转..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://cutezhangq.github.io">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596769565696" class="site-logo">
+        <h1 class="site-title">cutezhangq</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://cutezhangq.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">JSON.stringify与&#34;环&#34;问题</h2>
+            <div class="post-date">2020-08-06</div>
+            
+            <div class="post-content" v-pre>
+              <p>JSON.stringify的功能是，讲一个js字面量对象转化为一个JSON格式的字符串，例如：</p>
+<pre><code class="language-js">const obj = {a:1,b:2}
+JSON.stringify(obj)     //  ‘ {“a”:1,“b”:2}’
+</code></pre>
+<p>当要转化的对象有**“环”**存在时（<strong>子节点属性赋值了父节点的引用</strong>），为了避免死循环，JSON.stringify 会抛出异常，例如：</p>
+<pre><code class="language-js">const obj = {
+  foo: {
+    name: 'foo',
+    bar: {
+      name: 'bar'
+      baz: {
+        name: 'baz',
+        aChild: null  //待会让它指向obj.foo
+      }
+    }
+  }
+}
+obj.foo.bar.baz.aChild = obj.foo // foo-&gt;bar-&gt;baz-&gt;aChild-&gt;foo 形成环
+JSON.stringify(obj) // =&gt; TypeError: Converting circular structure to JSON 类型错误:将循环结构转换为JSON
+</code></pre>
+<p>请完善以下“环”检查器函数 cycleDetector，当入参对象中有环时返回 true，否则返回 false。</p>
+<pre><code class="language-js">function cycleDetector(obj) {   
+  // 请添加代码
+}
+</code></pre>
+<p>“环”的形成是因为对象的子节点属性赋值了父节点的引用，所以我们需要记录下父节点的地址，然后再拿其子节点的属性与之前记录下的父节点地址做一个比较，当结果一致时，就形成了“环”。</p>
+<p>那么，在“环”检测器函数中，我们首先需要遍历这个对象的属性，前面提到了引用，那么我们只需对Object类型的属性进行处理即可（简单数据类型不存在引用关系）。对于Objcet类型的属性，我们先与记录下来的父节点地址做一个对比，如无匹配项，将当前属性地址记录下来，然后遍历其子节点属性，一层一层找下去。下面开始上代码：</p>
+<pre><code class="language-js">function cycleDetector(obj){
+    var hasCircle = false,  //  定义一个变量，标志是否有环
+    cache = [];          //  定义一个数组，来保存对象类型的属性值
+    (function(obj){
+        var keys = Object.keys(obj);    //获取当前对象的属性数组——key是获取属性
+             for (var i = 0; i &lt; keys.length; i++) {
+            var key = keys[i];
+            var value = obj[key];
+            if (typeof value == 'object' &amp;&amp; value !== null) {
+                var index = cache.indexOf(value)
+                if (index !== -1) {
+                    hasCircle = true
+                    break
+                } else {
+                    cache.push(value)
+                    arguments.callee(value)
+                    cache.pop()      //  注意：这里要推出数据，因为递归返回，后面遍历的属性不是这个数据的子属性
+                }
+            }
+        }
+    })(obj)
+}
+
+</code></pre>
+<p>补充：<br>
+<strong>Object.keys</strong> 返回一个所有元素为字符串的数组，其元素来自于从给定的object上面可直接枚举的属性。这些属性的顺序与手动遍历该对象属性时的一致。<br>
+<strong>测试用例</strong></p>
+<pre><code class="language-js">/* 测试一 */
+
+const obj = {
+  foo: {
+    name: 'foo',
+    bar: {
+      name: 'bar'
+      baz: {
+        name: 'baz',
+        aChild: null  //待会让它指向obj.foo
+      }
+    }
+  }
+}
+obj.foo.bar.baz.aChild = obj.foo // foo-&gt;bar-&gt;baz-&gt;aChild-&gt;foo 形成环
+</code></pre>
+<pre><code class="language-js">/* 测试二 */
+
+var obj = {
+    foo: {
+        name: 'foo',
+        bar: {
+            name: 'bar',
+            baz: {
+                name: 'baz',
+                aChild: null
+            }
+        }
+    },
+    aaa: {
+        name: &quot;test&quot;,
+        bbb: null
+    }
+}
+obj.aaa.bbb = obj.foo;   //  aaa-&gt;bbb-&gt;bar-&gt;baz-&gt;aChild-&gt;null 不形成环
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/vuex-zhong-mutations-he-actions-de-qu-bie/">
+                  <h3 class="post-title">
+                    Vuex中mutations和actions的区别
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
