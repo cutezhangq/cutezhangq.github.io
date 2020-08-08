@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cutezhangq.github.io</id>
     <title>cutezhangq</title>
-    <updated>2020-08-08T08:12:45.894Z</updated>
+    <updated>2020-08-08T13:17:26.013Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cutezhangq.github.io"/>
     <link rel="self" href="https://cutezhangq.github.io/atom.xml"/>
@@ -16,7 +16,188 @@
         <link href="https://cutezhangq.github.io/post/slot-cha-cao/">
         </link>
         <updated>2020-08-07T03:04:18.000Z</updated>
-        <content type="html"><![CDATA[<p>11</p>
+        <content type="html"><![CDATA[<p>插槽，也就是slot，<strong>是组件的一块HTML模板，这块模板显示不显示、以及怎样显示由父组件来决定。 <strong>实际上，一个slot最核心的两个问题在这里就点出来了，是</strong>显示不显示</strong>和<strong>怎样显示</strong>。<br>
+由于插槽是一块模板，所以，对于任何一个组件，从模板种类的角度来分，其实都可以分为<strong>非插槽模板</strong>和<strong>插槽模板</strong>两大类。<br>
+非插槽模板指的是html模板，比如‘div、span、ul、table’这些，非插槽模板的显示与隐藏以及怎样显示由组件自身控制；<br>
+插槽模板是slot，它是一个空壳子，因为它的显示与隐藏以及最后用什么样的html模板显示由父组件控制。但是插槽显示的位置却由子组件自身决定，slot写在组件template的什么位置，父组件传过来的模板将来就显示在什么位置。</p>
+<h1 id="单个插槽-默认插槽-匿名插槽">单个插槽 | 默认插槽 | 匿名插槽</h1>
+<p>首先是单个插槽，单个插槽是vue的官方叫法，但是其实也可以叫它默认插槽，或者与具名插槽相对，我们可以叫它匿名插槽。因为它不用设置name属性。<br>
+单个插槽可以放置在组件的任意位置，但是就像它的名字一样，一个组件中只能有一个该类插槽。相对应的，具名插槽就可以有很多个，只要名字（name属性）不同就可以了。<br>
+下面通过一个例子来展示。<br>
+父组件：</p>
+<pre><code class="language-html">&lt;template&gt;
+    &lt;div class=&quot;father&quot;&gt;
+        &lt;h3&gt;这里是父组件&lt;/h3&gt;
+        &lt;child&gt;
+            &lt;div class=&quot;tmpl&quot;&gt;
+              &lt;span&gt;菜单1&lt;/span&gt;
+              &lt;span&gt;菜单2&lt;/span&gt;
+              &lt;span&gt;菜单3&lt;/span&gt;
+              &lt;span&gt;菜单4&lt;/span&gt;
+              &lt;span&gt;菜单5&lt;/span&gt;
+              &lt;span&gt;菜单6&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/child&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code class="language-html">&lt;template&gt;
+    &lt;div class=&quot;child&quot;&gt;
+        &lt;h3&gt;这里是子组件&lt;/h3&gt;
+        &lt;slot&gt;&lt;/slot&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<p>在这个例子里，因为父组件在里面写了html模板，那么子组件的匿名插槽这块模板就是下面这样。也就是说，子组件的匿名插槽被使用了，是被下面这块模板使用了。</p>
+<pre><code class="language-html">&lt;div class=&quot;tmpl&quot;&gt;
+  &lt;span&gt;菜单1&lt;/span&gt;
+  &lt;span&gt;菜单2&lt;/span&gt;
+  &lt;span&gt;菜单3&lt;/span&gt;
+  &lt;span&gt;菜单4&lt;/span&gt;
+  &lt;span&gt;菜单5&lt;/span&gt;
+  &lt;span&gt;菜单6&lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+<p>最终的渲染结果如图所示：<br>
+<img src="https://cutezhangq.github.io/post-images/1596892088251.png" alt="" loading="lazy"></p>
+<h1 id="具名插槽">具名插槽</h1>
+<p>匿名插槽没有name属性，所以是匿名插槽，那么，插槽加了name属性，就变成了具名插槽。具名插槽可以在一个组件中出现N次，出现在不同的位置。下面的例子，就是一个有两个<strong>具名插槽</strong>和<strong>单个插槽</strong>的组件，这三个插槽被父组件用同一套css样式显示了出来，不同的是内容上略有区别。<br>
+父组件：</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div class=&quot;father&quot;&gt;
+    &lt;h3&gt;这里是父组件&lt;/h3&gt;
+    &lt;child&gt;
+      &lt;div class=&quot;tmpl&quot; slot=&quot;up&quot;&gt;
+        &lt;span&gt;菜单1&lt;/span&gt;
+        &lt;span&gt;菜单2&lt;/span&gt;
+        &lt;span&gt;菜单3&lt;/span&gt;
+        &lt;span&gt;菜单4&lt;/span&gt;
+        &lt;span&gt;菜单5&lt;/span&gt;
+        &lt;span&gt;菜单6&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;tmpl&quot; slot=&quot;down&quot;&gt;
+        &lt;span&gt;菜单-1&lt;/span&gt;
+        &lt;span&gt;菜单-2&lt;/span&gt;
+        &lt;span&gt;菜单-3&lt;/span&gt;
+        &lt;span&gt;菜单-4&lt;/span&gt;
+        &lt;span&gt;菜单-5&lt;/span&gt;
+        &lt;span&gt;菜单-6&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;tmpl&quot;&gt;
+        &lt;span&gt;菜单-&gt;1&lt;/span&gt;
+        &lt;span&gt;菜单-&gt;2&lt;/span&gt;
+        &lt;span&gt;菜单-&gt;3&lt;/span&gt;
+        &lt;span&gt;菜单-&gt;4&lt;/span&gt;
+        &lt;span&gt;菜单-&gt;5&lt;/span&gt;
+        &lt;span&gt;菜单-&gt;6&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/child&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div class=&quot;child&quot;&gt;
+    // 具名插槽
+    &lt;slot name=&quot;up&quot;&gt;&lt;/slot&gt;
+    &lt;h3&gt;这里是子组件&lt;/h3&gt;
+    // 具名插槽
+    &lt;slot name=&quot;down&quot;&gt;&lt;/slot&gt;
+    // 匿名插槽
+    &lt;slot&gt;&lt;/slot&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<p><img src="https://cutezhangq.github.io/post-images/1596892200490.png" alt="" loading="lazy"><br>
+可以看到，父组件通过html模板上的slot属性关联具名插槽。没有slot属性的html模板默认关联匿名插槽。</p>
+<h1 id="作用域插槽-带数据的插槽">作用域插槽 | 带数据的插槽</h1>
+<p>最后，就是我们的作用域插槽。这个稍微难理解一点。官方叫它作用域插槽，实际上，对比前面两种插槽，我们可以叫它带数据的插槽。什么意思呢，就是前面两种，都是在组件的template里面写</p>
+<pre><code class="language-cmd">匿名插槽
+&lt;slot&gt;&lt;/slot&gt;
+具名插槽
+&lt;slot name=&quot;up&quot;&gt;&lt;/slot&gt;
+</code></pre>
+<p>但是作用域插槽要求，在slot上面绑定数据。也就是你得写成大概下面这个样子。</p>
+<pre><code class="language-html">&lt;slot name=&quot;up&quot; :data=&quot;data&quot;&gt;&lt;/slot&gt;
+ export default {
+    data: function(){
+      return {
+        data: ['zhangsan','lisi','wanwu','zhaoliu','tianqi','xiaoba']
+      }
+    },
+}
+</code></pre>
+<p>我们前面说了，插槽最后显示不显示是看父组件有没有在child下面写模板，像下面那样。</p>
+<pre><code class="language-cmd">&lt;child&gt;
+   html模板
+&lt;/child&gt;
+</code></pre>
+<p>写了，插槽就总得在浏览器上显示点东西，东西就是html该有的模样，没写，插槽就是空壳子，啥都没有。<br>
+OK，我们说有html模板的情况，就是父组件会往子组件插模板的情况，那到底插一套什么样的样式呢，这由父组件的html+css共同决定，但是这套样式里面的内容呢？<br>
+正因为作用域插槽绑定了一套数据，父组件可以拿来用。于是，情况就变成了这样：样式父组件说了算，但内容可以显示子组件插槽绑定的。<br>
+我们再来对比，作用域插槽跟单个插槽和具名插槽的区别，因为单个插槽和具名插槽不绑定数据，所以父组件提供的模板一般要既包括样式又包括内容，上面的例子中，你看到的文字，“菜单1”，“菜单2”都是父组件自己提供的内容；而作用域插槽，父组件只需要提供一套样式（在确实用作用域插槽绑定的数据的前提下）。<br>
+下面的例子，你就能看到，父组件提供了三种样式(分别是flex、ul、直接显示)，都没有提供数据，数据使用的都是子组件插槽自己绑定的那个数组（一堆人名的那个数组）。<br>
+父组件：</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div class=&quot;father&quot;&gt;
+    &lt;h3&gt;这里是父组件&lt;/h3&gt;
+    &lt;!--第一次使用：用flex展示数据--&gt;
+    &lt;child&gt;
+      &lt;template slot-scope=&quot;user&quot;&gt;
+        &lt;div class=&quot;tmpl&quot;&gt;
+          &lt;span v-for=&quot;item in user.data&quot;&gt;{{item}}&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/template&gt;
+
+    &lt;/child&gt;
+
+    &lt;!--第二次使用：用列表展示数据--&gt;
+    &lt;child&gt;
+      &lt;template slot-scope=&quot;user&quot;&gt;
+        &lt;ul&gt;
+          &lt;li v-for=&quot;item in user.data&quot;&gt;{{item}}&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/template&gt;
+
+    &lt;/child&gt;
+
+    &lt;!--第三次使用：直接显示数据--&gt;
+    &lt;child&gt;
+      &lt;template slot-scope=&quot;user&quot;&gt;
+       {{user.data}}
+      &lt;/template&gt;
+
+    &lt;/child&gt;
+
+    &lt;!--第四次使用：不使用其提供的数据, 作用域插槽退变成匿名插槽--&gt;
+    &lt;child&gt;
+      我就是模板
+    &lt;/child&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+</code></pre>
+<p>子组件：</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div class=&quot;child&quot;&gt;
+
+    &lt;h3&gt;这里是子组件&lt;/h3&gt;
+    // 作用域插槽
+    &lt;slot  :data=&quot;data&quot;&gt;&lt;/slot&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+ export default {
+    data: function(){
+      return {
+        data: ['zhangsan','lisi','wanwu','zhaoliu','tianqi','xiaoba']
+      }
+    }
+}
+</code></pre>
+<p>结果如图所示：<br>
+<img src="https://cutezhangq.github.io/post-images/1596892616696.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
@@ -618,6 +799,17 @@ _Event.trigger(&quot;yyyy&quot;,&quot;xxx&quot;,&quot;前端工程师&quot;)
 <p>发布-订阅模式就是常说的观察者模式，在实际开发中非常有用。它的优点是为时间是解耦，为对象之间解构，它的应用非常广泛，既可以在异步编程中也可以帮助我们完成更松的解耦。发布-订阅模式还可以帮助我们实现设计模式，从架构上来看，无论MVC还是MVVC都少不了发布-订阅模式的参与。然而发布-订阅模式也存在一些缺点，创建订阅本身会消耗一定的时间与内存，也许当你订阅一个消息之后，之后可能就不会发生。发布-订阅模式虽然它弱化了对象与对象之间的关系，但是如果过度使用，对象与对象的必要联系就会被深埋，会导致程序难以跟踪与维护。</p>
 <!-- more -->
 <h1 id="订阅发布模式和观察者模式的区别">订阅发布模式和观察者模式的区别</h1>
+<p><strong>发布订阅模式属于广义上的观察者模式</strong><br>
+发布订阅模式是最常用的一种观察者模式的实现，并且从解耦和重用角度来看，更优于典型的观察者模式</p>
+<p><strong>发布订阅模式多了个事件通道</strong><br>
+在观察者模式中，观察者需要直接订阅目标事件；在目标发出内容改变的事件后，直接接收事件并作出响应<br>
+<img src="https://cutezhangq.github.io/post-images/1596877097254.png" alt="" loading="lazy"></p>
+<p>在发布订阅模式中，发布者和订阅者之间多了一个发布通道；一方面从发布者接收事件，另一方面向订阅者发布事件；订阅者需要从事件通道订阅事件<br>
+以此避免发布者和订阅者之间产生依赖关系<br>
+<img src="https://cutezhangq.github.io/post-images/1596877130031.png" alt="" loading="lazy"></p>
+<p>总结起来就是，一个是紧密耦合，一个是松散耦合。优缺点也很明显，紧密耦合的方式简单直接，扩展性差，而且要求两端同时存在。松散耦合不直接产生依赖，更容易扩展，懒加载的时候会有优势，但稍显复杂。</p>
+<h2 id="从代码看区别">从代码看区别</h2>
+<p>需求：数据打包下载功能</p>
 ]]></content>
     </entry>
     <entry>
@@ -626,7 +818,27 @@ _Event.trigger(&quot;yyyy&quot;,&quot;xxx&quot;,&quot;前端工程师&quot;)
         <link href="https://cutezhangq.github.io/post/shuang-xiang-shu-ju-bang-ding-dan-xiang-shu-ju-liu/">
         </link>
         <updated>2020-08-07T01:30:09.000Z</updated>
-        <content type="html"><![CDATA[<p>1</p>
+        <content type="html"><![CDATA[<h1 id="单向数据流和双向数据绑定有什么优缺点单向数据流优缺点">单向数据流和双向数据绑定有什么优缺点？单向数据流优缺点</h1>
+<p><strong>优点：</strong><br>
+所有状态的改变可记录、可跟踪，源头易追溯;<br>
+所有数据只有一份，组件数据只有唯一的入口和出口，使得程序更直观更容易理解，有利于应用的可维护性;<br>
+一旦数据变化，就去更新页面(data-页面)，但是没有(页面-data);<br>
+如果用户在页面上做了变动，那么就手动收集起来(双向是自动)，合并到原有的数据中。</p>
+<p><strong>缺点：</strong><br>
+HTML 代码渲染完成，无法改变，有新数据，就须把旧 HTML 代码去掉，整合新数据和模板重新渲染;<br>
+代码量上升，数据流转过程变长，出现很多类似的样板代码;<br>
+同时由于对应用状态独立管理的严格要求(单一的全局 store)，在处理局部状态较多的场景时(如用户输入交互较多的“富表单型”应用)，会显得啰嗦及繁琐。</p>
+<h1 id="双向数据绑定的优缺点">双向数据绑定的优缺点：</h1>
+<p><strong>优点：</strong><br>
+用户在视图上的修改会自动同步到数据模型中去，数据模型中值的变化也会立刻同步到视图中去；<br>
+无需进行和单向数据绑定的那些相关操作；<br>
+在表单交互较多的场景下，会简化大量业务无关的代码。<br>
+<strong>缺点：</strong><br>
+无法追踪局部状态的变化；<br>
+“暗箱操作”，增加了出错时 debug 的难度；<br>
+由于组件数据变化来源入口变得可能不止一个，数据流转方向易紊乱，若再缺乏“管制”手段，崩溃。</p>
+<p>这样来看，单向绑定跟双向绑定在功能上基本上是互补的，所以我们可以在合适的场景下使用合适的手段。比如在 UI 控件 中(通常是类表单操作)，我会使用双向的方式绑定数据；而其他场景则统一采用 单向 + inline event ( &lt;component :msg=“msg” @update=“updateMsg(msg)”&gt; ) 的方式构建应用。<br>
+<img src="https://cutezhangq.github.io/post-images/1596891716608.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
@@ -645,10 +857,67 @@ _Event.trigger(&quot;yyyy&quot;,&quot;xxx&quot;,&quot;前端工程师&quot;)
 <p>computed是在HTML DOM加载后马上执行的，如赋值；</p>
 <p>而methods则必须要有一定的触发条件才能执行，如点击事件；</p>
 <p>watch呢？它用于观察Vue实例上的数据变动。对应一个对象，键是观察表达式，值是对应回调。值也可以是方法名，或者是对象，包含选项。</p>
-<p>所以他们的执行顺序为：默认加载的时候先computed再watch，不执行methods；等触发某一事件后，则是：先methods再watch。</p>
+<p>所以他们的执行顺序为：<code>默认加载的时候先computed再watch，不执行methods；等触发某一事件后，则是：先methods再watch。</code></p>
 <p>下面的例子可以做为说明。</p>
 <p>computed 属性 vs watched 属性：Vue 确实提供了一种更通用的方式来观察和响应 Vue 实例上的数据变动：watch 属性。当你有一些数据需要随着其它数据变动而变动时，你很容易滥用 watch——特别是如果你之前使用过 AngularJS。然而，通常更好的想法是使用 computed 属性而不是命令式的 watch 回调。</p>
-<p>所以他们的执行顺序为：默认加载的时候先computed再watch，不执行methods；等触发某一事件后，则是：先methods再watch。</p>
+<h1 id="computed与watch的区别">computed与watch的区别</h1>
+<p>在很多情况下, computed会比watch使用起来更加方便,但是当需要在数据变化时执行异步或者开销比较大的情况下,用watch会更加合适。<br>
+例如官网提供的例子(问与答。watch观察question的值,若值有改变会执行方法getAnswer,并且根据question不同的值, answer会给出不同的回答,并且会异步调用API返回相应的值,这些都是计算属性做不到的。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>目的</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>computed</td>
+<td>依赖变动实时更新数据</td>
+<td>更新数据</td>
+</tr>
+<tr>
+<td>watch</td>
+<td>观察某一特定的值，执行特定的函数</td>
+<td>观察数据</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-js">&lt;divid=&quot;demo&quot;&gt;{{ fullName }}&lt;/div&gt;
+
+使用watch方法观察数据（单个数据）
+var vm = new Vue({
+el: '#demo',
+data: {
+firstName: 'Foo',
+lastName: 'Bar',
+fullName: 'Foo Bar'
+},
+watch: {
+firstName: function (val) {
+this.fullName = val + ' ' + this.lastName
+},
+lastName: function (val) {
+this.fullName = this.firstName + ' ' + val
+}
+}
+})
+
+使用computed方法计算数据（多个数据）
+var vm = new Vue({
+el: '#demo',
+data: {
+firstName: 'Foo',
+lastName: 'Bar'
+},
+computed: {
+fullName: function () {
+return this.firstName + ' ' + this.lastName
+}
+}
+})
+</code></pre>
 ]]></content>
     </entry>
     <entry>

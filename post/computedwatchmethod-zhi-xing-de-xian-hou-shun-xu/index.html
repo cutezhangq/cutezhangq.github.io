@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596874036568">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596892639238">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -31,7 +31,7 @@ methods 将被混入到 Vue 实例中。可以直接通过 VM 实例访问这些
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596874036568" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596892639238" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -110,10 +110,67 @@ methods 将被混入到 Vue 实例中。可以直接通过 VM 实例访问这些
 <p>computed是在HTML DOM加载后马上执行的，如赋值；</p>
 <p>而methods则必须要有一定的触发条件才能执行，如点击事件；</p>
 <p>watch呢？它用于观察Vue实例上的数据变动。对应一个对象，键是观察表达式，值是对应回调。值也可以是方法名，或者是对象，包含选项。</p>
-<p>所以他们的执行顺序为：默认加载的时候先computed再watch，不执行methods；等触发某一事件后，则是：先methods再watch。</p>
+<p>所以他们的执行顺序为：<code>默认加载的时候先computed再watch，不执行methods；等触发某一事件后，则是：先methods再watch。</code></p>
 <p>下面的例子可以做为说明。</p>
 <p>computed 属性 vs watched 属性：Vue 确实提供了一种更通用的方式来观察和响应 Vue 实例上的数据变动：watch 属性。当你有一些数据需要随着其它数据变动而变动时，你很容易滥用 watch——特别是如果你之前使用过 AngularJS。然而，通常更好的想法是使用 computed 属性而不是命令式的 watch 回调。</p>
-<p>所以他们的执行顺序为：默认加载的时候先computed再watch，不执行methods；等触发某一事件后，则是：先methods再watch。</p>
+<h1 id="computed与watch的区别">computed与watch的区别</h1>
+<p>在很多情况下, computed会比watch使用起来更加方便,但是当需要在数据变化时执行异步或者开销比较大的情况下,用watch会更加合适。<br>
+例如官网提供的例子(问与答。watch观察question的值,若值有改变会执行方法getAnswer,并且根据question不同的值, answer会给出不同的回答,并且会异步调用API返回相应的值,这些都是计算属性做不到的。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>目的</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>computed</td>
+<td>依赖变动实时更新数据</td>
+<td>更新数据</td>
+</tr>
+<tr>
+<td>watch</td>
+<td>观察某一特定的值，执行特定的函数</td>
+<td>观察数据</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-js">&lt;divid=&quot;demo&quot;&gt;{{ fullName }}&lt;/div&gt;
+
+使用watch方法观察数据（单个数据）
+var vm = new Vue({
+el: '#demo',
+data: {
+firstName: 'Foo',
+lastName: 'Bar',
+fullName: 'Foo Bar'
+},
+watch: {
+firstName: function (val) {
+this.fullName = val + ' ' + this.lastName
+},
+lastName: function (val) {
+this.fullName = this.firstName + ' ' + val
+}
+}
+})
+
+使用computed方法计算数据（多个数据）
+var vm = new Vue({
+el: '#demo',
+data: {
+firstName: 'Foo',
+lastName: 'Bar'
+},
+computed: {
+fullName: function () {
+return this.firstName + ' ' + this.lastName
+}
+}
+})
+</code></pre>
 
             </div>
             

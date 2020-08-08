@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596874036568">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596892639238">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -34,7 +34,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596874036568" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596892639238" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -400,6 +400,17 @@ _Event.trigger(&quot;yyyy&quot;,&quot;xxx&quot;,&quot;前端工程师&quot;)
 <p>发布-订阅模式就是常说的观察者模式，在实际开发中非常有用。它的优点是为时间是解耦，为对象之间解构，它的应用非常广泛，既可以在异步编程中也可以帮助我们完成更松的解耦。发布-订阅模式还可以帮助我们实现设计模式，从架构上来看，无论MVC还是MVVC都少不了发布-订阅模式的参与。然而发布-订阅模式也存在一些缺点，创建订阅本身会消耗一定的时间与内存，也许当你订阅一个消息之后，之后可能就不会发生。发布-订阅模式虽然它弱化了对象与对象之间的关系，但是如果过度使用，对象与对象的必要联系就会被深埋，会导致程序难以跟踪与维护。</p>
 <!-- more -->
 <h1 id="订阅发布模式和观察者模式的区别">订阅发布模式和观察者模式的区别</h1>
+<p><strong>发布订阅模式属于广义上的观察者模式</strong><br>
+发布订阅模式是最常用的一种观察者模式的实现，并且从解耦和重用角度来看，更优于典型的观察者模式</p>
+<p><strong>发布订阅模式多了个事件通道</strong><br>
+在观察者模式中，观察者需要直接订阅目标事件；在目标发出内容改变的事件后，直接接收事件并作出响应<br>
+<img src="https://cutezhangq.github.io/post-images/1596877097254.png" alt="" loading="lazy"></p>
+<p>在发布订阅模式中，发布者和订阅者之间多了一个发布通道；一方面从发布者接收事件，另一方面向订阅者发布事件；订阅者需要从事件通道订阅事件<br>
+以此避免发布者和订阅者之间产生依赖关系<br>
+<img src="https://cutezhangq.github.io/post-images/1596877130031.png" alt="" loading="lazy"></p>
+<p>总结起来就是，一个是紧密耦合，一个是松散耦合。优缺点也很明显，紧密耦合的方式简单直接，扩展性差，而且要求两端同时存在。松散耦合不直接产生依赖，更容易扩展，懒加载的时候会有优势，但稍显复杂。</p>
+<h2 id="从代码看区别">从代码看区别</h2>
+<p>需求：数据打包下载功能</p>
 
             </div>
             

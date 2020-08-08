@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596874036568">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596892639238">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -18,8 +18,8 @@
 
 
 
-    <meta name="description" content="11
-" />
+    <meta name="description" content="插槽，也就是slot，是组件的一块HTML模板，这块模板显示不显示、以及怎样显示由父组件来决定。 实际上，一个slot最核心的两个问题在这里就点出来了，是显示不显示和怎样显示。
+由于插槽是一块模板，所以，对于任何一个组件，从模板种类的角度来..." />
     <meta name="keywords" content="" />
   </head>
   <body>
@@ -29,7 +29,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596874036568" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596892639238" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -98,7 +98,188 @@
               </div>
             
             <div class="post-content" v-pre>
-              <p>11</p>
+              <p>插槽，也就是slot，<strong>是组件的一块HTML模板，这块模板显示不显示、以及怎样显示由父组件来决定。 <strong>实际上，一个slot最核心的两个问题在这里就点出来了，是</strong>显示不显示</strong>和<strong>怎样显示</strong>。<br>
+由于插槽是一块模板，所以，对于任何一个组件，从模板种类的角度来分，其实都可以分为<strong>非插槽模板</strong>和<strong>插槽模板</strong>两大类。<br>
+非插槽模板指的是html模板，比如‘div、span、ul、table’这些，非插槽模板的显示与隐藏以及怎样显示由组件自身控制；<br>
+插槽模板是slot，它是一个空壳子，因为它的显示与隐藏以及最后用什么样的html模板显示由父组件控制。但是插槽显示的位置却由子组件自身决定，slot写在组件template的什么位置，父组件传过来的模板将来就显示在什么位置。</p>
+<h1 id="单个插槽-默认插槽-匿名插槽">单个插槽 | 默认插槽 | 匿名插槽</h1>
+<p>首先是单个插槽，单个插槽是vue的官方叫法，但是其实也可以叫它默认插槽，或者与具名插槽相对，我们可以叫它匿名插槽。因为它不用设置name属性。<br>
+单个插槽可以放置在组件的任意位置，但是就像它的名字一样，一个组件中只能有一个该类插槽。相对应的，具名插槽就可以有很多个，只要名字（name属性）不同就可以了。<br>
+下面通过一个例子来展示。<br>
+父组件：</p>
+<pre><code class="language-html">&lt;template&gt;
+    &lt;div class=&quot;father&quot;&gt;
+        &lt;h3&gt;这里是父组件&lt;/h3&gt;
+        &lt;child&gt;
+            &lt;div class=&quot;tmpl&quot;&gt;
+              &lt;span&gt;菜单1&lt;/span&gt;
+              &lt;span&gt;菜单2&lt;/span&gt;
+              &lt;span&gt;菜单3&lt;/span&gt;
+              &lt;span&gt;菜单4&lt;/span&gt;
+              &lt;span&gt;菜单5&lt;/span&gt;
+              &lt;span&gt;菜单6&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/child&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code class="language-html">&lt;template&gt;
+    &lt;div class=&quot;child&quot;&gt;
+        &lt;h3&gt;这里是子组件&lt;/h3&gt;
+        &lt;slot&gt;&lt;/slot&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<p>在这个例子里，因为父组件在里面写了html模板，那么子组件的匿名插槽这块模板就是下面这样。也就是说，子组件的匿名插槽被使用了，是被下面这块模板使用了。</p>
+<pre><code class="language-html">&lt;div class=&quot;tmpl&quot;&gt;
+  &lt;span&gt;菜单1&lt;/span&gt;
+  &lt;span&gt;菜单2&lt;/span&gt;
+  &lt;span&gt;菜单3&lt;/span&gt;
+  &lt;span&gt;菜单4&lt;/span&gt;
+  &lt;span&gt;菜单5&lt;/span&gt;
+  &lt;span&gt;菜单6&lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+<p>最终的渲染结果如图所示：<br>
+<img src="https://cutezhangq.github.io/post-images/1596892088251.png" alt="" loading="lazy"></p>
+<h1 id="具名插槽">具名插槽</h1>
+<p>匿名插槽没有name属性，所以是匿名插槽，那么，插槽加了name属性，就变成了具名插槽。具名插槽可以在一个组件中出现N次，出现在不同的位置。下面的例子，就是一个有两个<strong>具名插槽</strong>和<strong>单个插槽</strong>的组件，这三个插槽被父组件用同一套css样式显示了出来，不同的是内容上略有区别。<br>
+父组件：</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div class=&quot;father&quot;&gt;
+    &lt;h3&gt;这里是父组件&lt;/h3&gt;
+    &lt;child&gt;
+      &lt;div class=&quot;tmpl&quot; slot=&quot;up&quot;&gt;
+        &lt;span&gt;菜单1&lt;/span&gt;
+        &lt;span&gt;菜单2&lt;/span&gt;
+        &lt;span&gt;菜单3&lt;/span&gt;
+        &lt;span&gt;菜单4&lt;/span&gt;
+        &lt;span&gt;菜单5&lt;/span&gt;
+        &lt;span&gt;菜单6&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;tmpl&quot; slot=&quot;down&quot;&gt;
+        &lt;span&gt;菜单-1&lt;/span&gt;
+        &lt;span&gt;菜单-2&lt;/span&gt;
+        &lt;span&gt;菜单-3&lt;/span&gt;
+        &lt;span&gt;菜单-4&lt;/span&gt;
+        &lt;span&gt;菜单-5&lt;/span&gt;
+        &lt;span&gt;菜单-6&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;tmpl&quot;&gt;
+        &lt;span&gt;菜单-&gt;1&lt;/span&gt;
+        &lt;span&gt;菜单-&gt;2&lt;/span&gt;
+        &lt;span&gt;菜单-&gt;3&lt;/span&gt;
+        &lt;span&gt;菜单-&gt;4&lt;/span&gt;
+        &lt;span&gt;菜单-&gt;5&lt;/span&gt;
+        &lt;span&gt;菜单-&gt;6&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/child&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div class=&quot;child&quot;&gt;
+    // 具名插槽
+    &lt;slot name=&quot;up&quot;&gt;&lt;/slot&gt;
+    &lt;h3&gt;这里是子组件&lt;/h3&gt;
+    // 具名插槽
+    &lt;slot name=&quot;down&quot;&gt;&lt;/slot&gt;
+    // 匿名插槽
+    &lt;slot&gt;&lt;/slot&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<p><img src="https://cutezhangq.github.io/post-images/1596892200490.png" alt="" loading="lazy"><br>
+可以看到，父组件通过html模板上的slot属性关联具名插槽。没有slot属性的html模板默认关联匿名插槽。</p>
+<h1 id="作用域插槽-带数据的插槽">作用域插槽 | 带数据的插槽</h1>
+<p>最后，就是我们的作用域插槽。这个稍微难理解一点。官方叫它作用域插槽，实际上，对比前面两种插槽，我们可以叫它带数据的插槽。什么意思呢，就是前面两种，都是在组件的template里面写</p>
+<pre><code class="language-cmd">匿名插槽
+&lt;slot&gt;&lt;/slot&gt;
+具名插槽
+&lt;slot name=&quot;up&quot;&gt;&lt;/slot&gt;
+</code></pre>
+<p>但是作用域插槽要求，在slot上面绑定数据。也就是你得写成大概下面这个样子。</p>
+<pre><code class="language-html">&lt;slot name=&quot;up&quot; :data=&quot;data&quot;&gt;&lt;/slot&gt;
+ export default {
+    data: function(){
+      return {
+        data: ['zhangsan','lisi','wanwu','zhaoliu','tianqi','xiaoba']
+      }
+    },
+}
+</code></pre>
+<p>我们前面说了，插槽最后显示不显示是看父组件有没有在child下面写模板，像下面那样。</p>
+<pre><code class="language-cmd">&lt;child&gt;
+   html模板
+&lt;/child&gt;
+</code></pre>
+<p>写了，插槽就总得在浏览器上显示点东西，东西就是html该有的模样，没写，插槽就是空壳子，啥都没有。<br>
+OK，我们说有html模板的情况，就是父组件会往子组件插模板的情况，那到底插一套什么样的样式呢，这由父组件的html+css共同决定，但是这套样式里面的内容呢？<br>
+正因为作用域插槽绑定了一套数据，父组件可以拿来用。于是，情况就变成了这样：样式父组件说了算，但内容可以显示子组件插槽绑定的。<br>
+我们再来对比，作用域插槽跟单个插槽和具名插槽的区别，因为单个插槽和具名插槽不绑定数据，所以父组件提供的模板一般要既包括样式又包括内容，上面的例子中，你看到的文字，“菜单1”，“菜单2”都是父组件自己提供的内容；而作用域插槽，父组件只需要提供一套样式（在确实用作用域插槽绑定的数据的前提下）。<br>
+下面的例子，你就能看到，父组件提供了三种样式(分别是flex、ul、直接显示)，都没有提供数据，数据使用的都是子组件插槽自己绑定的那个数组（一堆人名的那个数组）。<br>
+父组件：</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div class=&quot;father&quot;&gt;
+    &lt;h3&gt;这里是父组件&lt;/h3&gt;
+    &lt;!--第一次使用：用flex展示数据--&gt;
+    &lt;child&gt;
+      &lt;template slot-scope=&quot;user&quot;&gt;
+        &lt;div class=&quot;tmpl&quot;&gt;
+          &lt;span v-for=&quot;item in user.data&quot;&gt;{{item}}&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/template&gt;
+
+    &lt;/child&gt;
+
+    &lt;!--第二次使用：用列表展示数据--&gt;
+    &lt;child&gt;
+      &lt;template slot-scope=&quot;user&quot;&gt;
+        &lt;ul&gt;
+          &lt;li v-for=&quot;item in user.data&quot;&gt;{{item}}&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/template&gt;
+
+    &lt;/child&gt;
+
+    &lt;!--第三次使用：直接显示数据--&gt;
+    &lt;child&gt;
+      &lt;template slot-scope=&quot;user&quot;&gt;
+       {{user.data}}
+      &lt;/template&gt;
+
+    &lt;/child&gt;
+
+    &lt;!--第四次使用：不使用其提供的数据, 作用域插槽退变成匿名插槽--&gt;
+    &lt;child&gt;
+      我就是模板
+    &lt;/child&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+</code></pre>
+<p>子组件：</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div class=&quot;child&quot;&gt;
+
+    &lt;h3&gt;这里是子组件&lt;/h3&gt;
+    // 作用域插槽
+    &lt;slot  :data=&quot;data&quot;&gt;&lt;/slot&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+ export default {
+    data: function(){
+      return {
+        data: ['zhangsan','lisi','wanwu','zhaoliu','tianqi','xiaoba']
+      }
+    }
+}
+</code></pre>
+<p>结果如图所示：<br>
+<img src="https://cutezhangq.github.io/post-images/1596892616696.png" alt="" loading="lazy"></p>
 
             </div>
             
