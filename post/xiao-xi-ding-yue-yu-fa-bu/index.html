@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596769565696">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596874036568">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -18,8 +18,13 @@
 
 
 
-    <meta name="description" content="11
-" />
+    <meta name="description" content="结合 Vue 源码谈谈发布-订阅模式
+发布订阅模式主要包含哪些内容呢?
+
+发布函数，发布的时候执行相应的回调
+订阅函数，添加订阅者,传入发布时要执行的函数,可能会携额外参数
+一个缓存订阅者以及订阅者的回调函数的列表
+取消订阅(需要分情况讨论..." />
     <meta name="keywords" content="" />
   </head>
   <body>
@@ -29,7 +34,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596769565696" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596874036568" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -94,8 +99,307 @@
             <h2 class="post-title"> 消息订阅与发布</h2>
             <div class="post-date">2020-08-07</div>
             
+              <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/xiao-xi-ding-yue-yu-fa-bu.jpg')">
+              </div>
+            
             <div class="post-content" v-pre>
-              <p>11</p>
+              <p>结合 Vue 源码谈谈发布-订阅模式</p>
+<h1 id="发布订阅模式主要包含哪些内容呢">发布订阅模式主要包含哪些内容呢?</h1>
+<ul>
+<li>发布函数，发布的时候执行相应的回调</li>
+<li>订阅函数，添加订阅者,传入发布时要执行的函数,可能会携额外参数</li>
+<li>一个缓存订阅者以及订阅者的回调函数的列表</li>
+<li>取消订阅(需要分情况讨论)</li>
+</ul>
+<p>这么看下来,其实就像 JavaScript 中的事件模型,我们在DOM节点上绑定事件函数,触发的时候执行就是应用了发布-订阅模式.</p>
+<h1 id="我们先按照上面的内容自己实现一个-observer-对象如下">我们先按照上面的内容自己实现一个 Observer 对象如下:</h1>
+<pre><code class="language-js">//用于存储订阅的事件名称以及回调函数列表的键值对
+function Observer() {
+    this.cache = {}  
+}
+
+//key:订阅消息的类型的标识（名称），fn收到消息之后执行的回调函数
+Observer.prototype.on = function (key,fn) {
+    if(!this.cache[key]){
+        this.cache[key]=[]
+    }
+    this.cache[key].push(fn)
+}
+
+
+//arguments 是发布消息时候携带的参数数组
+Observer.prototype.emit = function (key) {
+    if(this.cache[key]&amp;&amp;this.cache[key].length&gt;0){
+        var fns = this.cache[key]
+    }
+    for(let i=0;i&lt;fns.length;i++){
+        Array.prototype.shift.call(arguments)
+        fns[i].apply(this,arguments)
+    }
+}
+// remove 的时候需要注意，如果你直接传入一个匿名函数fn，那么你在remove的时候是无法找到这个函数并且把它移除的，变通方式是传入一个
+//指向该函数的指针，而 订阅的时候存入的也是这个指针
+Observer.prototype.remove = function (key,fn) {
+    let fns = this.cache[key]
+    if(!fns||fns.length===0){
+        return
+    }
+    //如果没有传入fn，那么就是取消所有该事件的订阅
+    if(!fn){
+        fns=[]
+    }else {
+        fns.forEach((item,index)=&gt;{
+            if(item===fn){
+                fns.splice(index,1)
+            }
+        })
+    }
+}
+
+
+//example
+
+
+var obj = new Observer()
+obj.on('hello',function (a,b) {
+    console.log(a,b)
+})
+obj.emit('hello',1,2)
+//取消订阅事件的回调必须是具名函数
+obj.on('test',fn1 =function () {
+    console.log('fn1')
+})
+obj.on('test',fn2 = function () {
+    console.log('fn2')
+})
+obj.remove('test',fn1)
+obj.emit('test')
+</code></pre>
+<p>为什么会使用发布订阅模式呢? 它的优点在于:</p>
+<ul>
+<li>实现<strong>时间上的解耦</strong>(组件,模块之间的异步通讯)</li>
+<li><strong>对象之间的解耦</strong>,交由发布订阅的对象管理对象之间的耦合关系.</li>
+</ul>
+<h1 id="发布-订阅模式在-vue中的应用">发布-订阅模式在 Vue中的应用</h1>
+<p>发布-订阅模式又叫<code>观察者模式</code>,它定义对象间的一种<code>一对多</code>的依赖关系,当一个对象的状态发生改变时,所有依赖于它的对象都将得到通知。JavaScript开发中我们一般用事件模型来代替传统的发布-订阅模式</p>
+<h1 id="案例介绍1">案例介绍1</h1>
+<p>卖烧饼的店主可以把小明、小龙的电话记录下来,等店里有烧饼了在通知小龙小明来拿这就是所谓的发布-订阅模式，代码如下：</p>
+<pre><code class="language-js">/*烧饼店*/        
+var Sesamecakeshop={
+    clienlist:[],//缓存列表
+    addlisten:function(fn){//增加订阅者
+        this.clienlist.push(fn);
+    },
+    trigger:function(){//发布消息
+        for(var i=0,fn;fn=this.clienlist[i++];){
+            fn.apply(this,arguments);
+        }
+    }
+}
+
+/*小明发布订阅*/
+Sesamecakeshop.addlisten(function(price,taste){
+    console.log(&quot;小明发布的&quot;+price+&quot;元，&quot;+taste+&quot;味道的&quot;);
+});
+/*小龙发布订阅*/
+Sesamecakeshop.addlisten(function(price,taste){
+    console.log(&quot;小龙发布的&quot;+price+&quot;元，&quot;+taste+&quot;味道的&quot;);
+});        
+
+Sesamecakeshop.trigger(10,&quot;椒盐&quot;);
+</code></pre>
+<p>从代码中可以看出，只有小明，小龙预定了烧饼，烧饼店就可以发布消息告诉小龙与小明。但是有个问题不知道大家发现了没有。小明只喜欢椒盐味道的。而小龙只喜欢焦糖味道的。上面的代码就满足不了客户的需求，给客户一种感觉就是，不管我喜欢不喜欢，你都会发给我。如果发布比较多，客户就会感到厌烦，甚至会想删除订阅。下边是对代码进行改良大家可以看看。</p>
+<pre><code class="language-js">/*烧饼店*/        
+var Sesamecakeshop={
+    clienlist:{},/*缓存列表*/
+    /**
+     * 增加订阅者
+     * @key {String} 类型
+     * @fn {Function} 回掉函数
+     * */
+    addlisten:function(key,fn){
+        if(!this.clienlist[key]){
+            this.clienlist[key]=[];
+        }
+        this.clienlist[key].push(fn);
+    },
+    /**
+     * 发布消息
+     * */
+    trigger:function(){
+        var key=[].shift.call(arguments),//取出消息类型
+            fns=this.clienlist[key];//取出该类型的对应的消息集合
+        if(!fns || fns.length===0){
+            return false;
+        }
+        for(var i=0,fn;fn=fns[i++];){
+            fn.apply(this,arguments);
+        }
+    },
+    /**
+     * 删除订阅
+     * @key {String} 类型
+     * @fn {Function} 回掉函数
+     * */
+    remove:function(key,fn){
+        var fns=this.clienlist[key];//取出该类型的对应的消息集合
+        if(!fns){//如果对应的key没有订阅直接返回
+            return false;
+        }
+        if(!fn){//如果没有传入具体的回掉，则表示需要取消所有订阅
+            fns &amp;&amp; (fns.length=0);
+        }else{
+            for(var l=fns.length-1;l&gt;=0;l--){//遍历回掉函数列表
+                if(fn===fns[l]){
+                    fns.splice(l,1);//删除订阅者的回掉
+                }
+            }
+        }
+    }
+}
+
+/*小明发布订阅*/
+Sesamecakeshop.addlisten(&quot;焦糖&quot;,fn1=function(price,taste){
+    console.log(&quot;小明发布的&quot;+price+&quot;元，&quot;+taste+&quot;味道的&quot;);
+});
+/*小龙发布订阅*/
+Sesamecakeshop.addlisten(&quot;椒盐&quot;,function(price,taste){
+    console.log(&quot;小龙发布的&quot;+price+&quot;元，&quot;+taste+&quot;味道的&quot;);
+});        
+
+Sesamecakeshop.trigger(&quot;椒盐&quot;,10,&quot;椒盐&quot;);
+
+Sesamecakeshop.remove(&quot;焦糖&quot;,fn1);//注意这里是按照地址引用的。如果传入匿名函数则删除不了        
+
+Sesamecakeshop.trigger(&quot;焦糖&quot;,40,&quot;焦糖&quot;);
+
+</code></pre>
+<p>删除的时候需要注意的是，如果订阅的时候传递的是匿名函数，删除的时候如果传入的也是匿名函数。则删除不了。因为删除时候是按照地址引用删除的。传进去的两个匿名函数，对应的地址引用是不同的。</p>
+<h1 id="案例介绍2">案例介绍2</h1>
+<p>比如咱们常见的用户身份分别有不同的功能，超级管理员拥有最高权限，可以删除修改任意用户。而普通用户则只能修改自己的账户信息。首先是用户身份验证，验证通过之后对应功能才可以显示。</p>
+<pre><code class="language-js">//登录发布-订阅模式
+login={
+    clienlist:{},/*缓存列表*/
+    /**
+     * 增加订阅者
+     * @key {String} 类型
+     * @fn {Function} 回掉函数
+     * */
+    addlisten:function(key,fn){
+        if(!this.clienlist[key]){
+            this.clienlist[key]=[];
+        }
+        this.clienlist[key].push(fn);
+    },
+    /**
+     * 发布消息
+     * */
+    trigger:function(){
+        var key=[].shift.call(arguments),//取出消息类型
+            fns=this.clienlist[key];//取出该类型的对应的消息集合
+        if(!fns || fns.length===0){
+            return false;
+        }
+        for(var i=0,fn;fn=fns[i++];){
+            fn.apply(this,arguments);
+        }
+    }
+}
+//超级管理员修改所有用户
+var editall=(function(){
+    login.addlisten(&quot;loginsucc&quot;,function(data){
+        editall.setview(data);
+    });
+    return{
+        setview:function(data){
+            console.log(data);
+            console.log(&quot;超级管理员修改所有用户&quot;);
+        }
+    }
+})();
+
+//仅仅修改自己
+var editOwn=(function(){
+    login.addlisten(&quot;loginsucc&quot;,function(data){
+        editOwn.setview(data);
+    });
+    return{
+        setview:function(data){
+            console.log(data);
+            console.log(&quot;仅仅修改自己&quot;);
+        }
+    }
+})();
+</code></pre>
+<p>发布-订阅模式简单封装</p>
+<pre><code class="language-js">var _Event=(function(){
+    var clienlist={},
+    addlisten,trigger,remove;
+    /**
+     * 增加订阅者
+     * @key {String} 类型
+     * @fn {Function} 回掉函数
+     * */
+    addlisten=function(key,fn){
+        if(!clienlist[key]){
+            clienlist[key]=[];
+        }
+        clienlist[key].push(fn);
+    };
+    /**
+     * 发布消息
+     * */
+    trigger=function(){
+        var key=[].shift.call(arguments),//取出消息类型
+            fns=clienlist[key];//取出该类型的对应的消息集合
+        if(!fns || fns.length===0){
+            return false;
+        }
+        for(var i=0,fn;fn=fns[i++];){
+            fn.apply(this,arguments);
+        }
+    };
+    /**
+     * 删除订阅
+     * @key {String} 类型
+     * @fn {Function} 回掉函数
+     * */
+    remove=function(key,fn){
+        var fns=clienlist[key];//取出该类型的对应的消息集合
+        if(!fns){//如果对应的key没有订阅直接返回
+            return false;
+        }
+        if(!fn){//如果没有传入具体的回掉，则表示需要取消所有订阅
+            fns &amp;&amp; (fns.length=0);
+        }else{
+            for(var l=fns.length-1;l&gt;=0;l--){//遍历回掉函数列表
+                if(fn===fns[l]){
+                    fns.splice(l,1);//删除订阅者的回掉
+                }
+            }
+        }
+    };
+    return{
+        addlisten:addlisten,
+        trigger:trigger,
+        remove:remove
+    }
+})();
+
+
+_Event.addlisten(&quot;jianbing&quot;,function(d,all){
+    console.log(&quot;发布的消息来自：&quot;+d+&quot;，具体信息：&quot;+all);
+});
+_Event.addlisten(&quot;jianbing&quot;,function(d,all){
+    console.log(&quot;发布的消息来自：&quot;+d+&quot;，具体信息：&quot;+all);
+})
+_Event.trigger(&quot;yyyy&quot;,&quot;xxx&quot;,&quot;前端工程师&quot;)
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1596872061540.png" alt="" loading="lazy"></figure>
+<h1 id="总结">总结</h1>
+<p>发布-订阅模式就是常说的观察者模式，在实际开发中非常有用。它的优点是为时间是解耦，为对象之间解构，它的应用非常广泛，既可以在异步编程中也可以帮助我们完成更松的解耦。发布-订阅模式还可以帮助我们实现设计模式，从架构上来看，无论MVC还是MVVC都少不了发布-订阅模式的参与。然而发布-订阅模式也存在一些缺点，创建订阅本身会消耗一定的时间与内存，也许当你订阅一个消息之后，之后可能就不会发生。发布-订阅模式虽然它弱化了对象与对象之间的关系，但是如果过度使用，对象与对象的必要联系就会被深埋，会导致程序难以跟踪与维护。</p>
+<!-- more -->
+<h1 id="订阅发布模式和观察者模式的区别">订阅发布模式和观察者模式的区别</h1>
 
             </div>
             

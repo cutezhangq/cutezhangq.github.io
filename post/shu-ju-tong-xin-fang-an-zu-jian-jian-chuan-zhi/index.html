@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596769565696">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596874036568">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -34,7 +34,7 @@ Vue 组件数据通信方案总结
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596769565696" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596874036568" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -98,6 +98,9 @@ Vue 组件数据通信方案总结
           <div class="post-detail">
             <h2 class="post-title">数据通信方案、组件间传值</h2>
             <div class="post-date">2020-08-06</div>
+            
+              <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/shu-ju-tong-xin-fang-an-zu-jian-jian-chuan-zhi.jpg')">
+              </div>
             
             <div class="post-content" v-pre>
               <h1 id="组件间通信的特点">组件间通信的特点</h1>
@@ -229,8 +232,8 @@ closeCom(msg) {
 }
 </code></pre>
 <!-- more -->
-<h1 id="二-emit-on-事件总线bus或者叫eventbus-适用于-父子-隔代-兄弟组件通信">二、 $emit / <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>o</mi><mi>n</mi><mi mathvariant="normal">事</mi><mi mathvariant="normal">件</mi><mi mathvariant="normal">总</mi><mi mathvariant="normal">线</mi><mi mathvariant="normal">：</mi></mrow><annotation encoding="application/x-tex">on     事件总线：</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord cjk_fallback">事</span><span class="mord cjk_fallback">件</span><span class="mord cjk_fallback">总</span><span class="mord cjk_fallback">线</span><span class="mord cjk_fallback">：</span></span></span></span>bus或者叫EventBus     适用于 父子、隔代、兄弟组件通信</h1>
-<h2 id="写法一将bus总线挂载到原型上用的时候直接thisbus即可使用发送-接收">写法一：将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi><mi>u</mi><mi>s</mi><mi mathvariant="normal">总</mi><mi mathvariant="normal">线</mi><mi mathvariant="normal">挂</mi><mi mathvariant="normal">载</mi><mi mathvariant="normal">到</mi><mi mathvariant="normal">原</mi><mi mathvariant="normal">型</mi><mi mathvariant="normal">上</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">用</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">时</mi><mi mathvariant="normal">候</mi><mi mathvariant="normal">直</mi><mi mathvariant="normal">接</mi><mi>t</mi><mi>h</mi><mi>i</mi><mi>s</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">bus总线挂载到原型上，用的时候直接this.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault">u</span><span class="mord mathdefault">s</span><span class="mord cjk_fallback">总</span><span class="mord cjk_fallback">线</span><span class="mord cjk_fallback">挂</span><span class="mord cjk_fallback">载</span><span class="mord cjk_fallback">到</span><span class="mord cjk_fallback">原</span><span class="mord cjk_fallback">型</span><span class="mord cjk_fallback">上</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">时</span><span class="mord cjk_fallback">候</span><span class="mord cjk_fallback">直</span><span class="mord cjk_fallback">接</span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord">.</span></span></span></span>bus即可使用（发送、接收）</h2>
+<h1 id="二-emit-on-事件总线bus或者叫eventbus-适用于-父子-隔代-兄弟组件通信">二、 <code>$emit / $on</code>    事件总线：$bus或者叫EventBus     适用于 父子、隔代、兄弟组件通信</h1>
+<h2 id="写法一将bus总线挂载到原型上用的时候直接thisbus即可使用发送-接收">写法一：将<code>$bus</code>总线挂载到原型上，用的时候直接this.$bus即可使用（发送、接收）</h2>
 <pre><code class="language-js">写法一：
 main.js
     Vue.prototype.$bus = new Vue()
@@ -331,9 +334,8 @@ export default store;
 &lt;button @click=&quot;this.actReduce&quot;&gt;减少&lt;/button&gt;
 &lt;/div&gt;
 &lt;/template&gt;
-
-&lt;script&gt;
-import { mapGetters, mapActions, mapState } from &quot;vuex&quot;;
+</code></pre>
+<pre><code class="language-js">import { mapGetters, mapActions, mapState } from &quot;vuex&quot;;
 
 export default {
 name: &quot;demo&quot;,
@@ -350,7 +352,6 @@ methods: {
     ...mapActions([&quot;actIncrement&quot;, &quot;actReduce&quot;])
 }
 };
-&lt;/script&gt;
 </code></pre>
 <p><img src="https://cutezhangq.github.io/post-images/1596764710488.png" alt="" loading="lazy"><br>
 mapxxx是<code>辅助函数</code>，将方法<code>映射</code>过来<br>
@@ -730,10 +731,25 @@ title: '我是子组件2'
 <p>• 兄弟通信：$emit / $on即Bus事件总线方式，Vuex</p>
 <p>• 隔代（跨级）通信：$emit / <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>o</mi><mi>n</mi><mi mathvariant="normal">即</mi><mi>B</mi><mi>u</mi><mi>s</mi><mi mathvariant="normal">事</mi><mi mathvariant="normal">件</mi><mi mathvariant="normal">总</mi><mi mathvariant="normal">线</mi><mi mathvariant="normal">方</mi><mi mathvariant="normal">式</mi><mi mathvariant="normal">，</mi><mi>V</mi><mi>u</mi><mi>e</mi><mi>x</mi><mi mathvariant="normal">，</mi><mi>p</mi><mi>r</mi><mi>o</mi><mi>v</mi><mi>i</mi><mi>d</mi><mi>e</mi><mi mathvariant="normal">/</mi><mi>i</mi><mi>n</mi><mi>j</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi mathvariant="normal">，</mi></mrow><annotation encoding="application/x-tex">on即Bus事件总线方式，Vuex，provide / inject，</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord cjk_fallback">即</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault">u</span><span class="mord mathdefault">s</span><span class="mord cjk_fallback">事</span><span class="mord cjk_fallback">件</span><span class="mord cjk_fallback">总</span><span class="mord cjk_fallback">线</span><span class="mord cjk_fallback">方</span><span class="mord cjk_fallback">式</span><span class="mord cjk_fallback">，</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault">u</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord cjk_fallback">，</span><span class="mord mathdefault">p</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord">/</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord cjk_fallback">，</span></span></span></span>attrs / $listeners</p>
 <!-- more -->
-<h1 id="消息订阅与发布">消息订阅与发布</h1>
-<p>见相关文章</p>
-<h1 id="slot">slot</h1>
-<p>见相关文章</p>
+<h1 id="七-消息订阅与发布-任意组件间的信息传递">七、消息订阅与发布        任意组件间的信息传递</h1>
+<p>详情见相关文章<br>
+安装pubsub-js</p>
+<pre><code class="language-cmd"> npm install pubsub-js --save
+</code></pre>
+<p>优点：<code>可以进行任意组件间的信息传递。</code></p>
+<p>1、发布消息</p>
+<pre><code class="language-js">    PubSub.publish('msg', data)
+</code></pre>
+<p>下面的例子中，msg为‘type’ , data为communicateType<br>
+<img src="https://cutezhangq.github.io/post-images/1596769897505.png" alt="" loading="lazy"></p>
+<p>2、订阅消息</p>
+<pre><code class="language-js">    PubSub.subscribe('msg', function(msg, data){})
+</code></pre>
+<p>第一个msg为‘type’ （必须与发布消息中的msg一样才能实现通信）,第二个msg就是与第一个msg一样，第二个msg必须得有（语法规定的）<br>
+<img src="https://cutezhangq.github.io/post-images/1596769944793.png" alt="" loading="lazy"></p>
+<!-- more -->
+<h1 id="八-slot">八、slot</h1>
+<p>详情见相关文章</p>
 
             </div>
             
