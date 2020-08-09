@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596892639238">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596939540263">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -29,7 +29,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596892639238" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596939540263" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -215,9 +215,10 @@
    html模板
 &lt;/child&gt;
 </code></pre>
-<p>写了，插槽就总得在浏览器上显示点东西，东西就是html该有的模样，没写，插槽就是空壳子，啥都没有。<br>
+<p>可以说是子组件暴露的一个让父组件传入自定义内容的接口。<br>
+写了，插槽就总得在浏览器上显示点东西，东西就是html该有的模样，没写，插槽就是空壳子，啥都没有。<br>
 OK，我们说有html模板的情况，就是父组件会往子组件插模板的情况，那到底插一套什么样的样式呢，这由父组件的html+css共同决定，但是这套样式里面的内容呢？<br>
-正因为作用域插槽绑定了一套数据，父组件可以拿来用。于是，情况就变成了这样：样式父组件说了算，但内容可以显示子组件插槽绑定的。<br>
+<code>正因为作用域插槽绑定了一套数据，父组件可以拿来用。</code>于是，情况就变成了这样：<code>样式父组件说了算，但内容可以显示子组件插槽绑定的。</code><br>
 我们再来对比，作用域插槽跟单个插槽和具名插槽的区别，因为单个插槽和具名插槽不绑定数据，所以父组件提供的模板一般要既包括样式又包括内容，上面的例子中，你看到的文字，“菜单1”，“菜单2”都是父组件自己提供的内容；而作用域插槽，父组件只需要提供一套样式（在确实用作用域插槽绑定的数据的前提下）。<br>
 下面的例子，你就能看到，父组件提供了三种样式(分别是flex、ul、直接显示)，都没有提供数据，数据使用的都是子组件插槽自己绑定的那个数组（一堆人名的那个数组）。<br>
 父组件：</p>
@@ -226,7 +227,7 @@ OK，我们说有html模板的情况，就是父组件会往子组件插模板�
     &lt;h3&gt;这里是父组件&lt;/h3&gt;
     &lt;!--第一次使用：用flex展示数据--&gt;
     &lt;child&gt;
-      &lt;template slot-scope=&quot;user&quot;&gt;
+      &lt;template slot-scope=&quot;user&quot;&gt;          &lt;!--通过slot-scope获取子组件的信息--&gt;
         &lt;div class=&quot;tmpl&quot;&gt;
           &lt;span v-for=&quot;item in user.data&quot;&gt;{{item}}&lt;/span&gt;
         &lt;/div&gt;
@@ -236,7 +237,7 @@ OK，我们说有html模板的情况，就是父组件会往子组件插模板�
 
     &lt;!--第二次使用：用列表展示数据--&gt;
     &lt;child&gt;
-      &lt;template slot-scope=&quot;user&quot;&gt;
+      &lt;template slot-scope=&quot;user&quot;&gt;          &lt;!--通过slot-scope获取子组件的信息--&gt;
         &lt;ul&gt;
           &lt;li v-for=&quot;item in user.data&quot;&gt;{{item}}&lt;/li&gt;
         &lt;/ul&gt;
@@ -246,7 +247,7 @@ OK，我们说有html模板的情况，就是父组件会往子组件插模板�
 
     &lt;!--第三次使用：直接显示数据--&gt;
     &lt;child&gt;
-      &lt;template slot-scope=&quot;user&quot;&gt;
+      &lt;template slot-scope=&quot;user&quot;&gt;              &lt;!--通过slot-scope获取子组件的信息--&gt;
        {{user.data}}
       &lt;/template&gt;
 
@@ -280,6 +281,133 @@ OK，我们说有html模板的情况，就是父组件会往子组件插模板�
 </code></pre>
 <p>结果如图所示：<br>
 <img src="https://cutezhangq.github.io/post-images/1596892616696.png" alt="" loading="lazy"></p>
+<h1 id="slot-scope">slot-scope</h1>
+<p><strong>父组件中在使用时：</strong></p>
+<ul>
+<li>默认插槽的话直接在子组件的标签内写入内容即可</li>
+<li>具名插槽是在默认插槽的基础上加上slot属性，值为子组件插槽name属性值</li>
+<li>作用域插槽则是通过<code>slot-scope获取子组件的信息</code>，在内容中使用。这里可以用解构语法去直接获取想要的属性</li>
+</ul>
+<h1 id="v-slot">v-slot</h1>
+<pre><code class="language-cmd">在vue2.6中，上述的API被软废弃（3.0正式废弃），取而代之的是内置指令v-slot，可以缩写为【#】
+</code></pre>
+<p>**子组件用法保持不变，**父组件中</p>
+<ul>
+<li>slot属性弃用，具名插槽通过指令参数<code>v-slot:插槽名</code>的形式传入，可以简化为 <code>#插槽名。</code></li>
+<li><code>slot-scope</code>属性弃用，作用域插槽通过<code>v-slot:xxx=&quot;slotProps&quot;</code>的slotProps来获取子组件传出的属性</li>
+<li>v-slot属性只能在 <code>&lt;template&gt;</code>上使用，但在**【只有默认插槽时】**可以在组件标签上使用</li>
+</ul>
+<pre><code class="language-html">//Parent
+&lt;template&gt;
+  &lt;child&gt;
+   &lt;!--默认插槽--&gt;
+   &lt;template v-slot&gt;
+     &lt;div&gt;默认插槽&lt;/div&gt;
+   &lt;/template&gt;
+   &lt;!--具名插槽--&gt;
+   &lt;template #header&gt;
+     &lt;div&gt;具名插槽&lt;/div&gt;
+   &lt;/template&gt;
+   &lt;!--作用域插槽--&gt;
+   &lt;template #footer=&quot;slotProps&quot;&gt;
+     &lt;div&gt;
+      {{slotProps.testProps}}
+     &lt;/div&gt;
+   &lt;/template&gt;
+  &lt;child&gt;
+&lt;/template&gt;
+</code></pre>
+<h1 id="拓展用法">拓展用法：</h1>
+<ol>
+<li>同样可以通过解构获取v-slot={user},<br>
+还可以重命名v-slot=&quot;{user: newName}&quot;和定义默认值v-slot=&quot;{user = '默认值'}&quot;</li>
+<li>插槽名可以是动态变化的 v-slot:[slotName]</li>
+</ol>
+<p><strong>注意：</strong></p>
+<ol>
+<li>默认插槽名为<code>default</code>，可以省略default直接写<code>v-slot</code>，<br>
+缩写为#时不能不写参数，写成<code>#default</code>（这点所有指令都一样，v-bind、v-on）</li>
+<li>多个插槽混用时，v-slot不能省略default</li>
+</ol>
+<h1 id="作用域插槽的原理">作用域插槽的原理</h1>
+<p>slot本质上是返回VNode的函数，一般情况下，Vue中的组件要渲染到页面上需要经过<br>
+<code>template &gt;&gt; render function &gt;&gt; VNode &gt;&gt; DOM</code>过程。 组件挂载的本质就是执行渲染函数得到VNode，至于data/props/computed这些属性都是给VNode提供数据来源。<br>
+在2.5之前，如果是普通插槽就<strong>直接是VNode</strong>的形式了，而如果是作用域插槽，由于子组件需要在父组件访问子组件的数据，所以父组件下是一个<strong>未执行的函数</strong><code>(slotScope) =&gt; return h('div', slotScope.msg)</code>，接受子组件的slotProps参数，在子组件渲染实例时会调用该函数传入数据。<br>
+在2.6之后，两者合并，普通插槽也变成一个函数，只是不接受参数了。</p>
+<h1 id="总结">总结</h1>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1596938553804.png" alt="" loading="lazy"></figure>
+<h1 id="slot的使用场景">slot的使用场景</h1>
+<ul>
+<li>布局组件、</li>
+<li>表格列、</li>
+<li>下拉选项</li>
+</ul>
+<h1 id="slot-scope的使用场景">slot-scope的使用场景</h1>
+<p>想象一个场景：<br>
+<strong>当你要给同事封装一个列表组件，你就需要使用作用域插槽（注意是列表或者类似列表的组件）</strong><br>
+你开发的这个列表组件要如何使用呢？<br>
+一般来说作为列表组件的调用者，你的同事先做ajax请求，拿到一个这样的数组</p>
+<pre><code class="language-json">   todos: [
+        {
+          id: 0,
+          text: 'ziwei0',
+          isComplete: false
+        },
+        {
+          text: 'ziwei1',
+          id: 1,
+          isComplete: true
+        },
+        {
+          text: 'ziwei2',
+          id: 2,
+          isComplete: false
+        },
+        {
+          text: 'ziwei3',
+          id: 3,
+          isComplete: false
+        }
+      ]
+</code></pre>
+<p>之后会把todso传递给列表组件吧，那么列表组件内部做什么事情呢？<br>
+列表内部肯定会v-for去帮你的同事渲染这个数组嘛。 就类似element-ui里的table组件一样<br>
+问题的关键就在这里<br>
+<strong>列表组件的循环，是发生在组件内部的，所以通过 v-for=&quot;todo in todos&quot; ,列表组件很容易拿到一项todo，但列表拿到数据没用呀，列表只是一个瓜皮，它又不懂业务逻辑这个数据是你同事的业务数据，</strong><br>
+<strong>所以这个数据必须得交给组件的调用者，也就是把数据交给你的同事才对。</strong></p>
+<p>那么你怎样才能把每一项的todo数据给传递出去呢？<br>
+你会发现没有办法！</p>
+<p>无论是用$emit、vuex还是localStorage，可以考虑一下，会发现没有合适的时机，能让你把todo传递出去</p>
+<p>所以为了应对这个场景下，发明了<code>作用域插槽</code>，列表组件可以通过<code>&lt;slot :todo=&quot;todo&quot;&gt;&lt;/slot&gt;</code>传递todo出去<br>
+你的同事可以通过 slot-scope=&quot;slotsProps&quot;<code>拿到todo</code>。<br>
+回答几个疑问，其实如果你看懂上面的问题，应该可以回答下面的问题。这也是我曾经的疑问</p>
+<ul>
+<li>疑问1：一般不是我们传参数来调用组件吗？为什么组件还把数据传递回来？</li>
+</ul>
+<pre><code class="language-cmd">的确，调用ui组件时一般是我们传递配置参数给他们。
+
+但是就像elemnt-ui的table组件，你把数组传递给table后，是不是有时候需要拿到某一行的row对象
+
+并根据row对象里的字段，来判断一些内容的显示隐藏？
+
+因为循环的过程发生在table组件内部，所以table组件可以方便的获取到每一项数据，但是这些数据最终不是给组件的，而是我们自己要用的业务数据。所以也需要一个方式，让调用者能拿到自己想要的数据
+</code></pre>
+<ul>
+<li>疑问2： 既然子组件最终还要把我给他的数据，再返还给我，那我当初还干嘛给它，能不能就自己在父组件里玩？</li>
+</ul>
+<pre><code class="language-cmd">如果你不把数据给子组件当然可以。但是就等于抛弃掉了子组件的封装，只能你直接在父组件自己写一个列表
+
+毕竟你不把数据给子组件，子组件还渲染个锤子？没有父子关系的话，也就不用什么插槽了。
+
+但是咱不是为了封装后，可以复用嘛，总不能永远不用组件嘛
+</code></pre>
+<ul>
+<li>疑问3： 父组件需要子组件的数据？那不会有$emit和vuex嘛，为什么要有slot-scope？</li>
+</ul>
+<pre><code class="language-cmd">$emit和vuex是数据传递的一种方法，但是你可以尝试用$emit和vuex把todo传递给父组件。
+
+你会发现的确没有合适的钩子、时机来$emit数据
+</code></pre>
 
             </div>
             
