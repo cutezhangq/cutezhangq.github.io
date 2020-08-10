@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8" >
 
-<title>笔试整理 | cutezhangq</title>
+<title>笔试-题目整理 | cutezhangq</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596939540263">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597066655337">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -19,7 +19,7 @@
 
 
     <meta name="description" content="#【1.】变量a是一个64位有符号的整数，初始值用16进制表示为：0Xf000000000000000； 变量b是一个64位有符号的整数，初始值用16进制表示为：0x7FFFFFFFFFFFFFFF。 则a-b的结果用10进制表示为多少？（..." />
-    <meta name="keywords" content="" />
+    <meta name="keywords" content="面试" />
   </head>
   <body>
     <div id="app" class="main">
@@ -28,7 +28,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596939540263" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597066655337" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -90,7 +90,7 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">笔试整理</h2>
+            <h2 class="post-title">笔试-题目整理</h2>
             <div class="post-date">2020-06-16</div>
             
               <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/bi-shi-zheng-li.jpg')">
@@ -541,8 +541,142 @@ a+=i*(isOdd?1:-1)；<br>
 }
 </code></pre>
 <figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1596858583685.png" alt="" loading="lazy"></figure>
+<h1 id="18设计一个todo-list页面结构如下图所示要求">【18.】设计一个TODO List，页面结构如下图所示，要求：</h1>
+<p>使用HTML与CSS完成界面开发</p>
+<p>实现添加功能：输入框中可输入任意字符，按回车后将输入字符串添加到下方列表的最后，并清空输入框</p>
+<p>实现删除功能：点击列表项后面的“X”号，可以删除该项</p>
+<p>实现模糊匹配：在输入框中输入字符后，将当前输入字符串与已添加的列表项进行模糊匹配，将匹配到的结果显示在输入框下方。如匹配不到任何列表项，列表显示空</p>
+<p>注：以上代码实现需要能在浏览器中正常显示与执行。<br>
+<img src="https://cutezhangq.github.io/post-images/1596956262981.png" alt="" loading="lazy"></p>
+<h2 id="答案-5">答案：</h2>
+<pre><code class="language-css">    body{
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        h1{
+            margin: 30px 0 0 0;
+            color: #ff5550;
+            text-align: center;
+            font-size: 60px;
+        }
+        #back{
+            width: 300px;
+            margin: 0 auto;
+            border: 1px solid #333;
+            box-shadow: 0px 0px 3px #999;
+            background-color: #fff;
+        }
+        #back input{
+            width: 100%;
+            box-sizing: border-box;
+            line-height: 30px;
+            border: none;
+            border-bottom: 1px solid #000;
+            padding: 5px 15px;
+            font-size: 18px;
+        }
+        #list_back .single{
+            position: relative;
+            border-bottom: 1px solid #000;
+        }
+        #list_back .single p{
+            width: 100%;
+            height: 30px;
+            margin: 0;
+            line-height: 30px;
+            padding: 5px 15px;
+        }
+        #list_back .single span{
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 30px;
+            text-align: center;
+            line-height: 40px;
+            font-size: 18px;
+            color: #000;
+            cursor: pointer;
+        }
+</code></pre>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;title&gt;TODOList&lt;/title&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;todos&lt;/h1&gt;
+&lt;div id=&quot;back&quot;&gt;
+    &lt;input id=&quot;addInput&quot; type=&quot;text&quot; name=&quot;&quot;&gt;
+    &lt;div id=&quot;list_back&quot;&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<pre><code class="language-js">  var oAddInput = document.getElementById('addInput');
+    var oList_back = document.getElementById('list_back');
+    var all = document.getElementsByClassName('single');
+    oAddInput.onkeyup = function(){
+        // alert(event.keyCode);//13
+        // alert(event.code);//Enter
+        if(event.keyCode == '13'){
+            // alert('add');
+            var oDiv = document.createElement('div');
+            var oSpan = document.createElement('span');
+            var oP = document.createElement('p');
+            oDiv.appendChild(oP);
+            oDiv.appendChild(oSpan);
+            oP.innerHTML = oAddInput.value;
+            oSpan.innerHTML = '&amp;times;';
+            oDiv.className = 'single';
+            oList_back.appendChild(oDiv);
+            oAddInput.value = '';//清空输入框
+            oSpan.onclick= function(){
+                oList_back.removeChild(this.parentNode);//绑定删除方法
+            };
+        }
+    };
+    //模糊查询
+    function select(){
+        oAddInput.addEventListener('keyup', function(e){//监听键盘抬起事件（所有键盘按钮）
+            // console.log(e.target.value);
+            var str = e.target.value;
+            var reg = new RegExp('(' + str + ')', 'g');//匹配到的文字变红色，准备工作
+            for( var i = 0; i&lt;all.length; i++ ){
+                var one = all[i].getElementsByTagName('p')[0];
+                var newStr = one.innerText.replace(reg, '&lt;font color=red&gt;$1&lt;/font&gt;');//换--&gt;红色，用innerText防止用innerHTML将标签也读取出来出错。
+                if( one.innerText.indexOf(str) == -1 ){//也选用innerHTML
+                    all[i].style.display = 'none';//匹配不到的掩藏
+                }else{
+                    one.innerHTML = newStr;//匹配到的变红
+                }
+            }
+            if(str == ''){
+                for( var i = 0; i&lt;all.length; i++ ){
+                    all[i].style.display = 'block';//输入框空时全部显示
+                }
+            }
+        });
+    }
+    select();  //函数解析完就运行
+</code></pre>
 
             </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://cutezhangq.github.io/tag/gEYVGztSN/" class="tag">
+                    面试
+                  </a>
+                
+              </div>
             
             
               <div class="next-post">

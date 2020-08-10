@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596939540263">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597066655337">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -20,7 +20,7 @@
 
     <meta name="description" content="插槽，也就是slot，是组件的一块HTML模板，这块模板显示不显示、以及怎样显示由父组件来决定。 实际上，一个slot最核心的两个问题在这里就点出来了，是显示不显示和怎样显示。
 由于插槽是一块模板，所以，对于任何一个组件，从模板种类的角度来..." />
-    <meta name="keywords" content="" />
+    <meta name="keywords" content="vue" />
   </head>
   <body>
     <div id="app" class="main">
@@ -29,7 +29,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596939540263" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597066655337" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -408,8 +408,97 @@ OK，我们说有html模板的情况，就是父组件会往子组件插模板�
 
 你会发现的确没有合适的钩子、时机来$emit数据
 </code></pre>
+<h1 id="26新增用法">2.6新增用法</h1>
+<h2 id="动态插槽名260新增">动态插槽名(2.6.0新增)</h2>
+<p>动态指令参数(需要自己了解)也可以用在v-slot上，来定义动态的插槽名：</p>
+<pre><code class="language-html">&lt;base-layout&gt;
+  &lt;template v-slot:[dynamicSlotName]&gt;
+    ...
+  &lt;/template&gt;
+&lt;/base-layout&gt;
+</code></pre>
+<h2 id="具名插槽的缩写260新增">具名插槽的缩写(2.6.0新增)</h2>
+<p>跟 v-on 和 v-bind 一样，v-slot 也有缩写，即把参数之前的所有内容 (v-slot:) 替换为字符 #。例如 v-slot:header 可以被重写为 #header：<br>
+原来是这样写的：</p>
+<pre><code class="language-html">&lt;div&gt;
+   &lt;template v-slot:header&gt;
+    &lt;h1&gt;Here might be a page title&lt;/h1&gt;
+   &lt;/template&gt;
+
+  &lt;p&gt;A paragraph for the main content.&lt;/p&gt;
+  &lt;p&gt;And another one.&lt;/p&gt;
+
+  &lt;template v-slot:footer&gt;
+    &lt;p&gt;Here some contact info&lt;/p&gt;
+  &lt;/template&gt;
+&lt;/div&gt;  
+</code></pre>
+<p>现在可以这样写：</p>
+<pre><code class="language-html">&lt;div&gt;
+   &lt;template #header&gt;
+    &lt;h1&gt;Here might be a page title&lt;/h1&gt;
+   &lt;/template&gt;
+
+  &lt;p&gt;A paragraph for the main content.&lt;/p&gt;
+  &lt;p&gt;And another one.&lt;/p&gt;
+
+  &lt;template #footer&gt;
+    &lt;p&gt;Here some contact info&lt;/p&gt;
+  &lt;/template&gt;
+&lt;/div&gt;
+</code></pre>
+<p>如果希望使用缩写的话，必须始终以明确插槽名取而代之：</p>
+<pre><code class="language-html">&lt;test #default=&quot;{ usertext }&quot;&gt;
+  {{ usertext.firstName }}
+&lt;/test&gt;
+</code></pre>
+<h1 id="其他示例">其他示例</h1>
+<p>插槽 prop 允许我们将插槽转换为<code>可复用</code>的模板，这些模板可以基于输入的 <code>prop</code>渲染出不同的内容。 这在设计封装数据逻辑同时允许父级组件自定义部分布局的可复用组件时是最有用的。<br>
+例如，我们要实现一个 <code>&lt;todo-list&gt;</code>组件，它是一个列表且包含布局和过滤逻辑：</p>
+<pre><code class="language-html">&lt;ul&gt;
+  &lt;li
+    v-for=&quot;todo in filteredTodos&quot;
+    v-bind:key=&quot;todo.id&quot;
+  &gt;
+    {{ todo.text }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>我们可以将每个<code>todo</code>作为父级组件的插槽，以此通过父级组件对其进行控制，然后将<code>todo</code> 作为一个插槽<code>prop</code>进行绑定：</p>
+<pre><code class="language-html">&lt;ul&gt;
+  &lt;li
+    v-for=&quot;todo in filteredTodos&quot;
+    v-bind:key=&quot;todo.id&quot;
+  &gt;
+    &lt;!--
+    我们为每个 todo 准备了一个插槽，
+    将 `todo` 对象作为一个插槽的 prop 传入。
+    --&gt;
+    &lt;slot name=&quot;todo&quot; v-bind:todo=&quot;todo&quot;&gt;
+      &lt;!-- 后备内容 --&gt;
+      {{ todo.text }}
+    &lt;/slot&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>现在当我们使用 <code>&lt;todo-list&gt;</code>组件的时候，我们可以选择为 todo 定义一个不一样的 <code>&lt;template&gt;</code>作为替代方案，并且可以从子组件获取数据：</p>
+<pre><code class="language-html">&lt;todo-list v-bind:todos=&quot;todos&quot;&gt;
+  &lt;template v-slot:todo=&quot;{ todo }&quot;&gt;
+    &lt;span v-if=&quot;todo.isComplete&quot;&gt;✓&lt;/span&gt;
+    {{ todo.text }}
+  &lt;/template&gt;
+&lt;/todo-list&gt;
+</code></pre>
 
             </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://cutezhangq.github.io/tag/3SsurU03A/" class="tag">
+                    vue
+                  </a>
+                
+              </div>
             
             
               <div class="next-post">

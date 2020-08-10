@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cutezhangq.github.io</id>
     <title>cutezhangq</title>
-    <updated>2020-08-09T02:19:43.347Z</updated>
+    <updated>2020-08-10T13:37:48.014Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cutezhangq.github.io"/>
     <link rel="self" href="https://cutezhangq.github.io/atom.xml"/>
@@ -10,6 +10,816 @@
     <logo>https://cutezhangq.github.io/images/avatar.png</logo>
     <icon>https://cutezhangq.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, cutezhangq</rights>
+    <entry>
+        <title type="html"><![CDATA[this、apply、call、bind]]></title>
+        <id>https://cutezhangq.github.io/post/thisapplycallbind/</id>
+        <link href="https://cutezhangq.github.io/post/thisapplycallbind/">
+        </link>
+        <updated>2020-08-09T07:12:03.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="面试题-区别bind与call和apply">面试题: 区别bind()与call()和apply()?</h1>
+<ul>
+<li>都能指定函数中的this</li>
+<li>call()/apply()是 立即调用函数</li>
+<li>bind()是 将函数返回</li>
+</ul>
+<pre><code class="language-js">//在不传参的形式下： .call同.apply  可以强制this的指向
+  var obj0 = {username:'gaga'};
+  function foo(){
+    console.log(this);
+  }
+  foo.call(obj0)        //{username:'gaga'}
+  foo.apply(obj0)       //{username:'gaga'}
+
+//传参时： call直接传   apply放到数组中传
+  function foo1(data){
+      console.log(this,data);
+  }
+  foo1.call(obj0,33)      //{username:'gaga'} 33    直接从第二个参数开始，依次传入
+  foo1.apply(obj0,[33])   //{username:'gaga'} 33  第二个参数必须是数组，传入的数据放在数组里
+  foo.bind(obj0)   //没有输出
+</code></pre>
+<p><strong>bind的特点：</strong><br>
+绑定完this不会立即调用当前的函数，而是将函数返回</p>
+<pre><code class="language-js">//bind的特点：
+    //绑定完this不会立即调用当前的函数，而是将函数返回
+      //写法1.
+    var bar = foo.bind(obj0)
+    console.log('bar',bar)      //foo(){  console.log(this);  }
+    bar();                     //{username:'gaga'}
+      //写法2.
+    foo.bind(obj0)();         //{username:'gaga'}
+
+//bind的用法：用来指定回调函数的this      vue中常用
+    setTimeout(function(){
+      console.log('---',this)   //不绑定bind,this是window；bind后this指向为obj0     --- {username: &quot;gaga&quot;}
+    }.bind(obj0),1000)
+
+//bind传参的方式：
+    function fun(age) {
+        this.name = 'kobe';
+        this.age = age;
+        console.log('dd');
+    }
+    var obj = {};
+    fun.bind(obj, 12)();
+    console.log(obj.name, obj.age);      //kobe 12
+</code></pre>
+<h1 id="this">this</h1>
+<ul>
+<li>this可以用在构造函数之中，表示实例对象。<br>
+除此之外，this还可以用在别的场合。但不管是什么场合，this都有一个共同点：它总是返回一个对象。<br>
+简单说，<code>this就是属性或方法“当前”所在的 对象。</code><br>
+下面是一个实际的例子。</li>
+</ul>
+<pre><code class="language-js">var person = {
+    name: '张三',
+    describe: function () {
+        return '姓名：'+ this.name;
+    }
+};
+
+person.describe()       // &quot;姓名：张三&quot;
+</code></pre>
+<p>上面代码中，this.name表示name属性所在的那个对象。由于this.name是在describe方法中调用，而describe方法所在的当前对象是person，因此this指向person，this.name就是person.name。<br>
+由于对象的属性可以赋给另一个对象，所以属性所在的当前对象是可变的，<br>
+<strong>即this的指向是可变的。</strong></p>
+<pre><code class="language-js">var A = {
+    name: '张三',
+    describe: function () {
+        return '姓名：'+ this.name;
+    }
+};
+
+var B = {
+    name: '李四'
+};
+
+B.describe = A.describe;
+B.describe()    // &quot;姓名：李四&quot;
+</code></pre>
+<p>上面代码中，A.describe属性被赋给B，于是B.describe就表示describe方法所在的当前对象是B，所以this.name就指向B.name。<br>
+稍稍重构这个例子，this的动态指向就能看得更清楚。</p>
+<pre><code class="language-js">function f() {
+    return '姓名：'+ this.name;
+}
+
+var A = {
+    name: '张三',
+    describe: f
+};
+
+var B = {
+    name: '李四',
+    describe: f
+};
+
+A.describe() // &quot;姓名：张三&quot;
+B.describe() // &quot;姓名：李四&quot;
+</code></pre>
+<p>上面代码中，函数f内部使用了this关键字，随着f所在的对象不同，this的指向也不同。<br>
+<strong>只要函数被赋给另一个变量，this的指向就会变。</strong></p>
+<pre><code class="language-js">var A = {
+    name: '张三',
+    describe: function () {
+        return '姓名：'+ this.name;
+    }
+};
+
+var name = '李四';
+var f = A.describe;
+f()     // &quot;姓名：李四&quot;
+</code></pre>
+<p>上面代码中，A.describe被赋值给变量f，内部的this就会指向f运行时所在的对象（本例是顶层对象）。</p>
+<h1 id="2-this-的使用场景">2. this 的使用场景</h1>
+<h2 id="1全局环境">（1）全局环境</h2>
+<pre><code class="language-js">this === window // true
+
+function f() {
+    console.log(this === window);
+}
+f() // true
+</code></pre>
+<h2 id="2构造函数">（2）构造函数</h2>
+<p>构造函数中的this，指的是实例对象。</p>
+<pre><code class="language-js">var Obj = function (p) {
+    this.p = p;
+};
+</code></pre>
+<h2 id="3对象的方法">（3）对象的方法</h2>
+<p>如果对象的方法里面包含this，this的指向就是方法运行时所在的对象。该方法赋值给另一个对象，就会改变this的指向。<br>
+但是，这条规则很不容易把握。请看下面的代码。</p>
+<pre><code class="language-js">var obj ={
+    foo: function () {
+        console.log(this);
+    }
+};
+
+obj.foo() // obj
+</code></pre>
+<p>上面代码中，obj.foo方法执行时，它内部的this指向obj。<br>
+但是，下面这几种用法，都会改变this的指向。</p>
+<pre><code class="language-js">// 情况一
+(obj.foo = obj.foo)() // window
+// 情况二
+(false || obj.foo)() // window
+// 情况三
+(1, obj.foo)() // window
+
+</code></pre>
+<p>如果这时将嵌套对象内部的方法赋值给一个变量，this依然会指向全局对象。</p>
+<pre><code class="language-js">var a = {
+    b: {
+        m: function() {
+            console.log(this.p);
+        },
+        p: 'Hello'
+    }
+};
+
+var hello = a.b.m;
+hello() // undefined
+</code></pre>
+<p><strong>即：当有赋值情况时，先将值替换，然后再看this的指向</strong></p>
+<h1 id="使用注意点">使用注意点</h1>
+<h2 id="countersection-避免多层-this">counter(section) &quot;　&quot;避免多层 this</h2>
+<p>由于this的指向是不确定的，所以切勿在函数中包含多层的this。</p>
+<pre><code class="language-js">var o = {
+    f1: function () {
+        console.log(this);
+        var f2 = function () {
+            console.log(this);
+        }();
+    }
+}
+
+o.f1()
+// Object
+</code></pre>
+<p>上面代码包含两层this，结果运行后，第一层指向对象o，第二层指向全局对象，因为实际执行的是下面的代码。</p>
+<pre><code class="language-js">var temp = function () {
+    console.log(this);
+};
+
+var o = {
+    f1: function () {
+        console.log(this);
+        var f2 = temp();
+    }
+}
+</code></pre>
+<p>一个解决方法是在第二层改用一个指向外层this的变量。</p>
+<pre><code class="language-js">var o = {
+    f1: function() {
+        console.log(this);
+        var that = this;
+        var f2 = function() {
+            console.log(that);    //然后在内层使用that，就不会发生this指向的改变
+        }();
+    }
+}
+
+o.f1()
+// Object
+// Object
+</code></pre>
+<p><strong>上面代码定义了变量that，固定指向外层的this，然后在内层使用that，就不会发生this指向的改变。</strong><br>
+事实上，使用一个变量固定this的值，然后内层函数调用这个变量，是非常常见的做法，请务必掌握。<br>
+JavaScript 提供了严格模式，也可以硬性避免这种问题。严格模式下，如果函数内部的this指向顶层对象，就会报错。</p>
+<h2 id="2-countersection-避免数组处理方法中的-this">2 &quot;.&quot; counter(section) &quot;　&quot;避免数组处理方法中的 this</h2>
+<p>数组的<code>map</code>和<code>forEach</code>方法，允许提供一个函数作为参数。这个函数内部不应该使用this。<br>
+——<strong>使用中间变量固定this。</strong><br>
+或者<strong>是将this当作forEach方法的第二个参数，固定它的运行环境。</strong></p>
+<h3 id="一种方法就是前面提到的使用中间变量固定this">一种方法，就是前面提到的，使用中间变量固定this。</h3>
+<p>应用：</p>
+<pre><code class="language-js"> //下单
+      async orderDown() {
+        var _this = this;
+        //获取选择的商品数组信息
+        this.listData.forEach(function(item,index){
+          goodsIdArr.forEach(function(item2,index2){
+            if(item.productId == item2){
+              _this.chooseProductList.push(_this.listData[index]);
+            }
+          })
+        });
+      },
+</code></pre>
+<h3 id="另一种方法是将this当作foreach方法的第二个参数固定它的运行环境">另一种方法是将this当作foreach方法的第二个参数，固定它的运行环境。</h3>
+<pre><code class="language-js">var o = {
+    v: 'hello',
+    p: [ 'a1', 'a2' ],
+    f: function f() {
+        this.p.forEach(function (item) {
+            console.log(this.v + ' ' + item);
+        }, this);
+    }
+}
+
+o.f()
+// hello a1
+// hello a2
+</code></pre>
+<h2 id="3-countersection-避免回调函数中的-this">3 &quot;.&quot; counter(section) &quot;　&quot;避免回调函数中的 this</h2>
+<p><strong>回调函数中的this往往会改变指向，最好避免使用。</strong></p>
+<h2 id="4-绑定-this-的方法">4 &quot;. &quot;绑定 this 的方法</h2>
+<p>this的动态切换，固然为 JavaScript 创造了巨大的灵活性，但也使得编程变得困难和模糊。有时，需要把this固定下来，避免出现意想不到的情况。JavaScript 提供了<code>call、apply、bind</code>这三个方法，来切换/固定this的指向。</p>
+<h1 id="call">.call()</h1>
+<p>函数实例的call方法，<strong>可以指定函数内部this的指向（即函数执行时所在的作用域）</strong>，然后在所指定的作用域中，调用该函数。</p>
+<pre><code class="language-js">var obj = {};
+
+var f = function () {
+    return  this;
+};
+
+f() === window // true
+f.call(obj) === obj // true
+</code></pre>
+<p>上面代码中，全局环境运行函数f时，this指向全局环境（浏览器为window对象）；<br>
+call方法可以改变this的指向，指定this指向对象obj，然后在对象obj的作用域中运行函数f。<br>
+call方法的参数，应该是一个对象。如果参数为空、null和undefined，则默认传入全局对象。</p>
+<pre><code class="language-js">var n = 123;
+var obj = { n: 456 };
+
+function a() {
+    console.log(this.n);
+}
+
+a.call() // 123
+a.call(null) // 123
+a.call(undefined) // 123
+a.call(window) // 123
+a.call(obj) // 456
+</code></pre>
+<p>如果call方法的参数是一个原始值，那么这个原始值会自动转成对应的包装对象，然后传入call方法。</p>
+<pre><code class="language-js">var f = function () {
+    return  this;
+};
+
+f.call(5)    // Number {[[PrimitiveValue]]: 5}
+</code></pre>
+<p>上面代码中，call的参数为5，不是对象，会被自动转成包装对象（Number的实例），绑定f内部的this。<br>
+call方法还可以接受多个参数。</p>
+<p>call的第一个参数就是this所要指向的那个对象，后面的参数则是函数调用时所需的参数。</p>
+<pre><code class="language-js">function add(a, b) {
+    return a + b;
+}
+
+add.call(this, 1, 2) // 3
+</code></pre>
+<p>上面代码中，call方法指定函数add内部的this绑定当前环境（对象），并且参数为1和2，因此函数add运行后得到3。<br>
+call方法的一个应用是调用对象的原生方法。</p>
+<pre><code class="language-js">var obj = {};
+obj.hasOwnProperty('toString') // false
+
+// 覆盖掉继承的 hasOwnProperty 方法
+obj.hasOwnProperty = function () {
+    return true;
+};
+obj.hasOwnProperty('toString') // true
+
+Object.prototype.hasOwnProperty.call(obj, 'toString') // false
+</code></pre>
+<p>上面代码中，hasOwnProperty是obj对象继承的方法，如果这个方法一旦被覆盖，就不会得到正确结果。call方法可以解决这个问题，它将hasOwnProperty方法的原始定义放到obj对象上执行，这样无论obj上有没有同名方法，都不会影响结果。</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="面试题-区别bind与call和apply">面试题: 区别bind()与call()和apply()?</h1>
+<ul>
+<li>都能指定函数中的this</li>
+<li>call()/apply()是 立即调用函数</li>
+<li>bind()是 将函数返回</li>
+</ul>
+<pre><code class="language-js">//在不传参的形式下： .call同.apply  可以强制this的指向
+  var obj0 = {username:'gaga'};
+  function foo(){
+    console.log(this);
+  }
+  foo.call(obj0)        //{username:'gaga'}
+  foo.apply(obj0)       //{username:'gaga'}
+
+//传参时： call直接传   apply放到数组中传
+  function foo1(data){
+      console.log(this,data);
+  }
+  foo1.call(obj0,33)      //{username:'gaga'} 33    直接从第二个参数开始，依次传入
+  foo1.apply(obj0,[33])   //{username:'gaga'} 33  第二个参数必须是数组，传入的数据放在数组里
+  foo.bind(obj0)   //没有输出
+</code></pre>
+<p><strong>bind的特点：</strong><br>
+绑定完this不会立即调用当前的函数，而是将函数返回</p>
+<pre><code class="language-js">//bind的特点：
+    //绑定完this不会立即调用当前的函数，而是将函数返回
+      //写法1.
+    var bar = foo.bind(obj0)
+    console.log('bar',bar)      //foo(){  console.log(this);  }
+    bar();                     //{username:'gaga'}
+      //写法2.
+    foo.bind(obj0)();         //{username:'gaga'}
+
+//bind的用法：用来指定回调函数的this      vue中常用
+    setTimeout(function(){
+      console.log('---',this)   //不绑定bind,this是window；bind后this指向为obj0     --- {username: &quot;gaga&quot;}
+    }.bind(obj0),1000)
+
+//bind传参的方式：
+    function fun(age) {
+        this.name = 'kobe';
+        this.age = age;
+        console.log('dd');
+    }
+    var obj = {};
+    fun.bind(obj, 12)();
+    console.log(obj.name, obj.age);      //kobe 12
+</code></pre>
+<h1 id="this">this</h1>
+<ul>
+<li>this可以用在构造函数之中，表示实例对象。<br>
+除此之外，this还可以用在别的场合。但不管是什么场合，this都有一个共同点：它总是返回一个对象。<br>
+简单说，<code>this就是属性或方法“当前”所在的 对象。</code><br>
+下面是一个实际的例子。</li>
+</ul>
+<pre><code class="language-js">var person = {
+    name: '张三',
+    describe: function () {
+        return '姓名：'+ this.name;
+    }
+};
+
+person.describe()       // &quot;姓名：张三&quot;
+</code></pre>
+<p>上面代码中，this.name表示name属性所在的那个对象。由于this.name是在describe方法中调用，而describe方法所在的当前对象是person，因此this指向person，this.name就是person.name。<br>
+由于对象的属性可以赋给另一个对象，所以属性所在的当前对象是可变的，<br>
+<strong>即this的指向是可变的。</strong></p>
+<pre><code class="language-js">var A = {
+    name: '张三',
+    describe: function () {
+        return '姓名：'+ this.name;
+    }
+};
+
+var B = {
+    name: '李四'
+};
+
+B.describe = A.describe;
+B.describe()    // &quot;姓名：李四&quot;
+</code></pre>
+<p>上面代码中，A.describe属性被赋给B，于是B.describe就表示describe方法所在的当前对象是B，所以this.name就指向B.name。<br>
+稍稍重构这个例子，this的动态指向就能看得更清楚。</p>
+<pre><code class="language-js">function f() {
+    return '姓名：'+ this.name;
+}
+
+var A = {
+    name: '张三',
+    describe: f
+};
+
+var B = {
+    name: '李四',
+    describe: f
+};
+
+A.describe() // &quot;姓名：张三&quot;
+B.describe() // &quot;姓名：李四&quot;
+</code></pre>
+<p>上面代码中，函数f内部使用了this关键字，随着f所在的对象不同，this的指向也不同。<br>
+<strong>只要函数被赋给另一个变量，this的指向就会变。</strong></p>
+<pre><code class="language-js">var A = {
+    name: '张三',
+    describe: function () {
+        return '姓名：'+ this.name;
+    }
+};
+
+var name = '李四';
+var f = A.describe;
+f()     // &quot;姓名：李四&quot;
+</code></pre>
+<p>上面代码中，A.describe被赋值给变量f，内部的this就会指向f运行时所在的对象（本例是顶层对象）。</p>
+<h1 id="2-this-的使用场景">2. this 的使用场景</h1>
+<h2 id="1全局环境">（1）全局环境</h2>
+<pre><code class="language-js">this === window // true
+
+function f() {
+    console.log(this === window);
+}
+f() // true
+</code></pre>
+<h2 id="2构造函数">（2）构造函数</h2>
+<p>构造函数中的this，指的是实例对象。</p>
+<pre><code class="language-js">var Obj = function (p) {
+    this.p = p;
+};
+</code></pre>
+<h2 id="3对象的方法">（3）对象的方法</h2>
+<p>如果对象的方法里面包含this，this的指向就是方法运行时所在的对象。该方法赋值给另一个对象，就会改变this的指向。<br>
+但是，这条规则很不容易把握。请看下面的代码。</p>
+<pre><code class="language-js">var obj ={
+    foo: function () {
+        console.log(this);
+    }
+};
+
+obj.foo() // obj
+</code></pre>
+<p>上面代码中，obj.foo方法执行时，它内部的this指向obj。<br>
+但是，下面这几种用法，都会改变this的指向。</p>
+<pre><code class="language-js">// 情况一
+(obj.foo = obj.foo)() // window
+// 情况二
+(false || obj.foo)() // window
+// 情况三
+(1, obj.foo)() // window
+
+</code></pre>
+<p>如果这时将嵌套对象内部的方法赋值给一个变量，this依然会指向全局对象。</p>
+<pre><code class="language-js">var a = {
+    b: {
+        m: function() {
+            console.log(this.p);
+        },
+        p: 'Hello'
+    }
+};
+
+var hello = a.b.m;
+hello() // undefined
+</code></pre>
+<p><strong>即：当有赋值情况时，先将值替换，然后再看this的指向</strong></p>
+<h1 id="使用注意点">使用注意点</h1>
+<h2 id="countersection-避免多层-this">counter(section) &quot;　&quot;避免多层 this</h2>
+<p>由于this的指向是不确定的，所以切勿在函数中包含多层的this。</p>
+<pre><code class="language-js">var o = {
+    f1: function () {
+        console.log(this);
+        var f2 = function () {
+            console.log(this);
+        }();
+    }
+}
+
+o.f1()
+// Object
+</code></pre>
+<p>上面代码包含两层this，结果运行后，第一层指向对象o，第二层指向全局对象，因为实际执行的是下面的代码。</p>
+<pre><code class="language-js">var temp = function () {
+    console.log(this);
+};
+
+var o = {
+    f1: function () {
+        console.log(this);
+        var f2 = temp();
+    }
+}
+</code></pre>
+<p>一个解决方法是在第二层改用一个指向外层this的变量。</p>
+<pre><code class="language-js">var o = {
+    f1: function() {
+        console.log(this);
+        var that = this;
+        var f2 = function() {
+            console.log(that);    //然后在内层使用that，就不会发生this指向的改变
+        }();
+    }
+}
+
+o.f1()
+// Object
+// Object
+</code></pre>
+<p><strong>上面代码定义了变量that，固定指向外层的this，然后在内层使用that，就不会发生this指向的改变。</strong><br>
+事实上，使用一个变量固定this的值，然后内层函数调用这个变量，是非常常见的做法，请务必掌握。<br>
+JavaScript 提供了严格模式，也可以硬性避免这种问题。严格模式下，如果函数内部的this指向顶层对象，就会报错。</p>
+<h2 id="2-countersection-避免数组处理方法中的-this">2 &quot;.&quot; counter(section) &quot;　&quot;避免数组处理方法中的 this</h2>
+<p>数组的<code>map</code>和<code>forEach</code>方法，允许提供一个函数作为参数。这个函数内部不应该使用this。<br>
+——<strong>使用中间变量固定this。</strong><br>
+或者<strong>是将this当作forEach方法的第二个参数，固定它的运行环境。</strong></p>
+<h3 id="一种方法就是前面提到的使用中间变量固定this">一种方法，就是前面提到的，使用中间变量固定this。</h3>
+<p>应用：</p>
+<pre><code class="language-js"> //下单
+      async orderDown() {
+        var _this = this;
+        //获取选择的商品数组信息
+        this.listData.forEach(function(item,index){
+          goodsIdArr.forEach(function(item2,index2){
+            if(item.productId == item2){
+              _this.chooseProductList.push(_this.listData[index]);
+            }
+          })
+        });
+      },
+</code></pre>
+<h3 id="另一种方法是将this当作foreach方法的第二个参数固定它的运行环境">另一种方法是将this当作foreach方法的第二个参数，固定它的运行环境。</h3>
+<pre><code class="language-js">var o = {
+    v: 'hello',
+    p: [ 'a1', 'a2' ],
+    f: function f() {
+        this.p.forEach(function (item) {
+            console.log(this.v + ' ' + item);
+        }, this);
+    }
+}
+
+o.f()
+// hello a1
+// hello a2
+</code></pre>
+<h2 id="3-countersection-避免回调函数中的-this">3 &quot;.&quot; counter(section) &quot;　&quot;避免回调函数中的 this</h2>
+<p><strong>回调函数中的this往往会改变指向，最好避免使用。</strong></p>
+<h2 id="4-绑定-this-的方法">4 &quot;. &quot;绑定 this 的方法</h2>
+<p>this的动态切换，固然为 JavaScript 创造了巨大的灵活性，但也使得编程变得困难和模糊。有时，需要把this固定下来，避免出现意想不到的情况。JavaScript 提供了<code>call、apply、bind</code>这三个方法，来切换/固定this的指向。</p>
+<h1 id="call">.call()</h1>
+<p>函数实例的call方法，<strong>可以指定函数内部this的指向（即函数执行时所在的作用域）</strong>，然后在所指定的作用域中，调用该函数。</p>
+<pre><code class="language-js">var obj = {};
+
+var f = function () {
+    return  this;
+};
+
+f() === window // true
+f.call(obj) === obj // true
+</code></pre>
+<p>上面代码中，全局环境运行函数f时，this指向全局环境（浏览器为window对象）；<br>
+call方法可以改变this的指向，指定this指向对象obj，然后在对象obj的作用域中运行函数f。<br>
+call方法的参数，应该是一个对象。如果参数为空、null和undefined，则默认传入全局对象。</p>
+<pre><code class="language-js">var n = 123;
+var obj = { n: 456 };
+
+function a() {
+    console.log(this.n);
+}
+
+a.call() // 123
+a.call(null) // 123
+a.call(undefined) // 123
+a.call(window) // 123
+a.call(obj) // 456
+</code></pre>
+<p>如果call方法的参数是一个原始值，那么这个原始值会自动转成对应的包装对象，然后传入call方法。</p>
+<pre><code class="language-js">var f = function () {
+    return  this;
+};
+
+f.call(5)    // Number {[[PrimitiveValue]]: 5}
+</code></pre>
+<p>上面代码中，call的参数为5，不是对象，会被自动转成包装对象（Number的实例），绑定f内部的this。<br>
+call方法还可以接受多个参数。</p>
+<p>call的第一个参数就是this所要指向的那个对象，后面的参数则是函数调用时所需的参数。</p>
+<pre><code class="language-js">function add(a, b) {
+    return a + b;
+}
+
+add.call(this, 1, 2) // 3
+</code></pre>
+<p>上面代码中，call方法指定函数add内部的this绑定当前环境（对象），并且参数为1和2，因此函数add运行后得到3。<br>
+call方法的一个应用是调用对象的原生方法。</p>
+<pre><code class="language-js">var obj = {};
+obj.hasOwnProperty('toString') // false
+
+// 覆盖掉继承的 hasOwnProperty 方法
+obj.hasOwnProperty = function () {
+    return true;
+};
+obj.hasOwnProperty('toString') // true
+
+Object.prototype.hasOwnProperty.call(obj, 'toString') // false
+</code></pre>
+<p>上面代码中，hasOwnProperty是obj对象继承的方法，如果这个方法一旦被覆盖，就不会得到正确结果。call方法可以解决这个问题，它将hasOwnProperty方法的原始定义放到obj对象上执行，这样无论obj上有没有同名方法，都不会影响结果。</p>
+<!-- more -->
+<h1 id="2-apply">2 .apply()</h1>
+<p>apply方法的作用与call方法类似，也是改变this指向，然后再调用该函数。唯一的区别就是，它接收一个数组作为函数执行时的参数，使用格式如下。<br>
+apply方法的第一个参数也是this所要指向的那个对象，如果设为null或undefined，则等同于指定全局对象。<br>
+第二个参数则是一个数组，该数组的所有成员依次作为参数，传入原函数。原函数的参数，在call方法中必须一个个添加，但是在apply方法中，<strong>必须以数组形式添加</strong>。</p>
+<pre><code class="language-js">function f(x, y){
+    console.log(x + y);
+}
+
+f.call(null, 1, 1) // 2
+f.apply(null, [1, 1]) // 2
+</code></pre>
+<p>上面代码中，f函数本来接受两个参数，使用apply方法以后，就变成可以接受一个数组作为参数。<br>
+利用这一点，可以做一些有趣的应用。</p>
+<h2 id="1找出数组最大元素">（1）找出数组最大元素</h2>
+<p>JavaScript 不提供找出数组最大元素的函数。结合使用apply方法和Math.max方法，就可以返回数组的最大元素。</p>
+<pre><code class="language-js">var a = [10, 2, 4, 15, 9];
+Math.max.apply(null, a) // 15
+</code></pre>
+<h2 id="2将数组的空元素变为undefined">（2）将数组的空元素变为undefined</h2>
+<p>通过apply方法，利用Array构造函数将数组的空元素变成undefined。</p>
+<pre><code class="language-js">Array.apply(null, ['a', ,'b'])
+// [ 'a', undefined, 'b' ]
+</code></pre>
+<p>空元素与undefined的差别在于，数组的forEach方法会跳过空元素，但是不会跳过undefined。<br>
+因此，遍历内部元素的时候，会得到不同的结果。</p>
+<pre><code class="language-js">var a = ['a', , 'b'];
+
+function print(i) {
+console.log(i);
+}
+
+a.forEach(print)
+// a
+// b
+
+Array.apply(null, a).forEach(print)
+// a
+// undefined
+// b
+</code></pre>
+<h2 id="3转换类似数组的对象">（3）转换类似数组的对象</h2>
+<p>另外，利用数组对象的slice方法，可以将一个类似数组的对象（比如arguments对象）转为真正的数组。</p>
+<pre><code class="language-js">Array.prototype.slice.apply({0: 1, length: 1}) // [1]
+Array.prototype.slice.apply({0: 1}) // []
+Array.prototype.slice.apply({0: 1, length: 2}) // [1, undefined]
+Array.prototype.slice.apply({length: 1}) // [undefined]
+</code></pre>
+<p>上面代码的apply方法的参数都是对象，但是返回结果都是数组，这就起到了将对象转成数组的目的。从上面代码可以看到，这个方法起作用的前提是，被处理的对象必须有length属性，以及相对应的数字键。</p>
+<h2 id="4绑定回调函数的对象">（4）绑定回调函数的对象</h2>
+<pre><code class="language-js">var o = new  Object();
+
+o.f = function () {
+    console.log(this === o);
+}
+
+var f = function (){
+    o.f.apply(o);
+    // 或者 o.f.call(o);
+};
+
+// jQuery 的写法
+$('#button').on('click', f);
+</code></pre>
+<p>上面代码中，点击按钮以后，控制台将会显示true。由于apply方法（或者call方法）不仅绑定函数执行时所在的对象，还会立即执行函数，因此不得不把绑定语句写在一个函数体内。更简洁的写法是采用下面介绍的bind方法。</p>
+<h1 id="3-bind">3 .bind()</h1>
+<p>bind方法用于将函数体内的this绑定到某个对象，然后返回一个新函数。</p>
+<pre><code class="language-js">var d = new Date();
+d.getTime() // 1481869925657
+
+var print = d.getTime;
+print() // Uncaught TypeError: this is not a Date object.
+</code></pre>
+<p>上面代码中，我们将d.getTime方法赋给变量print，然后调用print就报错了。这是因为getTime方法内部的this，绑定Date对象的实例，赋给变量print以后，内部的this已经不指向Date对象的实例了。<br>
+bind方法可以解决这个问题。</p>
+<pre><code class="language-js">var print = d.getTime.bind(d);
+print() // 1481869925657
+</code></pre>
+<p>上面代码中，bind方法将getTime方法内部的this绑定到d对象，这时就可以安全地将这个方法赋值给其他变量了。<br>
+bind方法的参数就是所要绑定this的对象，下面是一个更清晰的例子。</p>
+<pre><code class="language-js">var counter = {
+    count: 0,
+    inc: function () {
+        this.count++;
+    }
+};
+
+var func = counter.inc.bind(counter);
+func();
+counter.count // 1
+</code></pre>
+<p>上面代码中，counter.inc方法被赋值给变量func。这时必须用bind方法将inc内部的this，绑定到counter，否则就会出错。<br>
+this绑定到其他对象也是可以的。</p>
+<pre><code class="language-js">var counter = {
+    count: 0,
+    inc: function () {
+        this.count++;
+    }
+};
+
+var obj = {
+    count: 100
+};
+var func = counter.inc.bind(obj);
+func();
+obj.count // 101
+</code></pre>
+<p>上面代码中，bind方法将inc方法内部的this，绑定到obj对象。结果调用func函数以后，递增的就是obj内部的count属性。<br>
+bind还可以接受更多的参数，将这些参数绑定原函数的参数。</p>
+<pre><code class="language-js">var add = function (x, y) {
+    return  x * this.m + y * this.n;
+}
+
+var obj = {
+    m: 2,
+    n: 2
+};
+
+var newAdd = add.bind(obj, 5);
+newAdd(5) // 20
+</code></pre>
+<h2 id="1每一次返回一个新函数">（1）每一次返回一个新函数</h2>
+<p>bind方法每运行一次，就返回一个新函数，这会产生一些问题。比如，监听事件的时候，不能写成下面这样。</p>
+<pre><code class="language-js">element.addEventListener('click', o.m.bind(o));
+</code></pre>
+<p>上面代码中，click事件绑定bind方法生成的一个匿名函数。这样会导致无法取消绑定，所以，下面的代码是无效的。</p>
+<pre><code class="language-js">element.removeEventListener('click', o.m.bind(o));
+</code></pre>
+<p>正确的方法是写成下面这样：</p>
+<pre><code class="language-js">var listener = o.m.bind(o);
+element.addEventListener('click', listener);
+// ...
+element.removeEventListener('click', listener);
+</code></pre>
+<h2 id="回调函数是-javascript-最常用的模式之一但是一个常见的错误是将包含this的方法直接当作回调函数">回调函数是 JavaScript 最常用的模式之一，但是一个常见的错误是，将包含this的方法直接当作回调函数。</h2>
+<p>解决方法就是使用bind方法，将counter.inc绑定counter。</p>
+<pre><code class="language-js">var counter = {
+    count: 0,
+    inc: function () {
+        'use strict';
+        this.count++;
+    }
+};
+
+function callIt(callback) {
+    callback();
+}
+
+callIt(counter.inc.bind(counter));
+counter.count // 1
+</code></pre>
+<p>上面代码中，callIt方法会调用回调函数。<br>
+这时如果直接把counter.inc传入，调用时counter.inc内部的this就会指向全局对象。<br>
+使用bind方法将counter.inc绑定counter以后，就不会有这个问题，this总是指向counter。<br>
+还有一种情况比较隐蔽，就是某些数组方法可以接受一个函数当作参数。这些函数内部的this指向，很可能也会出错。</p>
+<pre><code class="language-js">var obj = {
+    name: '张三',
+    times: [1, 2, 3],
+    print: function () {
+        this.times.forEach(function (n) {
+            console.log(this.name);
+        });
+    }
+};
+
+obj.print()    // 没有任何输出
+</code></pre>
+<p>上面代码中，obj.print内部this.times的this是指向obj的，这个没有问题。但是，forEach方法的回调函数内部的this.name却是指向全局对象，导致没有办法取到值。稍微改动一下，就可以看得更清楚。</p>
+<pre><code class="language-js">obj.print = function () {
+    this.times.forEach(function (n) {
+        console.log(this === window);
+    });
+};
+
+obj.print()
+// true
+// true
+// true
+</code></pre>
+<p>解决这个问题，也是通过bind方法绑定this。</p>
+<pre><code class="language-js">obj.print = function () {
+    this.times.forEach(function (n) {
+        console.log(this.name);
+    }.bind(this));
+};
+
+obj.print()
+// 张三
+// 张三
+// 张三
+</code></pre>
+<h2 id="3结合call方法使用">（3）结合call方法使用</h2>
+<p>利用bind方法，可以改写一些 JavaScript 原生方法的使用形式，以数组的slice方法为例。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[slot插槽]]></title>
         <id>https://cutezhangq.github.io/post/slot-cha-cao/</id>
@@ -325,6 +1135,87 @@ OK，我们说有html模板的情况，就是父组件会往子组件插模板�
 <pre><code class="language-cmd">$emit和vuex是数据传递的一种方法，但是你可以尝试用$emit和vuex把todo传递给父组件。
 
 你会发现的确没有合适的钩子、时机来$emit数据
+</code></pre>
+<h1 id="26新增用法">2.6新增用法</h1>
+<h2 id="动态插槽名260新增">动态插槽名(2.6.0新增)</h2>
+<p>动态指令参数(需要自己了解)也可以用在v-slot上，来定义动态的插槽名：</p>
+<pre><code class="language-html">&lt;base-layout&gt;
+  &lt;template v-slot:[dynamicSlotName]&gt;
+    ...
+  &lt;/template&gt;
+&lt;/base-layout&gt;
+</code></pre>
+<h2 id="具名插槽的缩写260新增">具名插槽的缩写(2.6.0新增)</h2>
+<p>跟 v-on 和 v-bind 一样，v-slot 也有缩写，即把参数之前的所有内容 (v-slot:) 替换为字符 #。例如 v-slot:header 可以被重写为 #header：<br>
+原来是这样写的：</p>
+<pre><code class="language-html">&lt;div&gt;
+   &lt;template v-slot:header&gt;
+    &lt;h1&gt;Here might be a page title&lt;/h1&gt;
+   &lt;/template&gt;
+
+  &lt;p&gt;A paragraph for the main content.&lt;/p&gt;
+  &lt;p&gt;And another one.&lt;/p&gt;
+
+  &lt;template v-slot:footer&gt;
+    &lt;p&gt;Here some contact info&lt;/p&gt;
+  &lt;/template&gt;
+&lt;/div&gt;  
+</code></pre>
+<p>现在可以这样写：</p>
+<pre><code class="language-html">&lt;div&gt;
+   &lt;template #header&gt;
+    &lt;h1&gt;Here might be a page title&lt;/h1&gt;
+   &lt;/template&gt;
+
+  &lt;p&gt;A paragraph for the main content.&lt;/p&gt;
+  &lt;p&gt;And another one.&lt;/p&gt;
+
+  &lt;template #footer&gt;
+    &lt;p&gt;Here some contact info&lt;/p&gt;
+  &lt;/template&gt;
+&lt;/div&gt;
+</code></pre>
+<p>如果希望使用缩写的话，必须始终以明确插槽名取而代之：</p>
+<pre><code class="language-html">&lt;test #default=&quot;{ usertext }&quot;&gt;
+  {{ usertext.firstName }}
+&lt;/test&gt;
+</code></pre>
+<h1 id="其他示例">其他示例</h1>
+<p>插槽 prop 允许我们将插槽转换为<code>可复用</code>的模板，这些模板可以基于输入的 <code>prop</code>渲染出不同的内容。 这在设计封装数据逻辑同时允许父级组件自定义部分布局的可复用组件时是最有用的。<br>
+例如，我们要实现一个 <code>&lt;todo-list&gt;</code>组件，它是一个列表且包含布局和过滤逻辑：</p>
+<pre><code class="language-html">&lt;ul&gt;
+  &lt;li
+    v-for=&quot;todo in filteredTodos&quot;
+    v-bind:key=&quot;todo.id&quot;
+  &gt;
+    {{ todo.text }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>我们可以将每个<code>todo</code>作为父级组件的插槽，以此通过父级组件对其进行控制，然后将<code>todo</code> 作为一个插槽<code>prop</code>进行绑定：</p>
+<pre><code class="language-html">&lt;ul&gt;
+  &lt;li
+    v-for=&quot;todo in filteredTodos&quot;
+    v-bind:key=&quot;todo.id&quot;
+  &gt;
+    &lt;!--
+    我们为每个 todo 准备了一个插槽，
+    将 `todo` 对象作为一个插槽的 prop 传入。
+    --&gt;
+    &lt;slot name=&quot;todo&quot; v-bind:todo=&quot;todo&quot;&gt;
+      &lt;!-- 后备内容 --&gt;
+      {{ todo.text }}
+    &lt;/slot&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>现在当我们使用 <code>&lt;todo-list&gt;</code>组件的时候，我们可以选择为 todo 定义一个不一样的 <code>&lt;template&gt;</code>作为替代方案，并且可以从子组件获取数据：</p>
+<pre><code class="language-html">&lt;todo-list v-bind:todos=&quot;todos&quot;&gt;
+  &lt;template v-slot:todo=&quot;{ todo }&quot;&gt;
+    &lt;span v-if=&quot;todo.isComplete&quot;&gt;✓&lt;/span&gt;
+    {{ todo.text }}
+  &lt;/template&gt;
+&lt;/todo-list&gt;
 </code></pre>
 ]]></content>
     </entry>
@@ -967,6 +1858,95 @@ HTML 代码渲染完成，无法改变，有新数据，就须把旧 HTML 代码
 由于组件数据变化来源入口变得可能不止一个，数据流转方向易紊乱，若再缺乏“管制”手段，崩溃。</p>
 <p>这样来看，单向绑定跟双向绑定在功能上基本上是互补的，所以我们可以在合适的场景下使用合适的手段。比如在 UI 控件 中(通常是类表单操作)，我会使用双向的方式绑定数据；而其他场景则统一采用 单向 + inline event ( &lt;component :msg=“msg” @update=“updateMsg(msg)”&gt; ) 的方式构建应用。<br>
 <img src="https://cutezhangq.github.io/post-images/1596891716608.png" alt="" loading="lazy"></p>
+<h1 id="单向数据流">单向数据流：</h1>
+<p>如：<strong>props</strong><br>
+数据从父级组件传递给子组件，只能单向绑定。<br>
+子组件内部不能直接修改从父级传递过来的数据。<br>
+其中，props的用法：<br>
+props 是<strong>单向绑定</strong>的：当父组件的属性变化时，将传导给子组件，但是不会反过来。这是为了防止子组件无意修改父组件的状态。<br>
+所以<code>不应该在子组件中修改 props 中的值，Vue 会报出警告</code>。</p>
+<h2 id="修改-props-数据">修改 props 数据</h2>
+<p>通常有两种原因：</p>
+<ul>
+<li>prop 作为初始值传入后，子组件想把它当做局部数据来用</li>
+<li>prop 作为初始值传入后，由子组件处理成其他数据输出</li>
+</ul>
+<h2 id="应对办法是">应对办法是</h2>
+<ul>
+<li>定义一个<code>局部变量</code>，并用 prop 的值初始化它<br>
+但是由于定义的 ownChildMsg 只能接受 forChildMsg <code>的初始值</code>，当父组件要传递的值变化发生时，ownChildMsg <code>无法收到更新</code>。</li>
+</ul>
+<pre><code class="language-js">let childNode = {
+  template: `
+          &lt;div class=&quot;child&quot;&gt;
+            &lt;div&gt;
+              &lt;span&gt;子组件数据&lt;/span&gt;
+              &lt;input v-model=&quot;forChildMsg&quot;/&gt;
+            &lt;/div&gt;
+            &lt;p&gt;{{forChildMsg}}&lt;/p&gt;
+            &lt;p&gt;ownChildMsg : {{ownChildMsg}}&lt;/p&gt;
+          &lt;/div&gt;`,
+  props: {
+    &quot;for-child-msg&quot;: String
+  },
+  data() {
+    return { ownChildMsg: this.forChildMsg };
+  }
+};
+</code></pre>
+<p>这里我们加了一个<p>用于查看 ownChildMsg 数据是否变化，结果发现只有默认值传递给了 ownChildMsg，父组件改变只会变化到 forChildMsg，不会修改 ownChildMsg。</p>
+<ul>
+<li>定义一个<code>计算属性</code>，处理 prop 的值并返回<br>
+由于是计算属性，所以只能显示值，不能设置值。我们这里设置的是一旦从父组件修改了 forChildMsg 数据，我们就把 forChildMsg 加上一个字符串&quot;---ownChildMsg&quot;，然后显示在屏幕上。这时是可以每当父组件修改了新数据，<code>都会更新</code> ownChildMsg 数据的。</li>
+</ul>
+<pre><code class="language-js">let childNode = {
+  template: `
+          &lt;div class=&quot;child&quot;&gt;
+            &lt;div&gt;
+              &lt;span&gt;子组件数据&lt;/span&gt;
+              &lt;input v-model=&quot;forChildMsg&quot;/&gt;
+            &lt;/div&gt;
+            &lt;p&gt;{{forChildMsg}}&lt;/p&gt;
+            &lt;p&gt;ownChildMsg : {{ownChildMsg}}&lt;/p&gt;
+          &lt;/div&gt;`,
+  props: {
+    &quot;for-child-msg&quot;: String
+  },
+  computed: {
+    ownChildMsg() {
+      return this.forChildMsg + &quot;---ownChildMsg&quot;;
+    }
+  }
+};
+</code></pre>
+<ul>
+<li>更加妥帖的方式是<code>使用变量存储</code> prop 的初始值，并用<code>watch</code>来观察 prop 值得<code>变化</code>。发生变化时，更新变量的值。</li>
+</ul>
+<pre><code class="language-js">let childNode = {
+  template: `
+          &lt;div class=&quot;child&quot;&gt;
+            &lt;div&gt;
+              &lt;span&gt;子组件数据&lt;/span&gt;
+              &lt;input v-model=&quot;forChildMsg&quot;/&gt;
+            &lt;/div&gt;
+            &lt;p&gt;{{forChildMsg}}&lt;/p&gt;
+            &lt;p&gt;ownChildMsg : {{ownChildMsg}}&lt;/p&gt;
+          &lt;/div&gt;`,
+  props: {
+    &quot;for-child-msg&quot;: String
+  },
+  data() {
+    return {
+      ownChildMsg: this.forChildMsg
+    };
+  },
+  watch: {
+    forChildMsg() {
+      this.ownChildMsg = this.forChildMsg;
+    }
+  }
+};
+</code></pre>
 ]]></content>
     </entry>
     <entry>
@@ -2398,164 +3378,6 @@ async function getPlayList (courseId, currentAudioId) {
 <li>图片记得要压缩，图片在显示时才渲染。</li>
 <li>vuex保持数据精简，必要时可先存storage。</li>
 </ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[小程序框架比较]]></title>
-        <id>https://cutezhangq.github.io/post/xiao-cheng-xu-kuang-jia-bi-jiao/</id>
-        <link href="https://cutezhangq.github.io/post/xiao-cheng-xu-kuang-jia-bi-jiao/">
-        </link>
-        <updated>2020-08-05T07:21:50.000Z</updated>
-        <content type="html"><![CDATA[<p>( wepy / mpvue / taro )<br>
-<img src="https://cutezhangq.github.io/post-images/1596612473597.png" alt="" loading="lazy"><br>
-<img src="https://cutezhangq.github.io/post-images/1596612549046.png" alt="" loading="lazy"></p>
-<h1 id="生命周期">生命周期</h1>
-<p>同为vue规范的mpvue和wepy的生命周期和各种方法不尽相同</p>
-<p><strong>wepy</strong><br>
-　　wepy生命周期基本与原生小程序相同,再此基础上糅合了一些vue的特性; 对于WePY中的methods属性，因为与Vue中的使用习惯不一致，非常容易造成误解，这里需要特别强调一下：WePY中的methods属性只能声明页面wxml标签的bind、catch事件，不能声明自定义方法，这与Vue中的用法是不一致的。</p>
-<pre><code class="language-js">import wepy from 'wepy';
-
-export default class MyPage extends wepy.page {
-// export default class MyComponent extends wepy.component {
-    customData = {}  // 自定义数据
-
-    customFunction ()　{}  //自定义方法
-
-    onLoad () {}  // 在Page和Component共用的生命周期函数
-
-    onShow () {}  // 只在Page中存在的页面生命周期函数
-
-    config = {};  // 只在Page实例中存在的配置数据，对应于原生的page.json文件
-
-    data = {};  // 页面所需数据均需在这里声明，可用于模板数据绑定
-
-    components = {};  // 声明页面中所引用的组件，或声明组件中所引用的子组件
-
-    mixins = [];  // 声明页面所引用的Mixin实例
-
-    computed = {};  // 声明计算属性（详见后文介绍）
-
-    watch = {};  // 声明数据watcher（详见后文介绍）
-
-    methods = {};  // 声明页面wxml中标签的事件处理函数。注意，此处只用于声明页面wxml中标签的bind、catch事件，自定义方法需以自定义方法的方式声明
-
-    events = {};  // 声明组件之间的事件处理函数
-}
-</code></pre>
-<p><strong>mpvue</strong></p>
-<p>mpvue 除了 Vue 本身的生命周期外，还兼容了小程序生命周期，这部分生命周期钩子的来源于微信小程序的 Page， 除特殊情况外，不建议使用小程序的生命周期 钩子。</p>
-<blockquote>
-<p><strong>Vue</strong><br>
-beforeCreate<br>
-created<br>
-beforeMount<br>
-mounted<br>
-beforeUpdate<br>
-updated<br>
-activated<br>
-deactivated<br>
-beforeDestroy<br>
-destroyed</p>
-</blockquote>
-<blockquote>
-<p><strong>app 部分</strong><br>
-onLaunch，初始化<br>
-onShow，当小程序启动，或从后台进入前台显示<br>
-onHide，当小程序从前台进入后台</p>
-</blockquote>
-<blockquote>
-<p><strong>page 部分</strong><br>
-onLoad，监听页面加载<br>
-onShow，监听页面显示<br>
-onReady，监听页面初次渲染完成<br>
-onHide，监听页面隐藏<br>
-onUnload，监听页面卸载<br>
-onPullDownRefresh，监听用户下拉动作<br>
-onReachBottom，页面上拉触底事件的处理函数<br>
-onShareAppMessage，用户点击右上角分享<br>
-onPageScroll，页面滚动<br>
-onTabItemTap, 当前是 tab 页时，点击 tab 时触发 （mpvue 0.0.16 支持）</p>
-</blockquote>
-<p>简单示例</p>
-<pre><code class="language-js">new Vue({
-  data: {
-    a: 1
-  },
-  created () {
-    // `this` 指向 vm 实例
-    console.log('a is: ' + this.a)
-  },
-  onShow () {
-    // `this` 指向 vm 实例
-    console.log('a is: ' + this.a, '小程序触发的 onshow')
-  }
-})
-// =&gt; &quot;a is: 1&quot;
-</code></pre>
-<p>** taro与react生命周期完全相同**</p>
-<pre><code class="language-js">class Clock extends Component {
-  constructor (props) {
-    super(props)
-    this.state = { date: new Date() }
-  }
-
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
-  }
-
-  render () {
-    return (
-      &lt;View&gt;
-        &lt;Text&gt;Hello, world!&lt;/Text&gt;
-        &lt;Text&gt;现在的时间是 {this.state.date.toLocaleTimeString()}.&lt;/Text&gt;
-      &lt;/View&gt;
-    )
-  }
-}
-
-</code></pre>
-<h1 id="小程序开发框架">【小程序开发框架】</h1>
-<h2 id="1-官方框架mina">1、官方框架MINA</h2>
-<p>小程序提供的开发框架为MINA框架，它类似于淘宝Weex、Vue框架。MINA框架通过封装微信客户端提供的文件系统、网络通信、任务管理、数据安全等基础功能，对上层提供一整套JavaScript API,让开发者能够非常方便地使用微信客户端提供的各种基础功能与能力，快速构建一个应用。</p>
-<p>地址：<br>
-()[<a href="https://developers.weixin.qq.com/miniprogram/dev/framework/MINA.html">https://developers.weixin.qq.com/miniprogram/dev/framework/MINA.html</a>]</p>
-<h2 id="2-美团小程序框架mpvue">2、美团小程序框架mpvue</h2>
-<p>mpvue 是美团点评开源的一个使用Vue.js开发小程序的前端框架。框架基于 Vue.js 核心，mpvue 修改了 Vue.js 的  runtime 和  compiler 实现，使其可以运行在小程序环境中，从而为小程序开发引入了整套 Vue.js 开发体验。使用  mpvue 开发小程序，你将在小程序技术体系的基础上获取到这样一些能力：</p>
-<p>彻底的组件化开发能力：提高代码复用性</p>
-<p>完整的 Vue.js 开发体验</p>
-<p>方便的 Vuex 数据管理方案：方便构建复杂应用</p>
-<p>快捷的 webpack 构建机制：自定义构建策略、开发阶段 hotReload</p>
-<p>支持使用 npm 外部依赖</p>
-<p>使用 Vue.js 命令行工具 vue-cli 快速初始化项目</p>
-<p>H5 代码转换编译成小程序目标代码的能力</p>
-<p>Github： <br>
-()[<a href="https://github.com/Meituan-Dianping/mpvue">https://github.com/Meituan-Dianping/mpvue</a>]<br>
-官网：<br>
-()[<a href="http://mpvue.com/">http://mpvue.com/</a>]</p>
-<h2 id="3-tinajs-一款轻巧的渐进式微信小程序框架">3、Tina.js 一款轻巧的渐进式微信小程序框架</h2>
-<p>特性： 轻盈小巧。 极易上手，保留 MINA (微信小程序官方框架) 的大部分 API 设计；无论你有无小程序开发经验，都可以轻松过渡上手。 渐进增强，既有状态管理器，也有路由增强，还可以自己编写插件。</p>
-<p>Tina.js 开源框架地址：<br>
-()[<a href="https://github.com/tinajs/tina">https://github.com/tinajs/tina</a>]</p>
-<h2 id="4-组件化开发框架wepy">4、组件化开发框架wepy</h2>
-<p>WePY 是一款让小程序支持组件化开发的框架，通过预编译的手段让开发者可以选择自己喜欢的开发风格去开发小程序。框架的细节优化，Promise，Async Functions的引入都是为了能让开发小程序项目变得更加简单，高效。</p>
-<p>特性：</p>
-<p>类Vue开发风格</p>
-<p>支持自定义组件开发</p>
-<p>支持引入NPM包</p>
-<p>支持Promise</p>
-<p>支持ES2015+特性，如Async Functions</p>
-<p>支持多种编译器，Less/Sass/Styus、Babel/Typescript、Pug</p>
-<p>支持多种插件处理，文件压缩，图片压缩，内容替换等</p>
-<p>支持 Sourcemap，ESLint等</p>
-<p>小程序细节优化，如请求列队，事件优化等</p>
-<p>Github地址: <br>
-()[<a href="https://github.com/Tencent/wepy">https://github.com/Tencent/wepy</a>]</p>
-<p>官网地址：<br>
-()[<a href="https://tencent.github.io/wepy">https://tencent.github.io/wepy</a>]</p>
 ]]></content>
     </entry>
 </feed>

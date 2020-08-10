@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596939540263">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597066655337">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -23,7 +23,7 @@
 所有状态的改变可记录、可跟踪，源头易追溯;
 所有数据只有一份，组件数据只有唯一的入口和出口，使得程序更直观更容易理解，有利于应用的可维护性;
 一旦数据变化，就去更新页面(dat..." />
-    <meta name="keywords" content="" />
+    <meta name="keywords" content="vue" />
   </head>
   <body>
     <div id="app" class="main">
@@ -32,7 +32,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596939540263" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597066655337" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -122,8 +122,105 @@ HTML 代码渲染完成，无法改变，有新数据，就须把旧 HTML 代码
 由于组件数据变化来源入口变得可能不止一个，数据流转方向易紊乱，若再缺乏“管制”手段，崩溃。</p>
 <p>这样来看，单向绑定跟双向绑定在功能上基本上是互补的，所以我们可以在合适的场景下使用合适的手段。比如在 UI 控件 中(通常是类表单操作)，我会使用双向的方式绑定数据；而其他场景则统一采用 单向 + inline event ( &lt;component :msg=“msg” @update=“updateMsg(msg)”&gt; ) 的方式构建应用。<br>
 <img src="https://cutezhangq.github.io/post-images/1596891716608.png" alt="" loading="lazy"></p>
+<h1 id="单向数据流">单向数据流：</h1>
+<p>如：<strong>props</strong><br>
+数据从父级组件传递给子组件，只能单向绑定。<br>
+子组件内部不能直接修改从父级传递过来的数据。<br>
+其中，props的用法：<br>
+props 是<strong>单向绑定</strong>的：当父组件的属性变化时，将传导给子组件，但是不会反过来。这是为了防止子组件无意修改父组件的状态。<br>
+所以<code>不应该在子组件中修改 props 中的值，Vue 会报出警告</code>。</p>
+<h2 id="修改-props-数据">修改 props 数据</h2>
+<p>通常有两种原因：</p>
+<ul>
+<li>prop 作为初始值传入后，子组件想把它当做局部数据来用</li>
+<li>prop 作为初始值传入后，由子组件处理成其他数据输出</li>
+</ul>
+<h2 id="应对办法是">应对办法是</h2>
+<ul>
+<li>定义一个<code>局部变量</code>，并用 prop 的值初始化它<br>
+但是由于定义的 ownChildMsg 只能接受 forChildMsg <code>的初始值</code>，当父组件要传递的值变化发生时，ownChildMsg <code>无法收到更新</code>。</li>
+</ul>
+<pre><code class="language-js">let childNode = {
+  template: `
+          &lt;div class=&quot;child&quot;&gt;
+            &lt;div&gt;
+              &lt;span&gt;子组件数据&lt;/span&gt;
+              &lt;input v-model=&quot;forChildMsg&quot;/&gt;
+            &lt;/div&gt;
+            &lt;p&gt;{{forChildMsg}}&lt;/p&gt;
+            &lt;p&gt;ownChildMsg : {{ownChildMsg}}&lt;/p&gt;
+          &lt;/div&gt;`,
+  props: {
+    &quot;for-child-msg&quot;: String
+  },
+  data() {
+    return { ownChildMsg: this.forChildMsg };
+  }
+};
+</code></pre>
+<p>这里我们加了一个<p>用于查看 ownChildMsg 数据是否变化，结果发现只有默认值传递给了 ownChildMsg，父组件改变只会变化到 forChildMsg，不会修改 ownChildMsg。</p>
+<ul>
+<li>定义一个<code>计算属性</code>，处理 prop 的值并返回<br>
+由于是计算属性，所以只能显示值，不能设置值。我们这里设置的是一旦从父组件修改了 forChildMsg 数据，我们就把 forChildMsg 加上一个字符串&quot;---ownChildMsg&quot;，然后显示在屏幕上。这时是可以每当父组件修改了新数据，<code>都会更新</code> ownChildMsg 数据的。</li>
+</ul>
+<pre><code class="language-js">let childNode = {
+  template: `
+          &lt;div class=&quot;child&quot;&gt;
+            &lt;div&gt;
+              &lt;span&gt;子组件数据&lt;/span&gt;
+              &lt;input v-model=&quot;forChildMsg&quot;/&gt;
+            &lt;/div&gt;
+            &lt;p&gt;{{forChildMsg}}&lt;/p&gt;
+            &lt;p&gt;ownChildMsg : {{ownChildMsg}}&lt;/p&gt;
+          &lt;/div&gt;`,
+  props: {
+    &quot;for-child-msg&quot;: String
+  },
+  computed: {
+    ownChildMsg() {
+      return this.forChildMsg + &quot;---ownChildMsg&quot;;
+    }
+  }
+};
+</code></pre>
+<ul>
+<li>更加妥帖的方式是<code>使用变量存储</code> prop 的初始值，并用<code>watch</code>来观察 prop 值得<code>变化</code>。发生变化时，更新变量的值。</li>
+</ul>
+<pre><code class="language-js">let childNode = {
+  template: `
+          &lt;div class=&quot;child&quot;&gt;
+            &lt;div&gt;
+              &lt;span&gt;子组件数据&lt;/span&gt;
+              &lt;input v-model=&quot;forChildMsg&quot;/&gt;
+            &lt;/div&gt;
+            &lt;p&gt;{{forChildMsg}}&lt;/p&gt;
+            &lt;p&gt;ownChildMsg : {{ownChildMsg}}&lt;/p&gt;
+          &lt;/div&gt;`,
+  props: {
+    &quot;for-child-msg&quot;: String
+  },
+  data() {
+    return {
+      ownChildMsg: this.forChildMsg
+    };
+  },
+  watch: {
+    forChildMsg() {
+      this.ownChildMsg = this.forChildMsg;
+    }
+  }
+};
+</code></pre>
 
             </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://cutezhangq.github.io/tag/3SsurU03A/" class="tag">
+                    vue
+                  </a>
+                
+              </div>
             
             
               <div class="next-post">

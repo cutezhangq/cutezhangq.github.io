@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1596939540263">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597066655337">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -27,7 +27,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1596939540263" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597066655337" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -89,6 +89,78 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <h2 class="current-tag">标签: 面试</h2>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://cutezhangq.github.io/post/bi-shi-zheng-li/">
+                  <h2 class="post-title">笔试-题目整理</h2>
+                </a>
+                <div class="post-date">
+                  2020-06-16
+                </div>
+                <div class="post-abstract">
+                  <p>#【1.】变量a是一个64位有符号的整数，初始值用16进制表示为：0Xf000000000000000； 变量b是一个64位有符号的整数，初始值用16进制表示为：0x7FFFFFFFFFFFFFFF。 则a-b的结果用10进制表示为多少？（）</p>
+<h2 id="答案">答案：</h2>
+<p><strong>方案1</strong><br>
+0Xf000000000000000补码为1111000000000000000000000000000000000000000000000000000000000000<br>
+0x7FFFFFFFFFFFFFFF补码为0111111111111111111111111111111111111111111111111111111111111111<br>
+a-b=a+(-b)=<br>
+1111000000000000000000000000000000000000000000000000000000000000+<br>
+1000000000000000000000000000000000000000000000000000000000000001=<br>
+10111000000000000000000000000000000000000000000000000000000000001(高位溢出舍去)<br>
+则结果为<br>
+0111000000000000000000000000000000000000000000000000000000000001=<br>
+2<sup>62+2</sup>61+2^60+1</p>
+<pre><code class="language-cmd"> ①  原码：
+
+　　原码是指将最高位作为符号位(0表示正，1表示负)，其它数字位代表数值本身的绝对值的数字表示方式。
+
+　　例如：数字6 在计算机中原码表示为：0 000 0110
+
+　　其中，第一个数字0是符号位，0表示正数，0 000110是数字6的二进制数据表示。
+
+　　数字－6 在计算机中原码表示为：1 000 0110
+
+　　以上是在8位计算机中的原码表示，如果在32位或16位计算机中，表示方法也是一样的，只是多了几个数字0而已。
+
+　　例如，在32位 计算机中数字6 的原码表示为：00000000 0000 0000 0000 0000 0000 0110
+
+　　在16位 计算机中数字6 的原码表示为：00000000 0000 0110
+</code></pre>
+<pre><code class="language-cmd">②   反码：
+
+　　反码表示规则为：如果是正数，则表示方法和原码一样；如果是负数，符号位不变，其余各位取反，则得到这个数字的反码表示形式。
+
+　　例如，数字6 在8位 计算机中的反码就是它的原码：00000110
+
+　　数字－6 在 8位计算机中的反码为：11111001
+</code></pre>
+<pre><code class="language-cmd">③   补码
+
+　　补码是计算机表示数据的一般方式，其规则为：如果是整数，则表示方法和原码一样；如果是负数，则将数字的反码加上1(相当于将原码数值位取反然后在最低位加1)。
+
+　　例如：数字6 在8位 计算机中的补码就是它的原码：00000110
+
+    数字－6 在8 位 计算机中的补码为：1111 1010
+</code></pre>
+<p><strong>方案2</strong><br>
+0x7FFFFFFFFFFFFFFF+1=0X8000000000000000，那么<br>
+a-b=0Xf000000000000000-0X8000000000000000+1<br>
+=0X7000000000000001<br>
+=16<sup>15*7+16</sup>0<em>1<br>
+=2^60</em>7+1<br>
+=2<sup>60*(2</sup>2+2<sup>1+2</sup>0)+1<br>
+=2<sup>62+2</sup>61+2^60+1</p>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://cutezhangq.github.io/post/bi-shi-zheng-li/">
+                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/bi-shi-zheng-li.jpg')">
+                  </div>
+                </a>
+              
+            </article>
           
             <article class="post-item">
               <div class="left">
