@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597068264279">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597069392387">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -18,14 +18,8 @@
 
 
 
-    <meta name="description" content="面试题: 区别bind()与call()和apply()?
-
-都能指定函数中的this
-call()/apply()是 立即调用函数
-bind()是 将函数返回
-
-//在不传参的形式下： .call同.apply  可以强制this的指向
-..." />
+    <meta name="description" content="👉面试题：this的指向一般是由什么决定的，一般怎么改变它的指向？
+🙋答：this就是属性或方法当前所在的对象；可以通过将函数赋值给变量的方式改变this的指向，也可以通过.call()、.apply()、.bind()的方式改变thi..." />
     <meta name="keywords" content="ES" />
   </head>
   <body>
@@ -35,7 +29,7 @@ bind()是 将函数返回
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597068264279" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597069392387" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -108,7 +102,10 @@ bind()是 将函数返回
               </div>
             
             <div class="post-content" v-pre>
-              <h1 id="面试题-区别bind与call和apply">面试题: 区别bind()与call()和apply()?</h1>
+              <p>👉面试题：this的指向一般是由什么决定的，一般怎么改变它的指向？<br>
+🙋答：this就是<code>属性或方法</code><strong>当前</strong>所在的<code>对象</code>；可以通过将函数赋值给变量的方式改变this的指向，也可以通过<code>.call()、.apply()、.bind()</code>的方式改变this的指向...🏃‍♀</p>
+<!-- more -->
+<h1 id="面试题-区别bind与call和apply">面试题: 区别bind()与call()和apply()?</h1>
 <ul>
 <li>都能指定函数中的this</li>
 <li>call()/apply()是 立即调用函数</li>

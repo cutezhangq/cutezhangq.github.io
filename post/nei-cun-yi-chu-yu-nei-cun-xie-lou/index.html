@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597068264279">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597069392387">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -19,11 +19,14 @@
 
 
     <meta name="description" content="闭包的缺点：
-1.函数执行完后，函数内的局部变量没有被释放，占用内存时间会变长
-2.容易造成内存泄漏（内存被占用着，但用不上里面的内容）
+
+函数执行完后，函数内的局部变量没有被释放，占用内存时间会变长
+容易造成内存泄漏（内存被占用着，但用不上里面的内容）
 解决：
-1.尽量不用闭包
-2.及时释放（让内部函数成为垃圾对象--&gt;就收闭包） 即 f = nu..." />
+尽量不用闭包
+及时释放（让内部函数成为垃圾对象--&gt;就收闭包） 即 f = null
+
+内存溢..." />
     <meta name="keywords" content="js" />
   </head>
   <body>
@@ -33,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597068264279" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597069392387" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -106,25 +109,41 @@
               </div>
             
             <div class="post-content" v-pre>
-              <p>闭包的缺点：<br>
-1.函数执行完后，函数内的局部变量没有被释放，占用内存时间会变长<br>
-2.容易造成内存泄漏（内存被占用着，但用不上里面的内容）<br>
-解决：<br>
-1.尽量不用闭包<br>
-2.及时释放（让内部函数成为垃圾对象--&gt;就收闭包） 即 f = null<br>
+              <p><strong>闭包的缺点：</strong></p>
+<ol>
+<li>函数执行完后，函数内的局部变量没有被释放，占用内存时间会变长</li>
+<li>容易造成内存泄漏（内存被占用着，但用不上里面的内容）<br>
+解决：</li>
+<li>尽量不用闭包</li>
+<li>及时释放（让内部函数成为垃圾对象--&gt;就收闭包） 即 f = null<br>
 <img src="https://cutezhangq.github.io/post-images/1596375551223.png" alt="" loading="lazy"><br>
 内存溢出与内存泄漏:内存溢出：<br>
 一种程序运行出现的错误。<br>
 当程序运行的内存超过了剩余的内存时，就抛出内存溢出的错误<br>
 <img src="https://cutezhangq.github.io/post-images/1596375576188.png" alt="" loading="lazy"><br>
-注：是一种抛出错误，浏览器会崩溃</p>
-<p>内存泄漏：<br>
+注：是一种抛出错误，浏览器会崩溃</li>
+</ol>
+<p><strong>内存泄漏：</strong><br>
 占用的内存没有及时释放<br>
 内存泄漏积累多了就容易导致内存溢出<br>
-常见的内存泄漏：<br>
-1.意外的全局变量<br>
-2.没有及时清理的计时器或回调函数<br>
-3.闭包</p>
+常见的内存泄漏：</p>
+<ul>
+<li>
+<ol>
+<li>意外的全局变量</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>没有及时清理的计时器或回调函数</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>闭包</li>
+</ol>
+</li>
+</ul>
 <p><code>1.意外的全局变量</code><br>
 <img src="https://cutezhangq.github.io/post-images/1596375625382.png" alt="" loading="lazy"><br>
 <code>2.没有及时清理的计时器或回调函数，清理定时器</code>：clearInterval( )<br>
