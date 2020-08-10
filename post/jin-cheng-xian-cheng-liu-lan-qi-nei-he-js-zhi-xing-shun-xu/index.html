@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597070167563">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597072311726">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -33,7 +33,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597070167563" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597072311726" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,9 +112,10 @@
 是程序执行的一个完整流程<br>
 是CPU的最小的调度单元</p>
 <p>👉<code>多线程：</code>一个进程里面有多个线程，一个程序可以同时启动对个实例运行。<br>
-👉<code>单线程：</code>一个进程里面只有一个线程。（JS是单线程的，但是用H5中的Web Workers可以多线程运行）<br>
-<strong>js执行顺序</strong><br>
-1、js是单线程，执行模式有两种：同步，异步<br>
+👉<code>单线程：</code>一个进程里面只有一个线程。（JS是单线程的，但是用H5中的Web Workers可以多线程运行）</p>
+<!-- more -->
+<h1 id="js执行顺序"><strong>js执行顺序</strong></h1>
+<p>1、js是单线程，执行模式有两种：同步，异步<br>
 　　单线程：只有一条流水线<br>
 　　同步：依次再流水线上执行<br>
 　　异步：流水线旁加了一个临时储物台（任务队列），会把某些模块拿到临时储物台，或者会把临时储物台的某些模块插队到流水线<br>
@@ -156,27 +157,30 @@
 显示顺序：aaaa，hideLoading，跳转<br>
 7、if...else if....else会按照顺序执行，先执行if，再执行else if，再执行else<br>
 8、for循环是先执行完内部的循环，再跳出循环，for循环后面的代码，必须for循环完成后才能执行</p>
-<h1 id="js引擎j">js引擎j</h1>
+<h1 id="js引擎">js引擎</h1>
 <p>js引擎执行代码的基本流程：    初始化代码---&gt;回调代码script 引入方式</p>
-<pre><code>* html 静态&lt;script&gt;引入
-* js 动态插入&lt;script&gt;
-* &lt;script defer&gt;: 延迟加载，元素解析完成后执行
-* &lt;script async&gt;: 异步加载，但执行时会阻塞元素渲染
-</code></pre>
+<ul>
+<li>html 静态<code>&lt;script&gt;</code>引入</li>
+<li>js 动态插入<code>&lt;script&gt;</code></li>
+<li><code>&lt;script defer&gt;:</code> 延迟加载，元素解析完成后执行</li>
+<li><code>&lt;script async&gt;:</code>异步加载，但执行时会阻塞元素渲染</li>
+</ul>
 <h1 id="web-workers">Web Workers</h1>
-<p>1.H5规范了js 分线程的实现，取名为:Web Workers    （但是 js 仍然是 单线程 的）</p>
-<p>2.相关API:<br>
-Worker:  构造函数，加载分线程执行的js文件<br>
-Worker.prototype.onmessage： 用于接收另一个线程的回调函数<br>
-Worker.protptype.postMessage:  向另一个线程发送消息</p>
+<p>1.H5规范了js 分线程的实现，取名为:Web Workers    （但是<code>js 仍然是 单线程 的</code>）<br>
+2.相关API:</p>
+<ul>
+<li>Worker:  构造函数，加载分线程执行的js文件</li>
+<li>Worker.prototype.onmessage： 用于接收另一个线程的回调函数</li>
+<li>Worker.protptype.postMessage:  向另一个线程发送消息</li>
+</ul>
 <p>3.不足：</p>
 <ol>
 <li>Worker内代码不能操作DOM（更新UI）：因为他的全局变量不再是window</li>
 <li>不能跨域加载JS</li>
 <li>不是每个浏览器都支持这个新特性</li>
 </ol>
-<p>Web Workers使用：<br>
-在主线程的JS中 发消息并设置回调：</p>
+<h2 id="web-workers使用">Web Workers使用：</h2>
+<p>在主线程的JS中 发消息并设置回调：</p>
 <p>主线程中的代码：</p>
 <pre><code class="language-js">&lt;body&gt;
   &lt;input type=&quot;text&quot; placeholder=&quot;数值&quot; id=&quot;number&quot;/&gt;
@@ -202,11 +206,12 @@ Worker.protptype.postMessage:  向另一个线程发送消息</p>
     console.log('主线程向分线程发送数据'+number);
   }
 </code></pre>
-<p>分线程中的代码：<br>
-分线程不能更新界面，因为在分线程中看不到window<br>
+<!-- more -->
+<h2 id="分线程中的代码">分线程中的代码：</h2>
+<p>分线程不能更新界面，因为在分线程中看不到window<br>
 <img src="https://cutezhangq.github.io/post-images/1596377870491.png" alt="" loading="lazy"><br>
-<img src="https://cutezhangq.github.io/post-images/1596377904673.png" alt="" loading="lazy"><br>
-总结：</p>
+<img src="https://cutezhangq.github.io/post-images/1596377904673.png" alt="" loading="lazy"></p>
+<h2 id="总结">总结：</h2>
 <ol>
 <li>分线程中的全局对象不再是window，所以在分线程中不可能更新界面</li>
 <li>postMessage可以双向发送消息，一个一个发送<br>

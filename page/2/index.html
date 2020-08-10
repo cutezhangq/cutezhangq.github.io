@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597070167563">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597072311726">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -28,7 +28,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597070167563" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597072311726" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -103,7 +103,10 @@
                   2020-08-05
                 </div>
                 <div class="post-abstract">
-                  
+                  <p><code>( wepy / mpvue / taro )</code><br>
+<img src="https://cutezhangq.github.io/post-images/1596612473597.png" alt="" loading="lazy"><br>
+<img src="https://cutezhangq.github.io/post-images/1596612549046.png" alt="" loading="lazy"></p>
+
                 </div>
               </div>
               
@@ -123,7 +126,14 @@
                   2020-08-02
                 </div>
                 <div class="post-abstract">
-                  
+                  <p>👉<code>进程process ：</code>程序的一次执行，它占有一片独有的内存空间<br>
+可以通过windows任务管理器查看进程</p>
+<p>👉<code>线程thread：</code>是进程内的一个独立执行单元<br>
+是程序执行的一个完整流程<br>
+是CPU的最小的调度单元</p>
+<p>👉<code>多线程：</code>一个进程里面有多个线程，一个程序可以同时启动对个实例运行。<br>
+👉<code>单线程：</code>一个进程里面只有一个线程。（JS是单线程的，但是用H5中的Web Workers可以多线程运行）</p>
+
                 </div>
               </div>
               
@@ -203,7 +213,8 @@
                   2020-07-01
                 </div>
                 <div class="post-abstract">
-                  <p>几种的方案包含许多，居中的方式也是：👉如水平居中、垂直居中、水平垂直居中...</p>
+                  <p>几种的方案包含许多，居中的方式也是：👉如水平居中、垂直居中、水平垂直居中...<br>
+一起来看看叭，最全居中方案整理：🙆🙆🙆</p>
 
                 </div>
               </div>
@@ -224,58 +235,8 @@
                   2020-06-16
                 </div>
                 <div class="post-abstract">
-                  <p>#【1.】变量a是一个64位有符号的整数，初始值用16进制表示为：0Xf000000000000000； 变量b是一个64位有符号的整数，初始值用16进制表示为：0x7FFFFFFFFFFFFFFF。 则a-b的结果用10进制表示为多少？（）</p>
-<h2 id="答案">答案：</h2>
-<p><strong>方案1</strong><br>
-0Xf000000000000000补码为1111000000000000000000000000000000000000000000000000000000000000<br>
-0x7FFFFFFFFFFFFFFF补码为0111111111111111111111111111111111111111111111111111111111111111<br>
-a-b=a+(-b)=<br>
-1111000000000000000000000000000000000000000000000000000000000000+<br>
-1000000000000000000000000000000000000000000000000000000000000001=<br>
-10111000000000000000000000000000000000000000000000000000000000001(高位溢出舍去)<br>
-则结果为<br>
-0111000000000000000000000000000000000000000000000000000000000001=<br>
-2<sup>62+2</sup>61+2^60+1</p>
-<pre><code class="language-cmd"> ①  原码：
-
-　　原码是指将最高位作为符号位(0表示正，1表示负)，其它数字位代表数值本身的绝对值的数字表示方式。
-
-　　例如：数字6 在计算机中原码表示为：0 000 0110
-
-　　其中，第一个数字0是符号位，0表示正数，0 000110是数字6的二进制数据表示。
-
-　　数字－6 在计算机中原码表示为：1 000 0110
-
-　　以上是在8位计算机中的原码表示，如果在32位或16位计算机中，表示方法也是一样的，只是多了几个数字0而已。
-
-　　例如，在32位 计算机中数字6 的原码表示为：00000000 0000 0000 0000 0000 0000 0110
-
-　　在16位 计算机中数字6 的原码表示为：00000000 0000 0110
-</code></pre>
-<pre><code class="language-cmd">②   反码：
-
-　　反码表示规则为：如果是正数，则表示方法和原码一样；如果是负数，符号位不变，其余各位取反，则得到这个数字的反码表示形式。
-
-　　例如，数字6 在8位 计算机中的反码就是它的原码：00000110
-
-　　数字－6 在 8位计算机中的反码为：11111001
-</code></pre>
-<pre><code class="language-cmd">③   补码
-
-　　补码是计算机表示数据的一般方式，其规则为：如果是整数，则表示方法和原码一样；如果是负数，则将数字的反码加上1(相当于将原码数值位取反然后在最低位加1)。
-
-　　例如：数字6 在8位 计算机中的补码就是它的原码：00000110
-
-    数字－6 在8 位 计算机中的补码为：1111 1010
-</code></pre>
-<p><strong>方案2</strong><br>
-0x7FFFFFFFFFFFFFFF+1=0X8000000000000000，那么<br>
-a-b=0Xf000000000000000-0X8000000000000000+1<br>
-=0X7000000000000001<br>
-=16<sup>15*7+16</sup>0<em>1<br>
-=2^60</em>7+1<br>
-=2<sup>60*(2</sup>2+2<sup>1+2</sup>0)+1<br>
-=2<sup>62+2</sup>61+2^60+1</p>
+                  <p>这里收录了部分字节2017的笔试题，一起来看看叭，查漏补缺鸭😘<br>
+涉及的众多的基础知识点....</p>
 
                 </div>
               </div>
@@ -318,7 +279,8 @@ a-b=0Xf000000000000000-0X8000000000000000+1<br>
                   2020-05-19
                 </div>
                 <div class="post-abstract">
-                  <p>具体let、var、consts区别见es6中内容</p>
+                  <p>👉具体let、var、consts的区别可见es6中内容👈，这里简要介绍了它们的区别<br>
+主要围绕生命周期、作用域来看🙌</p>
 
                 </div>
               </div>

@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597070167563">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597072311726">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -18,13 +18,17 @@
 
 
 
-    <meta name="description" content="变量与对象的区别
+    <meta name="description" content="主要介绍了创建对象4种方式：
+👉系统的构造函数Object、
+👉自定义构造函数、
+👉字面量的方式、
+👉工厂化模式
+变量与对象的区别
 变量：只能存一个数据
 对象：可以存多个数据（属性、封装...）
 对象的组成：
-属性（属性名 String类型，属性值 任意类型）
-方法（一种特别的属性，属性值是函数）
-访问 对象内部数据 的方法    (中括号运算符总是能..." />
+
+属性（属性名 Str..." />
     <meta name="keywords" content="js" />
   </head>
   <body>
@@ -34,7 +38,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597070167563" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597072311726" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -107,18 +111,27 @@
               </div>
             
             <div class="post-content" v-pre>
-              <p>变量与对象的区别<br>
+              <p>主要介绍了创建对象4种方式：<br>
+👉<strong>系统的构造函数Object</strong>、<br>
+👉<strong>自定义构造函数</strong>、<br>
+👉<strong>字面量的方式</strong>、<br>
+👉<strong>工厂化模式</strong></p>
+<p>变量与对象的区别<br>
 变量：只能存一个数据<br>
 对象：可以存多个数据（属性、封装...）<br>
-对象的组成：<br>
-属性（属性名 String类型，属性值 任意类型）<br>
-方法（一种特别的属性，属性值是函数）</p>
-<p>访问 对象内部数据 的方法    (中括号运算符总是能代替点运算符。但点运算符却不一定能全部代替中括号运算符。)<br>
-. 点 属性名        后面加静态标志符<br>
-当对象内部没有定义该属性时不能使用。<br>
-[' 属性名 ']        后面可以加动态标志符<br>
+对象的组成：</p>
+<ul>
+<li>属性（属性名 String类型，属性值 任意类型）</li>
+<li>方法（一种特别的属性，属性值是函数）</li>
+</ul>
+<p>访问 对象内部数据 的方法    (中括号运算符总是能代替点运算符。但点运算符却不一定能全部代替中括号运算符。)</p>
+<ul>
+<li>. 点 属性名        后面加静态标志符<br>
+当对象内部没有定义该属性时不能使用。</li>
+<li>[' 属性名 ']        后面可以加动态标志符<br>
 当属性名包含特殊字符：-  空格，必须使用[' ']；<br>
-当属性名 不确定时，必须使用[' ']；</p>
+当属性名 不确定时，必须使用[' ']；</li>
+</ul>
 <p>常用：点是访问json对象。而方括号是数组。   obj.name='xx'  ;  arr[0] = 1</p>
 <pre><code class="language-js">//访问对象内部属性
 var person = {
@@ -170,11 +183,13 @@ for(let i=1; i&lt;Object.keys(obj).length+1; i++){
 //  2
 //  3
 </code></pre>
-<p>创建对象的四种方式：<br>
-<strong>系统的构造函数Object</strong><br>
-<strong>自定义构造函数</strong><br>
-<strong>字面量的方式</strong><br>
-<strong>工厂化模式</strong></p>
+<h1 id="创建对象的四种方式">创建对象的四种方式：</h1>
+<ul>
+<li><strong>系统的构造函数Object</strong></li>
+<li><strong>自定义构造函数</strong></li>
+<li><strong>字面量的方式</strong></li>
+<li><strong>工厂化模式</strong></li>
+</ul>
 <pre><code class="language-js">//创建对象的4中方式
 //1.调用 系统的构造函数Object 创建对象（per2.name=&quot; &quot;）
 var person = new Object();
@@ -185,10 +200,8 @@ person.key = function(i){
 }
 console.log(person);  //Object {name: &quot;cutezhangq&quot;, age: 20, key: }
 person.key(123)       //给实例自定义方法123
-
-
-
-//2.自定义构造函数    (申请一块空闲的空间,首字母一般大写)
+</code></pre>
+<pre><code class="language-js">//2.自定义构造函数    (申请一块空闲的空间,首字母一般大写)
 function stu(name,age){
   this.name = name;
   this.age = age;
@@ -205,9 +218,8 @@ for(var key in stu_zq){
 //  key:age,value:22
 //  key:say,value:function(){ return console.log(&quot;我叫：&quot;+this.name,&quot;,年龄是:&quot;+this.age);  }
 
-
-
-//3.字面量的方式创建对象
+</code></pre>
+<pre><code class="language-js">//3.字面量的方式创建对象
 var obj = {
   name:'piu',
   age:20,
@@ -231,10 +243,8 @@ console.log(typeof b1.b2[2])  //function  说明console.log是函数
 console.log(b1.b3()())  //yiny
 //b1.b3() 找到b3属性里的函数
 //b1.b3()() 找到函数里的return的函数
-
-
-
-//4.工厂化模式创建对象（批量制作对象）  采用createObject批量化生产，能实例化多个具有相似属性和方法的对象
+</code></pre>
+<pre><code class="language-js">//4.工厂化模式创建对象（批量制作对象）  采用createObject批量化生产，能实例化多个具有相似属性和方法的对象
 function createObject(name,age){
   var obj = new Object;
   obj.name = name;

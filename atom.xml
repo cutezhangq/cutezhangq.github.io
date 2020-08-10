@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cutezhangq.github.io</id>
     <title>cutezhangq</title>
-    <updated>2020-08-10T14:36:10.241Z</updated>
+    <updated>2020-08-10T15:11:54.845Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cutezhangq.github.io"/>
     <link rel="self" href="https://cutezhangq.github.io/atom.xml"/>
@@ -527,8 +527,13 @@ obj.print()
         <link href="https://cutezhangq.github.io/post/slot-cha-cao/">
         </link>
         <updated>2020-08-07T03:04:18.000Z</updated>
-        <content type="html"><![CDATA[<p>👉插槽，也就是slot，👈<strong>是组件的一块HTML模板，这块模板显示不显示、以及怎样显示由父组件来决定。 <strong>实际上，一个slot最核心的两个问题在这里就点出来了，是</strong>显示不显示</strong>和<strong>怎样显示</strong>。<br>
-由于插槽是一块模板，所以，对于任何一个组件，从模板种类的角度来分，其实都可以分为<strong>非插槽模板</strong>和<strong>插槽模板</strong>两大类。<br>
+        <summary type="html"><![CDATA[<p>👉插槽，也就是slot，👈<strong>是组件的一块HTML模板，这块模板显示不显示、以及怎样显示由父组件来决定。 **<br>
+实际上，一个slot最核心的两个问题在这里就点出来了，是</strong>显示不显示<strong>和</strong>怎样显示**。🙆🙆🙆</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>👉插槽，也就是slot，👈<strong>是组件的一块HTML模板，这块模板显示不显示、以及怎样显示由父组件来决定。 **<br>
+实际上，一个slot最核心的两个问题在这里就点出来了，是</strong>显示不显示<strong>和</strong>怎样显示**。🙆🙆🙆</p>
+<!-- more -->
+<p>由于插槽是一块模板，所以，对于任何一个组件，从模板种类的角度来分，其实都可以分为<strong>非插槽模板</strong>和<strong>插槽模板</strong>两大类。<br>
 非插槽模板指的是html模板，比如‘div、span、ul、table’这些，非插槽模板的显示与隐藏以及怎样显示由组件自身控制；<br>
 插槽模板是slot，它是一个空壳子，因为它的显示与隐藏以及最后用什么样的html模板显示由父组件控制。但是插槽显示的位置却由子组件自身决定，slot写在组件template的什么位置，父组件传过来的模板将来就显示在什么位置。</p>
 <h1 id="单个插槽-默认插槽-匿名插槽">单个插槽 | 默认插槽 | 匿名插槽</h1>
@@ -926,9 +931,9 @@ OK，我们说有html模板的情况，就是父组件会往子组件插模板�
         <link href="https://cutezhangq.github.io/post/xiao-xi-ding-yue-yu-fa-bu/">
         </link>
         <updated>2020-08-07T03:04:04.000Z</updated>
-        <summary type="html"><![CDATA[<p>结合 Vue 源码谈谈发布-订阅模式🙆🙆🙆</p>
+        <summary type="html"><![CDATA[<p>结合 Vue 源码谈谈发布-订阅模式🙆🙆🙆，并涉及几个核心对象如 Observer 等。看看他们在vue实例中的应用~</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>结合 Vue 源码谈谈发布-订阅模式🙆🙆🙆</p>
+        <content type="html"><![CDATA[<p>结合 Vue 源码谈谈发布-订阅模式🙆🙆🙆，并涉及几个核心对象如 Observer 等。看看他们在vue实例中的应用~</p>
 <!-- more -->
 <h1 id="发布订阅模式主要包含哪些内容呢">发布订阅模式主要包含哪些内容呢?</h1>
 <ul>
@@ -1245,7 +1250,11 @@ _Event.trigger(&quot;yyyy&quot;,&quot;xxx&quot;,&quot;前端工程师&quot;)
         <link href="https://cutezhangq.github.io/post/shuang-xiang-shu-ju-bang-ding-dan-xiang-shu-ju-liu/">
         </link>
         <updated>2020-08-07T01:30:09.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="单向数据流和双向数据绑定有什么优缺点单向数据流优缺点">单向数据流和双向数据绑定有什么优缺点？单向数据流优缺点</h1>
+        <summary type="html"><![CDATA[<p>单向数据流和双向数据绑定各有优缺点，一起来看看吧~🙆</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>单向数据流和双向数据绑定各有优缺点，一起来看看吧~🙆</p>
+<!-- more -->
+<h1 id="单向数据流和双向数据绑定有什么优缺点单向数据流优缺点">单向数据流和双向数据绑定有什么优缺点？单向数据流优缺点</h1>
 <p><strong>优点：</strong><br>
 所有状态的改变可记录、可跟踪，源头易追溯;<br>
 所有数据只有一份，组件数据只有唯一的入口和出口，使得程序更直观更容易理解，有利于应用的可维护性;<br>
@@ -1363,7 +1372,11 @@ props 是<strong>单向绑定</strong>的：当父组件的属性变化时，将
         <link href="https://cutezhangq.github.io/post/computedwatchmethod-zhi-xing-de-xian-hou-shun-xu/">
         </link>
         <updated>2020-08-06T13:57:16.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="computed">computed：</h1>
+        <summary type="html"><![CDATA[<p>👉他们的执行顺序为：<code>默认加载的时候先computed再watch，不执行methods；等触发某一事件后，则是：先methods再watch。</code></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>👉他们的执行顺序为：<code>默认加载的时候先computed再watch，不执行methods；等触发某一事件后，则是：先methods再watch。</code></p>
+<!-- more -->
+<h1 id="computed">computed：</h1>
 <p>计算属性将被混入到 Vue 实例中。所有 getter 和 setter 的 this 上下文自动地绑定为 Vue 实例。</p>
 <h1 id="methods">methods：</h1>
 <p>methods 将被混入到 Vue 实例中。可以直接通过 VM 实例访问这些方法，或者在指令表达式中使用。方法中的 this 自动绑定为 Vue 实例。</p>
@@ -2200,10 +2213,10 @@ title: '我是子组件2'
         </link>
         <updated>2020-08-06T12:45:01.000Z</updated>
         <content type="html"><![CDATA[<p>new运算符的执行过程<br>
-* 创建一个空对象obj<br>
-* 并将这个空对象obj的__proto__连接到构造函数的原型上。链接到原型: obj.<strong>proto</strong> = Con.prototype<br>
-* 绑定this:  apply，创建属性和方法。  用apply绑定对象的this指向（obj作为this的上下文）Con.apply(obj,arguments)<br>
-* 返回新对象this或者叫创建的对象obj(如果构造函数有自己 retrun 时，则返回该值)</p>
+👉	* 创建一个空对象obj<br>
+👉	* 并将这个空对象obj的__proto__连接到构造函数的原型上。链接到原型: obj.<strong>proto</strong> = Con.prototype<br>
+👉	* 绑定this:  apply，创建属性和方法。  用apply绑定对象的this指向（obj作为this的上下文）Con.apply(obj,arguments)<br>
+👉	* 返回新对象this或者叫创建的对象obj(如果构造函数有自己 retrun 时，则返回该值)</p>
 <pre><code class="language-js">  // 传参 New(obj, ...args)
   function New123() {  
       let obj = new Object();  // 提取第一个参数并作为构造函数; 
@@ -2240,7 +2253,7 @@ console.log(people2.say())  //My name is Rose.
         <link href="https://cutezhangq.github.io/post/jsonstringify-yu-huan-wen-ti/">
         </link>
         <updated>2020-08-06T10:50:32.000Z</updated>
-        <content type="html"><![CDATA[<p>JSON.stringify的功能是，讲一个js字面量对象转化为一个JSON格式的字符串，例如：</p>
+        <content type="html"><![CDATA[<p>🙋JSON.stringify的功能是，讲一个js字面量对象转化为一个JSON格式的字符串，例如：</p>
 <pre><code class="language-js">const obj = {a:1,b:2}
 JSON.stringify(obj)     //  ‘ {“a”:1,“b”:2}’
 </code></pre>
@@ -2338,9 +2351,11 @@ obj.aaa.bbb = obj.foo;   //  aaa-&gt;bbb-&gt;bar-&gt;baz-&gt;aChild-&gt;null 不
         <link href="https://cutezhangq.github.io/post/vuex-zhong-mutations-he-actions-de-qu-bie/">
         </link>
         <updated>2020-08-06T01:55:07.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>Vuex</strong> 是一个专为 Vue.js 应用程序开发的状态管理模式。<br>
-它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化</p>
+        <content type="html"><![CDATA[<p>👉<strong>Vuex</strong> 是一个专为 Vue.js 应用程序开发的状态管理模式。👈<br>
+它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化🙆🙆🙆</p>
+<h1 id="mutation">Mutation</h1>
 <p>Mutation 更改 Vuex 的 store 中的状态的<strong>唯一</strong>方法是提交 mutation。事实上在 vuex 里面 actions 只是一个架构性的概念，并不是必须的，只要最后触发 mutation 就行。异步竞态怎么处理那是用户自己的事情。</p>
+<h1 id="action">Action</h1>
 <ul>
 <li>
 <p>Action <strong>提交的是 mutation</strong>，而不是直接变更状态。最后<strong>是mutation去修改store里的state</strong></p>

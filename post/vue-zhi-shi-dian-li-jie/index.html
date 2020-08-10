@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597070167563">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597072311726">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -18,12 +18,10 @@
 
 
 
-    <meta name="description" content="模板字符串的前世今生
-JS
-js中，输出模板是这样写的。通过字符串拼接
-$('#result').append(
- 'There are &lt;b&gt;' + basket.count + '&lt;/b&gt; ' +
- 'items..." />
+    <meta name="description" content="❤️总结了vue模板字符串的前后变化，从最基础的js的模板，再在es6中进行优化写法，最后应用于vue中。
+Vue2.0模板就有三种写法：💁
+👉第一种：利用模板字符串
+👉第二种：利用template标签实现内容填充,通过 id 或者其..." />
     <meta name="keywords" content="vue" />
   </head>
   <body>
@@ -33,7 +31,7 @@ $('#result').append(
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597070167563" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597072311726" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -106,7 +104,13 @@ $('#result').append(
               </div>
             
             <div class="post-content" v-pre>
-              <h1 id="模板字符串的前世今生">模板字符串的前世今生</h1>
+              <p>❤️总结了vue模板字符串的前后变化，从最基础的js的模板，再在es6中进行优化写法，最后应用于vue中。<br>
+Vue2.0模板就有三种写法：💁<br>
+👉第一种：利用模板字符串<br>
+👉第二种：利用template标签实现内容填充,通过 id 或者其他的选择器挂载到template上<br>
+👉第三种：改变script中的type.变为type=&quot;x-template&quot;,给它id,最终挂载到template中<br>
+Vue3.0模板的写法又有改进哦🏃‍♀</p>
+<h1 id="模板字符串的前世今生">模板字符串的前世今生</h1>
 <h2 id="js">JS</h2>
 <p>js中，输出模板是这样写的。通过<code>字符串</code>拼接</p>
 <pre><code class="language-js">$('#result').append(
@@ -152,7 +156,7 @@ $('#result').append(
 })
 &lt;/script&gt;
 </code></pre>
-<h3 id="改变script中的type变为typex-template给它id最终挂载到template中">改变script中的type.变为type=&quot;x-template&quot;,给它id,最终挂载到template中</h3>
+<h3 id="第三种改变script中的type变为typex-template给它id最终挂载到template中">第三种：改变script中的type.变为type=&quot;x-template&quot;,给它id,最终挂载到template中</h3>
 <p>使用于内容比较多或有公共的模板,可以使用,引入就可以<br>
 type=&quot;x-template&quot;，给它id</p>
 <pre><code class="language-js">&lt;script src=&quot;js/vue.js&quot;&gt;&lt;/script&gt;

@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597070167563">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597072311726">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -18,14 +18,12 @@
 
 
 
-    <meta name="description" content="结合 Vue 源码谈谈发布-订阅模式🙆🙆🙆
+    <meta name="description" content="结合 Vue 源码谈谈发布-订阅模式🙆🙆🙆，并涉及几个核心对象如 Observer 等。看看他们在vue实例中的应用~
 
 发布订阅模式主要包含哪些内容呢?
 
 发布函数，发布的时候执行相应的回调
-订阅函数，添加订阅者,传入发布时要执行的函数,可能会携额外参数
-一个缓存订阅者以及订阅者的回调函数的列表
-取消订阅(..." />
+订阅函数，添加订阅者,传入发布时要执行的..." />
     <meta name="keywords" content="vue" />
   </head>
   <body>
@@ -35,7 +33,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597070167563" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597072311726" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -108,7 +106,7 @@
               </div>
             
             <div class="post-content" v-pre>
-              <p>结合 Vue 源码谈谈发布-订阅模式🙆🙆🙆</p>
+              <p>结合 Vue 源码谈谈发布-订阅模式🙆🙆🙆，并涉及几个核心对象如 Observer 等。看看他们在vue实例中的应用~</p>
 <!-- more -->
 <h1 id="发布订阅模式主要包含哪些内容呢">发布订阅模式主要包含哪些内容呢?</h1>
 <ul>

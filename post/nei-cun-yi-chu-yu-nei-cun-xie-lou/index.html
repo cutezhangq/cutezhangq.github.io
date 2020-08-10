@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597070167563">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597072311726">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -18,15 +18,14 @@
 
 
 
-    <meta name="description" content="闭包的缺点：
+    <meta name="description" content="本文从闭包部分引发而来，闭包存在缺点，会造成内存泄漏等问题。
+同时也讲解了内存溢出的情况🏃‍♀
+闭包的缺点：
 
 函数执行完后，函数内的局部变量没有被释放，占用内存时间会变长
 容易造成内存泄漏（内存被占用着，但用不上里面的内容）
 解决：
-尽量不用闭包
-及时释放（让内部函数成为垃圾对象--&gt;就收闭包） 即 f = null
-
-内存溢..." />
+尽..." />
     <meta name="keywords" content="js" />
   </head>
   <body>
@@ -36,7 +35,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597070167563" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597072311726" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -109,7 +108,9 @@
               </div>
             
             <div class="post-content" v-pre>
-              <p><strong>闭包的缺点：</strong></p>
+              <p>本文从闭包部分引发而来，闭包存在缺点，会造成内存泄漏等问题。<br>
+同时也讲解了内存溢出的情况🏃‍♀</p>
+<p><strong>闭包的缺点：</strong></p>
 <ol>
 <li>函数执行完后，函数内的局部变量没有被释放，占用内存时间会变长</li>
 <li>容易造成内存泄漏（内存被占用着，但用不上里面的内容）<br>
