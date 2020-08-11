@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>奇淫巧技 | cutezhangq</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597155337597">
+<link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="🙈🙉🙊本文收录一些计算的技巧，让功能的实现不止一种！
+还在持续更新中...✨
+👉对数据进行奇偶判断
+👉判断类型 封装（可判断所有类型）
+👉判断是否存在
+👉检测 某个对象 是不是 另一个对象 的 实例
+👉判断一个 实例 是否属..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://cutezhangq.github.io">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597155337597" class="site-logo">
+        <h1 class="site-title">cutezhangq</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/cutezhangq" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://cutezhangq.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">奇淫巧技</h2>
+            <div class="post-date">2020-08-11</div>
+            
+              <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/qi-yin-qiao-ji.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>🙈🙉🙊本文收录一些计算的技巧，让功能的实现不止一种！<br>
+还在持续更新中...✨<br>
+👉对数据进行奇偶判断<br>
+👉判断类型 封装（可判断所有类型）<br>
+👉判断是否存在<br>
+👉检测 某个对象 是不是 另一个对象 的 实例<br>
+👉判断一个 实例 是否属于它的 父类型</p>
+<!-- more -->
+<h1 id="对数据进行奇偶判断">对数据进行奇偶判断</h1>
+<p>普通选手：</p>
+<pre><code class="language-js">const n = 11;
+if(n%2 == 1){
+   console.log('奇数')
+}else{
+    console.log('偶数')
+}
+</code></pre>
+<p>种子选手：&amp; 位运算符的妙用，相“与”</p>
+<pre><code class="language-js">const n = 11;
+  if(n &amp; 1){    // 取代 n % 2 == 1 的判断，因为其还要转成二进制的判断
+    console.log('奇数')
+  }else{
+    console.log('偶数')
+  }
+</code></pre>
+<h1 id="判断类型-封装可判断所有类型">判断类型 封装（可判断所有类型）</h1>
+<p>普通选手：</p>
+<pre><code class="language-js">  function isObjArr(value) {
+    if (Object.prototype.toString.call(value) === &quot;[object Array]&quot;) {
+      console.log('value是数组');
+    } else if (Object.prototype.toString.call(value) === '[object Object]') { //这个方法兼容性好一点
+      console.log('value是对象');
+    } else {
+      console.log('value不是数组也不是对象')
+    }
+  }
+</code></pre>
+<p>种子选手：<br>
+判断 Target 的类型，单单用 typeof 并无法完全满足，这其实并不是 bug，本质原因是 JS 的万物皆对象的理论。<br>
+因此要真正完美判断时，我们需要区分对待:<br>
+* 基本类型( null ): 使用String( )，如：String(null)<br>
+* 基本类型(string / number / boolean / undefined) + function + symbol: 直接使用 typeof 即可<br>
+* 其余引用类型(Array / Date / RegExp Error): 调用toString后根据[object XXX]进行判断，本质上还是调用 valueof 进行判断。</p>
+<pre><code class="language-js"> let class2type = {}
+  'Array Date RegExp Object Error'.split(' ').forEach(e =&gt; class2type['[object ' + e + ']'] = e.toLowerCase())
+
+  function type(obj) {
+    if (obj == null) return String(obj)
+    return typeof obj === 'object' ? class2type[Object.prototype.toString.call(obj)] || 'object' : typeof obj
+  }
+</code></pre>
+<p>这里的.call是绑定this对象指向当前的Object对象<br>
+**RegExp：**是正则表达式（regular expression）的简写。</p>
+<h1 id="判断是否存在">判断是否存在</h1>
+<pre><code class="language-js">  if(typeof a!=&quot;undefined&quot;){     //不要去使用 if(a) 因为如果 a 不存在（未声明）则会出错
+      xxx
+    }
+</code></pre>
+<h1 id="检测-某个对象-是不是-另一个对象-的-实例">检测 某个对象 是不是 另一个对象 的 实例</h1>
+<p>（测试一个对象在其原型链中是否存在一个构造函数的prototype属性）</p>
+<pre><code class="language-js">  function test(){};
+  var b = new test();
+  var c = new test();
+  console.log(b instanceof test); //true   可用来判断一个变量是否是某个对象的实例
+  console.log(c == b);  //false
+</code></pre>
+<h1 id="判断一个-实例-是否属于它的-父类型">判断一个 实例 是否属于它的 父类型</h1>
+<p>instanceof 可以在 继承关系 中用来判断一个 实例 是否属于它的 父类型。</p>
+<pre><code class="language-js"> var a = new Array();  
+ console.log(a instanceof Array);  //true
+ console.log(a instanceof Object); //true  因为 Array 是 Object的 子类
+</code></pre>
+<h1 id="判断-对象是否为空-的三种方法">判断 对象是否为空 的三种方法：</h1>
+<pre><code class="language-js">  //方法1：JSON.stringify(xxx)=='{}'    转成字符串，看值是不是空对象
+  c = {};
+  if(JSON.stringify(c)=='{}'){
+    console.log('空对象');  //空对象
+  }
+
+
+  //方法2：for in  有没有数据在它的里面
+  obj = {};
+  function abc(obj){
+    for(var a in obj){
+      console.log('不是空对象');
+    }
+    console.log('空对象');  
+  }
+  abc();  //空对象
+
+
+  //方法3：Object.keys(xxx).length == 0    对象转成数组，再看数组的长度
+    //方法会返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和正常循环遍历该对象时返回的顺序一致 。
+  t = {};
+  if(Object.keys(t).length == 0){
+    console.log('空对象');    //空对象
+  }else{
+    console.log('不是空对象');
+  }
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/thisapplycallbind/">
+                  <h3 class="post-title">
+                    this、apply、call、bind
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

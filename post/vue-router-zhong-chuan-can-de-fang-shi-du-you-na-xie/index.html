@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>vue-router中传参的方式都有哪些 | cutezhangq</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597155337597">
+<link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="没事就需要翻翻vue官网，好长时间不看了。Vue路由组件传参🏃‍♀🏃
+主要从this.$router.push的name和params、path和qurey；router-link :to传参来回答
+
+常用的传递方式
+一、编程式的导航 ..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://cutezhangq.github.io">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597155337597" class="site-logo">
+        <h1 class="site-title">cutezhangq</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/cutezhangq" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://cutezhangq.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">vue-router中传参的方式都有哪些</h2>
+            <div class="post-date">2020-08-11</div>
+            
+              <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/vue-router-zhong-chuan-can-de-fang-shi-du-you-na-xie.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>没事就需要翻翻vue官网，好长时间不看了。<a href="https://router.vuejs.org/zh/guide/essentials/passing-props.html#%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%BC%8F">Vue路由组件传参</a>🏃‍♀🏃<br>
+主要从this.$router.push的name和params、path和qurey；router-link :to传参来回答</p>
+<!-- more -->
+<h1 id="常用的传递方式">常用的传递方式</h1>
+<h1 id="一-编程式的导航-routerpush">一、编程式的导航 router.push</h1>
+<h2 id="直接传拼接">直接传（拼接）</h2>
+<pre><code class="language-js">//组件调用
+this.$router.push({path: `/describe/${id}`})
+//路由配置
+{
+    path: '/describe/:id',
+    name: 'Describe',
+    component: Describe
+}
+//Describe组件获取
+this.$route.query.id
+</code></pre>
+<h2 id="query传参get请求">query传参——get请求</h2>
+<p>传递的参数会拼接在url上</p>
+<pre><code class="language-js"> //组件调用
+this.$router.push({
+ path: '/describe',
+ query: {
+            id: id
+        }
+})
+//路由配置
+{
+    path: '/describe',
+    name: 'Describe',
+    component: Describe
+}
+//Describe组件获取
+this.$route.query.id
+</code></pre>
+<p>（注：以上两种方式都会把参数放置在 this.$route.query 中）</p>
+<h2 id="params传参post请求">params传参——post请求</h2>
+<p>params传参<br>
+（注：这里的路由匹配方式：通过路由属性中的name来确定匹配的路由。如果提供了 path，params 会被忽略）</p>
+<p>params传参不会拼接在url上，但存在一个问题-------如果强制刷新页面会丢失参数</p>
+<pre><code class="language-js">//组件调用
+this.$router.push({
+    name: 'Describe',
+    params: {
+                id: id
+            }
+})
+//路由配置
+{
+     path: '/describe',
+     name: 'Describe',
+     component: Describe
+}
+//Describe组件获用
+this.$route.params.id
+</code></pre>
+<h1 id="新发现">新发现</h1>
+<p>现在的路由传参的方式没有改变，上述内容依然有效。组件内获取的方式增加了props方式接收，可以把参数传到props里了，功能更强大了。</p>
+<p>如果在组件内要用props接收路由上的参数可以分为三种方式</p>
+<h2 id="布尔模式">布尔模式</h2>
+<p>如果<code>props</code> 被设置为<code>true</code>，<code>route.params</code>将会被设置为组件属性。</p>
+<pre><code class="language-js">//组件调用
+//路由传递方式只能使用params传递参数
+this.$router.push(
+    name: 'Describe',
+    params: {
+                id: id
+            }
+})
+//路由配置
+{
+     path: '/describe',
+     name: 'Describe',
+     component: Describe,
+     props: ture
+}
+//组件获取
+const Describe= {
+  props: ['id'],
+  template: '&lt;div&gt;User {{ id }}&lt;/div&gt;'
+}
+</code></pre>
+<h2 id="对象模式">对象模式</h2>
+<p>如果<code>props</code>是一个对象，它会被按原样设置为组件属性。当<code>props</code>是静态的时候有用。</p>
+<pre><code class="language-js">const router = new VueRouter({
+  routes: [
+    { 
+        path: '/promotion/from-newsletter', 
+        component: Promotion, 
+        props: { 
+            newsletterPopup: false
+             } 
+        }
+  ]
+})
+</code></pre>
+<p>案例：</p>
+<pre><code class="language-js">// 对于包含命名视图的路由，你必须分别为每个命名视图添加 `props` 选项：
+//组件配置
+{
+  path: '/describe/:id',
+  components: { default: Describe, sidebar: Sidebar },
+  props: { default: true, sidebar: false }
+}
+//单文件组件在props中获取
+const Describe= {
+    props: ['id'],
+    template: '&lt;div&gt;describe{{ id }}&lt;/div&gt;'
+}
+ //方式二 (这里需要注意如果在props中声明了id，这里方式获取会报undefined。)
+this.$attrs['id']
+</code></pre>
+<h2 id="函数模式">函数模式</h2>
+<p>你可以创建一个函数返回<code>props</code>。这样你便可以将参数转换成另一种类型，将静态值与基于路由的值结合等等。</p>
+<pre><code class="language-js">const router = new VueRouter({
+  routes: [
+    { 
+        path: '/search', 
+        component: SearchUser, 
+        props: (route) =&gt; ({ 
+            query: route.query.q 
+            }) 
+        }
+  ]
+})
+</code></pre>
+<p><code>URL /search?q=vue</code>会将<code>{query: 'vue'}</code> 作为属性传递给<code>SearchUser</code>组件。</p>
+<p>请尽可能保持 <code>props</code> 函数为无状态的，因为它只会在路由发生变化时起作用。如果你需要状态来定义 <code>props</code>，请使用包装组件，这样 Vue 才可以对状态变化做出反应。</p>
+<pre><code class="language-js">//组件调用（这里只能把参数放置在query中）
+ this.$router.push({
+     path: '/describe',
+     query: {
+                id: id
+            }
+})
+  //路由设置
+ { 
+    path: '/describe', 
+    component: describe, 
+    props: (route) =&gt; ({ name: route.query.name}) 
+ }
+ //组价获取
+ //方式一
+ props:{
+     name:''
+ }
+ this.name
+ //方式二 (这里需要注意如果在props中声明了name，这里方式获取会报undefined。)
+this.$attrs['name']
+</code></pre>
+<h1 id="总结">总结</h1>
+<p>布尔模式需要用命名路由访问并把参数放置在<code>params</code>中，否则接收不到。<br>
+对象路由需要使用path拼接或者放置在<code>query</code>中，否则接收不到。<br>
+对象路由静态参数无所谓。<br>
+对象模式和函数模式返回的都是一个对象，如果在<code>props</code>中接收则直接<code>this.key</code>访问。若没有在<code>props</code>中接收则通过<code>this.$attrs.key</code>访问</p>
+<h1 id="二-声明式的导航">二、声明式的导航</h1>
+<p>声明式的导航和编程式的一样，这里就不在过多介绍，给几个例子大家对照编程式理解，例子如下：</p>
+<h3 id="字符串">字符串</h3>
+<pre><code class="language-html">&lt;router-link to=“news”&gt;click to news page&lt;/router-link&gt;
+</code></pre>
+<h3 id="命名路由">命名路由</h3>
+<pre><code class="language-html">&lt;router-link :to=&quot;{ name: ‘news’, params: { userId: 1111}}&quot;&gt;click to news page&lt;/router-link&gt;
+</code></pre>
+<h3 id="查询参数">查询参数</h3>
+<pre><code class="language-html">&lt;router-link :to=&quot;{ path: ‘/news’, query: { userId: 1111}}&quot;&gt;click to news page&lt;/router-link&gt;
+</code></pre>
+<h1 id="总结-2">总结</h1>
+<p>1.命名路由搭配params，刷新页面参数会丢失<br>
+2.查询参数搭配query，刷新页面数据不会丢失<br>
+3.接受参数使用this.$router后面就是搭配路由的名称就能获取到参数的值</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/qi-yin-qiao-ji/">
+                  <h3 class="post-title">
+                    奇淫巧技
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>
