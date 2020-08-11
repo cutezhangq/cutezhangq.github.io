@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cutezhangq.github.io</id>
     <title>cutezhangq</title>
-    <updated>2020-08-10T15:11:54.845Z</updated>
+    <updated>2020-08-11T01:21:12.682Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cutezhangq.github.io"/>
     <link rel="self" href="https://cutezhangq.github.io/atom.xml"/>
@@ -527,11 +527,11 @@ obj.print()
         <link href="https://cutezhangq.github.io/post/slot-cha-cao/">
         </link>
         <updated>2020-08-07T03:04:18.000Z</updated>
-        <summary type="html"><![CDATA[<p>👉插槽，也就是slot，👈<strong>是组件的一块HTML模板，这块模板显示不显示、以及怎样显示由父组件来决定。 **<br>
-实际上，一个slot最核心的两个问题在这里就点出来了，是</strong>显示不显示<strong>和</strong>怎样显示**。🙆🙆🙆</p>
+        <summary type="html"><![CDATA[<p>👉插槽，也就是slot，👈是组件的一块HTML模板，这块模板显示不显示、以及怎样显示由父组件来决定。<br>
+实际上，一个slot最核心的两个问题在这里就点出来了，是<strong>显示不显示</strong>和<strong>怎样显示</strong>。😘</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>👉插槽，也就是slot，👈<strong>是组件的一块HTML模板，这块模板显示不显示、以及怎样显示由父组件来决定。 **<br>
-实际上，一个slot最核心的两个问题在这里就点出来了，是</strong>显示不显示<strong>和</strong>怎样显示**。🙆🙆🙆</p>
+        <content type="html"><![CDATA[<p>👉插槽，也就是slot，👈是组件的一块HTML模板，这块模板显示不显示、以及怎样显示由父组件来决定。<br>
+实际上，一个slot最核心的两个问题在这里就点出来了，是<strong>显示不显示</strong>和<strong>怎样显示</strong>。😘</p>
 <!-- more -->
 <p>由于插槽是一块模板，所以，对于任何一个组件，从模板种类的角度来分，其实都可以分为<strong>非插槽模板</strong>和<strong>插槽模板</strong>两大类。<br>
 非插槽模板指的是html模板，比如‘div、span、ul、table’这些，非插槽模板的显示与隐藏以及怎样显示由组件自身控制；<br>
@@ -931,9 +931,9 @@ OK，我们说有html模板的情况，就是父组件会往子组件插模板�
         <link href="https://cutezhangq.github.io/post/xiao-xi-ding-yue-yu-fa-bu/">
         </link>
         <updated>2020-08-07T03:04:04.000Z</updated>
-        <summary type="html"><![CDATA[<p>结合 Vue 源码谈谈发布-订阅模式🙆🙆🙆，并涉及几个核心对象如 Observer 等。看看他们在vue实例中的应用~</p>
+        <summary type="html"><![CDATA[<p>结合 Vue 源码谈谈发布-订阅模式🤞，并涉及几个核心对象如 Observer 等。看看他们在vue实例中的应用~👀</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>结合 Vue 源码谈谈发布-订阅模式🙆🙆🙆，并涉及几个核心对象如 Observer 等。看看他们在vue实例中的应用~</p>
+        <content type="html"><![CDATA[<p>结合 Vue 源码谈谈发布-订阅模式🤞，并涉及几个核心对象如 Observer 等。看看他们在vue实例中的应用~👀</p>
 <!-- more -->
 <h1 id="发布订阅模式主要包含哪些内容呢">发布订阅模式主要包含哪些内容呢?</h1>
 <ul>
@@ -1457,107 +1457,10 @@ return this.firstName + ' ' + this.lastName
         <updated>2020-08-06T13:12:36.000Z</updated>
         <summary type="html"><![CDATA[<p>组件间的通信方式有多种~，一起来看下吧，最全攻略哦！👉<br>
 在讲述通信方式之前，我们先了解下组件间通信的特点💁</p>
-<h1 id="组件间通信的特点">组件间通信的特点</h1>
-<p>👉1. 不要在子组件中直接修改父组件的状态数据<br>
-👉2. 数据在哪, 更新数据的行为(函数)就应该定义在哪</p>
-<h1 id="vue-组件数据通信方案总结">Vue 组件数据通信方案总结</h1>
-<p><img src="https://cutezhangq.github.io/post-images/1596720130251.png" alt="" loading="lazy"><br>
-组件 A 与组件 B 、C 之间是父子组件，组件 B 、C 之间是兄弟组件，而组件 A 、D 之间是隔代的关系。<br>
-那么对于这些不同的关系，本文主要分享了他们之间可以采用的几种数据通信方式，<br>
-例如 Props 、$emit / $on 、Vuex 等，大家可以根据自己的使用场景可以选择适合的使用方式。</p>
-<h1 id="一-prop-emit-父子-子父">一、 Prop / $emit    （父——&gt;子        子——&gt;父）</h1>
-<h2 id="prop-通过绑定属性的方式">Prop  通过绑定属性的方式</h2>
-<pre><code class="language-html">// 父组件   &lt;child :title=&quot;title1&quot;&gt;&lt;/child&gt;
-// 子组件   props: { title:Object }
-</code></pre>
-<p>其中，props的用法：<br>
-props 是<strong>单向绑定</strong>的：当父组件的属性变化时，将传导给子组件，但是不会反过来。这是为了防止子组件无意修改父组件的状态。<br>
-所以<code>不应该在子组件中修改 props 中的值，Vue 会报出警告</code>。</p>
-<h2 id="修改-props-数据">修改 props 数据</h2>
-<p>通常有两种原因：</p>
-<ul>
-<li>prop 作为初始值传入后，子组件想把它当做局部数据来用</li>
-<li>prop 作为初始值传入后，由子组件处理成其他数据输出</li>
-</ul>
-<h2 id="应对办法是">应对办法是</h2>
-<ul>
-<li>定义一个<code>局部变量</code>，并用 prop 的值初始化它<br>
-但是由于定义的 ownChildMsg 只能接受 forChildMsg <code>的初始值</code>，当父组件要传递的值变化发生时，ownChildMsg <code>无法收到更新</code>。</li>
-</ul>
-<pre><code class="language-js">let childNode = {
-  template: `
-          &lt;div class=&quot;child&quot;&gt;
-            &lt;div&gt;
-              &lt;span&gt;子组件数据&lt;/span&gt;
-              &lt;input v-model=&quot;forChildMsg&quot;/&gt;
-            &lt;/div&gt;
-            &lt;p&gt;{{forChildMsg}}&lt;/p&gt;
-            &lt;p&gt;ownChildMsg : {{ownChildMsg}}&lt;/p&gt;
-          &lt;/div&gt;`,
-  props: {
-    &quot;for-child-msg&quot;: String
-  },
-  data() {
-    return { ownChildMsg: this.forChildMsg };
-  }
-};
-</code></pre>
-<p>这里我们加了一个<p>用于查看 ownChildMsg 数据是否变化，结果发现只有默认值传递给了 ownChildMsg，父组件改变只会变化到 forChildMsg，不会修改 ownChildMsg。</p>
-<ul>
-<li>定义一个<code>计算属性</code>，处理 prop 的值并返回<br>
-由于是计算属性，所以只能显示值，不能设置值。我们这里设置的是一旦从父组件修改了 forChildMsg 数据，我们就把 forChildMsg 加上一个字符串&quot;---ownChildMsg&quot;，然后显示在屏幕上。这时是可以每当父组件修改了新数据，<code>都会更新</code> ownChildMsg 数据的。</li>
-</ul>
-<pre><code class="language-js">let childNode = {
-  template: `
-          &lt;div class=&quot;child&quot;&gt;
-            &lt;div&gt;
-              &lt;span&gt;子组件数据&lt;/span&gt;
-              &lt;input v-model=&quot;forChildMsg&quot;/&gt;
-            &lt;/div&gt;
-            &lt;p&gt;{{forChildMsg}}&lt;/p&gt;
-            &lt;p&gt;ownChildMsg : {{ownChildMsg}}&lt;/p&gt;
-          &lt;/div&gt;`,
-  props: {
-    &quot;for-child-msg&quot;: String
-  },
-  computed: {
-    ownChildMsg() {
-      return this.forChildMsg + &quot;---ownChildMsg&quot;;
-    }
-  }
-};
-</code></pre>
-<ul>
-<li>更加妥帖的方式是<code>使用变量存储</code> prop 的初始值，并用<code>watch</code>来观察 prop 值得<code>变化</code>。发生变化时，更新变量的值。</li>
-</ul>
-<pre><code class="language-js">let childNode = {
-  template: `
-          &lt;div class=&quot;child&quot;&gt;
-            &lt;div&gt;
-              &lt;span&gt;子组件数据&lt;/span&gt;
-              &lt;input v-model=&quot;forChildMsg&quot;/&gt;
-            &lt;/div&gt;
-            &lt;p&gt;{{forChildMsg}}&lt;/p&gt;
-            &lt;p&gt;ownChildMsg : {{ownChildMsg}}&lt;/p&gt;
-          &lt;/div&gt;`,
-  props: {
-    &quot;for-child-msg&quot;: String
-  },
-  data() {
-    return {
-      ownChildMsg: this.forChildMsg
-    };
-  },
-  watch: {
-    forChildMsg() {
-      this.ownChildMsg = this.forChildMsg;
-    }
-  }
-};
-</code></pre>
 ]]></summary>
         <content type="html"><![CDATA[<p>组件间的通信方式有多种~，一起来看下吧，最全攻略哦！👉<br>
 在讲述通信方式之前，我们先了解下组件间通信的特点💁</p>
+<!-- more -->
 <h1 id="组件间通信的特点">组件间通信的特点</h1>
 <p>👉1. 不要在子组件中直接修改父组件的状态数据<br>
 👉2. 数据在哪, 更新数据的行为(函数)就应该定义在哪</p>
@@ -2212,11 +2115,18 @@ title: '我是子组件2'
         <link href="https://cutezhangq.github.io/post/new-yun-suan-fu-de-zhi-xing-guo-cheng/">
         </link>
         <updated>2020-08-06T12:45:01.000Z</updated>
-        <content type="html"><![CDATA[<p>new运算符的执行过程<br>
-👉	* 创建一个空对象obj<br>
-👉	* 并将这个空对象obj的__proto__连接到构造函数的原型上。链接到原型: obj.<strong>proto</strong> = Con.prototype<br>
-👉	* 绑定this:  apply，创建属性和方法。  用apply绑定对象的this指向（obj作为this的上下文）Con.apply(obj,arguments)<br>
-👉	* 返回新对象this或者叫创建的对象obj(如果构造函数有自己 retrun 时，则返回该值)</p>
+        <summary type="html"><![CDATA[<p>new运算符的执行过程基本可以描述为：<br>
+👉	创建一个空对象obj<br>
+👉	并将这个空对象obj的__proto__连接到构造函数的原型上。链接到原型: obj.<strong>proto</strong> = Con.prototype<br>
+👉	绑定this:  apply，创建属性和方法。  用apply绑定对象的this指向（obj作为this的上下文）Con.apply(obj,arguments)<br>
+👉	返回新对象this或者叫创建的对象obj(如果构造函数有自己 retrun 时，则返回该值)</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>new运算符的执行过程基本可以描述为：<br>
+👉	创建一个空对象obj<br>
+👉	并将这个空对象obj的__proto__连接到构造函数的原型上。链接到原型: obj.<strong>proto</strong> = Con.prototype<br>
+👉	绑定this:  apply，创建属性和方法。  用apply绑定对象的this指向（obj作为this的上下文）Con.apply(obj,arguments)<br>
+👉	返回新对象this或者叫创建的对象obj(如果构造函数有自己 retrun 时，则返回该值)</p>
+<!-- more -->
 <pre><code class="language-js">  // 传参 New(obj, ...args)
   function New123() {  
       let obj = new Object();  // 提取第一个参数并作为构造函数; 
@@ -2253,10 +2163,17 @@ console.log(people2.say())  //My name is Rose.
         <link href="https://cutezhangq.github.io/post/jsonstringify-yu-huan-wen-ti/">
         </link>
         <updated>2020-08-06T10:50:32.000Z</updated>
-        <content type="html"><![CDATA[<p>🙋JSON.stringify的功能是，讲一个js字面量对象转化为一个JSON格式的字符串，例如：</p>
+        <summary type="html"><![CDATA[<p>JSON.stringify在解析接口数据时，我们经常使用到，那么它为什么会产生“环“呢，啥是”环“和？😨<br>
+🙄博主酱的脑海中一堆问号，赶快来了解下了！</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>JSON.stringify在解析接口数据时，我们经常使用到，那么它为什么会产生“环“呢，啥是”环“和？😨<br>
+🙄博主酱的脑海中一堆问号，赶快来了解下了！</p>
+<!-- more -->
+<p>JSON.stringify的功能是，将一个js字面量对象转化为一个JSON格式的字符串，例如：</p>
 <pre><code class="language-js">const obj = {a:1,b:2}
 JSON.stringify(obj)     //  ‘ {“a”:1,“b”:2}’
 </code></pre>
+<!-- more -->
 <p>当要转化的对象有**“环”**存在时（<strong>子节点属性赋值了父节点的引用</strong>），为了避免死循环，JSON.stringify 会抛出异常，例如：</p>
 <pre><code class="language-js">const obj = {
   foo: {
@@ -2351,8 +2268,12 @@ obj.aaa.bbb = obj.foo;   //  aaa-&gt;bbb-&gt;bar-&gt;baz-&gt;aChild-&gt;null 不
         <link href="https://cutezhangq.github.io/post/vuex-zhong-mutations-he-actions-de-qu-bie/">
         </link>
         <updated>2020-08-06T01:55:07.000Z</updated>
+        <summary type="html"><![CDATA[<p>👉<strong>Vuex</strong> 是一个专为 Vue.js 应用程序开发的状态管理模式。👈<br>
+它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化🙆🙆🙆</p>
+]]></summary>
         <content type="html"><![CDATA[<p>👉<strong>Vuex</strong> 是一个专为 Vue.js 应用程序开发的状态管理模式。👈<br>
 它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化🙆🙆🙆</p>
+<!-- more -->
 <h1 id="mutation">Mutation</h1>
 <p>Mutation 更改 Vuex 的 store 中的状态的<strong>唯一</strong>方法是提交 mutation。事实上在 vuex 里面 actions 只是一个架构性的概念，并不是必须的，只要最后触发 mutation 就行。异步竞态怎么处理那是用户自己的事情。</p>
 <h1 id="action">Action</h1>
@@ -2507,9 +2428,32 @@ export default new Vuex.Store({
         <link href="https://cutezhangq.github.io/post/mpvue-xing-neng-you-hua-ji-qiao/">
         </link>
         <updated>2020-08-05T15:42:43.000Z</updated>
-        <content type="html"><![CDATA[<p>优化前后的图：<br>
+        <summary type="html"><![CDATA[<p>👀性能优化十分重要，本文通过一下几个方面来介绍了小程序的优化：<br>
+👉压缩图片、<br>
+👉移除无用的库、<br>
+👉开启Vue.config._mpTrace = true、<br>
+👉精简data、<br>
+👉静态图片放进static、<br>
+👉swiper优化、<br>
+👉vuex使用注意事项、<br>
+👉善用storage、<br>
+👉动画优化</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>👀性能优化十分重要，本文通过一下几个方面来介绍了小程序的优化：<br>
+👉压缩图片、<br>
+👉移除无用的库、<br>
+👉开启Vue.config._mpTrace = true、<br>
+👉精简data、<br>
+👉静态图片放进static、<br>
+👉swiper优化、<br>
+👉vuex使用注意事项、<br>
+👉善用storage、<br>
+👉动画优化</p>
+<!-- more -->
+<p>优化前后的图：<br>
 <img src="https://cutezhangq.github.io/post-images/1596642240799.webp" alt="" loading="lazy"></p>
 <p>可以看到打包后的代码量从813KB减少到387KB,Audits体验评分从B到A，效果还是比较明显的。其实这个指标说明不了什么，而且轻易就可以做到，更重要的是优化小程序运行过程中的卡顿感，请耐心往下看。</p>
+<!-- more -->
 <p>常规优化<br>
 常规的Web端优化方法在小程序中也是适用的，而且不可忽视。</p>
 <h1 id="一-压缩图片">一、压缩图片</h1>

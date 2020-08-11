@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597072311726">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597108174842">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -18,11 +18,13 @@
 
 
 
-    <meta name="description" content="优化前后的图：
-
-可以看到打包后的代码量从813KB减少到387KB,Audits体验评分从B到A，效果还是比较明显的。其实这个指标说明不了什么，而且轻易就可以做到，更重要的是优化小程序运行过程中的卡顿感，请耐心往下看。
-常规优化
-常规的W..." />
+    <meta name="description" content="👀性能优化十分重要，本文通过一下几个方面来介绍了小程序的优化：
+👉压缩图片、
+👉移除无用的库、
+👉开启Vue.config._mpTrace = true、
+👉精简data、
+👉静态图片放进static、
+👉swiper优化、..." />
     <meta name="keywords" content="小程序" />
   </head>
   <body>
@@ -32,7 +34,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597072311726" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597108174842" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -105,9 +107,21 @@
               </div>
             
             <div class="post-content" v-pre>
-              <p>优化前后的图：<br>
+              <p>👀性能优化十分重要，本文通过一下几个方面来介绍了小程序的优化：<br>
+👉压缩图片、<br>
+👉移除无用的库、<br>
+👉开启Vue.config._mpTrace = true、<br>
+👉精简data、<br>
+👉静态图片放进static、<br>
+👉swiper优化、<br>
+👉vuex使用注意事项、<br>
+👉善用storage、<br>
+👉动画优化</p>
+<!-- more -->
+<p>优化前后的图：<br>
 <img src="https://cutezhangq.github.io/post-images/1596642240799.webp" alt="" loading="lazy"></p>
 <p>可以看到打包后的代码量从813KB减少到387KB,Audits体验评分从B到A，效果还是比较明显的。其实这个指标说明不了什么，而且轻易就可以做到，更重要的是优化小程序运行过程中的卡顿感，请耐心往下看。</p>
+<!-- more -->
 <p>常规优化<br>
 常规的Web端优化方法在小程序中也是适用的，而且不可忽视。</p>
 <h1 id="一-压缩图片">一、压缩图片</h1>

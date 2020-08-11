@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597072311726">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597108174842">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -18,11 +18,10 @@
 
 
 
-    <meta name="description" content="🙋JSON.stringify的功能是，讲一个js字面量对象转化为一个JSON格式的字符串，例如：
-const obj = {a:1,b:2}
-JSON.stringify(obj)     //  ‘ {“a”:1,“b”:2}’
+    <meta name="description" content="JSON.stringify在解析接口数据时，我们经常使用到，那么它为什么会产生“环“呢，啥是”环“和？😨
+🙄博主酱的脑海中一堆问号，赶快来了解下了！
 
-当..." />
+JSON.stringify的功能是，将一个js字面量对象转化为一个JSON格式的..." />
     <meta name="keywords" content="js" />
   </head>
   <body>
@@ -32,7 +31,7 @@ JSON.stringify(obj)     //  ‘ {“a”:1,“b”:2}’
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597072311726" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597108174842" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -105,10 +104,14 @@ JSON.stringify(obj)     //  ‘ {“a”:1,“b”:2}’
               </div>
             
             <div class="post-content" v-pre>
-              <p>🙋JSON.stringify的功能是，讲一个js字面量对象转化为一个JSON格式的字符串，例如：</p>
+              <p>JSON.stringify在解析接口数据时，我们经常使用到，那么它为什么会产生“环“呢，啥是”环“和？😨<br>
+🙄博主酱的脑海中一堆问号，赶快来了解下了！</p>
+<!-- more -->
+<p>JSON.stringify的功能是，将一个js字面量对象转化为一个JSON格式的字符串，例如：</p>
 <pre><code class="language-js">const obj = {a:1,b:2}
 JSON.stringify(obj)     //  ‘ {“a”:1,“b”:2}’
 </code></pre>
+<!-- more -->
 <p>当要转化的对象有**“环”**存在时（<strong>子节点属性赋值了父节点的引用</strong>），为了避免死循环，JSON.stringify 会抛出异常，例如：</p>
 <pre><code class="language-js">const obj = {
   foo: {

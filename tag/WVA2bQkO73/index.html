@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597072311726">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597108174842">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -27,7 +27,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597072311726" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597108174842" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -103,7 +103,12 @@
                   2020-08-06
                 </div>
                 <div class="post-abstract">
-                  
+                  <p>new运算符的执行过程基本可以描述为：<br>
+👉	创建一个空对象obj<br>
+👉	并将这个空对象obj的__proto__连接到构造函数的原型上。链接到原型: obj.<strong>proto</strong> = Con.prototype<br>
+👉	绑定this:  apply，创建属性和方法。  用apply绑定对象的this指向（obj作为this的上下文）Con.apply(obj,arguments)<br>
+👉	返回新对象this或者叫创建的对象obj(如果构造函数有自己 retrun 时，则返回该值)</p>
+
                 </div>
               </div>
               
@@ -123,7 +128,9 @@
                   2020-08-06
                 </div>
                 <div class="post-abstract">
-                  
+                  <p>JSON.stringify在解析接口数据时，我们经常使用到，那么它为什么会产生“环“呢，啥是”环“和？😨<br>
+🙄博主酱的脑海中一堆问号，赶快来了解下了！</p>
+
                 </div>
               </div>
               
