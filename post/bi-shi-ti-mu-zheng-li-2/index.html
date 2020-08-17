@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>笔试-题目整理2-2020bilibili  | cutezhangq</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597652889879">
+<link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="这里收录了部分bilibili 2020的笔试题，一起来看看叭，查漏补缺鸭😘
+涉及的众多的基础知识点....
+
+【1.】关于DOMContentLoaded和load事件说法正确的是？
+A DOMContentLoaded事件比load事..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://cutezhangq.github.io">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597652889879" class="site-logo">
+        <h1 class="site-title">cutezhangq</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/cutezhangq" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://cutezhangq.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">笔试-题目整理2-2020bilibili </h2>
+            <div class="post-date">2020-08-14</div>
+            
+              <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/bi-shi-ti-mu-zheng-li-2.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>这里收录了部分bilibili 2020的笔试题，一起来看看叭，查漏补缺鸭😘<br>
+涉及的众多的基础知识点....</p>
+<!-- more -->
+<h1 id="1关于domcontentloaded和load事件说法正确的是">【1.】关于DOMContentLoaded和load事件说法正确的是？</h1>
+<p>A DOMContentLoaded事件比load事件更早执行<br>
+B load事件比DOMContentLoaded事件更早执行<br>
+C 按监听代码从上到下先后执行<br>
+D dom文档完全加载完后执行load事件</p>
+<h2 id="答案a-domcontentloaded事件比load事件更早执行">答案：A DOMContentLoaded事件比load事件更早执行</h2>
+<p><strong>DOMContentLoaded</strong>：DOM解析完成之后。<br>
+当纯HTML被完全加载以及解析时，DOMContentLoaded事件会被触发，而不必等待样式表，图片或者子框架完成加载。</p>
+<pre><code class="language-cmd">MDN
+当初始的 HTML 文档被完全加载和解析完成之后，DOMContentLoaded 事件被触发，而无需等待样式表、图像和子框架的完全加载。
+注意：DOMContentLoaded 事件必须等待其所属script之前的样式表加载解析完成才会触发。
+</code></pre>
+<p><strong>load</strong>：页面HTML、CSS、JS..及图片等外链资源加载完成之后，才会执行load。<br>
+当一个资源及其依赖资源已完成加载时，将触发load事件。</p>
+<h1 id="2如何在-div-容器里展示-divdiv-这几个字符">【2.】如何在 div 容器里展示 <div></div> 这几个字符？</h1>
+<h2 id="答案documentqueryselectordivinnertext-divdiv">答案：document.querySelector('div').innerText = &quot;<div></div>&quot;</h2>
+<pre><code class="language-html">  &lt;!--  innerHTML：设置或获取标签所包含的HTML与文本信息。（不含标签本身）
+        innerText：设置或获取标签所包含的文本信息。（不含标签本身）
+        outerHTML：设置或获取标签本身以及所包含的HTML与文本信息。（包含标签本身）
+        outerText：设置或获取标签本身以及所包含的文本信息。（包含标签本身） --&gt;
+
+&lt;div id=&quot;div1&quot;&gt;
+        &lt;p id=&quot;p1&quot;&gt;this is text&lt;/p&gt;
+&lt;/div&gt;
+    &lt;script&gt;
+        var div=document.getElementsByTagName(&quot;div&quot;);
+        console.log(div[0].innerHTML);      //  &lt;p id=&quot;p1&quot;&gt;this is text&lt;/p&gt;
+        console.log(div[0].innerText);         //  this is text
+        console.log(div[0].outerHTML);     // &lt;div id=&quot;div1&quot;&gt;&lt;p id=&quot;p1&quot;&gt;this is text&lt;/p&gt;&lt;/div&gt;
+        console.log(div[0].outerText);        //  this is text
+    &lt;/script&gt;
+</code></pre>
+<h1 id="3以下不是box-sizing的属性是">【3.】以下不是box-sizing的属性是？</h1>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>content-box</td>
+<td>这是由 CSS2.1 规定的宽度高度行为。宽度和高度分别应用到元素的内容框。在宽度和高度之外绘制元素的内边距和边框。</td>
+</tr>
+<tr>
+<td>border-box</td>
+<td>为元素设定的宽度和高度决定了元素的边框盒。就是说，为元素指定的任何内边距和边框都将在已设定的宽度和高度内进行绘制。通过从已设定的宽度和高度分别减去边框和内边距才能得到内容的宽度和高度。</td>
+</tr>
+<tr>
+<td>inherit</td>
+<td>规定应从父元素继承 box-sizing 属性的值。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="box-sizing">box-sizing</h2>
+<p>box-sizing 最主要的用法是规定容器元素的<strong>最终尺寸计算方式。</strong></p>
+<p>如果你创造了一个 <code>&lt;div&gt;</code> 没有设置 <code>box-sizing</code>属性为<code>border-box</code>(不设置的话默认值为 <code>content-box</code>)，同时你设置 <code>width:100px; border:10px solid red; padding:10px;</code>那么最终 div 容器的实际宽度为：</p>
+<pre><code class="language-js">100px(width)+2*10px*(padding)+2*10px(border)=140px
+</code></pre>
+<p>所以你会得到一个比你预期（100px）还要更大的容器，结果就是会破坏网页布局。<br>
+注意：容易 margin 的尺寸不会被计算入最终容器宽度，因为对他的定义为对这个容器的留白，但不属于容器本身。</p>
+<p>如果当我们定义一个容器的 <code>box-sizing</code>属性为<code>border-box</code>时<br>
+（表达式：<code>br{box-sizing:border-box}</code>），那么我们创建一个和上段中相同设置的<code>&lt;div&gt;</code>容器时，那么他的最终宽度即为 100px, 那么它的内容部分（content）的有效宽度变成了</p>
+<pre><code class="language-js">100px-2*10px-2*10px =60px; 
+</code></pre>
+<p>所以你会得到一个你预期大小的盒子容器，但是只是被压缩了内容部分尺寸而已，但是对于整体布局而言益处颇多。</p>
+<p>所以要合理利用好这个属性，这个属性十分重要。</p>
+<!-- more -->
+<h1 id="4-1-32-的值为">【4.】‘-1 &gt;&gt;&gt; 32 的值为(  )’</h1>
+<p>emm...知识盲区😳😳😳</p>
+<h2 id="答案232-1">答案：2^32-1</h2>
+<pre><code class="language-cmd">&gt;&gt;这个是带符号右移
+&gt;&gt;&gt; 这个是无符号右移
+无符号右移运算符（&gt;&gt;&gt;）
+</code></pre>
+<p><code>按二进制形式把所有的数字向右移动对应位数，低位移出(舍弃)，高位的空位补零。对于正数来说和带符号右移（&gt;&gt;） 相同，但是对于负数来说不同。</code><br>
+<strong>正数</strong><br>
+例：20 &gt;&gt; 2<br>
+1、<code>首先转化为二进制</code>，20的二进制为0001 0100<br>
+2、<code>将二进制数向右移两位，高位补符号位（0）</code>，得到0000 0101<br>
+3、最后<code>将二进制数转化成十进制数</code>，0000 0101转化为十进制为5<br>
+所以，20 &gt;&gt; 2 = 5</p>
+<p><strong>负数</strong><br>
+例：-20 &gt;&gt; 2<br>
+1、<code>首先转化为二进制</code>，20的二进制为1110 1100   //<code>取反加1</code>  20的二进制为0001 0100 取反得到1110 1011 加1后得到1110 1100<br>
+2、将<code>二进制数向右移两位，高位补符号位（1）</code>，得到1111 1011<br>
+3、最后<code>将二进制数转化成十进制数</code>，1111 1011转化为十进制为-5  //取反 0000 0100 加1   0000 0101 因为是负数，也就是1000 0101也就是2的2次方加2的零次方 等于-5<br>
+所以，-20 &gt;&gt; 2 = -5</p>
+<p><code>1</code>的二进制 00000000 00000000 00000000 00000001<br>
+<code>-1</code>的二进制 10000000 00000000 00000000 00000001 取反加1得到补码 11111111 11111111 11111111 11111111  //首位不变，其余为取反<br>
+右移32位（高位补符号位1） 也就是11111111 11111111 11111111 11111111  //32位<br>
+假设该数值加上一也就是变成<br>
+1 00000000 00000000 00000000 00000000  //1后面有32个0<br>
+那就把刚才加上的1减掉<br>
+也就是结果<br>
+2^32-1<br>
+<img src="https://cutezhangq.github.io/post-images/1597476991984.png" alt="" loading="lazy"></p>
+<h1 id="51-2-3mapparseint">【5.】['1', '2', '3'].map(parseInt) ( )</h1>
+<h2 id="答案1-nan-nan">答案：[1, NaN, NaN]</h2>
+<pre><code class="language-js">['1', '2', '3'].map((item, index) =&gt; {
+    return parseInt(item, index)
+})
+parseInt('1', 0) // 1  默认十进制的1
+parseInt('2', 1) // NaN 1进制没有2
+parseInt('3', 2) // NaN,2进制逢2进1
+</code></pre>
+<p>ps 啥是parseInt<br>
+parseInt('11',2) //二进制的11 转换成十进制应该是 3</p>
+<p>['10','10','10','10','10'].map(parseInt); // [10, NaN, 2, 3, 4]<br>
+意思是0(默认0是十进制)进制的十转换成十进制是多少 1进制的十转换成十进制是多少 二进制的10转换成十进制是多少...</p>
+<pre><code class="language-js">['1','2','3'].map((a,b,arr)=&gt;{  //a:循环得到的那一项的值；b:循环时的索引; arr整个数组的值
+    parseInt(a,b);  //a代表那一项； b代表进制
+})
+// parseInt(string, radix)   
+// 将一个字符串 string 转换为 radix 进制的整数， radix 为介于2-36之间的数。
+parseInt('1', 0) // radix 为 0，默认以十进制解析字符串，返回 1 
+
+parseInt('2', 1) // radix 为 1，不在 2 ~ 36 之间，返回 NaN 
+
+parseInt('3', 2) // radix 为 2， 字符串却为 3，超出二进制的表示范围，因此要解析的字符串和基数矛盾，返回 NaN
+//2 进制只有0和1，，，3超出范围了
+</code></pre>
+<h1 id="6计算结果">【6.】计算结果</h1>
+<pre><code class="language-js">console.log(1);
+setTimeout(() =&gt; {console.log(2)}, 0);
+console.log(3);
+Promise.resolve(4).then(b =&gt; {
+console.log(b);
+});
+console.log(5);
+</code></pre>
+<h2 id="答案1-3-5-4-2">答案：1 3 5 4 2</h2>
+<p><code>console.log()</code> -&gt; <code>同步</code><br>
+<code>promise</code>-&gt; <code>异步，微任务</code><br>
+<code>setTimeout</code> -&gt; <code>异步，宏任务</code><br>
+执行顺序:<code>同步</code> &gt;<code>异步,微任务</code> &gt; <code>异步，宏任务</code></p>
+<h1 id="7mathabs-6666-的结果是多少">【7.】Math.abs(-6.666) 的结果是多少?</h1>
+<h2 id="答案6666">答案：6.666</h2>
+<p><code>Math.abs()</code>转为为绝对值</p>
+<p><code>parseInt(7/2)</code>丢弃小数部分,保留整数部分</p>
+<p><code>Math.ceil(7/2)</code>向上取整,有小数就整数部分加1</p>
+<p><code>Math.round(7/2)</code>四舍五入</p>
+<p><code>Math.floor(7/2)</code>向下取整</p>
+<h1 id="812345-的数组的基础上-删除第一个-和-最后一位">【8.】[1,2,3,4,5] 的数组的基础上 删除第一个 和 最后一位</h1>
+<p>[1,2,3,4,5].replace(1, -1)<br>
+[1,2,3,4,5].reverse(1，-1)<br>
+[1,2,3,4,5].toString(-1，1)<br>
+[1,2,3,4,5].slice(1, -1)</p>
+<h2 id="答案12345slice1-1">答案：[1,2,3,4,5].slice(1, -1)</h2>
+<p><code>slice(1,-1)</code>  slice不会操作原数组，会返回一个新数组 。 表示从索引为0开始截取，-1表示截取到倒数第二个，并将这个新数组返回。</p>
+<p><code>replace</code>方法返回一个由替换值（replacement）替换部分或所有的模式（pattern）匹配项后的新字符串。原字符串不会改变。</p>
+<p><code>reverse</code>方法将数组中元素的位置颠倒，并返回该数组。数组的第一个元素会变成最后一个，数组的最后一个元素变成第一个。该方法会改变原数组。</p>
+<h1 id="9计算结果">【9.】计算结果</h1>
+<pre><code class="language-js">function setname(name){
+ this.name = name
+}
+setname.prototype.printName = function(){ console.log(this.name) }
+let a = new setname(&quot;cc&quot;)
+a.name = &quot;dd&quot;
+a.__proto__.name = &quot;ee&quot;
+
+a.__proto__.printName()  // ?
+a.printName() // ?
+</code></pre>
+<h2 id="答案ee-dd">答案：ee dd</h2>
+<p>首先定义了一个函数 setname（）接下来定义了一个方法printname<br>
+调用new 方法生成对象传参 “cc” 此时a对象上面的name属性为cc<br>
+<img src="https://cutezhangq.github.io/post-images/1597559456328.png" alt="" loading="lazy"><br>
+接下来通过a.name修改属性 此时a对象的name属性为 dd<br>
+<img src="https://cutezhangq.github.io/post-images/1597559495746.png" alt="" loading="lazy"><br>
+最后修改通过a修改构造函数中的属性 --proto--<br>
+<img src="https://cutezhangq.github.io/post-images/1597559529281.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/tan-tan-shen-kao-bei-qian-kao-bei/">
+                  <h3 class="post-title">
+                    谈谈深拷贝、浅拷贝
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

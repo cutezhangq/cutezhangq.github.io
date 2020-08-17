@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597155337597">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597652889879">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -34,7 +34,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597155337597" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597652889879" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -206,6 +206,34 @@ if(n%2 == 1){
   }else{
     console.log('不是空对象');
   }
+</code></pre>
+<h1 id="apply的使用">.apply（）的使用</h1>
+<h2 id="1找出数组最大元素">（1）找出数组最大元素</h2>
+<p>JavaScript 不提供找出数组最大元素的函数。结合使用apply方法和Math.max方法，就可以返回数组的最大元素。</p>
+<pre><code class="language-js">var a = [10, 2, 4, 15, 9];
+Math.max.apply(null, a) // 15
+</code></pre>
+<h2 id="2将数组的空元素变为undefined">（2）将数组的空元素变为undefined</h2>
+<p>通过apply方法，利用Array构造函数将数组的空元素变成undefined。</p>
+<pre><code class="language-js">Array.apply(null, ['a', ,'b'])
+// [ 'a', undefined, 'b' ]
+</code></pre>
+<p>空元素与undefined的差别在于，数组的forEach方法会跳过空元素，但是不会跳过undefined。<br>
+因此，遍历内部元素的时候，会得到不同的结果。</p>
+<pre><code class="language-js">var a = ['a', , 'b'];
+
+function print(i) {
+console.log(i);
+}
+
+a.forEach(print)
+// a
+// b
+
+Array.apply(null, a).forEach(print)
+// a
+// undefined
+// b
 </code></pre>
 
             </div>

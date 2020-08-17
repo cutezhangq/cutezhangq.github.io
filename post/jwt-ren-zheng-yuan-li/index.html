@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>JWT认证原理（JSON Web Token） | cutezhangq</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597652889879">
+<link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="Json web token (JWT), 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，特别适用于👉分布式站点的单点登录（SSO）场景👈。JWT的声明一般被用..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://cutezhangq.github.io">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597652889879" class="site-logo">
+        <h1 class="site-title">cutezhangq</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/cutezhangq" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://cutezhangq.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">JWT认证原理（JSON Web Token）</h2>
+            <div class="post-date">2020-08-17</div>
+            
+              <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/jwt-ren-zheng-yuan-li.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p><code>Json web token (JWT)</code>, 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，特别适用于👉分布式站点的<code>单点登录（SSO）</code>场景👈。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token也可直接被用于认证，也可被加密。👀</p>
+<p>JWT认证原理（JSON Web Token）</p>
+<p>互联网服务离不开用户认证。一般流程是下面这样。🙌</p>
+<!-- more -->
+<h1 id="一-传统的session认证">一、传统的Session认证</h1>
+<h2 id="流程session">流程session</h2>
+<p>认证的流程一般如下：</p>
+<ul>
+<li>1.用户向服务器发送用户名和密码。</li>
+<li>2.服务器验证通过后，在当前对话（session）里面保存相关数据，比如用户角色、登录时间等等。</li>
+<li>3.服务器向用户返回一个 session_id，写入用户的 Cookie。</li>
+<li>4.用户随后的每一次请求，都会通过 Cookie，将 session_id 传回服务器。</li>
+<li>5.服务器收到 session_id，找到前期保存的数据，由此得知用户的身份。</li>
+</ul>
+<h2 id="缺点">缺点</h2>
+<ul>
+<li>session保存在服务器，当注册用户很多，会增加服务器的开销。</li>
+<li>用户认证之后，服务端做认证记录，如果认证的记录被保存在内存中的话，这意味着用户下次请求还必须要请求在这台服务器上,这样才能拿到授权的资源，这样在分布式的应用上，限制了负载均衡的能力。这也意味着限制了应用的扩展能力。</li>
+<li>session是基于cookie来进行用户识别的, cookie如果被截获，用户就会很容易受到<code>跨站请求伪造（CSRF）</code>的攻击。</li>
+</ul>
+<p>这种模式的问题在于，扩展性（scaling）不好。单机当然没有问题，如果是服务器集群，或者是跨域的服务导向架构，就要求 session 数据共享，每台服务器都能够读取 session。</p>
+<p>举例来说，A 网站和 B 网站是同一家公司的关联服务。现在要求，用户只要在其中一个网站登录，再访问另一个网站就会自动登录，请问怎么实现？</p>
+<p>一种解决方案是 <code>session 数据持久化</code>，写入数据库或别的持久层。各种服务收到请求后，都向持久层请求数据。这种方案的优点是架构清晰，缺点是工程量比较大。另外，持久层万一挂了，就会单点失败。</p>
+<p>另一种方案是服务器索性不保存 session 数据了，所有数据都<code>保存在客户端</code>，每次请求都发回服务器。<code>JWT</code>就是这种方案的一个代表。</p>
+<h1 id="二-jwt-认证">二、JWT 认证</h1>
+<h2 id="token">token</h2>
+<p><code>JWT</code>是基于<code>token</code>的鉴权机制类似于<code>http协议</code>也是无状态的，它不需要在服务端去保留用户的认证信息或者会话信息。<br>
+这就意味着基于token认证机制的应用不需要去考虑用户在哪一台服务器登录了，这就为应用的扩展提供了便利。</p>
+<h2 id="流程">流程</h2>
+<ul>
+<li>1.用户使用用户名密码来请求服务器。</li>
+<li>2.服务器进行验证用户的信息</li>
+<li>3.服务器通过验证发送给用户一个token</li>
+<li>4.客户端存储token，并在每次请求时附送上这个token值</li>
+<li>5.服务端验证token值，并返回数据</li>
+</ul>
+<p>这个token必须要在每次请求时传递给服务端，它应该保存在请求头里， 另外，服务端要支持<code>CORS(跨来源资源共享)策略</code>，一般我们在服务端这么做就可以了<code>Access-Control-Allow-Origin: *</code>。</p>
+<h2 id="jwt-的原理">JWT 的原理</h2>
+<p>JWT 的原理是，服务器认证以后，生成一个 JSON 对象，发回给用户，就像下面这样。</p>
+<pre><code class="language-json">{
+  &quot;姓名&quot;: &quot;张三&quot;,
+  &quot;角色&quot;: &quot;管理员&quot;,
+  &quot;到期时间&quot;: &quot;2018年7月1日0点0分&quot;
+}
+</code></pre>
+<p>以后，用户与服务端通信的时候，都要发回这个 JSON 对象。服务器完全只靠这个对象认定用户身份。为了防止用户篡改数据，服务器在生成这个对象的时候，会加上签名（详见后文）。<br>
+服务器就不保存任何 session 数据了，也就是说，服务器变成无状态了，从而比较容易实现扩展。</p>
+<h1 id="三-jwt-的数据结构">三、JWT 的数据结构</h1>
+<pre><code class="language-js">    const accessToken =    &quot;eyJhbGciOiJIUzI1NiJ9.eyJvcGVuSWQiOiJvVjc2QndpYVVYcGcxYUo2S1RDb3hQbWppRHg0IiwiaXNzIjoib3JhbmdlMiIsImRldmljZUlkIjoiZ2hfOGY0ODdhNjEyZmM5XzkzNzdjYjk4YWU0MDU3NzgiLCJpYXQiOjE1OTQ4MDYzMTJ9.6kS29myZlCUxQqvZOEGmhJhQ66NCwk_raB5HGRGhr7M&quot;
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1597647417511.png" alt="" loading="lazy"></figure>
+<p>JWT 的三个部分依次如下:</p>
+<pre><code class="language-cmd">Header（头部）
+Payload（负载）
+Signature（签名）
+</code></pre>
+<p>写成一行，就是下面的样子。<br>
+Header.Payload.Signature<br>
+下面依次介绍这三个部分。</p>
+<h2 id="header">Header</h2>
+<p>Header 部分是一个 JSON 对象，描述 JWT 的元数据，通常是下面的样子。</p>
+<pre><code class="language-json">{
+  &quot;alg&quot;: &quot;HS256&quot;,
+  &quot;typ&quot;: &quot;JWT&quot;
+}
+</code></pre>
+<p>上面代码中，<code>alg</code>属性表示签名的算法（algorithm），默认是 HMAC SHA256（写成 HS256）；<code>typ</code>属性表示这个令牌（token）的类型（type），JWT 令牌统一写为JWT。<br>
+最后，将上面的 JSON 对象使用 Base64URL 算法（详见后文）转成字符串。</p>
+<h2 id="payload">Payload</h2>
+<p>载荷就是存放有效信息的地方。这些有效信息包含三个部分:<br>
+标准中注册的声明<br>
+公共的声明<br>
+私有的声明<br>
+Payload 部分也是一个 JSON 对象，用来存放实际需要传递的数据。JWT 规定了7个官方字段，供选用。</p>
+<pre><code class="language-cmd">iss (issuer)：签发人
+exp (expiration time)：过期时间
+sub (subject)：主题
+aud (audience)：受众
+nbf (Not Before)：生效时间
+iat (Issued At)：签发时间
+jti (JWT ID)：编号
+</code></pre>
+<p>除了官方字段，你还可以在这个部分定义私有字段，下面就是一个例子。</p>
+<pre><code class="language-json">{
+  &quot;sub&quot;: &quot;1234567890&quot;,
+  &quot;name&quot;: &quot;John Doe&quot;,
+  &quot;admin&quot;: true
+}
+</code></pre>
+<p>注意，JWT 默认是不加密的，任何人都可以读到，所以不要把秘密信息放在这个部分。<br>
+这个 JSON 对象也要使用 Base64URL 算法转成字符串。</p>
+<h2 id="signature">Signature</h2>
+<p>JWT的第三部分是一个签证信息，这个签证信息由三部分组成：</p>
+<ul>
+<li>header (base64加密)</li>
+<li>payload (base64加密)</li>
+<li>secret 密钥<br>
+Signature 部分是对前两部分的签名，防止数据篡改。<br>
+首先，需要指定一个密钥（secret）。这个密钥只有服务器才知道，不能泄露给用户。然后，使用 Header 里面指定的签名算法（默认是 HMAC SHA256），按照下面的公式产生签名。</li>
+</ul>
+<pre><code class="language-cmd">HMACSHA256(
+  base64UrlEncode(header) + &quot;.&quot; +
+  base64UrlEncode(payload),
+  secret)
+</code></pre>
+<p>算出签名以后，把 Header、Payload、Signature 三个部分拼成一个字符串，每个部分之间用&quot;点&quot;（.）分隔，就可以返回给用户。</p>
+<p><strong>注意</strong>：<code>secret</code>是保存在服务器端的，<code>jwt</code>的签发生成也是在服务器端的，<code>secret</code>就是用来进行<code>jwt</code>的签发和<code>jwt</code>的验证，所以，它就是你服务端的<code>私钥</code>，在任何场景都不应该流露出去。一旦客户端得知这个<code>secret</code>, 那就意味着客户端是可以<code>自我签发jwt</code>了。如果觉得密钥泄露了，请及时修改。</p>
+<h2 id="base64url">Base64URL</h2>
+<p>前面提到，Header 和 Payload 串型化的算法是 Base64URL。这个算法跟 Base64 算法基本类似，但有一些小的不同。<br>
+JWT 作为一个令牌（token），有些场合可能会放到 URL（比如 api.example.com/?token=xxx）。Base64 有三个字符<code>+、/和=</code>，在 URL 里面有特殊含义，所以要被替换掉：<code>=</code>被省略、<code>+</code>替换成<code>-</code>，<code>/</code>替换成<code>_</code> 。这就是 Base64URL 算法。</p>
+<h1 id="五-jwt-的几个特点">五、JWT 的几个特点</h1>
+<p>（1）JWT 默认是不加密，但也是可以加密的。生成原始 Token 以后，可以用密钥再加密一次。<br>
+（2）JWT 不加密的情况下，不能将秘密数据写入 JWT。<br>
+（3）JWT 不仅可以<code>用于认证</code>，也可以用于<code>交换信息</code>。有效使用 JWT，可以<code>降低服务器查询数据库的次数</code>。<br>
+（4）JWT 的最大缺点是，由于服务器不保存 session 状态，因此无法在使用过程中废止某个 token，或者更改 token 的权限。也就是说，一旦 JWT 签发了，在到期之前就会始终有效，除非服务器部署额外的逻辑。<br>
+（5）JWT 本身包含了认证信息，一旦泄露，任何人都可以获得该令牌的所有权限。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证。<br>
+（6）为了减少盗用，JWT 不应该使用 HTTP 协议明码传输，要使用 HTTPS 协议传输。</p>
+<p>案例：request.js</p>
+<pre><code class="language-js">import axios from 'axios'
+import global from '../../api/global'
+import router from '../../router/router'
+// 拿到token
+function getAccessToken() {
+    // 从localStorage中获取token
+    //let accessToken = localStorage.getItem('accessToken')
+    const accessToken = &quot;eyJhbGciOiJIUzI1NiJ9.eyJvcGVuSWQiOiJvVjc2QndpYVVYcGcxYUo2S1RDb3hQbWppRHg0IiwiaXNzIjoib3JhbmdlMiIsImRldmljZUlkIjoiZ2hfOGY0ODdhNjEyZmM5XzkzNzdjYjk4YWU0MDU3NzgiLCJpYXQiOjE1OTQ4MDYzMTJ9.6kS29myZlCUxQqvZOEGmhJhQ66NCwk_raB5HGRGhr7M&quot;
+    if (accessToken != null&amp;&amp; refreshToken !== undefined) {
+        return &quot;Bearer &quot; + accessToken
+    }
+}
+
+// 创建一个axios实例
+const axiosJWT = axios.create({
+    baseURL: global.API,
+    timeout: 300000,
+    headers: {
+        'Authorization': getAccessToken(),
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+    }
+})
+
+async function refreshToken() {    //之前的逻辑是去发送请求拿到刷新的token(refreshToken)
+    // instance是当前request.js中已创建的axios实例
+    // return await axiosBASIC.get('/auth/reissueToken', {
+    //   params: {
+    //     refreshToken: getRefreshToken()
+    //   }
+    // })
+    return await axiosBASIC.get('/auth/issueToken', {
+    params: {
+      openId: &quot;oV76BwiaUXpg1aJ6KTCoxPmjiDx4&quot;
+    }
+  })
+}
+
+
+// 给实例添加一个setToken方法，用于登录后将最新token动态添加到header，同时将token保存在localStorage中
+axiosJWT.setToken = (accessToken) =&gt; {
+    localStorage.setItem('accessToken', accessToken)
+    axiosJWT.defaults.headers['Authorization'] = &quot;Bearer &quot;+accessToken
+}
+
+// 是否正在刷新的标记
+let isRefreshing = false
+// 重试队列，每一项将是一个待执行的函数形式
+let requests = []
+
+
+// 响应拦截
+axiosJWT.interceptors.response.use(response =&gt; {
+        const {code} = response.data
+        // 接下来会在这里进行token过期重发逻辑处理
+        switch(code){
+            case 604:
+                //非法token！
+                break
+            case 603:
+                //缺少token！
+            case 605:
+                //accessToken已过期！
+                //获取当前失败的请求
+                const config = response.config
+                if (!isRefreshing) {
+                    isRefreshing = true
+                   return refreshToken()
+                        .then(res =&gt; {
+                            const {code} = res.data
+                            switch(code){
+                                case 200:
+                                    //refreshToken有效，刷新Token成功
+                                    //将最新的token更新到header中，同时保存在localStorage中
+                                    const {accessToken} = res.data.data
+                                    console.log('access_token====='+accessToken)
+                                    axiosJWT.setToken(accessToken)
+                                    // 刷新下之前的请求配置
+                                    config.headers['Authorization'] = &quot;Bearer &quot;+accessToken
+                                    config.baseURL = ''
+                                    //已经刷新了token，将所有队列中的请求进行重试
+                                    requests.forEach(cb =&gt; cb(accessToken))
+                                    //清空队列
+                                    requests = []
+                                    // 重试之前的请求并返回promise
+                                    return axiosJWT(config)
+                                case 500:
+                                case 606:
+                                    //refreshToken过期
+                                   router.push(&quot;/auth&quot;)
+                            }
+                        })
+                        .finally(() =&gt; {
+                            //刷新成功，恢复标志位
+                            isRefreshing = false
+                        })
+                } else {
+                    // 正在刷新token，返回一个未执行resolve的promise
+                    return new Promise((resolve) =&gt; {
+                        // 将resolve放进队列，用一个函数形式来保存，等token刷新后直接执行
+                        requests.push((accessToken) =&gt; {
+                            config.baseURL = ''
+                            config.headers['Authorization'] = &quot;Bearer &quot;+accessToken
+                            resolve(axiosJWT(config))
+                        })
+                    })
+                }
+            case 701:
+                //JWT认证失败!
+                break
+            default: 
+            return response.data
+        }
+    },error =&gt; {
+        return Promise.reject(error)
+    })
+
+export  {
+    axiosJWT,
+    axiosBASIC
+}
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/kua-yu-wen-ti/">
+                  <h3 class="post-title">
+                    跨域问题
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

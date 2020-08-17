@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title> new运算符的执行过程 | cutezhangq</title>
+<title>跨域问题 | cutezhangq</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,11 +18,13 @@
 
 
 
-    <meta name="description" content="new运算符的执行过程基本可以描述为：
-👉	创建一个空对象obj
-👉	并将这个空对象obj的__proto__连接到构造函数的原型上。链接到原型: obj.proto = Con.prototype
-👉	绑定this:  apply，..." />
-    <meta name="keywords" content="js" />
+    <meta name="description" content="什么是同源
+👉为了保证使用者信息的安全，防止恶意网站篡改用户数据，一些常见的Web技术都默认采用了同源策略（如Silverlight, Flash, XMLHttpRequest, Dom等）。
+那如何判断同源呢？
+
+1、相同的协议
+2、..." />
+    <meta name="keywords" content="" />
   </head>
   <body>
     <div id="app" class="main">
@@ -97,64 +99,74 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title"> new运算符的执行过程</h2>
-            <div class="post-date">2020-08-06</div>
+            <h2 class="post-title">跨域问题</h2>
+            <div class="post-date">2020-08-15</div>
             
-              <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/new-yun-suan-fu-de-zhi-xing-guo-cheng.jpg')">
+              <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/kua-yu-wen-ti.jpg')">
               </div>
             
             <div class="post-content" v-pre>
-              <p>new运算符的执行过程基本可以描述为：<br>
-👉	创建一个空对象obj<br>
-👉	并将这个空对象obj的__proto__连接到构造函数的原型上。链接到原型: obj.<strong>proto</strong> = Con.prototype<br>
-👉	绑定this:  apply，创建属性和方法。  用apply绑定对象的this指向（obj作为this的上下文）Con.apply(obj,arguments)<br>
-👉	返回新对象this或者叫创建的对象obj(如果构造函数有自己 retrun 时，则返回该值)</p>
+              <p>什么是同源<br>
+👉为了保证使用者信息的安全，防止恶意网站篡改用户数据，一些常见的Web技术都默认采用了同源策略（如Silverlight, Flash, XMLHttpRequest, Dom等）。</p>
+<p>那如何判断同源呢？</p>
+<ul>
+<li>1、相同的协议</li>
+<li>2、相同的域名</li>
+<li>3、相同的的端口号</li>
+</ul>
 <!-- more -->
-<pre><code class="language-js">  // 传参 New(obj, ...args)
-  function New123() {  
-      let obj = new Object();  // 提取第一个参数并作为构造函数; 
-      let construction = [].shift.call(arguments);  // 新对象的__prop__要链接到原型链  
-      obj.__proto__ = construction.prototype;  // 改变this指向    
-      construction.apply(obj, arguments);   //obj作为this的上下文
-      return obj;   // 返回新对象 
+<p><img src="https://cutezhangq.github.io/post-images/1597462361320.png" alt="" loading="lazy"><br>
+<img src="https://cutezhangq.github.io/post-images/1597462366080.png" alt="" loading="lazy"></p>
+<p>同源政策：一是针对接口的请求，二是针对Dom的查询</p>
+<h1 id="跨域解决方案">跨域解决方案</h1>
+<ul>
+<li>1、 通过jsonp跨域</li>
+<li>2、 document.domain + iframe跨域</li>
+<li>3、 location.hash + iframe</li>
+<li>4、 window.name + iframe跨域</li>
+<li>5、 postMessage跨域</li>
+<li>6、 跨域资源共享（CORS）</li>
+<li>7、 nginx代理跨域</li>
+<li>8、 nodejs中间件代理跨域</li>
+<li>9、 WebSocket协议跨域</li>
+</ul>
+<h1 id="iframe标签跨域">Iframe标签跨域</h1>
+<pre><code class="language-html">&lt;body&gt;
+    &lt;iframe src=&quot;http://www.baidu.com&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;
+&lt;/body&gt;
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1597462564913.png" alt="" loading="lazy"></figure>
+<h1 id="跨域资源共享cors">跨域资源共享（CORS）</h1>
+<p>1、 前端设置：<br>
+1.）原生ajax</p>
+<pre><code class="language-js">var xhr = new XMLHttpRequest();
+//前端设置是否带cookie
+xhr.withCredentials = true;
+xhr.open('get','data.json');    //open(method,url,async)
+xhr.send('user=admin');
+xhr.onreadystatechange = function(){
+    if(xhr.readyState == 4 &amp;&amp; xhr.status == 200){
+        console.log(xhr.responseText);
+    }
 }
 </code></pre>
-<p>下面对自定义的New方法进行验证：</p>
-<pre><code class="language-js">function People(name,age){
-  this.name = name;
-  this.age = age;
-}
-People.prototype.say = function () {
-  console.log(`My name is ${this.name}.`);
-}
-//通过new创建构造实例
-let people1 = new People('Jack',20);
-console.log(people1.name)  // Jack
-console.log(people1.say()) // My name is Jack.
- 
-//通过New方法创造实例
-let people2 = New123(People,'Rose',18);
-console.log(people2.name)  //Rose
-console.log(people2.say())  //My name is Rose.
-</code></pre>
-<p>过输出结果可以看出来，我们自己定义的New方法，是可以实现跟new运算符同等作用的。</p>
+<p>0: 请求未初始化<br>
+1: 服务器连接已建立<br>
+2: 请求已接收<br>
+3: 请求处理中<br>
+4: 请求已完成，且响应已就绪              readyState=4的时候才去做后续逻辑</p>
+<p><strong>xhr.readyState == 4  是表示后台处理完成了。</strong><br>
+<strong>xhr.status == 200 是表示处理的结果是OK的。</strong><br>
+<img src="https://cutezhangq.github.io/post-images/1597463024441.png" alt="" loading="lazy"></p>
 
             </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://cutezhangq.github.io/tag/WVA2bQkO73/" class="tag">
-                    js
-                  </a>
-                
-              </div>
             
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://cutezhangq.github.io/post/jsonstringify-yu-huan-wen-ti/">
+                <a href="https://cutezhangq.github.io/post/bi-shi-ti-mu-zheng-li-2/">
                   <h3 class="post-title">
-                    JSON.stringify与&#34;环&#34;问题
+                    笔试-题目整理2-2020bilibili 
                   </h3>
                 </a>
               </div>

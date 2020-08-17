@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cutezhangq.github.io</id>
     <title>cutezhangq</title>
-    <updated>2020-08-11T14:15:50.223Z</updated>
+    <updated>2020-08-17T08:28:39.689Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cutezhangq.github.io"/>
     <link rel="self" href="https://cutezhangq.github.io/atom.xml"/>
@@ -10,6 +10,628 @@
     <logo>https://cutezhangq.github.io/images/avatar.png</logo>
     <icon>https://cutezhangq.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, cutezhangq</rights>
+    <entry>
+        <title type="html"><![CDATA[JWT认证原理（JSON Web Token）]]></title>
+        <id>https://cutezhangq.github.io/post/jwt-ren-zheng-yuan-li/</id>
+        <link href="https://cutezhangq.github.io/post/jwt-ren-zheng-yuan-li/">
+        </link>
+        <updated>2020-08-17T06:27:29.000Z</updated>
+        <summary type="html"><![CDATA[<p><code>Json web token (JWT)</code>, 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，特别适用于👉分布式站点的<code>单点登录（SSO）</code>场景👈。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token也可直接被用于认证，也可被加密。👀</p>
+<p>JWT认证原理（JSON Web Token）</p>
+<p>互联网服务离不开用户认证。一般流程是下面这样。🙌</p>
+]]></summary>
+        <content type="html"><![CDATA[<p><code>Json web token (JWT)</code>, 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，特别适用于👉分布式站点的<code>单点登录（SSO）</code>场景👈。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token也可直接被用于认证，也可被加密。👀</p>
+<p>JWT认证原理（JSON Web Token）</p>
+<p>互联网服务离不开用户认证。一般流程是下面这样。🙌</p>
+<!-- more -->
+<h1 id="一-传统的session认证">一、传统的Session认证</h1>
+<h2 id="流程session">流程session</h2>
+<p>认证的流程一般如下：</p>
+<ul>
+<li>1.用户向服务器发送用户名和密码。</li>
+<li>2.服务器验证通过后，在当前对话（session）里面保存相关数据，比如用户角色、登录时间等等。</li>
+<li>3.服务器向用户返回一个 session_id，写入用户的 Cookie。</li>
+<li>4.用户随后的每一次请求，都会通过 Cookie，将 session_id 传回服务器。</li>
+<li>5.服务器收到 session_id，找到前期保存的数据，由此得知用户的身份。</li>
+</ul>
+<h2 id="缺点">缺点</h2>
+<ul>
+<li>session保存在服务器，当注册用户很多，会增加服务器的开销。</li>
+<li>用户认证之后，服务端做认证记录，如果认证的记录被保存在内存中的话，这意味着用户下次请求还必须要请求在这台服务器上,这样才能拿到授权的资源，这样在分布式的应用上，限制了负载均衡的能力。这也意味着限制了应用的扩展能力。</li>
+<li>session是基于cookie来进行用户识别的, cookie如果被截获，用户就会很容易受到<code>跨站请求伪造（CSRF）</code>的攻击。</li>
+</ul>
+<p>这种模式的问题在于，扩展性（scaling）不好。单机当然没有问题，如果是服务器集群，或者是跨域的服务导向架构，就要求 session 数据共享，每台服务器都能够读取 session。</p>
+<p>举例来说，A 网站和 B 网站是同一家公司的关联服务。现在要求，用户只要在其中一个网站登录，再访问另一个网站就会自动登录，请问怎么实现？</p>
+<p>一种解决方案是 <code>session 数据持久化</code>，写入数据库或别的持久层。各种服务收到请求后，都向持久层请求数据。这种方案的优点是架构清晰，缺点是工程量比较大。另外，持久层万一挂了，就会单点失败。</p>
+<p>另一种方案是服务器索性不保存 session 数据了，所有数据都<code>保存在客户端</code>，每次请求都发回服务器。<code>JWT</code>就是这种方案的一个代表。</p>
+<h1 id="二-jwt-认证">二、JWT 认证</h1>
+<h2 id="token">token</h2>
+<p><code>JWT</code>是基于<code>token</code>的鉴权机制类似于<code>http协议</code>也是无状态的，它不需要在服务端去保留用户的认证信息或者会话信息。<br>
+这就意味着基于token认证机制的应用不需要去考虑用户在哪一台服务器登录了，这就为应用的扩展提供了便利。</p>
+<h2 id="流程">流程</h2>
+<ul>
+<li>1.用户使用用户名密码来请求服务器。</li>
+<li>2.服务器进行验证用户的信息</li>
+<li>3.服务器通过验证发送给用户一个token</li>
+<li>4.客户端存储token，并在每次请求时附送上这个token值</li>
+<li>5.服务端验证token值，并返回数据</li>
+</ul>
+<p>这个token必须要在每次请求时传递给服务端，它应该保存在请求头里， 另外，服务端要支持<code>CORS(跨来源资源共享)策略</code>，一般我们在服务端这么做就可以了<code>Access-Control-Allow-Origin: *</code>。</p>
+<h2 id="jwt-的原理">JWT 的原理</h2>
+<p>JWT 的原理是，服务器认证以后，生成一个 JSON 对象，发回给用户，就像下面这样。</p>
+<pre><code class="language-json">{
+  &quot;姓名&quot;: &quot;张三&quot;,
+  &quot;角色&quot;: &quot;管理员&quot;,
+  &quot;到期时间&quot;: &quot;2018年7月1日0点0分&quot;
+}
+</code></pre>
+<p>以后，用户与服务端通信的时候，都要发回这个 JSON 对象。服务器完全只靠这个对象认定用户身份。为了防止用户篡改数据，服务器在生成这个对象的时候，会加上签名（详见后文）。<br>
+服务器就不保存任何 session 数据了，也就是说，服务器变成无状态了，从而比较容易实现扩展。</p>
+<h1 id="三-jwt-的数据结构">三、JWT 的数据结构</h1>
+<pre><code class="language-js">    const accessToken =    &quot;eyJhbGciOiJIUzI1NiJ9.eyJvcGVuSWQiOiJvVjc2QndpYVVYcGcxYUo2S1RDb3hQbWppRHg0IiwiaXNzIjoib3JhbmdlMiIsImRldmljZUlkIjoiZ2hfOGY0ODdhNjEyZmM5XzkzNzdjYjk4YWU0MDU3NzgiLCJpYXQiOjE1OTQ4MDYzMTJ9.6kS29myZlCUxQqvZOEGmhJhQ66NCwk_raB5HGRGhr7M&quot;
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1597647417511.png" alt="" loading="lazy"></figure>
+<p>JWT 的三个部分依次如下:</p>
+<pre><code class="language-cmd">Header（头部）
+Payload（负载）
+Signature（签名）
+</code></pre>
+<p>写成一行，就是下面的样子。<br>
+Header.Payload.Signature<br>
+下面依次介绍这三个部分。</p>
+<h2 id="header">Header</h2>
+<p>Header 部分是一个 JSON 对象，描述 JWT 的元数据，通常是下面的样子。</p>
+<pre><code class="language-json">{
+  &quot;alg&quot;: &quot;HS256&quot;,
+  &quot;typ&quot;: &quot;JWT&quot;
+}
+</code></pre>
+<p>上面代码中，<code>alg</code>属性表示签名的算法（algorithm），默认是 HMAC SHA256（写成 HS256）；<code>typ</code>属性表示这个令牌（token）的类型（type），JWT 令牌统一写为JWT。<br>
+最后，将上面的 JSON 对象使用 Base64URL 算法（详见后文）转成字符串。</p>
+<h2 id="payload">Payload</h2>
+<p>载荷就是存放有效信息的地方。这些有效信息包含三个部分:<br>
+标准中注册的声明<br>
+公共的声明<br>
+私有的声明<br>
+Payload 部分也是一个 JSON 对象，用来存放实际需要传递的数据。JWT 规定了7个官方字段，供选用。</p>
+<pre><code class="language-cmd">iss (issuer)：签发人
+exp (expiration time)：过期时间
+sub (subject)：主题
+aud (audience)：受众
+nbf (Not Before)：生效时间
+iat (Issued At)：签发时间
+jti (JWT ID)：编号
+</code></pre>
+<p>除了官方字段，你还可以在这个部分定义私有字段，下面就是一个例子。</p>
+<pre><code class="language-json">{
+  &quot;sub&quot;: &quot;1234567890&quot;,
+  &quot;name&quot;: &quot;John Doe&quot;,
+  &quot;admin&quot;: true
+}
+</code></pre>
+<p>注意，JWT 默认是不加密的，任何人都可以读到，所以不要把秘密信息放在这个部分。<br>
+这个 JSON 对象也要使用 Base64URL 算法转成字符串。</p>
+<h2 id="signature">Signature</h2>
+<p>JWT的第三部分是一个签证信息，这个签证信息由三部分组成：</p>
+<ul>
+<li>header (base64加密)</li>
+<li>payload (base64加密)</li>
+<li>secret 密钥<br>
+Signature 部分是对前两部分的签名，防止数据篡改。<br>
+首先，需要指定一个密钥（secret）。这个密钥只有服务器才知道，不能泄露给用户。然后，使用 Header 里面指定的签名算法（默认是 HMAC SHA256），按照下面的公式产生签名。</li>
+</ul>
+<pre><code class="language-cmd">HMACSHA256(
+  base64UrlEncode(header) + &quot;.&quot; +
+  base64UrlEncode(payload),
+  secret)
+</code></pre>
+<p>算出签名以后，把 Header、Payload、Signature 三个部分拼成一个字符串，每个部分之间用&quot;点&quot;（.）分隔，就可以返回给用户。</p>
+<p><strong>注意</strong>：<code>secret</code>是保存在服务器端的，<code>jwt</code>的签发生成也是在服务器端的，<code>secret</code>就是用来进行<code>jwt</code>的签发和<code>jwt</code>的验证，所以，它就是你服务端的<code>私钥</code>，在任何场景都不应该流露出去。一旦客户端得知这个<code>secret</code>, 那就意味着客户端是可以<code>自我签发jwt</code>了。如果觉得密钥泄露了，请及时修改。</p>
+<h2 id="base64url">Base64URL</h2>
+<p>前面提到，Header 和 Payload 串型化的算法是 Base64URL。这个算法跟 Base64 算法基本类似，但有一些小的不同。<br>
+JWT 作为一个令牌（token），有些场合可能会放到 URL（比如 api.example.com/?token=xxx）。Base64 有三个字符<code>+、/和=</code>，在 URL 里面有特殊含义，所以要被替换掉：<code>=</code>被省略、<code>+</code>替换成<code>-</code>，<code>/</code>替换成<code>_</code> 。这就是 Base64URL 算法。</p>
+<h1 id="五-jwt-的几个特点">五、JWT 的几个特点</h1>
+<p>（1）JWT 默认是不加密，但也是可以加密的。生成原始 Token 以后，可以用密钥再加密一次。<br>
+（2）JWT 不加密的情况下，不能将秘密数据写入 JWT。<br>
+（3）JWT 不仅可以<code>用于认证</code>，也可以用于<code>交换信息</code>。有效使用 JWT，可以<code>降低服务器查询数据库的次数</code>。<br>
+（4）JWT 的最大缺点是，由于服务器不保存 session 状态，因此无法在使用过程中废止某个 token，或者更改 token 的权限。也就是说，一旦 JWT 签发了，在到期之前就会始终有效，除非服务器部署额外的逻辑。<br>
+（5）JWT 本身包含了认证信息，一旦泄露，任何人都可以获得该令牌的所有权限。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证。<br>
+（6）为了减少盗用，JWT 不应该使用 HTTP 协议明码传输，要使用 HTTPS 协议传输。</p>
+<p>案例：request.js</p>
+<pre><code class="language-js">import axios from 'axios'
+import global from '../../api/global'
+import router from '../../router/router'
+// 拿到token
+function getAccessToken() {
+    // 从localStorage中获取token
+    //let accessToken = localStorage.getItem('accessToken')
+    const accessToken = &quot;eyJhbGciOiJIUzI1NiJ9.eyJvcGVuSWQiOiJvVjc2QndpYVVYcGcxYUo2S1RDb3hQbWppRHg0IiwiaXNzIjoib3JhbmdlMiIsImRldmljZUlkIjoiZ2hfOGY0ODdhNjEyZmM5XzkzNzdjYjk4YWU0MDU3NzgiLCJpYXQiOjE1OTQ4MDYzMTJ9.6kS29myZlCUxQqvZOEGmhJhQ66NCwk_raB5HGRGhr7M&quot;
+    if (accessToken != null&amp;&amp; refreshToken !== undefined) {
+        return &quot;Bearer &quot; + accessToken
+    }
+}
+
+// 创建一个axios实例
+const axiosJWT = axios.create({
+    baseURL: global.API,
+    timeout: 300000,
+    headers: {
+        'Authorization': getAccessToken(),
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+    }
+})
+
+async function refreshToken() {    //之前的逻辑是去发送请求拿到刷新的token(refreshToken)
+    // instance是当前request.js中已创建的axios实例
+    // return await axiosBASIC.get('/auth/reissueToken', {
+    //   params: {
+    //     refreshToken: getRefreshToken()
+    //   }
+    // })
+    return await axiosBASIC.get('/auth/issueToken', {
+    params: {
+      openId: &quot;oV76BwiaUXpg1aJ6KTCoxPmjiDx4&quot;
+    }
+  })
+}
+
+
+// 给实例添加一个setToken方法，用于登录后将最新token动态添加到header，同时将token保存在localStorage中
+axiosJWT.setToken = (accessToken) =&gt; {
+    localStorage.setItem('accessToken', accessToken)
+    axiosJWT.defaults.headers['Authorization'] = &quot;Bearer &quot;+accessToken
+}
+
+// 是否正在刷新的标记
+let isRefreshing = false
+// 重试队列，每一项将是一个待执行的函数形式
+let requests = []
+
+
+// 响应拦截
+axiosJWT.interceptors.response.use(response =&gt; {
+        const {code} = response.data
+        // 接下来会在这里进行token过期重发逻辑处理
+        switch(code){
+            case 604:
+                //非法token！
+                break
+            case 603:
+                //缺少token！
+            case 605:
+                //accessToken已过期！
+                //获取当前失败的请求
+                const config = response.config
+                if (!isRefreshing) {
+                    isRefreshing = true
+                   return refreshToken()
+                        .then(res =&gt; {
+                            const {code} = res.data
+                            switch(code){
+                                case 200:
+                                    //refreshToken有效，刷新Token成功
+                                    //将最新的token更新到header中，同时保存在localStorage中
+                                    const {accessToken} = res.data.data
+                                    console.log('access_token====='+accessToken)
+                                    axiosJWT.setToken(accessToken)
+                                    // 刷新下之前的请求配置
+                                    config.headers['Authorization'] = &quot;Bearer &quot;+accessToken
+                                    config.baseURL = ''
+                                    //已经刷新了token，将所有队列中的请求进行重试
+                                    requests.forEach(cb =&gt; cb(accessToken))
+                                    //清空队列
+                                    requests = []
+                                    // 重试之前的请求并返回promise
+                                    return axiosJWT(config)
+                                case 500:
+                                case 606:
+                                    //refreshToken过期
+                                   router.push(&quot;/auth&quot;)
+                            }
+                        })
+                        .finally(() =&gt; {
+                            //刷新成功，恢复标志位
+                            isRefreshing = false
+                        })
+                } else {
+                    // 正在刷新token，返回一个未执行resolve的promise
+                    return new Promise((resolve) =&gt; {
+                        // 将resolve放进队列，用一个函数形式来保存，等token刷新后直接执行
+                        requests.push((accessToken) =&gt; {
+                            config.baseURL = ''
+                            config.headers['Authorization'] = &quot;Bearer &quot;+accessToken
+                            resolve(axiosJWT(config))
+                        })
+                    })
+                }
+            case 701:
+                //JWT认证失败!
+                break
+            default: 
+            return response.data
+        }
+    },error =&gt; {
+        return Promise.reject(error)
+    })
+
+export  {
+    axiosJWT,
+    axiosBASIC
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[跨域问题]]></title>
+        <id>https://cutezhangq.github.io/post/kua-yu-wen-ti/</id>
+        <link href="https://cutezhangq.github.io/post/kua-yu-wen-ti/">
+        </link>
+        <updated>2020-08-15T03:07:52.000Z</updated>
+        <summary type="html"><![CDATA[<p>什么是同源<br>
+👉为了保证使用者信息的安全，防止恶意网站篡改用户数据，一些常见的Web技术都默认采用了同源策略（如Silverlight, Flash, XMLHttpRequest, Dom等）。</p>
+<p>那如何判断同源呢？</p>
+<ul>
+<li>1、相同的协议</li>
+<li>2、相同的域名</li>
+<li>3、相同的的端口号</li>
+</ul>
+]]></summary>
+        <content type="html"><![CDATA[<p>什么是同源<br>
+👉为了保证使用者信息的安全，防止恶意网站篡改用户数据，一些常见的Web技术都默认采用了同源策略（如Silverlight, Flash, XMLHttpRequest, Dom等）。</p>
+<p>那如何判断同源呢？</p>
+<ul>
+<li>1、相同的协议</li>
+<li>2、相同的域名</li>
+<li>3、相同的的端口号</li>
+</ul>
+<!-- more -->
+<p><img src="https://cutezhangq.github.io/post-images/1597462361320.png" alt="" loading="lazy"><br>
+<img src="https://cutezhangq.github.io/post-images/1597462366080.png" alt="" loading="lazy"></p>
+<p>同源政策：一是针对接口的请求，二是针对Dom的查询</p>
+<h1 id="跨域解决方案">跨域解决方案</h1>
+<ul>
+<li>1、 通过jsonp跨域</li>
+<li>2、 document.domain + iframe跨域</li>
+<li>3、 location.hash + iframe</li>
+<li>4、 window.name + iframe跨域</li>
+<li>5、 postMessage跨域</li>
+<li>6、 跨域资源共享（CORS）</li>
+<li>7、 nginx代理跨域</li>
+<li>8、 nodejs中间件代理跨域</li>
+<li>9、 WebSocket协议跨域</li>
+</ul>
+<h1 id="iframe标签跨域">Iframe标签跨域</h1>
+<pre><code class="language-html">&lt;body&gt;
+    &lt;iframe src=&quot;http://www.baidu.com&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;
+&lt;/body&gt;
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1597462564913.png" alt="" loading="lazy"></figure>
+<h1 id="跨域资源共享cors">跨域资源共享（CORS）</h1>
+<p>1、 前端设置：<br>
+1.）原生ajax</p>
+<pre><code class="language-js">var xhr = new XMLHttpRequest();
+//前端设置是否带cookie
+xhr.withCredentials = true;
+xhr.open('get','data.json');    //open(method,url,async)
+xhr.send('user=admin');
+xhr.onreadystatechange = function(){
+    if(xhr.readyState == 4 &amp;&amp; xhr.status == 200){
+        console.log(xhr.responseText);
+    }
+}
+</code></pre>
+<p>0: 请求未初始化<br>
+1: 服务器连接已建立<br>
+2: 请求已接收<br>
+3: 请求处理中<br>
+4: 请求已完成，且响应已就绪              readyState=4的时候才去做后续逻辑</p>
+<p><strong>xhr.readyState == 4  是表示后台处理完成了。</strong><br>
+<strong>xhr.status == 200 是表示处理的结果是OK的。</strong><br>
+<img src="https://cutezhangq.github.io/post-images/1597463024441.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[笔试-题目整理2-2020bilibili ]]></title>
+        <id>https://cutezhangq.github.io/post/bi-shi-ti-mu-zheng-li-2/</id>
+        <link href="https://cutezhangq.github.io/post/bi-shi-ti-mu-zheng-li-2/">
+        </link>
+        <updated>2020-08-14T07:18:46.000Z</updated>
+        <summary type="html"><![CDATA[<p>这里收录了部分bilibili 2020的笔试题，一起来看看叭，查漏补缺鸭😘<br>
+涉及的众多的基础知识点....</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>这里收录了部分bilibili 2020的笔试题，一起来看看叭，查漏补缺鸭😘<br>
+涉及的众多的基础知识点....</p>
+<!-- more -->
+<h1 id="1关于domcontentloaded和load事件说法正确的是">【1.】关于DOMContentLoaded和load事件说法正确的是？</h1>
+<p>A DOMContentLoaded事件比load事件更早执行<br>
+B load事件比DOMContentLoaded事件更早执行<br>
+C 按监听代码从上到下先后执行<br>
+D dom文档完全加载完后执行load事件</p>
+<h2 id="答案a-domcontentloaded事件比load事件更早执行">答案：A DOMContentLoaded事件比load事件更早执行</h2>
+<p><strong>DOMContentLoaded</strong>：DOM解析完成之后。<br>
+当纯HTML被完全加载以及解析时，DOMContentLoaded事件会被触发，而不必等待样式表，图片或者子框架完成加载。</p>
+<pre><code class="language-cmd">MDN
+当初始的 HTML 文档被完全加载和解析完成之后，DOMContentLoaded 事件被触发，而无需等待样式表、图像和子框架的完全加载。
+注意：DOMContentLoaded 事件必须等待其所属script之前的样式表加载解析完成才会触发。
+</code></pre>
+<p><strong>load</strong>：页面HTML、CSS、JS..及图片等外链资源加载完成之后，才会执行load。<br>
+当一个资源及其依赖资源已完成加载时，将触发load事件。</p>
+<h1 id="2如何在-div-容器里展示-divdiv-这几个字符">【2.】如何在 div 容器里展示 <div></div> 这几个字符？</h1>
+<h2 id="答案documentqueryselectordivinnertext-divdiv">答案：document.querySelector('div').innerText = &quot;<div></div>&quot;</h2>
+<pre><code class="language-html">  &lt;!--  innerHTML：设置或获取标签所包含的HTML与文本信息。（不含标签本身）
+        innerText：设置或获取标签所包含的文本信息。（不含标签本身）
+        outerHTML：设置或获取标签本身以及所包含的HTML与文本信息。（包含标签本身）
+        outerText：设置或获取标签本身以及所包含的文本信息。（包含标签本身） --&gt;
+
+&lt;div id=&quot;div1&quot;&gt;
+        &lt;p id=&quot;p1&quot;&gt;this is text&lt;/p&gt;
+&lt;/div&gt;
+    &lt;script&gt;
+        var div=document.getElementsByTagName(&quot;div&quot;);
+        console.log(div[0].innerHTML);      //  &lt;p id=&quot;p1&quot;&gt;this is text&lt;/p&gt;
+        console.log(div[0].innerText);         //  this is text
+        console.log(div[0].outerHTML);     // &lt;div id=&quot;div1&quot;&gt;&lt;p id=&quot;p1&quot;&gt;this is text&lt;/p&gt;&lt;/div&gt;
+        console.log(div[0].outerText);        //  this is text
+    &lt;/script&gt;
+</code></pre>
+<h1 id="3以下不是box-sizing的属性是">【3.】以下不是box-sizing的属性是？</h1>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>content-box</td>
+<td>这是由 CSS2.1 规定的宽度高度行为。宽度和高度分别应用到元素的内容框。在宽度和高度之外绘制元素的内边距和边框。</td>
+</tr>
+<tr>
+<td>border-box</td>
+<td>为元素设定的宽度和高度决定了元素的边框盒。就是说，为元素指定的任何内边距和边框都将在已设定的宽度和高度内进行绘制。通过从已设定的宽度和高度分别减去边框和内边距才能得到内容的宽度和高度。</td>
+</tr>
+<tr>
+<td>inherit</td>
+<td>规定应从父元素继承 box-sizing 属性的值。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="box-sizing">box-sizing</h2>
+<p>box-sizing 最主要的用法是规定容器元素的<strong>最终尺寸计算方式。</strong></p>
+<p>如果你创造了一个 <code>&lt;div&gt;</code> 没有设置 <code>box-sizing</code>属性为<code>border-box</code>(不设置的话默认值为 <code>content-box</code>)，同时你设置 <code>width:100px; border:10px solid red; padding:10px;</code>那么最终 div 容器的实际宽度为：</p>
+<pre><code class="language-js">100px(width)+2*10px*(padding)+2*10px(border)=140px
+</code></pre>
+<p>所以你会得到一个比你预期（100px）还要更大的容器，结果就是会破坏网页布局。<br>
+注意：容易 margin 的尺寸不会被计算入最终容器宽度，因为对他的定义为对这个容器的留白，但不属于容器本身。</p>
+<p>如果当我们定义一个容器的 <code>box-sizing</code>属性为<code>border-box</code>时<br>
+（表达式：<code>br{box-sizing:border-box}</code>），那么我们创建一个和上段中相同设置的<code>&lt;div&gt;</code>容器时，那么他的最终宽度即为 100px, 那么它的内容部分（content）的有效宽度变成了</p>
+<pre><code class="language-js">100px-2*10px-2*10px =60px; 
+</code></pre>
+<p>所以你会得到一个你预期大小的盒子容器，但是只是被压缩了内容部分尺寸而已，但是对于整体布局而言益处颇多。</p>
+<p>所以要合理利用好这个属性，这个属性十分重要。</p>
+<!-- more -->
+<h1 id="4-1-32-的值为">【4.】‘-1 &gt;&gt;&gt; 32 的值为(  )’</h1>
+<p>emm...知识盲区😳😳😳</p>
+<h2 id="答案232-1">答案：2^32-1</h2>
+<pre><code class="language-cmd">&gt;&gt;这个是带符号右移
+&gt;&gt;&gt; 这个是无符号右移
+无符号右移运算符（&gt;&gt;&gt;）
+</code></pre>
+<p><code>按二进制形式把所有的数字向右移动对应位数，低位移出(舍弃)，高位的空位补零。对于正数来说和带符号右移（&gt;&gt;） 相同，但是对于负数来说不同。</code><br>
+<strong>正数</strong><br>
+例：20 &gt;&gt; 2<br>
+1、<code>首先转化为二进制</code>，20的二进制为0001 0100<br>
+2、<code>将二进制数向右移两位，高位补符号位（0）</code>，得到0000 0101<br>
+3、最后<code>将二进制数转化成十进制数</code>，0000 0101转化为十进制为5<br>
+所以，20 &gt;&gt; 2 = 5</p>
+<p><strong>负数</strong><br>
+例：-20 &gt;&gt; 2<br>
+1、<code>首先转化为二进制</code>，20的二进制为1110 1100   //<code>取反加1</code>  20的二进制为0001 0100 取反得到1110 1011 加1后得到1110 1100<br>
+2、将<code>二进制数向右移两位，高位补符号位（1）</code>，得到1111 1011<br>
+3、最后<code>将二进制数转化成十进制数</code>，1111 1011转化为十进制为-5  //取反 0000 0100 加1   0000 0101 因为是负数，也就是1000 0101也就是2的2次方加2的零次方 等于-5<br>
+所以，-20 &gt;&gt; 2 = -5</p>
+<p><code>1</code>的二进制 00000000 00000000 00000000 00000001<br>
+<code>-1</code>的二进制 10000000 00000000 00000000 00000001 取反加1得到补码 11111111 11111111 11111111 11111111  //首位不变，其余为取反<br>
+右移32位（高位补符号位1） 也就是11111111 11111111 11111111 11111111  //32位<br>
+假设该数值加上一也就是变成<br>
+1 00000000 00000000 00000000 00000000  //1后面有32个0<br>
+那就把刚才加上的1减掉<br>
+也就是结果<br>
+2^32-1<br>
+<img src="https://cutezhangq.github.io/post-images/1597476991984.png" alt="" loading="lazy"></p>
+<h1 id="51-2-3mapparseint">【5.】['1', '2', '3'].map(parseInt) ( )</h1>
+<h2 id="答案1-nan-nan">答案：[1, NaN, NaN]</h2>
+<pre><code class="language-js">['1', '2', '3'].map((item, index) =&gt; {
+    return parseInt(item, index)
+})
+parseInt('1', 0) // 1  默认十进制的1
+parseInt('2', 1) // NaN 1进制没有2
+parseInt('3', 2) // NaN,2进制逢2进1
+</code></pre>
+<p>ps 啥是parseInt<br>
+parseInt('11',2) //二进制的11 转换成十进制应该是 3</p>
+<p>['10','10','10','10','10'].map(parseInt); // [10, NaN, 2, 3, 4]<br>
+意思是0(默认0是十进制)进制的十转换成十进制是多少 1进制的十转换成十进制是多少 二进制的10转换成十进制是多少...</p>
+<pre><code class="language-js">['1','2','3'].map((a,b,arr)=&gt;{  //a:循环得到的那一项的值；b:循环时的索引; arr整个数组的值
+    parseInt(a,b);  //a代表那一项； b代表进制
+})
+// parseInt(string, radix)   
+// 将一个字符串 string 转换为 radix 进制的整数， radix 为介于2-36之间的数。
+parseInt('1', 0) // radix 为 0，默认以十进制解析字符串，返回 1 
+
+parseInt('2', 1) // radix 为 1，不在 2 ~ 36 之间，返回 NaN 
+
+parseInt('3', 2) // radix 为 2， 字符串却为 3，超出二进制的表示范围，因此要解析的字符串和基数矛盾，返回 NaN
+//2 进制只有0和1，，，3超出范围了
+</code></pre>
+<h1 id="6计算结果">【6.】计算结果</h1>
+<pre><code class="language-js">console.log(1);
+setTimeout(() =&gt; {console.log(2)}, 0);
+console.log(3);
+Promise.resolve(4).then(b =&gt; {
+console.log(b);
+});
+console.log(5);
+</code></pre>
+<h2 id="答案1-3-5-4-2">答案：1 3 5 4 2</h2>
+<p><code>console.log()</code> -&gt; <code>同步</code><br>
+<code>promise</code>-&gt; <code>异步，微任务</code><br>
+<code>setTimeout</code> -&gt; <code>异步，宏任务</code><br>
+执行顺序:<code>同步</code> &gt;<code>异步,微任务</code> &gt; <code>异步，宏任务</code></p>
+<h1 id="7mathabs-6666-的结果是多少">【7.】Math.abs(-6.666) 的结果是多少?</h1>
+<h2 id="答案6666">答案：6.666</h2>
+<p><code>Math.abs()</code>转为为绝对值</p>
+<p><code>parseInt(7/2)</code>丢弃小数部分,保留整数部分</p>
+<p><code>Math.ceil(7/2)</code>向上取整,有小数就整数部分加1</p>
+<p><code>Math.round(7/2)</code>四舍五入</p>
+<p><code>Math.floor(7/2)</code>向下取整</p>
+<h1 id="812345-的数组的基础上-删除第一个-和-最后一位">【8.】[1,2,3,4,5] 的数组的基础上 删除第一个 和 最后一位</h1>
+<p>[1,2,3,4,5].replace(1, -1)<br>
+[1,2,3,4,5].reverse(1，-1)<br>
+[1,2,3,4,5].toString(-1，1)<br>
+[1,2,3,4,5].slice(1, -1)</p>
+<h2 id="答案12345slice1-1">答案：[1,2,3,4,5].slice(1, -1)</h2>
+<p><code>slice(1,-1)</code>  slice不会操作原数组，会返回一个新数组 。 表示从索引为0开始截取，-1表示截取到倒数第二个，并将这个新数组返回。</p>
+<p><code>replace</code>方法返回一个由替换值（replacement）替换部分或所有的模式（pattern）匹配项后的新字符串。原字符串不会改变。</p>
+<p><code>reverse</code>方法将数组中元素的位置颠倒，并返回该数组。数组的第一个元素会变成最后一个，数组的最后一个元素变成第一个。该方法会改变原数组。</p>
+<h1 id="9计算结果">【9.】计算结果</h1>
+<pre><code class="language-js">function setname(name){
+ this.name = name
+}
+setname.prototype.printName = function(){ console.log(this.name) }
+let a = new setname(&quot;cc&quot;)
+a.name = &quot;dd&quot;
+a.__proto__.name = &quot;ee&quot;
+
+a.__proto__.printName()  // ?
+a.printName() // ?
+</code></pre>
+<h2 id="答案ee-dd">答案：ee dd</h2>
+<p>首先定义了一个函数 setname（）接下来定义了一个方法printname<br>
+调用new 方法生成对象传参 “cc” 此时a对象上面的name属性为cc<br>
+<img src="https://cutezhangq.github.io/post-images/1597559456328.png" alt="" loading="lazy"><br>
+接下来通过a.name修改属性 此时a对象的name属性为 dd<br>
+<img src="https://cutezhangq.github.io/post-images/1597559495746.png" alt="" loading="lazy"><br>
+最后修改通过a修改构造函数中的属性 --proto--<br>
+<img src="https://cutezhangq.github.io/post-images/1597559529281.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[谈谈深拷贝、浅拷贝]]></title>
+        <id>https://cutezhangq.github.io/post/tan-tan-shen-kao-bei-qian-kao-bei/</id>
+        <link href="https://cutezhangq.github.io/post/tan-tan-shen-kao-bei-qian-kao-bei/">
+        </link>
+        <updated>2020-08-12T01:21:13.000Z</updated>
+        <summary type="html"><![CDATA[<p>js对象不像变量那样，简单的赋值就能进行克隆的，对象进行赋值时，只是创建了一个新的指针指向相同的存储空间。👀如果不想改变原数据，那么就要对对象进行深克隆了</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>js对象不像变量那样，简单的赋值就能进行克隆的，对象进行赋值时，只是创建了一个新的指针指向相同的存储空间。👀如果不想改变原数据，那么就要对对象进行深克隆了</p>
+<!-- more -->
+<pre><code class="language-js">var a={a:1}
+var b=a;
+b.a=2
+</code></pre>
+<p>这时输出a你会发现，a的值同样发生了改变。<br>
+这一点在你进行数据操作时，又想保留原来数据时，你就需要深度克隆了。</p>
+<h1 id="怎么深拷贝一个对象深拷贝一个对象的时候应该怎么做">怎么深拷贝一个对象？（深拷贝一个对象的时候应该怎么做？）</h1>
+<p>深度克隆的方法:</p>
+<h1 id="1-js序列化">1、js序列化</h1>
+<p>将js转换成字符串，然后再将字符串转换成js对象。<br>
+js字符串的克隆就比对象的克隆简单多了。简单的赋值操作就能完成。<br>
+深拷贝,但拷贝的数据里不能有函数，不然处理不了</p>
+<pre><code class="language-js">var obj = {a:1};
+var str = JSON.stringify(obj); //序列化对象         JSON.stringify() 方法将一个JavaScript 对象或值转换为JSON 字符串
+var newobj = JSON.parse(str); //还原
+var b = newobj;
+b.a = 2;
+console.log(obj.a); // 1
+console.log(b.a);   // 2 
+</code></pre>
+<h1 id="2-进行对象的遍历复制">2、进行对象的遍历复制</h1>
+<p>进行对象的遍历复制，对对象的每一条属性进行复制，这样就能进行对象的深度克隆<br>
+如何实现深拷贝?<br>
+浅拷贝里的数据不能有对象/数组，即使有对象/数组可以继续遍历对象/数组，拿到里面的每一项值，<br>
+一直到拿到的是基本数据类型，然后再复制，这时就是深拷贝</p>
+<pre><code class="language-js">
+function newobj(obj) {
+  var str, newobj = obj.constructor === Array ? [] : {};//constructor 属性返回对创建此对象的数组函数的引用。创建相同类型的空数据
+  if (typeof obj !== 'object') {
+    return;
+  } else {
+    for (var i in obj) {
+      if (typeof obj[i] === 'object'){//判断对象的这条属性是否为对象
+        newobj[i] = newObj(obj[i]);//若是对象进行嵌套调用
+      }else{
+        newobj[i] = obj[i];
+      }
+    }
+  }
+  return newobj;//返回深度克隆后的对象
+};
+</code></pre>
+<pre><code class="language-js">    var obj = {a:1};
+    function newobj(obj) {
+      var str, newobj = obj.constructor === Array ? [] : {}; //constructor 属性返回对创建此对象的数组函数的引用。创建相同类型的空数据
+      if (typeof obj !== 'object') {
+        return;
+      } else {
+        for (var i in obj) {
+          if (typeof obj[i] === 'object') { //判断对象的这条属性是否为对象
+            newobj[i] = newObj(obj[i]); //若是对象进行嵌套调用
+          } else {
+            newobj[i] = obj[i];
+          }
+        }
+      }
+      return newobj; //返回深度克隆后的对象
+    };
+
+    var b = newobj(obj);
+    b.a = 2;
+    console.log(obj.a); // 1
+    console.log(b.a);   // 2 
+</code></pre>
+<h1 id="3-应用es6的语法对象展开运算符进行对象的展开赋值">3、应用es6的语法对象展开运算符——进行对象的展开赋值</h1>
+<p>应用es6的语法对象展开运算符：进行对象的展开赋值</p>
+<pre><code class="language-js">var obj = {a:0}
+var b = {...obj}
+</code></pre>
+<pre><code class="language-js">var obj = {a:0}
+var b = {...obj}
+b.a = 2;
+console.log(obj.a); // 0
+console.log(b.a);   // 2 
+</code></pre>
+<p>基本数据类型：存放的就是 实际的数据，可直接复制<br>
+克隆数据：对象/数组</p>
+<h1 id="如何深拷贝一个数组">如何深拷贝一个数组？</h1>
+<h1 id="concat">concat</h1>
+<p>concat() 方法用于合并两个或多个<strong>数组</strong>。此方法不会更改现有数组，而是返回一个新数组。</p>
+<pre><code class="language-js">//concat()    深复制
+  let arr_0 = [1,3,{name:'hhh'}];
+  let arr_1 = arr_0.concat();
+  arr_1[1] = 6
+  console.log(arr_0)  // [1, 3, {name: &quot;hhh&quot;}]
+  console.log(arr_1)  // [1, 6, {name: &quot;hhh&quot;}]
+</code></pre>
+<h1 id="浅拷贝深拷贝-区别">浅拷贝/深拷贝 区别：</h1>
+<ul>
+<li>拷贝 产生了新的数据     ：深拷贝</li>
+<li>拷贝 数据的引用    ：浅拷贝</li>
+</ul>
+<h1 id="浅拷贝对象数组特点">浅拷贝（对象/数组）：特点：</h1>
+<ul>
+<li>拷贝的引用，<br>
+= 修改拷贝后的数据会影响原数据</li>
+</ul>
+<h1 id="深拷贝特点">深拷贝：特点：</h1>
+<ul>
+<li>生成新数据，</li>
+<li>不影响原数据</li>
+</ul>
+<h1 id="常用的拷贝技术">常用的拷贝技术</h1>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[vue-router中传参的方式都有哪些]]></title>
         <id>https://cutezhangq.github.io/post/vue-router-zhong-chuan-can-de-fang-shi-du-you-na-xie/</id>
@@ -304,6 +926,34 @@ if(n%2 == 1){
   }else{
     console.log('不是空对象');
   }
+</code></pre>
+<h1 id="apply的使用">.apply（）的使用</h1>
+<h2 id="1找出数组最大元素">（1）找出数组最大元素</h2>
+<p>JavaScript 不提供找出数组最大元素的函数。结合使用apply方法和Math.max方法，就可以返回数组的最大元素。</p>
+<pre><code class="language-js">var a = [10, 2, 4, 15, 9];
+Math.max.apply(null, a) // 15
+</code></pre>
+<h2 id="2将数组的空元素变为undefined">（2）将数组的空元素变为undefined</h2>
+<p>通过apply方法，利用Array构造函数将数组的空元素变成undefined。</p>
+<pre><code class="language-js">Array.apply(null, ['a', ,'b'])
+// [ 'a', undefined, 'b' ]
+</code></pre>
+<p>空元素与undefined的差别在于，数组的forEach方法会跳过空元素，但是不会跳过undefined。<br>
+因此，遍历内部元素的时候，会得到不同的结果。</p>
+<pre><code class="language-js">var a = ['a', , 'b'];
+
+function print(i) {
+console.log(i);
+}
+
+a.forEach(print)
+// a
+// b
+
+Array.apply(null, a).forEach(print)
+// a
+// undefined
+// b
 </code></pre>
 ]]></content>
     </entry>
@@ -1660,902 +2310,6 @@ props 是<strong>单向绑定</strong>的：当父组件的属性变化时，将
     }
   }
 };
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[computed，watch，method执行的先后顺序]]></title>
-        <id>https://cutezhangq.github.io/post/computedwatchmethod-zhi-xing-de-xian-hou-shun-xu/</id>
-        <link href="https://cutezhangq.github.io/post/computedwatchmethod-zhi-xing-de-xian-hou-shun-xu/">
-        </link>
-        <updated>2020-08-06T13:57:16.000Z</updated>
-        <summary type="html"><![CDATA[<p>👉他们的执行顺序为：<code>默认加载的时候先computed再watch，不执行methods；等触发某一事件后，则是：先methods再watch。</code></p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👉他们的执行顺序为：<code>默认加载的时候先computed再watch，不执行methods；等触发某一事件后，则是：先methods再watch。</code></p>
-<!-- more -->
-<h1 id="computed">computed：</h1>
-<p>计算属性将被混入到 Vue 实例中。所有 getter 和 setter 的 this 上下文自动地绑定为 Vue 实例。</p>
-<h1 id="methods">methods：</h1>
-<p>methods 将被混入到 Vue 实例中。可以直接通过 VM 实例访问这些方法，或者在指令表达式中使用。方法中的 this 自动绑定为 Vue 实例。</p>
-<h1 id="watch">watch：</h1>
-<p>是一种更通用的方式来观察和响应 Vue 实例上的数据变动。一个对象，键是需要观察的表达式，值是对应回调函数。值也可以是方法名，或者包含选项的对象。Vue 实例将会在实例化时调用 $watch()，遍历 watch 对象的每一个属性。</p>
-<p>通俗来讲，</p>
-<p>computed是在HTML DOM加载后马上执行的，如赋值；</p>
-<p>而methods则必须要有一定的触发条件才能执行，如点击事件；</p>
-<p>watch呢？它用于观察Vue实例上的数据变动。对应一个对象，键是观察表达式，值是对应回调。值也可以是方法名，或者是对象，包含选项。</p>
-<p>所以他们的执行顺序为：<code>默认加载的时候先computed再watch，不执行methods；等触发某一事件后，则是：先methods再watch。</code></p>
-<p>下面的例子可以做为说明。</p>
-<p>computed 属性 vs watched 属性：Vue 确实提供了一种更通用的方式来观察和响应 Vue 实例上的数据变动：watch 属性。当你有一些数据需要随着其它数据变动而变动时，你很容易滥用 watch——特别是如果你之前使用过 AngularJS。然而，通常更好的想法是使用 computed 属性而不是命令式的 watch 回调。</p>
-<h1 id="computed与watch的区别">computed与watch的区别</h1>
-<p>在很多情况下, computed会比watch使用起来更加方便,但是当需要在数据变化时执行异步或者开销比较大的情况下,用watch会更加合适。<br>
-例如官网提供的例子(问与答。watch观察question的值,若值有改变会执行方法getAnswer,并且根据question不同的值, answer会给出不同的回答,并且会异步调用API返回相应的值,这些都是计算属性做不到的。</p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>目的</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>computed</td>
-<td>依赖变动实时更新数据</td>
-<td>更新数据</td>
-</tr>
-<tr>
-<td>watch</td>
-<td>观察某一特定的值，执行特定的函数</td>
-<td>观察数据</td>
-</tr>
-</tbody>
-</table>
-<pre><code class="language-js">&lt;divid=&quot;demo&quot;&gt;{{ fullName }}&lt;/div&gt;
-
-使用watch方法观察数据（单个数据）
-var vm = new Vue({
-el: '#demo',
-data: {
-firstName: 'Foo',
-lastName: 'Bar',
-fullName: 'Foo Bar'
-},
-watch: {
-firstName: function (val) {
-this.fullName = val + ' ' + this.lastName
-},
-lastName: function (val) {
-this.fullName = this.firstName + ' ' + val
-}
-}
-})
-
-使用computed方法计算数据（多个数据）
-var vm = new Vue({
-el: '#demo',
-data: {
-firstName: 'Foo',
-lastName: 'Bar'
-},
-computed: {
-fullName: function () {
-return this.firstName + ' ' + this.lastName
-}
-}
-})
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[数据通信方案、组件间传值]]></title>
-        <id>https://cutezhangq.github.io/post/shu-ju-tong-xin-fang-an-zu-jian-jian-chuan-zhi/</id>
-        <link href="https://cutezhangq.github.io/post/shu-ju-tong-xin-fang-an-zu-jian-jian-chuan-zhi/">
-        </link>
-        <updated>2020-08-06T13:12:36.000Z</updated>
-        <summary type="html"><![CDATA[<p>组件间的通信方式有多种~，一起来看下吧，最全攻略哦！👉<br>
-在讲述通信方式之前，我们先了解下组件间通信的特点💁</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>组件间的通信方式有多种~，一起来看下吧，最全攻略哦！👉<br>
-在讲述通信方式之前，我们先了解下组件间通信的特点💁</p>
-<!-- more -->
-<h1 id="组件间通信的特点">组件间通信的特点</h1>
-<p>👉1. 不要在子组件中直接修改父组件的状态数据<br>
-👉2. 数据在哪, 更新数据的行为(函数)就应该定义在哪</p>
-<h1 id="vue-组件数据通信方案总结">Vue 组件数据通信方案总结</h1>
-<p><img src="https://cutezhangq.github.io/post-images/1596720130251.png" alt="" loading="lazy"><br>
-组件 A 与组件 B 、C 之间是父子组件，组件 B 、C 之间是兄弟组件，而组件 A 、D 之间是隔代的关系。<br>
-那么对于这些不同的关系，本文主要分享了他们之间可以采用的几种数据通信方式，<br>
-例如 Props 、$emit / $on 、Vuex 等，大家可以根据自己的使用场景可以选择适合的使用方式。</p>
-<h1 id="一-prop-emit-父子-子父">一、 Prop / $emit    （父——&gt;子        子——&gt;父）</h1>
-<h2 id="prop-通过绑定属性的方式">Prop  通过绑定属性的方式</h2>
-<pre><code class="language-html">// 父组件   &lt;child :title=&quot;title1&quot;&gt;&lt;/child&gt;
-// 子组件   props: { title:Object }
-</code></pre>
-<p>其中，props的用法：<br>
-props 是<strong>单向绑定</strong>的：当父组件的属性变化时，将传导给子组件，但是不会反过来。这是为了防止子组件无意修改父组件的状态。<br>
-所以<code>不应该在子组件中修改 props 中的值，Vue 会报出警告</code>。</p>
-<h2 id="修改-props-数据">修改 props 数据</h2>
-<p>通常有两种原因：</p>
-<ul>
-<li>prop 作为初始值传入后，子组件想把它当做局部数据来用</li>
-<li>prop 作为初始值传入后，由子组件处理成其他数据输出</li>
-</ul>
-<h2 id="应对办法是">应对办法是</h2>
-<ul>
-<li>定义一个<code>局部变量</code>，并用 prop 的值初始化它<br>
-但是由于定义的 ownChildMsg 只能接受 forChildMsg <code>的初始值</code>，当父组件要传递的值变化发生时，ownChildMsg <code>无法收到更新</code>。</li>
-</ul>
-<pre><code class="language-js">let childNode = {
-  template: `
-          &lt;div class=&quot;child&quot;&gt;
-            &lt;div&gt;
-              &lt;span&gt;子组件数据&lt;/span&gt;
-              &lt;input v-model=&quot;forChildMsg&quot;/&gt;
-            &lt;/div&gt;
-            &lt;p&gt;{{forChildMsg}}&lt;/p&gt;
-            &lt;p&gt;ownChildMsg : {{ownChildMsg}}&lt;/p&gt;
-          &lt;/div&gt;`,
-  props: {
-    &quot;for-child-msg&quot;: String
-  },
-  data() {
-    return { ownChildMsg: this.forChildMsg };
-  }
-};
-</code></pre>
-<p>这里我们加了一个<p>用于查看 ownChildMsg 数据是否变化，结果发现只有默认值传递给了 ownChildMsg，父组件改变只会变化到 forChildMsg，不会修改 ownChildMsg。</p>
-<ul>
-<li>定义一个<code>计算属性</code>，处理 prop 的值并返回<br>
-由于是计算属性，所以只能显示值，不能设置值。我们这里设置的是一旦从父组件修改了 forChildMsg 数据，我们就把 forChildMsg 加上一个字符串&quot;---ownChildMsg&quot;，然后显示在屏幕上。这时是可以每当父组件修改了新数据，<code>都会更新</code> ownChildMsg 数据的。</li>
-</ul>
-<pre><code class="language-js">let childNode = {
-  template: `
-          &lt;div class=&quot;child&quot;&gt;
-            &lt;div&gt;
-              &lt;span&gt;子组件数据&lt;/span&gt;
-              &lt;input v-model=&quot;forChildMsg&quot;/&gt;
-            &lt;/div&gt;
-            &lt;p&gt;{{forChildMsg}}&lt;/p&gt;
-            &lt;p&gt;ownChildMsg : {{ownChildMsg}}&lt;/p&gt;
-          &lt;/div&gt;`,
-  props: {
-    &quot;for-child-msg&quot;: String
-  },
-  computed: {
-    ownChildMsg() {
-      return this.forChildMsg + &quot;---ownChildMsg&quot;;
-    }
-  }
-};
-</code></pre>
-<ul>
-<li>更加妥帖的方式是<code>使用变量存储</code> prop 的初始值，并用<code>watch</code>来观察 prop 值得<code>变化</code>。发生变化时，更新变量的值。</li>
-</ul>
-<pre><code class="language-js">let childNode = {
-  template: `
-          &lt;div class=&quot;child&quot;&gt;
-            &lt;div&gt;
-              &lt;span&gt;子组件数据&lt;/span&gt;
-              &lt;input v-model=&quot;forChildMsg&quot;/&gt;
-            &lt;/div&gt;
-            &lt;p&gt;{{forChildMsg}}&lt;/p&gt;
-            &lt;p&gt;ownChildMsg : {{ownChildMsg}}&lt;/p&gt;
-          &lt;/div&gt;`,
-  props: {
-    &quot;for-child-msg&quot;: String
-  },
-  data() {
-    return {
-      ownChildMsg: this.forChildMsg
-    };
-  },
-  watch: {
-    forChildMsg() {
-      this.ownChildMsg = this.forChildMsg;
-    }
-  }
-};
-</code></pre>
-<!-- more -->
-<!-- more -->
-<h2 id="emit-子组件向父组件传值通过事件形式所以是v-on也就是符号">$emit 子组件向父组件传值（通过事件形式,所以是v-on也就是@符号）</h2>
-<pre><code class="language-html">// 父组件    @xxx=&quot;zzz&quot;    methods:{zzz(q){ this.qq = q }}    //q就是接收到的子组件值
-// 子组件   this.$emit('xxx',yyy);    //yyy是值
-</code></pre>
-<p>子组件通过 $emit 事件向父组件发送消息，将自己的数据传递给父组件。<br>
-应用：搜索框 ，在searchTab（子组件）中将用户输入的搜索内容传到search（父组件）中</p>
-<p><strong>$emit 传递一个参数</strong><br>
-子组件：</p>
-<pre><code class="language-js">this.$emit('closeChange',false);
-</code></pre>
-<p>父组件：</p>
-<pre><code class="language-js">&lt;posilCom @closeChange=&quot;closeCom($event)&quot;&gt;&lt;/posilCom&gt;
-closeCom(msg) {
-  this.msg = msg;
-}
-</code></pre>
-<p><strong>$emit传递多个参数</strong><br>
-子组件：</p>
-<pre><code class="language-js">this.$emit('closeChange',false,true);
-</code></pre>
-<p>父组件：</p>
-<pre><code class="language-js">&lt;posilCom @closeChange=&quot;closeCom(arguments)&quot;&gt;&lt;/posilCom&gt;
-closeCom(msg) {
-  this.msg1 = msg[0];
-  this.msg2 = msg[1];
-}
-</code></pre>
-<!-- more -->
-<h1 id="二-emit-on-事件总线bus或者叫eventbus-适用于-父子-隔代-兄弟组件通信">二、 <code>$emit / $on</code>    事件总线：$bus或者叫EventBus     适用于 父子、隔代、兄弟组件通信</h1>
-<h2 id="写法一将bus总线挂载到原型上用的时候直接thisbus即可使用发送-接收">写法一：将<code>$bus</code>总线挂载到原型上，用的时候直接this.$bus即可使用（发送、接收）</h2>
-<pre><code class="language-js">写法一：
-main.js
-    Vue.prototype.$bus = new Vue()
-发送：
-    this.$bus.$emit('事件名称',参数)
-接收
-    this.$bus.$on('事件名称'，function(参数){
-    })
-</code></pre>
-<p>Vue中的 事件总线：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi><mi>u</mi><mi>s</mi><mi mathvariant="normal">或</mi><mi mathvariant="normal">者</mi><mi mathvariant="normal">叫</mi><mi>E</mi><mi>v</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>B</mi><mi>u</mi><mi>s</mi><mi mathvariant="normal">—</mi><mi mathvariant="normal">—</mi><mi mathvariant="normal">通</mi><mi mathvariant="normal">过</mi><mi mathvariant="normal">事</mi><mi mathvariant="normal">件</mi><mi mathvariant="normal">总</mi><mi mathvariant="normal">线</mi><mi mathvariant="normal">获</mi><mi mathvariant="normal">取</mi><mi mathvariant="normal">到</mi><mi mathvariant="normal">非</mi><mi mathvariant="normal">父</mi><mi mathvariant="normal">子</mi><mi mathvariant="normal">组</mi><mi mathvariant="normal">件</mi><mi mathvariant="normal">通</mi><mi mathvariant="normal">信</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">适</mi><mi mathvariant="normal">用</mi><mi mathvariant="normal">于</mi><mi mathvariant="normal">父</mi><mi mathvariant="normal">子</mi><mi mathvariant="normal">、</mi><mi mathvariant="normal">隔</mi><mi mathvariant="normal">代</mi><mi mathvariant="normal">、</mi><mi mathvariant="normal">兄</mi><mi mathvariant="normal">弟</mi><mi mathvariant="normal">组</mi><mi mathvariant="normal">件</mi><mi mathvariant="normal">通</mi><mi mathvariant="normal">信</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">这</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">方</mi><mi mathvariant="normal">法</mi><mi mathvariant="normal">是</mi><mi mathvariant="normal">通</mi><mi mathvariant="normal">过</mi><mi mathvariant="normal">‘</mi><mi mathvariant="normal">创</mi><mi mathvariant="normal">建</mi><mi mathvariant="normal">了</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">空</mi><mi mathvariant="normal">的</mi><mi>v</mi><mi>u</mi><mi>e</mi><mi mathvariant="normal">实</mi><mi mathvariant="normal">例</mi><mi mathvariant="normal">‘</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">当</mi><mi mathvariant="normal">做</mi><mi mathvariant="normal">‘</mi></mrow><annotation encoding="application/x-tex">bus或者叫EventBus    —— 通过事件总线获取到非父子组件通信， 适用于 父子、隔代、兄弟组件通信。
-这个方法是通过`创建了一个空的 vue 实例`，当做 `</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault">u</span><span class="mord mathdefault">s</span><span class="mord cjk_fallback">或</span><span class="mord cjk_fallback">者</span><span class="mord cjk_fallback">叫</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault">u</span><span class="mord mathdefault">s</span><span class="mord" style="margin-right:0.02778em;">—</span><span class="mord" style="margin-right:0.02778em;">—</span><span class="mord cjk_fallback">通</span><span class="mord cjk_fallback">过</span><span class="mord cjk_fallback">事</span><span class="mord cjk_fallback">件</span><span class="mord cjk_fallback">总</span><span class="mord cjk_fallback">线</span><span class="mord cjk_fallback">获</span><span class="mord cjk_fallback">取</span><span class="mord cjk_fallback">到</span><span class="mord cjk_fallback">非</span><span class="mord cjk_fallback">父</span><span class="mord cjk_fallback">子</span><span class="mord cjk_fallback">组</span><span class="mord cjk_fallback">件</span><span class="mord cjk_fallback">通</span><span class="mord cjk_fallback">信</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">适</span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">于</span><span class="mord cjk_fallback">父</span><span class="mord cjk_fallback">子</span><span class="mord cjk_fallback">、</span><span class="mord cjk_fallback">隔</span><span class="mord cjk_fallback">代</span><span class="mord cjk_fallback">、</span><span class="mord cjk_fallback">兄</span><span class="mord cjk_fallback">弟</span><span class="mord cjk_fallback">组</span><span class="mord cjk_fallback">件</span><span class="mord cjk_fallback">通</span><span class="mord cjk_fallback">信</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">这</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">方</span><span class="mord cjk_fallback">法</span><span class="mord cjk_fallback">是</span><span class="mord cjk_fallback">通</span><span class="mord cjk_fallback">过</span><span class="mord">‘</span><span class="mord cjk_fallback">创</span><span class="mord cjk_fallback">建</span><span class="mord cjk_fallback">了</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">空</span><span class="mord cjk_fallback">的</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord mathdefault">u</span><span class="mord mathdefault">e</span><span class="mord cjk_fallback">实</span><span class="mord cjk_fallback">例</span><span class="mord">‘</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">当</span><span class="mord cjk_fallback">做</span><span class="mord">‘</span></span></span></span>emit 事件的处理中心（事件总线）`，通过他来触发以及监听事件。</p>
-<h2 id="写法二将事件总线event创建在父组件中通过父子组件传值的方式props将事件event传给子组件123并在子组件123中通过-thisevent使用">写法二：将事件总线Event创建在父组件中，通过父子组件传值的方式（props）将事件Event传给子组件123，并在子组件123中通过 this.Event使用。</h2>
-<pre><code class="language-js">写法二：
-//父组件中：
- 事件总线：
-     const Event = new Vue();
-        data(){
-            return{ 
-                Event:Event 
-                }
-            }
- //子组件们:   
-:Evnet=&quot;Event&quot;
-</code></pre>
-<pre><code class="language-js">//子组件1   将事件总线传到组件1中
-props: {
-        Event:Object
-  },
-    this.Event.$emit(&quot;xxx&quot;,this.name)   //    this.Event.$emit传值
-</code></pre>
-<pre><code class="language-js">//子组件2   将事件总线传到组件2中
-props: {
-    Event:Object
-  },
-    this.Event.$emit(&quot;yyy&quot;,this.age)    //    this.Event.$emit传值
-</code></pre>
-<pre><code class="language-js">//子组件3  将事件总线传到组件3中
-  props: {
-    Event:Object
-  },
-this.Event.$on(&quot;xxx&quot;,name=&gt;{    //this.Event.$on取值
-    this.name = name 
-})
-this.Event.$on(&quot;yyy&quot;,age=&gt;{     //this.Event.$on取值
-    this.age= age
-})
-</code></pre>
-<!-- more -->
-<h1 id="三-vuex">三、vuex</h1>
-<p>应用：购物车（购物车中的数据信息是要被多个组件共享的）<br>
-Vuex状态管理模式。<br>
-它采用集中式存储 管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。<br>
-Vuex 实现了一个<strong>单项数据流</strong>。 每一个 Vuex 应用的核心就是 store（仓库）。<br>
-“store” 基本上就是一个容器，它包含着你的应用中大部分的状态 ( state )。</p>
-<ul>
-<li>Vuex 的状态存储是<strong>响应式的</strong>。当 Vue 组件从 store 中读取状态的时候，若 store 中的状态发生变化，那么相应的组件也会相应地得到<code>高效更新</code>。</li>
-<li>改变 store 中的状态的<code>唯一</code>途径就是显式地提交 (commit) mutation。这样使得我们可以方便地跟踪每一个状态的变化。</li>
-</ul>
-<pre><code class="language-js">// store
-import Vue from 'vue';
-import Vuex from 'vuex';
-
-Vue.use(Vuex);
-
-const store = new Vuex.Store({      //组件中数据状态存储管理的容器
-state: {                    //3. 读取数据状态
-    count: 1
-},
-mutations: {            //2. 修改status状态——唯一可进行修改的，是同步的
-    increment(state) {
-        state.count++;
-    },
-    reduce(state) {
-        state.count--;
-    }
-},
-actions: {                  //1. 提交数据给mutations,是异步的
-    actIncrement({ commit }) {
-        commit('increment');
-    },
-    actReduce({ commit }) {
-        commit('reduce');
-    }
-},
-getters: {               //4 读取数据，并对数据进行计算，最终读取数据
-doubleCount: state =&gt; state.count*2
-}
-});
-
-export default store;
-</code></pre>
-<pre><code class="language-html">// vue文件
-&lt;template&gt;
-&lt;div class=&quot;container&quot;&gt;
-&lt;p&gt;我的count：{{count}}&lt;/p&gt;
-&lt;p&gt;doubleCount:{{doubleCount}}&lt;/p&gt;
-&lt;button @click=&quot;this.actIncrement&quot;&gt;增加&lt;/button&gt;
-&lt;button @click=&quot;this.actReduce&quot;&gt;减少&lt;/button&gt;
-&lt;/div&gt;
-&lt;/template&gt;
-</code></pre>
-<pre><code class="language-js">import { mapGetters, mapActions, mapState } from &quot;vuex&quot;;
-
-export default {
-name: &quot;demo&quot;,
-data: function() {
-    return {};
-},
-components: {},
-props: {},
-computed: {
-    ...mapState([&quot;count&quot;]),
-    ...mapGetters([&quot;doubleCount&quot;])
-},
-methods: {
-    ...mapActions([&quot;actIncrement&quot;, &quot;actReduce&quot;])
-}
-};
-</code></pre>
-<p><img src="https://cutezhangq.github.io/post-images/1596764710488.png" alt="" loading="lazy"><br>
-mapxxx是<code>辅助函数</code>，将方法<code>映射</code>过来<br>
-如：mapMutations ，将组件中的 methods 映射为 store.commit 调用</p>
-<pre><code class="language-js">methods:{
- ...mapMutations(['addAge'])
-}
-</code></pre>
-<p>mapMutations(['addAge'])这一句就相当于下面的代码</p>
-<pre><code class="language-js">addAge(payLoad){
-  this.$store.commit('addAge',payLoad)
-}
-</code></pre>
-<!-- more -->
-<h1 id="四-attrs-listeners-适用于-隔代组件通信">四、$attrs / $listeners    （ 适用于 隔代组件通信）</h1>
-<ul>
-<li>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mi>t</mi><mi>t</mi><mi>r</mi><mi>s</mi><mi mathvariant="normal">：</mi><mi mathvariant="normal">包</mi><mi mathvariant="normal">含</mi><mi mathvariant="normal">了</mi><mi mathvariant="normal">父</mi><mi mathvariant="normal">作</mi><mi mathvariant="normal">用</mi><mi mathvariant="normal">域</mi><mi mathvariant="normal">中</mi><mi mathvariant="normal">不</mi><mi mathvariant="normal">作</mi><mi mathvariant="normal">为</mi><mi>P</mi><mi>r</mi><mi>o</mi><mi>p</mi><mi mathvariant="normal">被</mi><mi mathvariant="normal">识</mi><mi mathvariant="normal">别</mi><mo>(</mo><mi mathvariant="normal">且</mi><mi mathvariant="normal">获</mi><mi mathvariant="normal">取</mi><mo>)</mo><mi mathvariant="normal">的</mi><mi mathvariant="normal">特</mi><mi mathvariant="normal">性</mi><mi mathvariant="normal">绑</mi><mi mathvariant="normal">定</mi><mo>(</mo><mi>C</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mi mathvariant="normal">和</mi><mi>S</mi><mi>t</mi><mi>y</mi><mi>l</mi><mi>e</mi><mi mathvariant="normal">除</mi><mi mathvariant="normal">外</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">当</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">组</mi><mi mathvariant="normal">件</mi><mi mathvariant="normal">没</mi><mi mathvariant="normal">有</mi><mi mathvariant="normal">声</mi><mi mathvariant="normal">明</mi><mi mathvariant="normal">任</mi><mi mathvariant="normal">何</mi><mi>P</mi><mi>r</mi><mi>o</mi><mi>p</mi><mi mathvariant="normal">时</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">这</mi><mi mathvariant="normal">里</mi><mi mathvariant="normal">会</mi><mi mathvariant="normal">包</mi><mi mathvariant="normal">含</mi><mi mathvariant="normal">所</mi><mi mathvariant="normal">有</mi><mi mathvariant="normal">父</mi><mi mathvariant="normal">作</mi><mi mathvariant="normal">用</mi><mi mathvariant="normal">域</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">绑</mi><mi mathvariant="normal">定</mi><mo>(</mo><mi>C</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mi mathvariant="normal">和</mi><mi>S</mi><mi>t</mi><mi>y</mi><mi>l</mi><mi>e</mi><mi mathvariant="normal">除</mi><mi mathvariant="normal">外</mi><mo>)</mo><mi mathvariant="normal">，</mi><mi mathvariant="normal">并</mi><mi mathvariant="normal">且</mi><mi mathvariant="normal">可</mi><mi mathvariant="normal">以</mi><mi mathvariant="normal">通</mi><mi mathvariant="normal">过</mi><mi>v</mi><mo>−</mo><mi>b</mi><mi>i</mi><mi>n</mi><mi>d</mi><mo>=</mo><mi mathvariant="normal">&quot;</mi></mrow><annotation encoding="application/x-tex">attrs： 包含了父作用域中不作为 Prop 被识别 (且获取) 的特性绑定(Class 和  Style 除外。
-当一个组件没有声明任何 Prop 时，这里会包含所有父作用域的绑定 (Class 和 Style 除外)，并且可以通过 v-bind=&quot;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">s</span><span class="mord cjk_fallback">：</span><span class="mord cjk_fallback">包</span><span class="mord cjk_fallback">含</span><span class="mord cjk_fallback">了</span><span class="mord cjk_fallback">父</span><span class="mord cjk_fallback">作</span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">域</span><span class="mord cjk_fallback">中</span><span class="mord cjk_fallback">不</span><span class="mord cjk_fallback">作</span><span class="mord cjk_fallback">为</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault">p</span><span class="mord cjk_fallback">被</span><span class="mord cjk_fallback">识</span><span class="mord cjk_fallback">别</span><span class="mopen">(</span><span class="mord cjk_fallback">且</span><span class="mord cjk_fallback">获</span><span class="mord cjk_fallback">取</span><span class="mclose">)</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">特</span><span class="mord cjk_fallback">性</span><span class="mord cjk_fallback">绑</span><span class="mord cjk_fallback">定</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">s</span><span class="mord mathdefault">s</span><span class="mord cjk_fallback">和</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord cjk_fallback">除</span><span class="mord cjk_fallback">外</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">当</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">组</span><span class="mord cjk_fallback">件</span><span class="mord cjk_fallback">没</span><span class="mord cjk_fallback">有</span><span class="mord cjk_fallback">声</span><span class="mord cjk_fallback">明</span><span class="mord cjk_fallback">任</span><span class="mord cjk_fallback">何</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault">p</span><span class="mord cjk_fallback">时</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">这</span><span class="mord cjk_fallback">里</span><span class="mord cjk_fallback">会</span><span class="mord cjk_fallback">包</span><span class="mord cjk_fallback">含</span><span class="mord cjk_fallback">所</span><span class="mord cjk_fallback">有</span><span class="mord cjk_fallback">父</span><span class="mord cjk_fallback">作</span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">域</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">绑</span><span class="mord cjk_fallback">定</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">s</span><span class="mord mathdefault">s</span><span class="mord cjk_fallback">和</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord cjk_fallback">除</span><span class="mord cjk_fallback">外</span><span class="mclose">)</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">并</span><span class="mord cjk_fallback">且</span><span class="mord cjk_fallback">可</span><span class="mord cjk_fallback">以</span><span class="mord cjk_fallback">通</span><span class="mord cjk_fallback">过</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">&quot;</span></span></span></span>attrs&quot; 传入内部组件——在创建高级别的组件时非常有用。</p>
-</li>
-<li>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>i</mi><mi>s</mi><mi>t</mi><mi>e</mi><mi>n</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi mathvariant="normal">：</mi><mi mathvariant="normal">包</mi><mi mathvariant="normal">含</mi><mi mathvariant="normal">了</mi><mi mathvariant="normal">父</mi><mi mathvariant="normal">作</mi><mi mathvariant="normal">用</mi><mi mathvariant="normal">域</mi><mi mathvariant="normal">中</mi><mi mathvariant="normal">的</mi><mo>(</mo><mi mathvariant="normal">不</mi><mi mathvariant="normal">含</mi><mi mathvariant="normal">.</mi><mi>n</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>e</mi><mi mathvariant="normal">修</mi><mi mathvariant="normal">饰</mi><mi mathvariant="normal">器</mi><mi mathvariant="normal">的</mi><mo>)</mo><mi>v</mi><mo>−</mo><mi>o</mi><mi>n</mi><mi mathvariant="normal">事</mi><mi mathvariant="normal">件</mi><mi mathvariant="normal">监</mi><mi mathvariant="normal">听</mi><mi mathvariant="normal">器</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">它</mi><mi mathvariant="normal">可</mi><mi mathvariant="normal">以</mi><mi mathvariant="normal">通</mi><mi mathvariant="normal">过</mi><mi>v</mi><mo>−</mo><mi>o</mi><mi>n</mi><mo>=</mo><mi mathvariant="normal">&quot;</mi></mrow><annotation encoding="application/x-tex">listeners： 包含了父作用域中的 (不含 .native 修饰器的) v-on 事件监听器。
-它可以通过 v-on=&quot;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">s</span><span class="mord cjk_fallback">：</span><span class="mord cjk_fallback">包</span><span class="mord cjk_fallback">含</span><span class="mord cjk_fallback">了</span><span class="mord cjk_fallback">父</span><span class="mord cjk_fallback">作</span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">域</span><span class="mord cjk_fallback">中</span><span class="mord cjk_fallback">的</span><span class="mopen">(</span><span class="mord cjk_fallback">不</span><span class="mord cjk_fallback">含</span><span class="mord">.</span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord mathdefault">e</span><span class="mord cjk_fallback">修</span><span class="mord cjk_fallback">饰</span><span class="mord cjk_fallback">器</span><span class="mord cjk_fallback">的</span><span class="mclose">)</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord cjk_fallback">事</span><span class="mord cjk_fallback">件</span><span class="mord cjk_fallback">监</span><span class="mord cjk_fallback">听</span><span class="mord cjk_fallback">器</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">它</span><span class="mord cjk_fallback">可</span><span class="mord cjk_fallback">以</span><span class="mord cjk_fallback">通</span><span class="mord cjk_fallback">过</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">&quot;</span></span></span></span>listeners&quot; 传入内部组件<br>
-<img src="https://cutezhangq.github.io/post-images/1596765958655.png" alt="" loading="lazy"><br>
-父组件:</p>
-</li>
-</ul>
-<pre><code class="language-html">// 父组件
-&lt;template&gt;
-    &lt;div class=&quot;container&quot;&gt;
-        &lt;button style=&quot;backgroundColor:lightgray&quot; @click=&quot;reduce&quot;&gt;减dd&lt;/button&gt;
-        &lt;child1 :aa=&quot;aa&quot; :bb=&quot;bb&quot; :cc=&quot;cc&quot; :dd=&quot;dd&quot; @reduce=&quot;reduce&quot;&gt;&lt;/child1&gt;
-    &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-import Child1 from './component/child1.vue';
-export default {
-    name: 'demo',
-    data: function() {
-        return {
-            aa: 1,
-            bb: 2,
-            cc: 3,
-            dd: 100
-    };
-},
-components: {
-    Child1
-},
-methods: {
-    reduce() {
-        this.dd--;
-    }
-}
-};
-&lt;/script&gt;
-</code></pre>
-<p>// 子组件1 &quot; v-on=&quot;$listeners”    $attrs</p>
-<pre><code class="language-html">// 子组件1
-&lt;template&gt;
-&lt;div&gt;
-&lt;div class=&quot;center&quot;&gt;
-&lt;p&gt;aa:{{aa}}&lt;/p&gt;
-&lt;p&gt;child1的$attrs:{{$attrs}}&lt;/p&gt;
-&lt;button @click=&quot;this.reduce1&quot;&gt;组件1减dd&lt;/button&gt;
-&lt;/div&gt;
-&lt;child2 v-bind=&quot;$attrs&quot; v-on=&quot;$listeners&quot;&gt;&lt;/child2&gt;
-&lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-import child2 from './child2.vue';
-export default {
-name: 'demo1',
-data() {
-return {};
-},
-props: {
-aa: Number
-},
-components: {
-child2
-},
-methods: {
-reduce1() {
-this.$emit('reduce');
-}
-}
-};
-&lt;/script&gt;
-</code></pre>
-<p>//子组件2 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mi>t</mi><mi>t</mi><mi>r</mi><mi>s</mi><mi>v</mi><mo>−</mo><mi>b</mi><mi>i</mi><mi>n</mi><mi>d</mi><mo>=</mo><mi mathvariant="normal">&quot;</mi></mrow><annotation encoding="application/x-tex">attrs   v-bind=&quot;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69841em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">&quot;</span></span></span></span>attrs&quot;</p>
-<pre><code class="language-html">// 子组件2
-&lt;template&gt;
-&lt;div&gt;
-&lt;div class=&quot;center&quot;&gt;
-&lt;p&gt;bb:{{bb}}&lt;/p&gt;
-&lt;p&gt;child2的$attrs:{{$attrs}}&lt;/p&gt;
-&lt;button @click=&quot;this.reduce2&quot;&gt;组件2减dd&lt;/button&gt;
-&lt;/div&gt;
-&lt;child3 v-bind=&quot;$attrs&quot;&gt;&lt;/child3&gt;
-&lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-import child3 from './child3.vue';
-export default {
-name: 'demo1',
-data() {
-return {};
-},
-props: {
-bb: Number
-},
-components: {
-child3
-},
-methods: {
-reduce2() {
-this.$emit('reduce');
-}
-}
-};
-&lt;/script&gt;
-</code></pre>
-<p>//子组件3    $attrs</p>
-<pre><code class="language-html">// 子组件3
-&lt;template&gt;
-&lt;div class=&quot;center&quot;&gt;
-&lt;p&gt;child3的$attrs:{{$attrs}}&lt;/p&gt;
-&lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-export default {
-name: 'demo3',
-data() {
-return {};
-},
-props: {
-dd: String
-},
-};
-&lt;/script&gt;
-</code></pre>
-<p>简单来说，<code>$attrs 里存放的是父组件中绑定的非 props 属性，$listeners 里面存放的是父组件中绑定的非原生事件。</code></p>
-<h1 id="五-provide-inject-适用于-隔代组件通信">五、Provide / Inject     适用于 隔代组件通信</h1>
-<p>Vue 2.2 版本以后新增了这两个 API ，<br>
-这对选项需要<strong>一起使用</strong>，以允许<code>一个祖先</code>组件向其<code>所有子孙后代</code> 注入一个依赖，不论组件层次有多深，并在其上下游关系成立的时间里<strong>始终生效</strong>。</p>
-<ul>
-<li>就是父组件通过 Provide 传入变量，任意子孙组件通过 Inject 来拿到变量。</li>
-</ul>
-<p>它的使用场景，主要是子组件获取上级组件的状态，跨级组件间建立了一种主动提供与依赖注入的关系。<br>
-需要注意的是： Provide 和 Inject 绑定并<code>不是可响应的</code>。这是刻意为之的。然而，如果你<code>传入了一个可监听的对象</code>，那么其对象的属性还是<code>可响应</code>的。<br>
-所以，如果采用的是代码中注释的方式，父级的 name 如果改变了，子组件this.name 是不会改变的，仍然是 zxx ，而当采用代码中传入一个监听对象，修改对象中属性值，是可以监听到修改的。<br>
-Provider / Inject 在项目中需要有较多公共传参时使用还是颇为方便的。</p>
-<ul>
-<li>小总结：传输数据父级一次注入，子孙组件一起共享的方式。</li>
-</ul>
-<p>//Provide<br>
-data: function() {<br>
-return {<br>
-name: 'zxx'<br>
-};<br>
-},<br>
-provide() {<br>
-return {<br>
-obj: this    //响应式的方式<br>
-};<br>
-},</p>
-<pre><code class="language-html">// 父组件
-&lt;template&gt;
-&lt;div class=&quot;container&quot;&gt;
-&lt;button @click=&quot;this.changeName&quot;&gt;我要改名字了&lt;/button&gt;
-&lt;p&gt;我的名字：{{name}}&lt;/p&gt;
-&lt;child1&gt;&lt;/child1&gt;
-&lt;/div&gt;
-&lt;/template&gt;
-</code></pre>
-<pre><code class="language-js">
-import Child1 from './component/child1.vue';
-export default {
-name: 'demo',
-data: function() {
-return {
-name: 'zxx'
-};
-},
-// provide() {
-// return {
-// name: this.name //这种绑定方式是不可响应的
-// };
-// },
-provide() {
-return {
-obj: this
-};
-},
-components: {
-Child1
-},
-methods: {
-changeName() {
-this.name = '政采云前端';
-}
-}
-};
-
-</code></pre>
-<p>//Inject<br>
-inject: {<br>
-obj: {<br>
-default: () =&gt; {<br>
-return {};<br>
-}<br>
-}<br>
-},<br>
-this.obj.name</p>
-<pre><code class="language-html">// 子组件
-&lt;template&gt;
-&lt;div&gt;
-&lt;div class=&quot;center&quot;&gt;
-&lt;!-- &lt;p&gt;子组件名字:{{name}}&lt;/p&gt; --&gt;
-&lt;p&gt;子组件名字:{{this.obj.name}}&lt;/p&gt;
-&lt;/div&gt;
-&lt;child2&gt;&lt;/child2&gt;
-&lt;/div&gt;
-&lt;/template&gt;
-</code></pre>
-<pre><code class="language-js">import child2 from './child2.vue';
-
-export default {
-name: 'demo1',
-data() {
-return {};
-},
-props: {},
-// inject: [&quot;name&quot;],
-inject: {
-obj: {
-default: () =&gt; {
-return {};
-}
-}
-},
-components: {
-child2
-},
-};
-</code></pre>
-<h1 id="六-parent-children-refs-父子组件间通信">六、$parent / $children &amp; $refs               父子组件间通信</h1>
-<ul>
-<li>
-<p><code>$parent / $children</code>： 指定已创建的实例之父实例，在两者之间建立父子关系。子实例可以用 <code>this.$parent</code>访问父实例，子实例被推入父实例的<code>$children</code>数组中。</p>
-</li>
-<li>
-<p><code>$refs</code>： 一个对象，持有注册过 ref  的所有 DOM 元素和组件实例。ref 被用来给元素或子组件注册引用信息。引用信息将会注册在父组件的 <code>$refs</code>对象上。<br>
-如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素；如果用在子组件上，引用就指向组件。</p>
-</li>
-</ul>
-<blockquote>
-<p>// 父组件<br>
-<child1 ref="comp1"></child1><br>
-<child2 ref="comp2"></child2></p>
-</blockquote>
-<pre><code>data: function() {
-return {
-    title: null,
-    name: null,
-    content: '就是我'
-    };
-},
-
-const comp1 = this.$refs.comp1;
-this.title = comp1.title;
-this.$children[1].title
-</code></pre>
-<pre><code class="language-html">// 父组件
-&lt;template&gt;
-&lt;div class=&quot;container&quot;&gt;
-&lt;p&gt;我的title：{{title}}&lt;/p&gt;
-&lt;p&gt;我的name：{{name}}&lt;/p&gt;
-&lt;child1 ref=&quot;comp1&quot;&gt;&lt;/child1&gt;
-&lt;child2 ref=&quot;comp2&quot;&gt;&lt;/child2&gt;
-&lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-import Child1 from './component/child1.vue';
-import Child2 from './component/child2.vue';
-export default {
-name: 'demo',
-data: function() {
-return {
-title: null,
-name: null,
-content: '就是我'
-};
-},
-components: {
-Child1,
-Child2
-},
-mounted() {
-const comp1 = this.$refs.comp1;
-this.title = comp1.title;
-comp1.sayHello();
-this.name = this.$children[1].title;
-},
-};
-&lt;/script&gt;
-</code></pre>
-<blockquote>
-<p>// 子组件1-ref方式<br>
-// 子组件1-ref方式<br>
-this.$parent.content</p>
-</blockquote>
-<pre><code class="language-html">// 子组件1-ref方式
-&lt;template&gt;
-&lt;div&gt;
-&lt;div class=&quot;center&quot;&gt;我的父组件是谁:{{content}}&lt;/div&gt;
-&lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-export default {
-name: 'demo1',
-data() {
-return {
-title: '我是子组件',
-content: null
-};
-},
-mounted() {
-this.content = this.$parent.content;
-},
-methods: {
-sayHello() {
-window.alert('Hello');
-}
-}
-};
-&lt;/script&gt;
-</code></pre>
-<p>// 子组件2-children方式</p>
-<pre><code class="language-html">// 子组件2-children方式
-&lt;template&gt;
-&lt;div&gt;
-&lt;div class=&quot;center&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-export default{
-name: 'demo1',
-data() {
-return {
-title: '我是子组件2'
-};
-},
-};
-&lt;/script&gt;
-</code></pre>
-<p>通过例子可以看到这两种方式都可以父子间通信，而缺点也很统一，就是都不能跨级以及兄弟间通信。<br>
-小总结：父子组件间共享数据以及方法的便捷实践之一。<br>
-👉如果子组件是公共组件，会被多个父组件调用，那么$parent会怎么获取？<br>
-👉改变他们的属性将会怎么变化？<br>
-👉父组件中没有这个属性怎么办？</p>
-<pre><code>1. 针对不同父组件调用，子组件会每次都会生成一个实例，这也是Vue的重要机制。$parent会获取每个调用它的父组件实例。
-2. 子组件中通过$parent会改变每个调用它的父组件中的对应属性。
-</code></pre>
-<!-- more -->
-<h1 id="总结">总结</h1>
-<p>组件间不同的使用场景可以分为 3 类，对应的通信方式如下：</p>
-<p>• 父子通信：Props / <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>e</mi><mi>m</mi><mi>i</mi><mi>t</mi><mi mathvariant="normal">，</mi></mrow><annotation encoding="application/x-tex">emit，</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">e</span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord cjk_fallback">，</span></span></span></span>emit / <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>o</mi><mi>n</mi><mi mathvariant="normal">即</mi><mi>B</mi><mi>u</mi><mi>s</mi><mi mathvariant="normal">事</mi><mi mathvariant="normal">件</mi><mi mathvariant="normal">总</mi><mi mathvariant="normal">线</mi><mi mathvariant="normal">方</mi><mi mathvariant="normal">式</mi><mi mathvariant="normal">，</mi><mi>V</mi><mi>u</mi><mi>e</mi><mi>x</mi><mi mathvariant="normal">，</mi></mrow><annotation encoding="application/x-tex">on即Bus事件总线方式，Vuex，</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord cjk_fallback">即</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault">u</span><span class="mord mathdefault">s</span><span class="mord cjk_fallback">事</span><span class="mord cjk_fallback">件</span><span class="mord cjk_fallback">总</span><span class="mord cjk_fallback">线</span><span class="mord cjk_fallback">方</span><span class="mord cjk_fallback">式</span><span class="mord cjk_fallback">，</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault">u</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord cjk_fallback">，</span></span></span></span>attrs / <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>i</mi><mi>s</mi><mi>t</mi><mi>e</mi><mi>n</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi mathvariant="normal">，</mi><mi>p</mi><mi>r</mi><mi>o</mi><mi>v</mi><mi>i</mi><mi>d</mi><mi>e</mi><mi mathvariant="normal">/</mi><mi>i</mi><mi>n</mi><mi>j</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi mathvariant="normal">，</mi></mrow><annotation encoding="application/x-tex">listeners，provide/inject，</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">s</span><span class="mord cjk_fallback">，</span><span class="mord mathdefault">p</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord">/</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord cjk_fallback">，</span></span></span></span>parent / <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>h</mi><mi>i</mi><mi>l</mi><mi>d</mi><mi>r</mi><mi>e</mi><mi>n</mi><mi mathvariant="normal">＆</mi></mrow><annotation encoding="application/x-tex">children＆</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">h</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">d</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord cjk_fallback">＆</span></span></span></span>refs</p>
-<p>• 兄弟通信：$emit / $on即Bus事件总线方式，Vuex</p>
-<p>• 隔代（跨级）通信：$emit / <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>o</mi><mi>n</mi><mi mathvariant="normal">即</mi><mi>B</mi><mi>u</mi><mi>s</mi><mi mathvariant="normal">事</mi><mi mathvariant="normal">件</mi><mi mathvariant="normal">总</mi><mi mathvariant="normal">线</mi><mi mathvariant="normal">方</mi><mi mathvariant="normal">式</mi><mi mathvariant="normal">，</mi><mi>V</mi><mi>u</mi><mi>e</mi><mi>x</mi><mi mathvariant="normal">，</mi><mi>p</mi><mi>r</mi><mi>o</mi><mi>v</mi><mi>i</mi><mi>d</mi><mi>e</mi><mi mathvariant="normal">/</mi><mi>i</mi><mi>n</mi><mi>j</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi mathvariant="normal">，</mi></mrow><annotation encoding="application/x-tex">on即Bus事件总线方式，Vuex，provide / inject，</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord cjk_fallback">即</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault">u</span><span class="mord mathdefault">s</span><span class="mord cjk_fallback">事</span><span class="mord cjk_fallback">件</span><span class="mord cjk_fallback">总</span><span class="mord cjk_fallback">线</span><span class="mord cjk_fallback">方</span><span class="mord cjk_fallback">式</span><span class="mord cjk_fallback">，</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault">u</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord cjk_fallback">，</span><span class="mord mathdefault">p</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord">/</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord cjk_fallback">，</span></span></span></span>attrs / $listeners</p>
-<!-- more -->
-<h1 id="七-消息订阅与发布-任意组件间的信息传递">七、消息订阅与发布        任意组件间的信息传递</h1>
-<p>详情见相关文章<br>
-安装pubsub-js</p>
-<pre><code class="language-cmd"> npm install pubsub-js --save
-</code></pre>
-<p>优点：<code>可以进行任意组件间的信息传递。</code></p>
-<p>1、发布消息</p>
-<pre><code class="language-js">    PubSub.publish('msg', data)
-</code></pre>
-<p>下面的例子中，msg为‘type’ , data为communicateType<br>
-<img src="https://cutezhangq.github.io/post-images/1596769897505.png" alt="" loading="lazy"></p>
-<p>2、订阅消息</p>
-<pre><code class="language-js">    PubSub.subscribe('msg', function(msg, data){})
-</code></pre>
-<p>第一个msg为‘type’ （必须与发布消息中的msg一样才能实现通信）,第二个msg就是与第一个msg一样，第二个msg必须得有（语法规定的）<br>
-<img src="https://cutezhangq.github.io/post-images/1596769944793.png" alt="" loading="lazy"></p>
-<!-- more -->
-<h1 id="八-slot">八、slot</h1>
-<p>详情见相关文章</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ new运算符的执行过程]]></title>
-        <id>https://cutezhangq.github.io/post/new-yun-suan-fu-de-zhi-xing-guo-cheng/</id>
-        <link href="https://cutezhangq.github.io/post/new-yun-suan-fu-de-zhi-xing-guo-cheng/">
-        </link>
-        <updated>2020-08-06T12:45:01.000Z</updated>
-        <summary type="html"><![CDATA[<p>new运算符的执行过程基本可以描述为：<br>
-👉	创建一个空对象obj<br>
-👉	并将这个空对象obj的__proto__连接到构造函数的原型上。链接到原型: obj.<strong>proto</strong> = Con.prototype<br>
-👉	绑定this:  apply，创建属性和方法。  用apply绑定对象的this指向（obj作为this的上下文）Con.apply(obj,arguments)<br>
-👉	返回新对象this或者叫创建的对象obj(如果构造函数有自己 retrun 时，则返回该值)</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>new运算符的执行过程基本可以描述为：<br>
-👉	创建一个空对象obj<br>
-👉	并将这个空对象obj的__proto__连接到构造函数的原型上。链接到原型: obj.<strong>proto</strong> = Con.prototype<br>
-👉	绑定this:  apply，创建属性和方法。  用apply绑定对象的this指向（obj作为this的上下文）Con.apply(obj,arguments)<br>
-👉	返回新对象this或者叫创建的对象obj(如果构造函数有自己 retrun 时，则返回该值)</p>
-<!-- more -->
-<pre><code class="language-js">  // 传参 New(obj, ...args)
-  function New123() {  
-      let obj = new Object();  // 提取第一个参数并作为构造函数; 
-      let construction = [].shift.call(arguments);  // 新对象的__prop__要链接到原型链  
-      obj.__proto__ = construction.prototype;  // 改变this指向    
-      construction.apply(obj, arguments);   //obj作为this的上下文
-      return obj;   // 返回新对象 
-}
-</code></pre>
-<p>下面对自定义的New方法进行验证：</p>
-<pre><code class="language-js">function People(name,age){
-  this.name = name;
-  this.age = age;
-}
-People.prototype.say = function () {
-  console.log(`My name is ${this.name}.`);
-}
-//通过new创建构造实例
-let people1 = new People('Jack',20);
-console.log(people1.name)  // Jack
-console.log(people1.say()) // My name is Jack.
- 
-//通过New方法创造实例
-let people2 = New123(People,'Rose',18);
-console.log(people2.name)  //Rose
-console.log(people2.say())  //My name is Rose.
-</code></pre>
-<p>过输出结果可以看出来，我们自己定义的New方法，是可以实现跟new运算符同等作用的。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[JSON.stringify与"环"问题]]></title>
-        <id>https://cutezhangq.github.io/post/jsonstringify-yu-huan-wen-ti/</id>
-        <link href="https://cutezhangq.github.io/post/jsonstringify-yu-huan-wen-ti/">
-        </link>
-        <updated>2020-08-06T10:50:32.000Z</updated>
-        <summary type="html"><![CDATA[<p>JSON.stringify在解析接口数据时，我们经常使用到，那么它为什么会产生“环“呢，啥是”环“和？😨<br>
-🙄博主酱的脑海中一堆问号，赶快来了解下了！</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>JSON.stringify在解析接口数据时，我们经常使用到，那么它为什么会产生“环“呢，啥是”环“和？😨<br>
-🙄博主酱的脑海中一堆问号，赶快来了解下了！</p>
-<!-- more -->
-<p>JSON.stringify的功能是，将一个js字面量对象转化为一个JSON格式的字符串，例如：</p>
-<pre><code class="language-js">const obj = {a:1,b:2}
-JSON.stringify(obj)     //  ‘ {“a”:1,“b”:2}’
-</code></pre>
-<!-- more -->
-<p>当要转化的对象有**“环”**存在时（<strong>子节点属性赋值了父节点的引用</strong>），为了避免死循环，JSON.stringify 会抛出异常，例如：</p>
-<pre><code class="language-js">const obj = {
-  foo: {
-    name: 'foo',
-    bar: {
-      name: 'bar'
-      baz: {
-        name: 'baz',
-        aChild: null  //待会让它指向obj.foo
-      }
-    }
-  }
-}
-obj.foo.bar.baz.aChild = obj.foo // foo-&gt;bar-&gt;baz-&gt;aChild-&gt;foo 形成环
-JSON.stringify(obj) // =&gt; TypeError: Converting circular structure to JSON 类型错误:将循环结构转换为JSON
-</code></pre>
-<p>请完善以下“环”检查器函数 cycleDetector，当入参对象中有环时返回 true，否则返回 false。</p>
-<pre><code class="language-js">function cycleDetector(obj) {   
-  // 请添加代码
-}
-</code></pre>
-<p>“环”的形成是因为对象的子节点属性赋值了父节点的引用，所以我们需要记录下父节点的地址，然后再拿其子节点的属性与之前记录下的父节点地址做一个比较，当结果一致时，就形成了“环”。</p>
-<p>那么，在“环”检测器函数中，我们首先需要遍历这个对象的属性，前面提到了引用，那么我们只需对Object类型的属性进行处理即可（简单数据类型不存在引用关系）。对于Objcet类型的属性，我们先与记录下来的父节点地址做一个对比，如无匹配项，将当前属性地址记录下来，然后遍历其子节点属性，一层一层找下去。下面开始上代码：</p>
-<pre><code class="language-js">function cycleDetector(obj){
-    var hasCircle = false,  //  定义一个变量，标志是否有环
-    cache = [];          //  定义一个数组，来保存对象类型的属性值
-    (function(obj){
-        var keys = Object.keys(obj);    //获取当前对象的属性数组——key是获取属性
-             for (var i = 0; i &lt; keys.length; i++) {
-            var key = keys[i];
-            var value = obj[key];
-            if (typeof value == 'object' &amp;&amp; value !== null) {
-                var index = cache.indexOf(value)
-                if (index !== -1) {
-                    hasCircle = true
-                    break
-                } else {
-                    cache.push(value)
-                    arguments.callee(value)
-                    cache.pop()      //  注意：这里要推出数据，因为递归返回，后面遍历的属性不是这个数据的子属性
-                }
-            }
-        }
-    })(obj)
-}
-
-</code></pre>
-<p>补充：<br>
-<strong>Object.keys</strong> 返回一个所有元素为字符串的数组，其元素来自于从给定的object上面可直接枚举的属性。这些属性的顺序与手动遍历该对象属性时的一致。<br>
-<strong>测试用例</strong></p>
-<pre><code class="language-js">/* 测试一 */
-
-const obj = {
-  foo: {
-    name: 'foo',
-    bar: {
-      name: 'bar'
-      baz: {
-        name: 'baz',
-        aChild: null  //待会让它指向obj.foo
-      }
-    }
-  }
-}
-obj.foo.bar.baz.aChild = obj.foo // foo-&gt;bar-&gt;baz-&gt;aChild-&gt;foo 形成环
-</code></pre>
-<pre><code class="language-js">/* 测试二 */
-
-var obj = {
-    foo: {
-        name: 'foo',
-        bar: {
-            name: 'bar',
-            baz: {
-                name: 'baz',
-                aChild: null
-            }
-        }
-    },
-    aaa: {
-        name: &quot;test&quot;,
-        bbb: null
-    }
-}
-obj.aaa.bbb = obj.foo;   //  aaa-&gt;bbb-&gt;bar-&gt;baz-&gt;aChild-&gt;null 不形成环
 </code></pre>
 ]]></content>
     </entry>
