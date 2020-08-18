@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Hello | cutezhangq</title>
+<title>【性能优化】实现图片懒加载+Vue封装 | cutezhangq</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -24,14 +24,11 @@
 
 
 
-    <meta name="description" content="👏  欢迎来到我的博客 ！
-✍️  这是 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...
-
-Github
-码云
-博客地址
-..." />
-    <meta name="keywords" content="Gridea" />
+    <meta name="description" content="为什么要懒加载或者预加载？
+对页面加载速度影响最大的就是图片
+当页面图片比较多，加载速度慢，非常影响用户体验
+思考一下，页面有可能有几百张图片，但是首屏上需要展示的可能就一张而已，其他的那些图片能不能晚一点再加载，比如用户往下滚动的时候……..." />
+    <meta name="keywords" content="" />
   </head>
   <body>
     <div id="app" class="main">
@@ -106,30 +103,31 @@ Github
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Hello</h2>
-            <div class="post-date">2018-12-12</div>
-            
-              <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/hello-gridea.jpg')">
-              </div>
+            <h2 class="post-title">【性能优化】实现图片懒加载+Vue封装</h2>
+            <div class="post-date">2020-08-18</div>
             
             <div class="post-content" v-pre>
-              <p>👏  欢迎来到我的博客 ！<br>
-✍️  这是 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/cutezhangq">Github</a><br>
-<a href="https://gitee.com/zhuangzhoudekun">码云</a><br>
-<a href="https://cutezhangq.github.io/">博客地址</a></p>
+              <p>为什么要懒加载或者预加载？<br>
+对页面加载速度影响最大的就是图片<br>
+当页面图片比较多，加载速度慢，非常影响用户体验</p>
+<p>思考一下，页面有可能有几百张图片，但是首屏上需要展示的可能就一张而已，其他的那些图片能不能晚一点再加载，比如用户往下滚动的时候……</p>
+<p>这是为什么要用懒加载的原因</p>
+<p>那预加载呢？<br>
+这个非常语义化，预备，提前……<br>
+就是让用户感觉到你加载图片非常快，甚至用户没有感受到你在加载图片</p>
+<h1 id="懒加载原理">懒加载原理</h1>
 
             </div>
             
-              <div class="tag-container">
-                
-                  <a href="https://cutezhangq.github.io/tag/G0NoiJNrq/" class="tag">
-                    Gridea
-                  </a>
-                
-              </div>
             
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/jwt-ren-zheng-yuan-li/">
+                  <h3 class="post-title">
+                    JWT认证原理（JSON Web Token）
+                  </h3>
+                </a>
+              </div>
             
 
             
