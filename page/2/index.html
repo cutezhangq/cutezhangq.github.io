@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597848616064">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597928527014">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -28,7 +28,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597848616064" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597928527014" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -96,132 +96,20 @@
           
             <article class="post-item">
               <div class="left">
-                <a href="https://cutezhangq.github.io/post/shuang-xiang-shu-ju-bang-ding-dan-xiang-shu-ju-liu/">
-                  <h2 class="post-title">双向数据绑定、单向数据流</h2>
+                <a href="https://cutezhangq.github.io/post/xiao-xi-ding-yue-yu-fa-bu/">
+                  <h2 class="post-title"> 消息订阅与发布</h2>
                 </a>
                 <div class="post-date">
-                  2020-08-07
+                  2020-04-16
                 </div>
                 <div class="post-abstract">
-                  <p>单向数据流和双向数据绑定各有优缺点，一起来看看吧~🙆</p>
+                  <p>结合 Vue 源码谈谈发布-订阅模式🤞，并涉及几个核心对象如 Observer 等。看看他们在vue实例中的应用~👀</p>
 
                 </div>
               </div>
               
-                <a class="right" href="https://cutezhangq.github.io/post/shuang-xiang-shu-ju-bang-ding-dan-xiang-shu-ju-liu/">
-                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/shuang-xiang-shu-ju-bang-ding-dan-xiang-shu-ju-liu.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://cutezhangq.github.io/post/computedwatchmethod-zhi-xing-de-xian-hou-shun-xu/">
-                  <h2 class="post-title">computed，watch，method执行的先后顺序</h2>
-                </a>
-                <div class="post-date">
-                  2020-08-06
-                </div>
-                <div class="post-abstract">
-                  <p>👉他们的执行顺序为：<code>默认加载的时候先computed再watch，不执行methods；等触发某一事件后，则是：先methods再watch。</code></p>
-
-                </div>
-              </div>
-              
-                <a class="right" href="https://cutezhangq.github.io/post/computedwatchmethod-zhi-xing-de-xian-hou-shun-xu/">
-                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/computedwatchmethod-zhi-xing-de-xian-hou-shun-xu.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://cutezhangq.github.io/post/shu-ju-tong-xin-fang-an-zu-jian-jian-chuan-zhi/">
-                  <h2 class="post-title">数据通信方案、组件间传值</h2>
-                </a>
-                <div class="post-date">
-                  2020-08-06
-                </div>
-                <div class="post-abstract">
-                  <p>组件间的通信方式有多种~，一起来看下吧，最全攻略哦！👉<br>
-在讲述通信方式之前，我们先了解下组件间通信的特点💁</p>
-
-                </div>
-              </div>
-              
-                <a class="right" href="https://cutezhangq.github.io/post/shu-ju-tong-xin-fang-an-zu-jian-jian-chuan-zhi/">
-                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/shu-ju-tong-xin-fang-an-zu-jian-jian-chuan-zhi.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://cutezhangq.github.io/post/new-yun-suan-fu-de-zhi-xing-guo-cheng/">
-                  <h2 class="post-title"> new运算符的执行过程</h2>
-                </a>
-                <div class="post-date">
-                  2020-08-06
-                </div>
-                <div class="post-abstract">
-                  <p>new运算符的执行过程基本可以描述为：<br>
-👉	创建一个空对象obj<br>
-👉	并将这个空对象obj的__proto__连接到构造函数的原型上。链接到原型: obj.<strong>proto</strong> = Con.prototype<br>
-👉	绑定this:  apply，创建属性和方法。  用apply绑定对象的this指向（obj作为this的上下文）Con.apply(obj,arguments)<br>
-👉	返回新对象this或者叫创建的对象obj(如果构造函数有自己 retrun 时，则返回该值)</p>
-
-                </div>
-              </div>
-              
-                <a class="right" href="https://cutezhangq.github.io/post/new-yun-suan-fu-de-zhi-xing-guo-cheng/">
-                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/new-yun-suan-fu-de-zhi-xing-guo-cheng.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://cutezhangq.github.io/post/jsonstringify-yu-huan-wen-ti/">
-                  <h2 class="post-title">JSON.stringify与&#34;环&#34;问题</h2>
-                </a>
-                <div class="post-date">
-                  2020-08-06
-                </div>
-                <div class="post-abstract">
-                  <p>JSON.stringify在解析接口数据时，我们经常使用到，那么它为什么会产生“环“呢，啥是”环“和？😨<br>
-🙄博主酱的脑海中一堆问号，赶快来了解下了！</p>
-
-                </div>
-              </div>
-              
-                <a class="right" href="https://cutezhangq.github.io/post/jsonstringify-yu-huan-wen-ti/">
-                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/jsonstringify-yu-huan-wen-ti.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://cutezhangq.github.io/post/vuex-zhong-mutations-he-actions-de-qu-bie/">
-                  <h2 class="post-title">Vuex中mutations和actions的区别</h2>
-                </a>
-                <div class="post-date">
-                  2020-08-06
-                </div>
-                <div class="post-abstract">
-                  <p>👉<strong>Vuex</strong> 是一个专为 Vue.js 应用程序开发的状态管理模式。👈<br>
-它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化🙆🙆🙆</p>
-
-                </div>
-              </div>
-              
-                <a class="right" href="https://cutezhangq.github.io/post/vuex-zhong-mutations-he-actions-de-qu-bie/">
-                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/vuex-zhong-mutations-he-actions-de-qu-bie.jpg')">
+                <a class="right" href="https://cutezhangq.github.io/post/xiao-xi-ding-yue-yu-fa-bu/">
+                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/xiao-xi-ding-yue-yu-fa-bu.jpg')">
                   </div>
                 </a>
               
@@ -233,7 +121,7 @@
                   <h2 class="post-title">mpvue性能优化技巧</h2>
                 </a>
                 <div class="post-date">
-                  2020-08-05
+                  2020-04-07
                 </div>
                 <div class="post-abstract">
                   <p>👀性能优化十分重要，本文通过一下几个方面来介绍了小程序的优化：<br>
@@ -259,11 +147,32 @@
           
             <article class="post-item">
               <div class="left">
+                <a href="https://cutezhangq.github.io/post/interview-question/">
+                  <h2 class="post-title">面试题</h2>
+                </a>
+                <div class="post-date">
+                  2020-04-01
+                </div>
+                <div class="post-abstract">
+                  <p>收录了常见的面试题呀，涵盖了从Js到es再到vue的各类题目，快戳进来看看鸭...🙋🙋‍♂</p>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://cutezhangq.github.io/post/interview-question/">
+                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/interview-question.jpg')">
+                  </div>
+                </a>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
                 <a href="https://cutezhangq.github.io/post/xiao-cheng-xu-kuang-jia-bi-jiao/">
                   <h2 class="post-title">小程序框架比较</h2>
                 </a>
                 <div class="post-date">
-                  2020-08-05
+                  2020-03-20
                 </div>
                 <div class="post-abstract">
                   <p>本文主要比较了：wepy / mpvue / taro 这几种小程序框架🙆</p>
@@ -280,11 +189,93 @@
           
             <article class="post-item">
               <div class="left">
+                <a href="https://cutezhangq.github.io/post/tan-tan-shen-kao-bei-qian-kao-bei/">
+                  <h2 class="post-title">谈谈深拷贝、浅拷贝</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-07
+                </div>
+                <div class="post-abstract">
+                  <p>js对象不像变量那样，简单的赋值就能进行克隆的，对象进行赋值时，只是创建了一个新的指针指向相同的存储空间。👀如果不想改变原数据，那么就要对对象进行深克隆了</p>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://cutezhangq.github.io/post/tan-tan-shen-kao-bei-qian-kao-bei/">
+                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/tan-tan-shen-kao-bei-qian-kao-bei.jpg')">
+                  </div>
+                </a>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://cutezhangq.github.io/post/nei-cun-yi-chu-yu-nei-cun-xie-lou/">
+                  <h2 class="post-title">内存溢出与内存泄漏</h2>
+                </a>
+                <div class="post-date">
+                  2019-12-20
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+                <a class="right" href="https://cutezhangq.github.io/post/nei-cun-yi-chu-yu-nei-cun-xie-lou/">
+                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/nei-cun-yi-chu-yu-nei-cun-xie-lou.jpg')">
+                  </div>
+                </a>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://cutezhangq.github.io/post/chuang-jian-dui-xiang-4-chong-fang-shi/">
+                  <h2 class="post-title">创建对象4种方式</h2>
+                </a>
+                <div class="post-date">
+                  2019-12-11
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+                <a class="right" href="https://cutezhangq.github.io/post/chuang-jian-dui-xiang-4-chong-fang-shi/">
+                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/chuang-jian-dui-xiang-4-chong-fang-shi.jpg')">
+                  </div>
+                </a>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://cutezhangq.github.io/post/shuang-xiang-shu-ju-bang-ding-dan-xiang-shu-ju-liu/">
+                  <h2 class="post-title">双向数据绑定、单向数据流</h2>
+                </a>
+                <div class="post-date">
+                  2019-11-30
+                </div>
+                <div class="post-abstract">
+                  <p>单向数据流和双向数据绑定各有优缺点，一起来看看吧~🙆</p>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://cutezhangq.github.io/post/shuang-xiang-shu-ju-bang-ding-dan-xiang-shu-ju-liu/">
+                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/shuang-xiang-shu-ju-bang-ding-dan-xiang-shu-ju-liu.jpg')">
+                  </div>
+                </a>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
                 <a href="https://cutezhangq.github.io/post/jin-cheng-xian-cheng-liu-lan-qi-nei-he-js-zhi-xing-shun-xu/">
                   <h2 class="post-title">进程, 线程, 浏览器内核, js执行顺序 WebWorkers</h2>
                 </a>
                 <div class="post-date">
-                  2020-08-02
+                  2019-11-22
                 </div>
                 <div class="post-abstract">
                   <p>👉<code>进程process ：</code>程序的一次执行，它占有一片独有的内存空间<br>
@@ -307,19 +298,21 @@
           
             <article class="post-item">
               <div class="left">
-                <a href="https://cutezhangq.github.io/post/nei-cun-yi-chu-yu-nei-cun-xie-lou/">
-                  <h2 class="post-title">内存溢出与内存泄漏</h2>
+                <a href="https://cutezhangq.github.io/post/js-bian-liang-de-sheng-ming-zhou-qi-letvarconst/">
+                  <h2 class="post-title">变量的生命周期 let、var、const</h2>
                 </a>
                 <div class="post-date">
-                  2020-08-02
+                  2019-09-30
                 </div>
                 <div class="post-abstract">
-                  
+                  <p>👉具体let、var、consts的区别可见es6中内容👈，这里简要介绍了它们的区别<br>
+主要围绕生命周期、作用域来看🙌</p>
+
                 </div>
               </div>
               
-                <a class="right" href="https://cutezhangq.github.io/post/nei-cun-yi-chu-yu-nei-cun-xie-lou/">
-                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/nei-cun-yi-chu-yu-nei-cun-xie-lou.jpg')">
+                <a class="right" href="https://cutezhangq.github.io/post/js-bian-liang-de-sheng-ming-zhou-qi-letvarconst/">
+                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/js-bian-liang-de-sheng-ming-zhou-qi-letvarconst.jpg')">
                   </div>
                 </a>
               

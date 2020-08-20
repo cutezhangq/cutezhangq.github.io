@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cutezhangq.github.io</id>
     <title>cutezhangq</title>
-    <updated>2020-08-19T14:50:41.430Z</updated>
+    <updated>2020-08-20T13:48:36.542Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cutezhangq.github.io"/>
     <link rel="self" href="https://cutezhangq.github.io/atom.xml"/>
@@ -10,343 +10,6 @@
     <logo>https://cutezhangq.github.io/images/avatar.png</logo>
     <icon>https://cutezhangq.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, cutezhangq</rights>
-    <entry>
-        <title type="html"><![CDATA[【性能优化】实现图片懒加载+Vue封装]]></title>
-        <id>https://cutezhangq.github.io/post/xing-neng-you-hua-shi-xian-tu-pian-lan-jia-zai-vue-feng-zhuang/</id>
-        <link href="https://cutezhangq.github.io/post/xing-neng-you-hua-shi-xian-tu-pian-lan-jia-zai-vue-feng-zhuang/">
-        </link>
-        <updated>2020-08-18T06:52:25.000Z</updated>
-        <content type="html"><![CDATA[<p>为什么要懒加载或者预加载？<br>
-对页面加载速度影响最大的就是图片<br>
-当页面图片比较多，加载速度慢，非常影响用户体验</p>
-<p>思考一下，页面有可能有几百张图片，但是首屏上需要展示的可能就一张而已，其他的那些图片能不能晚一点再加载，比如用户往下滚动的时候……</p>
-<p>这是为什么要用懒加载的原因</p>
-<p>那预加载呢？<br>
-这个非常语义化，预备，提前……<br>
-就是让用户感觉到你加载图片非常快，甚至用户没有感受到你在加载图片</p>
-<h1 id="懒加载原理">懒加载原理</h1>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[JWT认证原理（JSON Web Token）]]></title>
-        <id>https://cutezhangq.github.io/post/jwt-ren-zheng-yuan-li/</id>
-        <link href="https://cutezhangq.github.io/post/jwt-ren-zheng-yuan-li/">
-        </link>
-        <updated>2020-08-17T06:27:29.000Z</updated>
-        <summary type="html"><![CDATA[<p><code>Json web token (JWT)</code>, 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，特别适用于👉分布式站点的<code>单点登录（SSO）</code>场景👈。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token也可直接被用于认证，也可被加密。👀</p>
-<p>JWT认证原理（JSON Web Token）</p>
-<p>互联网服务离不开用户认证。一般流程是下面这样。🙌</p>
-]]></summary>
-        <content type="html"><![CDATA[<p><code>Json web token (JWT)</code>, 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，特别适用于👉分布式站点的<code>单点登录（SSO）</code>场景👈。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token也可直接被用于认证，也可被加密。👀</p>
-<p>JWT认证原理（JSON Web Token）</p>
-<p>互联网服务离不开用户认证。一般流程是下面这样。🙌</p>
-<!-- more -->
-<h1 id="一-传统的session认证">一、传统的Session认证</h1>
-<h2 id="流程session">流程session</h2>
-<p>认证的流程一般如下：</p>
-<ul>
-<li>1.用户向服务器发送用户名和密码。</li>
-<li>2.服务器验证通过后，在当前对话（session）里面保存相关数据，比如用户角色、登录时间等等。</li>
-<li>3.服务器向用户返回一个 session_id，写入用户的 Cookie。</li>
-<li>4.用户随后的每一次请求，都会通过 Cookie，将 session_id 传回服务器。</li>
-<li>5.服务器收到 session_id，找到前期保存的数据，由此得知用户的身份。</li>
-</ul>
-<h2 id="缺点">缺点</h2>
-<ul>
-<li>session保存在服务器，当注册用户很多，会增加服务器的开销。</li>
-<li>用户认证之后，服务端做认证记录，如果认证的记录被保存在内存中的话，这意味着用户下次请求还必须要请求在这台服务器上,这样才能拿到授权的资源，这样在分布式的应用上，限制了负载均衡的能力。这也意味着限制了应用的扩展能力。</li>
-<li>session是基于cookie来进行用户识别的, cookie如果被截获，用户就会很容易受到<code>跨站请求伪造（CSRF）</code>的攻击。</li>
-</ul>
-<p>这种模式的问题在于，扩展性（scaling）不好。单机当然没有问题，如果是服务器集群，或者是跨域的服务导向架构，就要求 session 数据共享，每台服务器都能够读取 session。</p>
-<p>举例来说，A 网站和 B 网站是同一家公司的关联服务。现在要求，用户只要在其中一个网站登录，再访问另一个网站就会自动登录，请问怎么实现？</p>
-<p>一种解决方案是 <code>session 数据持久化</code>，写入数据库或别的持久层。各种服务收到请求后，都向持久层请求数据。这种方案的优点是架构清晰，缺点是工程量比较大。另外，持久层万一挂了，就会单点失败。</p>
-<p>另一种方案是服务器索性不保存 session 数据了，所有数据都<code>保存在客户端</code>，每次请求都发回服务器。<code>JWT</code>就是这种方案的一个代表。</p>
-<h1 id="二-jwt-认证">二、JWT 认证</h1>
-<h2 id="token">token</h2>
-<p><code>JWT</code>是基于<code>token</code>的鉴权机制类似于<code>http协议</code>也是无状态的，它不需要在服务端去保留用户的认证信息或者会话信息。<br>
-这就意味着基于token认证机制的应用不需要去考虑用户在哪一台服务器登录了，这就为应用的扩展提供了便利。</p>
-<h2 id="流程">流程</h2>
-<ul>
-<li>1.用户使用用户名密码来请求服务器。</li>
-<li>2.服务器进行验证用户的信息</li>
-<li>3.服务器通过验证发送给用户一个token</li>
-<li>4.客户端存储token，并在每次请求时附送上这个token值</li>
-<li>5.服务端验证token值，并返回数据</li>
-</ul>
-<p>这个token必须要在每次请求时传递给服务端，它应该保存在请求头里， 另外，服务端要支持<code>CORS(跨来源资源共享)策略</code>，一般我们在服务端这么做就可以了<code>Access-Control-Allow-Origin: *</code>。</p>
-<h2 id="jwt-的原理">JWT 的原理</h2>
-<p>JWT 的原理是，服务器认证以后，生成一个 JSON 对象，发回给用户，就像下面这样。</p>
-<pre><code class="language-json">{
-  &quot;姓名&quot;: &quot;张三&quot;,
-  &quot;角色&quot;: &quot;管理员&quot;,
-  &quot;到期时间&quot;: &quot;2018年7月1日0点0分&quot;
-}
-</code></pre>
-<p>以后，用户与服务端通信的时候，都要发回这个 JSON 对象。服务器完全只靠这个对象认定用户身份。为了防止用户篡改数据，服务器在生成这个对象的时候，会加上签名（详见后文）。<br>
-服务器就不保存任何 session 数据了，也就是说，服务器变成无状态了，从而比较容易实现扩展。</p>
-<h1 id="三-jwt-的数据结构">三、JWT 的数据结构</h1>
-<pre><code class="language-js">    const accessToken =    &quot;eyJhbGciOiJIUzI1NiJ9.eyJvcGVuSWQiOiJvVjc2QndpYVVYcGcxYUo2S1RDb3hQbWppRHg0IiwiaXNzIjoib3JhbmdlMiIsImRldmljZUlkIjoiZ2hfOGY0ODdhNjEyZmM5XzkzNzdjYjk4YWU0MDU3NzgiLCJpYXQiOjE1OTQ4MDYzMTJ9.6kS29myZlCUxQqvZOEGmhJhQ66NCwk_raB5HGRGhr7M&quot;
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1597647417511.png" alt="" loading="lazy"></figure>
-<p>JWT 的三个部分依次如下:</p>
-<pre><code class="language-cmd">Header（头部）
-Payload（负载）
-Signature（签名）
-</code></pre>
-<p>写成一行，就是下面的样子。<br>
-Header.Payload.Signature<br>
-下面依次介绍这三个部分。</p>
-<h2 id="header">Header</h2>
-<p>Header 部分是一个 JSON 对象，描述 JWT 的元数据，通常是下面的样子。</p>
-<pre><code class="language-json">{
-  &quot;alg&quot;: &quot;HS256&quot;,
-  &quot;typ&quot;: &quot;JWT&quot;
-}
-</code></pre>
-<p>上面代码中，<code>alg</code>属性表示签名的算法（algorithm），默认是 HMAC SHA256（写成 HS256）；<code>typ</code>属性表示这个令牌（token）的类型（type），JWT 令牌统一写为JWT。<br>
-最后，将上面的 JSON 对象使用 Base64URL 算法（详见后文）转成字符串。</p>
-<h2 id="payload">Payload</h2>
-<p>载荷就是存放有效信息的地方。这些有效信息包含三个部分:<br>
-标准中注册的声明<br>
-公共的声明<br>
-私有的声明<br>
-Payload 部分也是一个 JSON 对象，用来存放实际需要传递的数据。JWT 规定了7个官方字段，供选用。</p>
-<pre><code class="language-cmd">iss (issuer)：签发人
-exp (expiration time)：过期时间
-sub (subject)：主题
-aud (audience)：受众
-nbf (Not Before)：生效时间
-iat (Issued At)：签发时间
-jti (JWT ID)：编号
-</code></pre>
-<p>除了官方字段，你还可以在这个部分定义私有字段，下面就是一个例子。</p>
-<pre><code class="language-json">{
-  &quot;sub&quot;: &quot;1234567890&quot;,
-  &quot;name&quot;: &quot;John Doe&quot;,
-  &quot;admin&quot;: true
-}
-</code></pre>
-<p>注意，JWT 默认是不加密的，任何人都可以读到，所以不要把秘密信息放在这个部分。<br>
-这个 JSON 对象也要使用 Base64URL 算法转成字符串。</p>
-<h2 id="signature">Signature</h2>
-<p>JWT的第三部分是一个签证信息，这个签证信息由三部分组成：</p>
-<ul>
-<li>header (base64加密)</li>
-<li>payload (base64加密)</li>
-<li>secret 密钥<br>
-Signature 部分是对前两部分的签名，防止数据篡改。<br>
-首先，需要指定一个密钥（secret）。这个密钥只有服务器才知道，不能泄露给用户。然后，使用 Header 里面指定的签名算法（默认是 HMAC SHA256），按照下面的公式产生签名。</li>
-</ul>
-<pre><code class="language-cmd">HMACSHA256(
-  base64UrlEncode(header) + &quot;.&quot; +
-  base64UrlEncode(payload),
-  secret)
-</code></pre>
-<p>算出签名以后，把 Header、Payload、Signature 三个部分拼成一个字符串，每个部分之间用&quot;点&quot;（.）分隔，就可以返回给用户。</p>
-<p><strong>注意</strong>：<code>secret</code>是保存在服务器端的，<code>jwt</code>的签发生成也是在服务器端的，<code>secret</code>就是用来进行<code>jwt</code>的签发和<code>jwt</code>的验证，所以，它就是你服务端的<code>私钥</code>，在任何场景都不应该流露出去。一旦客户端得知这个<code>secret</code>, 那就意味着客户端是可以<code>自我签发jwt</code>了。如果觉得密钥泄露了，请及时修改。</p>
-<h2 id="base64url">Base64URL</h2>
-<p>前面提到，Header 和 Payload 串型化的算法是 Base64URL。这个算法跟 Base64 算法基本类似，但有一些小的不同。<br>
-JWT 作为一个令牌（token），有些场合可能会放到 URL（比如 api.example.com/?token=xxx）。Base64 有三个字符<code>+、/和=</code>，在 URL 里面有特殊含义，所以要被替换掉：<code>=</code>被省略、<code>+</code>替换成<code>-</code>，<code>/</code>替换成<code>_</code> 。这就是 Base64URL 算法。</p>
-<h1 id="五-jwt-的几个特点">五、JWT 的几个特点</h1>
-<p>（1）JWT 默认是不加密，但也是可以加密的。生成原始 Token 以后，可以用密钥再加密一次。<br>
-（2）JWT 不加密的情况下，不能将秘密数据写入 JWT。<br>
-（3）JWT 不仅可以<code>用于认证</code>，也可以用于<code>交换信息</code>。有效使用 JWT，可以<code>降低服务器查询数据库的次数</code>。<br>
-（4）JWT 的最大缺点是，由于服务器不保存 session 状态，因此无法在使用过程中废止某个 token，或者更改 token 的权限。也就是说，一旦 JWT 签发了，在到期之前就会始终有效，除非服务器部署额外的逻辑。<br>
-（5）JWT 本身包含了认证信息，一旦泄露，任何人都可以获得该令牌的所有权限。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证。<br>
-（6）为了减少盗用，JWT 不应该使用 HTTP 协议明码传输，要使用 HTTPS 协议传输。</p>
-<p>案例：request.js</p>
-<pre><code class="language-js">import axios from 'axios'
-import global from '../../api/global'
-import router from '../../router/router'
-// 拿到token
-function getAccessToken() {
-    // 从localStorage中获取token
-    //let accessToken = localStorage.getItem('accessToken')
-    const accessToken = &quot;eyJhbGciOiJIUzI1NiJ9.eyJvcGVuSWQiOiJvVjc2QndpYVVYcGcxYUo2S1RDb3hQbWppRHg0IiwiaXNzIjoib3JhbmdlMiIsImRldmljZUlkIjoiZ2hfOGY0ODdhNjEyZmM5XzkzNzdjYjk4YWU0MDU3NzgiLCJpYXQiOjE1OTQ4MDYzMTJ9.6kS29myZlCUxQqvZOEGmhJhQ66NCwk_raB5HGRGhr7M&quot;
-    if (accessToken != null&amp;&amp; refreshToken !== undefined) {
-        return &quot;Bearer &quot; + accessToken
-    }
-}
-
-// 创建一个axios实例
-const axiosJWT = axios.create({
-    baseURL: global.API,
-    timeout: 300000,
-    headers: {
-        'Authorization': getAccessToken(),
-        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
-    }
-})
-
-async function refreshToken() {    //之前的逻辑是去发送请求拿到刷新的token(refreshToken)
-    // instance是当前request.js中已创建的axios实例
-    // return await axiosBASIC.get('/auth/reissueToken', {
-    //   params: {
-    //     refreshToken: getRefreshToken()
-    //   }
-    // })
-    return await axiosBASIC.get('/auth/issueToken', {
-    params: {
-      openId: &quot;oV76BwiaUXpg1aJ6KTCoxPmjiDx4&quot;
-    }
-  })
-}
-
-
-// 给实例添加一个setToken方法，用于登录后将最新token动态添加到header，同时将token保存在localStorage中
-axiosJWT.setToken = (accessToken) =&gt; {
-    localStorage.setItem('accessToken', accessToken)
-    axiosJWT.defaults.headers['Authorization'] = &quot;Bearer &quot;+accessToken
-}
-
-// 是否正在刷新的标记
-let isRefreshing = false
-// 重试队列，每一项将是一个待执行的函数形式
-let requests = []
-
-
-// 响应拦截
-axiosJWT.interceptors.response.use(response =&gt; {
-        const {code} = response.data
-        // 接下来会在这里进行token过期重发逻辑处理
-        switch(code){
-            case 604:
-                //非法token！
-                break
-            case 603:
-                //缺少token！
-            case 605:
-                //accessToken已过期！
-                //获取当前失败的请求
-                const config = response.config
-                if (!isRefreshing) {
-                    isRefreshing = true
-                   return refreshToken()
-                        .then(res =&gt; {
-                            const {code} = res.data
-                            switch(code){
-                                case 200:
-                                    //refreshToken有效，刷新Token成功
-                                    //将最新的token更新到header中，同时保存在localStorage中
-                                    const {accessToken} = res.data.data
-                                    console.log('access_token====='+accessToken)
-                                    axiosJWT.setToken(accessToken)
-                                    // 刷新下之前的请求配置
-                                    config.headers['Authorization'] = &quot;Bearer &quot;+accessToken
-                                    config.baseURL = ''
-                                    //已经刷新了token，将所有队列中的请求进行重试
-                                    requests.forEach(cb =&gt; cb(accessToken))
-                                    //清空队列
-                                    requests = []
-                                    // 重试之前的请求并返回promise
-                                    return axiosJWT(config)
-                                case 500:
-                                case 606:
-                                    //refreshToken过期
-                                   router.push(&quot;/auth&quot;)
-                            }
-                        })
-                        .finally(() =&gt; {
-                            //刷新成功，恢复标志位
-                            isRefreshing = false
-                        })
-                } else {
-                    // 正在刷新token，返回一个未执行resolve的promise
-                    return new Promise((resolve) =&gt; {
-                        // 将resolve放进队列，用一个函数形式来保存，等token刷新后直接执行
-                        requests.push((accessToken) =&gt; {
-                            config.baseURL = ''
-                            config.headers['Authorization'] = &quot;Bearer &quot;+accessToken
-                            resolve(axiosJWT(config))
-                        })
-                    })
-                }
-            case 701:
-                //JWT认证失败!
-                break
-            default: 
-            return response.data
-        }
-    },error =&gt; {
-        return Promise.reject(error)
-    })
-
-export  {
-    axiosJWT,
-    axiosBASIC
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[跨域问题]]></title>
-        <id>https://cutezhangq.github.io/post/kua-yu-wen-ti/</id>
-        <link href="https://cutezhangq.github.io/post/kua-yu-wen-ti/">
-        </link>
-        <updated>2020-08-15T03:07:52.000Z</updated>
-        <summary type="html"><![CDATA[<p>什么是同源<br>
-👉为了保证使用者信息的安全，防止恶意网站篡改用户数据，一些常见的Web技术都默认采用了同源策略（如Silverlight, Flash, XMLHttpRequest, Dom等）。</p>
-<p>那如何判断同源呢？</p>
-<ul>
-<li>1、相同的协议</li>
-<li>2、相同的域名</li>
-<li>3、相同的的端口号</li>
-</ul>
-]]></summary>
-        <content type="html"><![CDATA[<p>什么是同源<br>
-👉为了保证使用者信息的安全，防止恶意网站篡改用户数据，一些常见的Web技术都默认采用了同源策略（如Silverlight, Flash, XMLHttpRequest, Dom等）。</p>
-<p>那如何判断同源呢？</p>
-<ul>
-<li>1、相同的协议</li>
-<li>2、相同的域名</li>
-<li>3、相同的的端口号</li>
-</ul>
-<!-- more -->
-<p><img src="https://cutezhangq.github.io/post-images/1597462361320.png" alt="" loading="lazy"><br>
-<img src="https://cutezhangq.github.io/post-images/1597462366080.png" alt="" loading="lazy"></p>
-<p>同源政策：一是针对接口的请求，二是针对Dom的查询</p>
-<h1 id="跨域解决方案">跨域解决方案</h1>
-<ul>
-<li>1、 通过jsonp跨域</li>
-<li>2、 document.domain + iframe跨域</li>
-<li>3、 location.hash + iframe</li>
-<li>4、 window.name + iframe跨域</li>
-<li>5、 postMessage跨域</li>
-<li>6、 跨域资源共享（CORS）</li>
-<li>7、 nginx代理跨域</li>
-<li>8、 nodejs中间件代理跨域</li>
-<li>9、 WebSocket协议跨域</li>
-</ul>
-<h1 id="iframe标签跨域">Iframe标签跨域</h1>
-<pre><code class="language-html">&lt;body&gt;
-    &lt;iframe src=&quot;http://www.baidu.com&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;
-&lt;/body&gt;
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1597462564913.png" alt="" loading="lazy"></figure>
-<h1 id="跨域资源共享cors">跨域资源共享（CORS）</h1>
-<p>1、 前端设置：<br>
-1.）原生ajax</p>
-<pre><code class="language-js">var xhr = new XMLHttpRequest();
-//前端设置是否带cookie
-xhr.withCredentials = true;
-xhr.open('get','data.json');    //open(method,url,async)
-xhr.send('user=admin');
-xhr.onreadystatechange = function(){
-    if(xhr.readyState == 4 &amp;&amp; xhr.status == 200){
-        console.log(xhr.responseText);
-    }
-}
-</code></pre>
-<p>0: 请求未初始化<br>
-1: 服务器连接已建立<br>
-2: 请求已接收<br>
-3: 请求处理中<br>
-4: 请求已完成，且响应已就绪              readyState=4的时候才去做后续逻辑</p>
-<p><strong>xhr.readyState == 4  是表示后台处理完成了。</strong><br>
-<strong>xhr.status == 200 是表示处理的结果是OK的。</strong><br>
-<img src="https://cutezhangq.github.io/post-images/1597463024441.png" alt="" loading="lazy"></p>
-]]></content>
-    </entry>
     <entry>
         <title type="html"><![CDATA[笔试-题目整理2-2020bilibili ]]></title>
         <id>https://cutezhangq.github.io/post/bi-shi-ti-mu-zheng-li-2/</id>
@@ -646,118 +309,990 @@ a.printName() // ?
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[谈谈深拷贝、浅拷贝]]></title>
-        <id>https://cutezhangq.github.io/post/tan-tan-shen-kao-bei-qian-kao-bei/</id>
-        <link href="https://cutezhangq.github.io/post/tan-tan-shen-kao-bei-qian-kao-bei/">
+        <title type="html"><![CDATA[奇淫巧技]]></title>
+        <id>https://cutezhangq.github.io/post/qi-yin-qiao-ji/</id>
+        <link href="https://cutezhangq.github.io/post/qi-yin-qiao-ji/">
         </link>
-        <updated>2020-08-12T01:21:13.000Z</updated>
-        <summary type="html"><![CDATA[<p>js对象不像变量那样，简单的赋值就能进行克隆的，对象进行赋值时，只是创建了一个新的指针指向相同的存储空间。👀如果不想改变原数据，那么就要对对象进行深克隆了</p>
+        <updated>2020-08-11T01:49:25.000Z</updated>
+        <summary type="html"><![CDATA[<p>🙈🙉🙊本文收录一些计算的技巧，让功能的实现不止一种！<br>
+还在持续更新中...✨<br>
+👉对数据进行奇偶判断<br>
+👉判断类型 封装（可判断所有类型）<br>
+👉判断是否存在<br>
+👉检测 某个对象 是不是 另一个对象 的 实例<br>
+👉判断一个 实例 是否属于它的 父类型</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>js对象不像变量那样，简单的赋值就能进行克隆的，对象进行赋值时，只是创建了一个新的指针指向相同的存储空间。👀如果不想改变原数据，那么就要对对象进行深克隆了</p>
+        <content type="html"><![CDATA[<p>🙈🙉🙊本文收录一些计算的技巧，让功能的实现不止一种！<br>
+还在持续更新中...✨<br>
+👉对数据进行奇偶判断<br>
+👉判断类型 封装（可判断所有类型）<br>
+👉判断是否存在<br>
+👉检测 某个对象 是不是 另一个对象 的 实例<br>
+👉判断一个 实例 是否属于它的 父类型</p>
 <!-- more -->
-<pre><code class="language-js">var a={a:1}
-var b=a;
-b.a=2
+<h1 id="对数据进行奇偶判断">对数据进行奇偶判断</h1>
+<p>普通选手：</p>
+<pre><code class="language-js">const n = 11;
+if(n%2 == 1){
+   console.log('奇数')
+}else{
+    console.log('偶数')
+}
 </code></pre>
-<p>这时输出a你会发现，a的值同样发生了改变。<br>
-这一点在你进行数据操作时，又想保留原来数据时，你就需要深度克隆了。</p>
-<h1 id="怎么深拷贝一个对象深拷贝一个对象的时候应该怎么做">怎么深拷贝一个对象？（深拷贝一个对象的时候应该怎么做？）</h1>
-<p>深度克隆的方法:</p>
-<h1 id="1-js序列化">1、js序列化</h1>
-<p>将js转换成字符串，然后再将字符串转换成js对象。<br>
-js字符串的克隆就比对象的克隆简单多了。简单的赋值操作就能完成。<br>
-深拷贝,但拷贝的数据里不能有函数，不然处理不了</p>
-<pre><code class="language-js">var obj = {a:1};
-var str = JSON.stringify(obj); //序列化对象         JSON.stringify() 方法将一个JavaScript 对象或值转换为JSON 字符串
-var newobj = JSON.parse(str); //还原
-var b = newobj;
-b.a = 2;
-console.log(obj.a); // 1
-console.log(b.a);   // 2 
+<p>种子选手：&amp; 位运算符的妙用，相“与”</p>
+<pre><code class="language-js">const n = 11;
+  if(n &amp; 1){    // 取代 n % 2 == 1 的判断，因为其还要转成二进制的判断
+    console.log('奇数')
+  }else{
+    console.log('偶数')
+  }
 </code></pre>
-<h1 id="2-进行对象的遍历复制">2、进行对象的遍历复制</h1>
-<p>进行对象的遍历复制，对对象的每一条属性进行复制，这样就能进行对象的深度克隆<br>
-如何实现深拷贝?<br>
-浅拷贝里的数据不能有对象/数组，即使有对象/数组可以继续遍历对象/数组，拿到里面的每一项值，<br>
-一直到拿到的是基本数据类型，然后再复制，这时就是深拷贝</p>
-<pre><code class="language-js">
-function newobj(obj) {
-  var str, newobj = obj.constructor === Array ? [] : {};//constructor 属性返回对创建此对象的数组函数的引用。创建相同类型的空数据
-  if (typeof obj !== 'object') {
-    return;
-  } else {
-    for (var i in obj) {
-      if (typeof obj[i] === 'object'){//判断对象的这条属性是否为对象
-        newobj[i] = newObj(obj[i]);//若是对象进行嵌套调用
-      }else{
-        newobj[i] = obj[i];
+<h1 id="判断类型-封装可判断所有类型">判断类型 封装（可判断所有类型）</h1>
+<p>普通选手：</p>
+<pre><code class="language-js">  function isObjArr(value) {
+    if (Object.prototype.toString.call(value) === &quot;[object Array]&quot;) {
+      console.log('value是数组');
+    } else if (Object.prototype.toString.call(value) === '[object Object]') { //这个方法兼容性好一点
+      console.log('value是对象');
+    } else {
+      console.log('value不是数组也不是对象')
+    }
+  }
+</code></pre>
+<p>种子选手：<br>
+判断 Target 的类型，单单用 typeof 并无法完全满足，这其实并不是 bug，本质原因是 JS 的万物皆对象的理论。<br>
+因此要真正完美判断时，我们需要区分对待:<br>
+* 基本类型( null ): 使用String( )，如：String(null)<br>
+* 基本类型(string / number / boolean / undefined) + function + symbol: 直接使用 typeof 即可<br>
+* 其余引用类型(Array / Date / RegExp Error): 调用toString后根据[object XXX]进行判断，本质上还是调用 valueof 进行判断。</p>
+<pre><code class="language-js"> let class2type = {}
+  'Array Date RegExp Object Error'.split(' ').forEach(e =&gt; class2type['[object ' + e + ']'] = e.toLowerCase())
+
+  function type(obj) {
+    if (obj == null) return String(obj)
+    return typeof obj === 'object' ? class2type[Object.prototype.toString.call(obj)] || 'object' : typeof obj
+  }
+</code></pre>
+<p>这里的.call是绑定this对象指向当前的Object对象<br>
+**RegExp：**是正则表达式（regular expression）的简写。</p>
+<h1 id="判断是否存在">判断是否存在</h1>
+<pre><code class="language-js">  if(typeof a!=&quot;undefined&quot;){     //不要去使用 if(a) 因为如果 a 不存在（未声明）则会出错
+      xxx
+    }
+</code></pre>
+<h1 id="检测-某个对象-是不是-另一个对象-的-实例">检测 某个对象 是不是 另一个对象 的 实例</h1>
+<p>（测试一个对象在其原型链中是否存在一个构造函数的prototype属性）</p>
+<pre><code class="language-js">  function test(){};
+  var b = new test();
+  var c = new test();
+  console.log(b instanceof test); //true   可用来判断一个变量是否是某个对象的实例
+  console.log(c == b);  //false
+</code></pre>
+<h1 id="判断一个-实例-是否属于它的-父类型">判断一个 实例 是否属于它的 父类型</h1>
+<p>instanceof 可以在 继承关系 中用来判断一个 实例 是否属于它的 父类型。</p>
+<pre><code class="language-js"> var a = new Array();  
+ console.log(a instanceof Array);  //true
+ console.log(a instanceof Object); //true  因为 Array 是 Object的 子类
+</code></pre>
+<h1 id="判断-对象是否为空-的三种方法">判断 对象是否为空 的三种方法：</h1>
+<pre><code class="language-js">  //方法1：JSON.stringify(xxx)=='{}'    转成字符串，看值是不是空对象
+  c = {};
+  if(JSON.stringify(c)=='{}'){
+    console.log('空对象');  //空对象
+  }
+
+
+  //方法2：for in  有没有数据在它的里面
+  obj = {};
+  function abc(obj){
+    for(var a in obj){
+      console.log('不是空对象');
+    }
+    console.log('空对象');  
+  }
+  abc();  //空对象
+
+
+  //方法3：Object.keys(xxx).length == 0    对象转成数组，再看数组的长度
+    //方法会返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和正常循环遍历该对象时返回的顺序一致 。
+  t = {};
+  if(Object.keys(t).length == 0){
+    console.log('空对象');    //空对象
+  }else{
+    console.log('不是空对象');
+  }
+</code></pre>
+<h1 id="apply的使用">.apply（）的使用</h1>
+<h2 id="1找出数组最大元素">（1）找出数组最大元素</h2>
+<p>JavaScript 不提供找出数组最大元素的函数。结合使用apply方法和Math.max方法，就可以返回数组的最大元素。</p>
+<pre><code class="language-js">var a = [10, 2, 4, 15, 9];
+Math.max.apply(null, a) // 15
+</code></pre>
+<h2 id="2将数组的空元素变为undefined">（2）将数组的空元素变为undefined</h2>
+<p>通过apply方法，利用Array构造函数将数组的空元素变成undefined。</p>
+<pre><code class="language-js">Array.apply(null, ['a', ,'b'])
+// [ 'a', undefined, 'b' ]
+</code></pre>
+<p>空元素与undefined的差别在于，数组的forEach方法会跳过空元素，但是不会跳过undefined。<br>
+因此，遍历内部元素的时候，会得到不同的结果。</p>
+<pre><code class="language-js">var a = ['a', , 'b'];
+
+function print(i) {
+console.log(i);
+}
+
+a.forEach(print)
+// a
+// b
+
+Array.apply(null, a).forEach(print)
+// a
+// undefined
+// b
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[slot插槽]]></title>
+        <id>https://cutezhangq.github.io/post/slot-cha-cao/</id>
+        <link href="https://cutezhangq.github.io/post/slot-cha-cao/">
+        </link>
+        <updated>2020-08-07T03:04:18.000Z</updated>
+        <summary type="html"><![CDATA[<p>👉插槽，也就是slot，👈是组件的一块HTML模板，这块模板显示不显示、以及怎样显示由父组件来决定。<br>
+实际上，一个slot最核心的两个问题在这里就点出来了，是<strong>显示不显示</strong>和<strong>怎样显示</strong>。😘</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>👉插槽，也就是slot，👈是组件的一块HTML模板，这块模板显示不显示、以及怎样显示由父组件来决定。<br>
+实际上，一个slot最核心的两个问题在这里就点出来了，是<strong>显示不显示</strong>和<strong>怎样显示</strong>。😘</p>
+<!-- more -->
+<p>由于插槽是一块模板，所以，对于任何一个组件，从模板种类的角度来分，其实都可以分为<strong>非插槽模板</strong>和<strong>插槽模板</strong>两大类。<br>
+非插槽模板指的是html模板，比如‘div、span、ul、table’这些，非插槽模板的显示与隐藏以及怎样显示由组件自身控制；<br>
+插槽模板是slot，它是一个空壳子，因为它的显示与隐藏以及最后用什么样的html模板显示由父组件控制。但是插槽显示的位置却由子组件自身决定，slot写在组件template的什么位置，父组件传过来的模板将来就显示在什么位置。</p>
+<h1 id="单个插槽-默认插槽-匿名插槽">单个插槽 | 默认插槽 | 匿名插槽</h1>
+<p>首先是单个插槽，单个插槽是vue的官方叫法，但是其实也可以叫它默认插槽，或者与具名插槽相对，我们可以叫它匿名插槽。因为它不用设置name属性。<br>
+单个插槽可以放置在组件的任意位置，但是就像它的名字一样，一个组件中只能有一个该类插槽。相对应的，具名插槽就可以有很多个，只要名字（name属性）不同就可以了。<br>
+下面通过一个例子来展示。<br>
+父组件：</p>
+<pre><code class="language-html">&lt;template&gt;
+    &lt;div class=&quot;father&quot;&gt;
+        &lt;h3&gt;这里是父组件&lt;/h3&gt;
+        &lt;child&gt;
+            &lt;div class=&quot;tmpl&quot;&gt;
+              &lt;span&gt;菜单1&lt;/span&gt;
+              &lt;span&gt;菜单2&lt;/span&gt;
+              &lt;span&gt;菜单3&lt;/span&gt;
+              &lt;span&gt;菜单4&lt;/span&gt;
+              &lt;span&gt;菜单5&lt;/span&gt;
+              &lt;span&gt;菜单6&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/child&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code class="language-html">&lt;template&gt;
+    &lt;div class=&quot;child&quot;&gt;
+        &lt;h3&gt;这里是子组件&lt;/h3&gt;
+        &lt;slot&gt;&lt;/slot&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<p>在这个例子里，因为父组件在里面写了html模板，那么子组件的匿名插槽这块模板就是下面这样。也就是说，子组件的匿名插槽被使用了，是被下面这块模板使用了。</p>
+<pre><code class="language-html">&lt;div class=&quot;tmpl&quot;&gt;
+  &lt;span&gt;菜单1&lt;/span&gt;
+  &lt;span&gt;菜单2&lt;/span&gt;
+  &lt;span&gt;菜单3&lt;/span&gt;
+  &lt;span&gt;菜单4&lt;/span&gt;
+  &lt;span&gt;菜单5&lt;/span&gt;
+  &lt;span&gt;菜单6&lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+<p>最终的渲染结果如图所示：<br>
+<img src="https://cutezhangq.github.io/post-images/1596892088251.png" alt="" loading="lazy"></p>
+<h1 id="具名插槽">具名插槽</h1>
+<p>匿名插槽没有name属性，所以是匿名插槽，那么，插槽加了name属性，就变成了具名插槽。具名插槽可以在一个组件中出现N次，出现在不同的位置。下面的例子，就是一个有两个<strong>具名插槽</strong>和<strong>单个插槽</strong>的组件，这三个插槽被父组件用同一套css样式显示了出来，不同的是内容上略有区别。<br>
+父组件：</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div class=&quot;father&quot;&gt;
+    &lt;h3&gt;这里是父组件&lt;/h3&gt;
+    &lt;child&gt;
+      &lt;div class=&quot;tmpl&quot; slot=&quot;up&quot;&gt;
+        &lt;span&gt;菜单1&lt;/span&gt;
+        &lt;span&gt;菜单2&lt;/span&gt;
+        &lt;span&gt;菜单3&lt;/span&gt;
+        &lt;span&gt;菜单4&lt;/span&gt;
+        &lt;span&gt;菜单5&lt;/span&gt;
+        &lt;span&gt;菜单6&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;tmpl&quot; slot=&quot;down&quot;&gt;
+        &lt;span&gt;菜单-1&lt;/span&gt;
+        &lt;span&gt;菜单-2&lt;/span&gt;
+        &lt;span&gt;菜单-3&lt;/span&gt;
+        &lt;span&gt;菜单-4&lt;/span&gt;
+        &lt;span&gt;菜单-5&lt;/span&gt;
+        &lt;span&gt;菜单-6&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;tmpl&quot;&gt;
+        &lt;span&gt;菜单-&gt;1&lt;/span&gt;
+        &lt;span&gt;菜单-&gt;2&lt;/span&gt;
+        &lt;span&gt;菜单-&gt;3&lt;/span&gt;
+        &lt;span&gt;菜单-&gt;4&lt;/span&gt;
+        &lt;span&gt;菜单-&gt;5&lt;/span&gt;
+        &lt;span&gt;菜单-&gt;6&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/child&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div class=&quot;child&quot;&gt;
+    // 具名插槽
+    &lt;slot name=&quot;up&quot;&gt;&lt;/slot&gt;
+    &lt;h3&gt;这里是子组件&lt;/h3&gt;
+    // 具名插槽
+    &lt;slot name=&quot;down&quot;&gt;&lt;/slot&gt;
+    // 匿名插槽
+    &lt;slot&gt;&lt;/slot&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<p><img src="https://cutezhangq.github.io/post-images/1596892200490.png" alt="" loading="lazy"><br>
+可以看到，父组件通过html模板上的slot属性关联具名插槽。没有slot属性的html模板默认关联匿名插槽。</p>
+<h1 id="作用域插槽-带数据的插槽">作用域插槽 | 带数据的插槽</h1>
+<p>最后，就是我们的作用域插槽。这个稍微难理解一点。官方叫它作用域插槽，实际上，对比前面两种插槽，我们可以叫它带数据的插槽。什么意思呢，就是前面两种，都是在组件的template里面写</p>
+<pre><code class="language-cmd">匿名插槽
+&lt;slot&gt;&lt;/slot&gt;
+具名插槽
+&lt;slot name=&quot;up&quot;&gt;&lt;/slot&gt;
+</code></pre>
+<p>但是作用域插槽要求，在slot上面绑定数据。也就是你得写成大概下面这个样子。</p>
+<pre><code class="language-html">&lt;slot name=&quot;up&quot; :data=&quot;data&quot;&gt;&lt;/slot&gt;
+ export default {
+    data: function(){
+      return {
+        data: ['zhangsan','lisi','wanwu','zhaoliu','tianqi','xiaoba']
+      }
+    },
+}
+</code></pre>
+<p>我们前面说了，插槽最后显示不显示是看父组件有没有在child下面写模板，像下面那样。</p>
+<pre><code class="language-cmd">&lt;child&gt;
+   html模板
+&lt;/child&gt;
+</code></pre>
+<p>可以说是子组件暴露的一个让父组件传入自定义内容的接口。<br>
+写了，插槽就总得在浏览器上显示点东西，东西就是html该有的模样，没写，插槽就是空壳子，啥都没有。<br>
+OK，我们说有html模板的情况，就是父组件会往子组件插模板的情况，那到底插一套什么样的样式呢，这由父组件的html+css共同决定，但是这套样式里面的内容呢？<br>
+<code>正因为作用域插槽绑定了一套数据，父组件可以拿来用。</code>于是，情况就变成了这样：<code>样式父组件说了算，但内容可以显示子组件插槽绑定的。</code><br>
+我们再来对比，作用域插槽跟单个插槽和具名插槽的区别，因为单个插槽和具名插槽不绑定数据，所以父组件提供的模板一般要既包括样式又包括内容，上面的例子中，你看到的文字，“菜单1”，“菜单2”都是父组件自己提供的内容；而作用域插槽，父组件只需要提供一套样式（在确实用作用域插槽绑定的数据的前提下）。<br>
+下面的例子，你就能看到，父组件提供了三种样式(分别是flex、ul、直接显示)，都没有提供数据，数据使用的都是子组件插槽自己绑定的那个数组（一堆人名的那个数组）。<br>
+父组件：</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div class=&quot;father&quot;&gt;
+    &lt;h3&gt;这里是父组件&lt;/h3&gt;
+    &lt;!--第一次使用：用flex展示数据--&gt;
+    &lt;child&gt;
+      &lt;template slot-scope=&quot;user&quot;&gt;          &lt;!--通过slot-scope获取子组件的信息--&gt;
+        &lt;div class=&quot;tmpl&quot;&gt;
+          &lt;span v-for=&quot;item in user.data&quot;&gt;{{item}}&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/template&gt;
+
+    &lt;/child&gt;
+
+    &lt;!--第二次使用：用列表展示数据--&gt;
+    &lt;child&gt;
+      &lt;template slot-scope=&quot;user&quot;&gt;          &lt;!--通过slot-scope获取子组件的信息--&gt;
+        &lt;ul&gt;
+          &lt;li v-for=&quot;item in user.data&quot;&gt;{{item}}&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/template&gt;
+
+    &lt;/child&gt;
+
+    &lt;!--第三次使用：直接显示数据--&gt;
+    &lt;child&gt;
+      &lt;template slot-scope=&quot;user&quot;&gt;              &lt;!--通过slot-scope获取子组件的信息--&gt;
+       {{user.data}}
+      &lt;/template&gt;
+
+    &lt;/child&gt;
+
+    &lt;!--第四次使用：不使用其提供的数据, 作用域插槽退变成匿名插槽--&gt;
+    &lt;child&gt;
+      我就是模板
+    &lt;/child&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+</code></pre>
+<p>子组件：</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div class=&quot;child&quot;&gt;
+
+    &lt;h3&gt;这里是子组件&lt;/h3&gt;
+    // 作用域插槽
+    &lt;slot  :data=&quot;data&quot;&gt;&lt;/slot&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+ export default {
+    data: function(){
+      return {
+        data: ['zhangsan','lisi','wanwu','zhaoliu','tianqi','xiaoba']
+      }
+    }
+}
+</code></pre>
+<p>结果如图所示：<br>
+<img src="https://cutezhangq.github.io/post-images/1596892616696.png" alt="" loading="lazy"></p>
+<h1 id="slot-scope">slot-scope</h1>
+<p><strong>父组件中在使用时：</strong></p>
+<ul>
+<li>默认插槽的话直接在子组件的标签内写入内容即可</li>
+<li>具名插槽是在默认插槽的基础上加上slot属性，值为子组件插槽name属性值</li>
+<li>作用域插槽则是通过<code>slot-scope获取子组件的信息</code>，在内容中使用。这里可以用解构语法去直接获取想要的属性</li>
+</ul>
+<h1 id="v-slot">v-slot</h1>
+<pre><code class="language-cmd">在vue2.6中，上述的API被软废弃（3.0正式废弃），取而代之的是内置指令v-slot，可以缩写为【#】
+</code></pre>
+<p>**子组件用法保持不变，**父组件中</p>
+<ul>
+<li>slot属性弃用，具名插槽通过指令参数<code>v-slot:插槽名</code>的形式传入，可以简化为 <code>#插槽名。</code></li>
+<li><code>slot-scope</code>属性弃用，作用域插槽通过<code>v-slot:xxx=&quot;slotProps&quot;</code>的slotProps来获取子组件传出的属性</li>
+<li>v-slot属性只能在 <code>&lt;template&gt;</code>上使用，但在**【只有默认插槽时】**可以在组件标签上使用</li>
+</ul>
+<pre><code class="language-html">//Parent
+&lt;template&gt;
+  &lt;child&gt;
+   &lt;!--默认插槽--&gt;
+   &lt;template v-slot&gt;
+     &lt;div&gt;默认插槽&lt;/div&gt;
+   &lt;/template&gt;
+   &lt;!--具名插槽--&gt;
+   &lt;template #header&gt;
+     &lt;div&gt;具名插槽&lt;/div&gt;
+   &lt;/template&gt;
+   &lt;!--作用域插槽--&gt;
+   &lt;template #footer=&quot;slotProps&quot;&gt;
+     &lt;div&gt;
+      {{slotProps.testProps}}
+     &lt;/div&gt;
+   &lt;/template&gt;
+  &lt;child&gt;
+&lt;/template&gt;
+</code></pre>
+<h1 id="拓展用法">拓展用法：</h1>
+<ol>
+<li>同样可以通过解构获取v-slot={user},<br>
+还可以重命名v-slot=&quot;{user: newName}&quot;和定义默认值v-slot=&quot;{user = '默认值'}&quot;</li>
+<li>插槽名可以是动态变化的 v-slot:[slotName]</li>
+</ol>
+<p><strong>注意：</strong></p>
+<ol>
+<li>默认插槽名为<code>default</code>，可以省略default直接写<code>v-slot</code>，<br>
+缩写为#时不能不写参数，写成<code>#default</code>（这点所有指令都一样，v-bind、v-on）</li>
+<li>多个插槽混用时，v-slot不能省略default</li>
+</ol>
+<h1 id="作用域插槽的原理">作用域插槽的原理</h1>
+<p>slot本质上是返回VNode的函数，一般情况下，Vue中的组件要渲染到页面上需要经过<br>
+<code>template &gt;&gt; render function &gt;&gt; VNode &gt;&gt; DOM</code>过程。 组件挂载的本质就是执行渲染函数得到VNode，至于data/props/computed这些属性都是给VNode提供数据来源。<br>
+在2.5之前，如果是普通插槽就<strong>直接是VNode</strong>的形式了，而如果是作用域插槽，由于子组件需要在父组件访问子组件的数据，所以父组件下是一个<strong>未执行的函数</strong><code>(slotScope) =&gt; return h('div', slotScope.msg)</code>，接受子组件的slotProps参数，在子组件渲染实例时会调用该函数传入数据。<br>
+在2.6之后，两者合并，普通插槽也变成一个函数，只是不接受参数了。</p>
+<h1 id="总结">总结</h1>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1596938553804.png" alt="" loading="lazy"></figure>
+<h1 id="slot的使用场景">slot的使用场景</h1>
+<ul>
+<li>布局组件、</li>
+<li>表格列、</li>
+<li>下拉选项</li>
+</ul>
+<h1 id="slot-scope的使用场景">slot-scope的使用场景</h1>
+<p>想象一个场景：<br>
+<strong>当你要给同事封装一个列表组件，你就需要使用作用域插槽（注意是列表或者类似列表的组件）</strong><br>
+你开发的这个列表组件要如何使用呢？<br>
+一般来说作为列表组件的调用者，你的同事先做ajax请求，拿到一个这样的数组</p>
+<pre><code class="language-json">   todos: [
+        {
+          id: 0,
+          text: 'ziwei0',
+          isComplete: false
+        },
+        {
+          text: 'ziwei1',
+          id: 1,
+          isComplete: true
+        },
+        {
+          text: 'ziwei2',
+          id: 2,
+          isComplete: false
+        },
+        {
+          text: 'ziwei3',
+          id: 3,
+          isComplete: false
+        }
+      ]
+</code></pre>
+<p>之后会把todso传递给列表组件吧，那么列表组件内部做什么事情呢？<br>
+列表内部肯定会v-for去帮你的同事渲染这个数组嘛。 就类似element-ui里的table组件一样<br>
+问题的关键就在这里<br>
+<strong>列表组件的循环，是发生在组件内部的，所以通过 v-for=&quot;todo in todos&quot; ,列表组件很容易拿到一项todo，但列表拿到数据没用呀，列表只是一个瓜皮，它又不懂业务逻辑这个数据是你同事的业务数据，</strong><br>
+<strong>所以这个数据必须得交给组件的调用者，也就是把数据交给你的同事才对。</strong></p>
+<p>那么你怎样才能把每一项的todo数据给传递出去呢？<br>
+你会发现没有办法！</p>
+<p>无论是用$emit、vuex还是localStorage，可以考虑一下，会发现没有合适的时机，能让你把todo传递出去</p>
+<p>所以为了应对这个场景下，发明了<code>作用域插槽</code>，列表组件可以通过<code>&lt;slot :todo=&quot;todo&quot;&gt;&lt;/slot&gt;</code>传递todo出去<br>
+你的同事可以通过 slot-scope=&quot;slotsProps&quot;<code>拿到todo</code>。<br>
+回答几个疑问，其实如果你看懂上面的问题，应该可以回答下面的问题。这也是我曾经的疑问</p>
+<ul>
+<li>疑问1：一般不是我们传参数来调用组件吗？为什么组件还把数据传递回来？</li>
+</ul>
+<pre><code class="language-cmd">的确，调用ui组件时一般是我们传递配置参数给他们。
+
+但是就像elemnt-ui的table组件，你把数组传递给table后，是不是有时候需要拿到某一行的row对象
+
+并根据row对象里的字段，来判断一些内容的显示隐藏？
+
+因为循环的过程发生在table组件内部，所以table组件可以方便的获取到每一项数据，但是这些数据最终不是给组件的，而是我们自己要用的业务数据。所以也需要一个方式，让调用者能拿到自己想要的数据
+</code></pre>
+<ul>
+<li>疑问2： 既然子组件最终还要把我给他的数据，再返还给我，那我当初还干嘛给它，能不能就自己在父组件里玩？</li>
+</ul>
+<pre><code class="language-cmd">如果你不把数据给子组件当然可以。但是就等于抛弃掉了子组件的封装，只能你直接在父组件自己写一个列表
+
+毕竟你不把数据给子组件，子组件还渲染个锤子？没有父子关系的话，也就不用什么插槽了。
+
+但是咱不是为了封装后，可以复用嘛，总不能永远不用组件嘛
+</code></pre>
+<ul>
+<li>疑问3： 父组件需要子组件的数据？那不会有$emit和vuex嘛，为什么要有slot-scope？</li>
+</ul>
+<pre><code class="language-cmd">$emit和vuex是数据传递的一种方法，但是你可以尝试用$emit和vuex把todo传递给父组件。
+
+你会发现的确没有合适的钩子、时机来$emit数据
+</code></pre>
+<h1 id="26新增用法">2.6新增用法</h1>
+<h2 id="动态插槽名260新增">动态插槽名(2.6.0新增)</h2>
+<p>动态指令参数(需要自己了解)也可以用在v-slot上，来定义动态的插槽名：</p>
+<pre><code class="language-html">&lt;base-layout&gt;
+  &lt;template v-slot:[dynamicSlotName]&gt;
+    ...
+  &lt;/template&gt;
+&lt;/base-layout&gt;
+</code></pre>
+<h2 id="具名插槽的缩写260新增">具名插槽的缩写(2.6.0新增)</h2>
+<p>跟 v-on 和 v-bind 一样，v-slot 也有缩写，即把参数之前的所有内容 (v-slot:) 替换为字符 #。例如 v-slot:header 可以被重写为 #header：<br>
+原来是这样写的：</p>
+<pre><code class="language-html">&lt;div&gt;
+   &lt;template v-slot:header&gt;
+    &lt;h1&gt;Here might be a page title&lt;/h1&gt;
+   &lt;/template&gt;
+
+  &lt;p&gt;A paragraph for the main content.&lt;/p&gt;
+  &lt;p&gt;And another one.&lt;/p&gt;
+
+  &lt;template v-slot:footer&gt;
+    &lt;p&gt;Here some contact info&lt;/p&gt;
+  &lt;/template&gt;
+&lt;/div&gt;  
+</code></pre>
+<p>现在可以这样写：</p>
+<pre><code class="language-html">&lt;div&gt;
+   &lt;template #header&gt;
+    &lt;h1&gt;Here might be a page title&lt;/h1&gt;
+   &lt;/template&gt;
+
+  &lt;p&gt;A paragraph for the main content.&lt;/p&gt;
+  &lt;p&gt;And another one.&lt;/p&gt;
+
+  &lt;template #footer&gt;
+    &lt;p&gt;Here some contact info&lt;/p&gt;
+  &lt;/template&gt;
+&lt;/div&gt;
+</code></pre>
+<p>如果希望使用缩写的话，必须始终以明确插槽名取而代之：</p>
+<pre><code class="language-html">&lt;test #default=&quot;{ usertext }&quot;&gt;
+  {{ usertext.firstName }}
+&lt;/test&gt;
+</code></pre>
+<h1 id="其他示例">其他示例</h1>
+<p>插槽 prop 允许我们将插槽转换为<code>可复用</code>的模板，这些模板可以基于输入的 <code>prop</code>渲染出不同的内容。 这在设计封装数据逻辑同时允许父级组件自定义部分布局的可复用组件时是最有用的。<br>
+例如，我们要实现一个 <code>&lt;todo-list&gt;</code>组件，它是一个列表且包含布局和过滤逻辑：</p>
+<pre><code class="language-html">&lt;ul&gt;
+  &lt;li
+    v-for=&quot;todo in filteredTodos&quot;
+    v-bind:key=&quot;todo.id&quot;
+  &gt;
+    {{ todo.text }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>我们可以将每个<code>todo</code>作为父级组件的插槽，以此通过父级组件对其进行控制，然后将<code>todo</code> 作为一个插槽<code>prop</code>进行绑定：</p>
+<pre><code class="language-html">&lt;ul&gt;
+  &lt;li
+    v-for=&quot;todo in filteredTodos&quot;
+    v-bind:key=&quot;todo.id&quot;
+  &gt;
+    &lt;!--
+    我们为每个 todo 准备了一个插槽，
+    将 `todo` 对象作为一个插槽的 prop 传入。
+    --&gt;
+    &lt;slot name=&quot;todo&quot; v-bind:todo=&quot;todo&quot;&gt;
+      &lt;!-- 后备内容 --&gt;
+      {{ todo.text }}
+    &lt;/slot&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>现在当我们使用 <code>&lt;todo-list&gt;</code>组件的时候，我们可以选择为 todo 定义一个不一样的 <code>&lt;template&gt;</code>作为替代方案，并且可以从子组件获取数据：</p>
+<pre><code class="language-html">&lt;todo-list v-bind:todos=&quot;todos&quot;&gt;
+  &lt;template v-slot:todo=&quot;{ todo }&quot;&gt;
+    &lt;span v-if=&quot;todo.isComplete&quot;&gt;✓&lt;/span&gt;
+    {{ todo.text }}
+  &lt;/template&gt;
+&lt;/todo-list&gt;
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[computed，watch，method执行的先后顺序]]></title>
+        <id>https://cutezhangq.github.io/post/computedwatchmethod-zhi-xing-de-xian-hou-shun-xu/</id>
+        <link href="https://cutezhangq.github.io/post/computedwatchmethod-zhi-xing-de-xian-hou-shun-xu/">
+        </link>
+        <updated>2020-08-06T13:57:16.000Z</updated>
+        <summary type="html"><![CDATA[<p>👉他们的执行顺序为：<code>默认加载的时候先computed再watch，不执行methods；等触发某一事件后，则是：先methods再watch。</code></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>👉他们的执行顺序为：<code>默认加载的时候先computed再watch，不执行methods；等触发某一事件后，则是：先methods再watch。</code></p>
+<!-- more -->
+<h1 id="computed">computed：</h1>
+<p>计算属性将被混入到 Vue 实例中。所有 getter 和 setter 的 this 上下文自动地绑定为 Vue 实例。</p>
+<h1 id="methods">methods：</h1>
+<p>methods 将被混入到 Vue 实例中。可以直接通过 VM 实例访问这些方法，或者在指令表达式中使用。方法中的 this 自动绑定为 Vue 实例。</p>
+<h1 id="watch">watch：</h1>
+<p>是一种更通用的方式来观察和响应 Vue 实例上的数据变动。一个对象，键是需要观察的表达式，值是对应回调函数。值也可以是方法名，或者包含选项的对象。Vue 实例将会在实例化时调用 $watch()，遍历 watch 对象的每一个属性。</p>
+<p>通俗来讲，</p>
+<p>computed是在HTML DOM加载后马上执行的，如赋值；</p>
+<p>而methods则必须要有一定的触发条件才能执行，如点击事件；</p>
+<p>watch呢？它用于观察Vue实例上的数据变动。对应一个对象，键是观察表达式，值是对应回调。值也可以是方法名，或者是对象，包含选项。</p>
+<p>所以他们的执行顺序为：<code>默认加载的时候先computed再watch，不执行methods；等触发某一事件后，则是：先methods再watch。</code></p>
+<p>下面的例子可以做为说明。</p>
+<p>computed 属性 vs watched 属性：Vue 确实提供了一种更通用的方式来观察和响应 Vue 实例上的数据变动：watch 属性。当你有一些数据需要随着其它数据变动而变动时，你很容易滥用 watch——特别是如果你之前使用过 AngularJS。然而，通常更好的想法是使用 computed 属性而不是命令式的 watch 回调。</p>
+<h1 id="computed与watch的区别">computed与watch的区别</h1>
+<p>在很多情况下, computed会比watch使用起来更加方便,但是当需要在数据变化时执行异步或者开销比较大的情况下,用watch会更加合适。<br>
+例如官网提供的例子(问与答。watch观察question的值,若值有改变会执行方法getAnswer,并且根据question不同的值, answer会给出不同的回答,并且会异步调用API返回相应的值,这些都是计算属性做不到的。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>目的</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>computed</td>
+<td>依赖变动实时更新数据</td>
+<td>更新数据</td>
+</tr>
+<tr>
+<td>watch</td>
+<td>观察某一特定的值，执行特定的函数</td>
+<td>观察数据</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-js">&lt;divid=&quot;demo&quot;&gt;{{ fullName }}&lt;/div&gt;
+
+使用watch方法观察数据（单个数据）
+var vm = new Vue({
+el: '#demo',
+data: {
+firstName: 'Foo',
+lastName: 'Bar',
+fullName: 'Foo Bar'
+},
+watch: {
+firstName: function (val) {
+this.fullName = val + ' ' + this.lastName
+},
+lastName: function (val) {
+this.fullName = this.firstName + ' ' + val
+}
+}
+})
+
+使用computed方法计算数据（多个数据）
+var vm = new Vue({
+el: '#demo',
+data: {
+firstName: 'Foo',
+lastName: 'Bar'
+},
+computed: {
+fullName: function () {
+return this.firstName + ' ' + this.lastName
+}
+}
+})
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[JSON.stringify与"环"问题]]></title>
+        <id>https://cutezhangq.github.io/post/jsonstringify-yu-huan-wen-ti/</id>
+        <link href="https://cutezhangq.github.io/post/jsonstringify-yu-huan-wen-ti/">
+        </link>
+        <updated>2020-08-06T10:50:32.000Z</updated>
+        <summary type="html"><![CDATA[<p>JSON.stringify在解析接口数据时，我们经常使用到，那么它为什么会产生“环“呢，啥是”环“和？😨<br>
+🙄博主酱的脑海中一堆问号，赶快来了解下了！</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>JSON.stringify在解析接口数据时，我们经常使用到，那么它为什么会产生“环“呢，啥是”环“和？😨<br>
+🙄博主酱的脑海中一堆问号，赶快来了解下了！</p>
+<!-- more -->
+<p>JSON.stringify的功能是，将一个js字面量对象转化为一个JSON格式的字符串，例如：</p>
+<pre><code class="language-js">const obj = {a:1,b:2}
+JSON.stringify(obj)     //  ‘ {“a”:1,“b”:2}’
+</code></pre>
+<!-- more -->
+<p>当要转化的对象有**“环”**存在时（<strong>子节点属性赋值了父节点的引用</strong>），为了避免死循环，JSON.stringify 会抛出异常，例如：</p>
+<pre><code class="language-js">const obj = {
+  foo: {
+    name: 'foo',
+    bar: {
+      name: 'bar'
+      baz: {
+        name: 'baz',
+        aChild: null  //待会让它指向obj.foo
       }
     }
   }
-  return newobj;//返回深度克隆后的对象
-};
+}
+obj.foo.bar.baz.aChild = obj.foo // foo-&gt;bar-&gt;baz-&gt;aChild-&gt;foo 形成环
+JSON.stringify(obj) // =&gt; TypeError: Converting circular structure to JSON 类型错误:将循环结构转换为JSON
 </code></pre>
-<pre><code class="language-js">    var obj = {a:1};
-    function newobj(obj) {
-      var str, newobj = obj.constructor === Array ? [] : {}; //constructor 属性返回对创建此对象的数组函数的引用。创建相同类型的空数据
-      if (typeof obj !== 'object') {
-        return;
-      } else {
-        for (var i in obj) {
-          if (typeof obj[i] === 'object') { //判断对象的这条属性是否为对象
-            newobj[i] = newObj(obj[i]); //若是对象进行嵌套调用
-          } else {
-            newobj[i] = obj[i];
-          }
+<p>请完善以下“环”检查器函数 cycleDetector，当入参对象中有环时返回 true，否则返回 false。</p>
+<pre><code class="language-js">function cycleDetector(obj) {   
+  // 请添加代码
+}
+</code></pre>
+<p>“环”的形成是因为对象的子节点属性赋值了父节点的引用，所以我们需要记录下父节点的地址，然后再拿其子节点的属性与之前记录下的父节点地址做一个比较，当结果一致时，就形成了“环”。</p>
+<p>那么，在“环”检测器函数中，我们首先需要遍历这个对象的属性，前面提到了引用，那么我们只需对Object类型的属性进行处理即可（简单数据类型不存在引用关系）。对于Objcet类型的属性，我们先与记录下来的父节点地址做一个对比，如无匹配项，将当前属性地址记录下来，然后遍历其子节点属性，一层一层找下去。下面开始上代码：</p>
+<pre><code class="language-js">function cycleDetector(obj){
+    var hasCircle = false,  //  定义一个变量，标志是否有环
+    cache = [];          //  定义一个数组，来保存对象类型的属性值
+    (function(obj){
+        var keys = Object.keys(obj);    //获取当前对象的属性数组——key是获取属性
+             for (var i = 0; i &lt; keys.length; i++) {
+            var key = keys[i];
+            var value = obj[key];
+            if (typeof value == 'object' &amp;&amp; value !== null) {
+                var index = cache.indexOf(value)
+                if (index !== -1) {
+                    hasCircle = true
+                    break
+                } else {
+                    cache.push(value)
+                    arguments.callee(value)
+                    cache.pop()      //  注意：这里要推出数据，因为递归返回，后面遍历的属性不是这个数据的子属性
+                }
+            }
         }
-      }
-      return newobj; //返回深度克隆后的对象
-    };
+    })(obj)
+}
 
-    var b = newobj(obj);
-    b.a = 2;
-    console.log(obj.a); // 1
-    console.log(b.a);   // 2 
 </code></pre>
-<h1 id="3-应用es6的语法对象展开运算符进行对象的展开赋值">3、应用es6的语法对象展开运算符——进行对象的展开赋值</h1>
-<p>应用es6的语法对象展开运算符：进行对象的展开赋值</p>
-<pre><code class="language-js">var obj = {a:0}
-var b = {...obj}
+<p>补充：<br>
+<strong>Object.keys</strong> 返回一个所有元素为字符串的数组，其元素来自于从给定的object上面可直接枚举的属性。这些属性的顺序与手动遍历该对象属性时的一致。<br>
+<strong>测试用例</strong></p>
+<pre><code class="language-js">/* 测试一 */
+
+const obj = {
+  foo: {
+    name: 'foo',
+    bar: {
+      name: 'bar'
+      baz: {
+        name: 'baz',
+        aChild: null  //待会让它指向obj.foo
+      }
+    }
+  }
+}
+obj.foo.bar.baz.aChild = obj.foo // foo-&gt;bar-&gt;baz-&gt;aChild-&gt;foo 形成环
 </code></pre>
-<pre><code class="language-js">var obj = {a:0}
-var b = {...obj}
-b.a = 2;
-console.log(obj.a); // 0
-console.log(b.a);   // 2 
+<pre><code class="language-js">/* 测试二 */
+
+var obj = {
+    foo: {
+        name: 'foo',
+        bar: {
+            name: 'bar',
+            baz: {
+                name: 'baz',
+                aChild: null
+            }
+        }
+    },
+    aaa: {
+        name: &quot;test&quot;,
+        bbb: null
+    }
+}
+obj.aaa.bbb = obj.foo;   //  aaa-&gt;bbb-&gt;bar-&gt;baz-&gt;aChild-&gt;null 不形成环
 </code></pre>
-<p>基本数据类型：存放的就是 实际的数据，可直接复制<br>
-克隆数据：对象/数组</p>
-<h1 id="如何深拷贝一个数组">如何深拷贝一个数组？</h1>
-<h1 id="concat">concat</h1>
-<p>concat() 方法用于合并两个或多个<strong>数组</strong>。此方法不会更改现有数组，而是返回一个新数组。</p>
-<pre><code class="language-js">//concat()    深复制
-  let arr_0 = [1,3,{name:'hhh'}];
-  let arr_1 = arr_0.concat();
-  arr_1[1] = 6
-  console.log(arr_0)  // [1, 3, {name: &quot;hhh&quot;}]
-  console.log(arr_1)  // [1, 6, {name: &quot;hhh&quot;}]
-</code></pre>
-<h1 id="浅拷贝深拷贝-区别">浅拷贝/深拷贝 区别：</h1>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[JWT认证原理（JSON Web Token）]]></title>
+        <id>https://cutezhangq.github.io/post/jwt-ren-zheng-yuan-li/</id>
+        <link href="https://cutezhangq.github.io/post/jwt-ren-zheng-yuan-li/">
+        </link>
+        <updated>2020-07-31T06:27:29.000Z</updated>
+        <summary type="html"><![CDATA[<p><code>Json web token (JWT)</code>, 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，特别适用于👉分布式站点的<code>单点登录（SSO）</code>场景👈。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token也可直接被用于认证，也可被加密。👀</p>
+<p>JWT认证原理（JSON Web Token）</p>
+<p>互联网服务离不开用户认证。一般流程是下面这样。🙌</p>
+]]></summary>
+        <content type="html"><![CDATA[<p><code>Json web token (JWT)</code>, 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，特别适用于👉分布式站点的<code>单点登录（SSO）</code>场景👈。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token也可直接被用于认证，也可被加密。👀</p>
+<p>JWT认证原理（JSON Web Token）</p>
+<p>互联网服务离不开用户认证。一般流程是下面这样。🙌</p>
+<!-- more -->
+<h1 id="一-传统的session认证">一、传统的Session认证</h1>
+<h2 id="流程session">流程session</h2>
+<p>认证的流程一般如下：</p>
 <ul>
-<li>拷贝 产生了新的数据     ：深拷贝</li>
-<li>拷贝 数据的引用    ：浅拷贝</li>
+<li>1.用户向服务器发送用户名和密码。</li>
+<li>2.服务器验证通过后，在当前对话（session）里面保存相关数据，比如用户角色、登录时间等等。</li>
+<li>3.服务器向用户返回一个 session_id，写入用户的 Cookie。</li>
+<li>4.用户随后的每一次请求，都会通过 Cookie，将 session_id 传回服务器。</li>
+<li>5.服务器收到 session_id，找到前期保存的数据，由此得知用户的身份。</li>
 </ul>
-<h1 id="浅拷贝对象数组特点">浅拷贝（对象/数组）：特点：</h1>
+<h2 id="缺点">缺点</h2>
 <ul>
-<li>拷贝的引用，<br>
-= 修改拷贝后的数据会影响原数据</li>
+<li>session保存在服务器，当注册用户很多，会增加服务器的开销。</li>
+<li>用户认证之后，服务端做认证记录，如果认证的记录被保存在内存中的话，这意味着用户下次请求还必须要请求在这台服务器上,这样才能拿到授权的资源，这样在分布式的应用上，限制了负载均衡的能力。这也意味着限制了应用的扩展能力。</li>
+<li>session是基于cookie来进行用户识别的, cookie如果被截获，用户就会很容易受到<code>跨站请求伪造（CSRF）</code>的攻击。</li>
 </ul>
-<h1 id="深拷贝特点">深拷贝：特点：</h1>
+<p>这种模式的问题在于，扩展性（scaling）不好。单机当然没有问题，如果是服务器集群，或者是跨域的服务导向架构，就要求 session 数据共享，每台服务器都能够读取 session。</p>
+<p>举例来说，A 网站和 B 网站是同一家公司的关联服务。现在要求，用户只要在其中一个网站登录，再访问另一个网站就会自动登录，请问怎么实现？</p>
+<p>一种解决方案是 <code>session 数据持久化</code>，写入数据库或别的持久层。各种服务收到请求后，都向持久层请求数据。这种方案的优点是架构清晰，缺点是工程量比较大。另外，持久层万一挂了，就会单点失败。</p>
+<p>另一种方案是服务器索性不保存 session 数据了，所有数据都<code>保存在客户端</code>，每次请求都发回服务器。<code>JWT</code>就是这种方案的一个代表。</p>
+<h1 id="二-jwt-认证">二、JWT 认证</h1>
+<h2 id="token">token</h2>
+<p><code>JWT</code>是基于<code>token</code>的鉴权机制类似于<code>http协议</code>也是无状态的，它不需要在服务端去保留用户的认证信息或者会话信息。<br>
+这就意味着基于token认证机制的应用不需要去考虑用户在哪一台服务器登录了，这就为应用的扩展提供了便利。</p>
+<h2 id="流程">流程</h2>
 <ul>
-<li>生成新数据，</li>
-<li>不影响原数据</li>
+<li>1.用户使用用户名密码来请求服务器。</li>
+<li>2.服务器进行验证用户的信息</li>
+<li>3.服务器通过验证发送给用户一个token</li>
+<li>4.客户端存储token，并在每次请求时附送上这个token值</li>
+<li>5.服务端验证token值，并返回数据</li>
 </ul>
-<h1 id="常用的拷贝技术">常用的拷贝技术</h1>
+<p>这个token必须要在每次请求时传递给服务端，它应该保存在请求头里， 另外，服务端要支持<code>CORS(跨来源资源共享)策略</code>，一般我们在服务端这么做就可以了<code>Access-Control-Allow-Origin: *</code>。</p>
+<h2 id="jwt-的原理">JWT 的原理</h2>
+<p>JWT 的原理是，服务器认证以后，生成一个 JSON 对象，发回给用户，就像下面这样。</p>
+<pre><code class="language-json">{
+  &quot;姓名&quot;: &quot;张三&quot;,
+  &quot;角色&quot;: &quot;管理员&quot;,
+  &quot;到期时间&quot;: &quot;2018年7月1日0点0分&quot;
+}
+</code></pre>
+<p>以后，用户与服务端通信的时候，都要发回这个 JSON 对象。服务器完全只靠这个对象认定用户身份。为了防止用户篡改数据，服务器在生成这个对象的时候，会加上签名（详见后文）。<br>
+服务器就不保存任何 session 数据了，也就是说，服务器变成无状态了，从而比较容易实现扩展。</p>
+<h1 id="三-jwt-的数据结构">三、JWT 的数据结构</h1>
+<pre><code class="language-js">    const accessToken =    &quot;eyJhbGciOiJIUzI1NiJ9.eyJvcGVuSWQiOiJvVjc2QndpYVVYcGcxYUo2S1RDb3hQbWppRHg0IiwiaXNzIjoib3JhbmdlMiIsImRldmljZUlkIjoiZ2hfOGY0ODdhNjEyZmM5XzkzNzdjYjk4YWU0MDU3NzgiLCJpYXQiOjE1OTQ4MDYzMTJ9.6kS29myZlCUxQqvZOEGmhJhQ66NCwk_raB5HGRGhr7M&quot;
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1597647417511.png" alt="" loading="lazy"></figure>
+<p>JWT 的三个部分依次如下:</p>
+<pre><code class="language-cmd">Header（头部）
+Payload（负载）
+Signature（签名）
+</code></pre>
+<p>写成一行，就是下面的样子。<br>
+Header.Payload.Signature<br>
+下面依次介绍这三个部分。</p>
+<h2 id="header">Header</h2>
+<p>Header 部分是一个 JSON 对象，描述 JWT 的元数据，通常是下面的样子。</p>
+<pre><code class="language-json">{
+  &quot;alg&quot;: &quot;HS256&quot;,
+  &quot;typ&quot;: &quot;JWT&quot;
+}
+</code></pre>
+<p>上面代码中，<code>alg</code>属性表示签名的算法（algorithm），默认是 HMAC SHA256（写成 HS256）；<code>typ</code>属性表示这个令牌（token）的类型（type），JWT 令牌统一写为JWT。<br>
+最后，将上面的 JSON 对象使用 Base64URL 算法（详见后文）转成字符串。</p>
+<h2 id="payload">Payload</h2>
+<p>载荷就是存放有效信息的地方。这些有效信息包含三个部分:<br>
+标准中注册的声明<br>
+公共的声明<br>
+私有的声明<br>
+Payload 部分也是一个 JSON 对象，用来存放实际需要传递的数据。JWT 规定了7个官方字段，供选用。</p>
+<pre><code class="language-cmd">iss (issuer)：签发人
+exp (expiration time)：过期时间
+sub (subject)：主题
+aud (audience)：受众
+nbf (Not Before)：生效时间
+iat (Issued At)：签发时间
+jti (JWT ID)：编号
+</code></pre>
+<p>除了官方字段，你还可以在这个部分定义私有字段，下面就是一个例子。</p>
+<pre><code class="language-json">{
+  &quot;sub&quot;: &quot;1234567890&quot;,
+  &quot;name&quot;: &quot;John Doe&quot;,
+  &quot;admin&quot;: true
+}
+</code></pre>
+<p>注意，JWT 默认是不加密的，任何人都可以读到，所以不要把秘密信息放在这个部分。<br>
+这个 JSON 对象也要使用 Base64URL 算法转成字符串。</p>
+<h2 id="signature">Signature</h2>
+<p>JWT的第三部分是一个签证信息，这个签证信息由三部分组成：</p>
+<ul>
+<li>header (base64加密)</li>
+<li>payload (base64加密)</li>
+<li>secret 密钥<br>
+Signature 部分是对前两部分的签名，防止数据篡改。<br>
+首先，需要指定一个密钥（secret）。这个密钥只有服务器才知道，不能泄露给用户。然后，使用 Header 里面指定的签名算法（默认是 HMAC SHA256），按照下面的公式产生签名。</li>
+</ul>
+<pre><code class="language-cmd">HMACSHA256(
+  base64UrlEncode(header) + &quot;.&quot; +
+  base64UrlEncode(payload),
+  secret)
+</code></pre>
+<p>算出签名以后，把 Header、Payload、Signature 三个部分拼成一个字符串，每个部分之间用&quot;点&quot;（.）分隔，就可以返回给用户。</p>
+<p><strong>注意</strong>：<code>secret</code>是保存在服务器端的，<code>jwt</code>的签发生成也是在服务器端的，<code>secret</code>就是用来进行<code>jwt</code>的签发和<code>jwt</code>的验证，所以，它就是你服务端的<code>私钥</code>，在任何场景都不应该流露出去。一旦客户端得知这个<code>secret</code>, 那就意味着客户端是可以<code>自我签发jwt</code>了。如果觉得密钥泄露了，请及时修改。</p>
+<h2 id="base64url">Base64URL</h2>
+<p>前面提到，Header 和 Payload 串型化的算法是 Base64URL。这个算法跟 Base64 算法基本类似，但有一些小的不同。<br>
+JWT 作为一个令牌（token），有些场合可能会放到 URL（比如 api.example.com/?token=xxx）。Base64 有三个字符<code>+、/和=</code>，在 URL 里面有特殊含义，所以要被替换掉：<code>=</code>被省略、<code>+</code>替换成<code>-</code>，<code>/</code>替换成<code>_</code> 。这就是 Base64URL 算法。</p>
+<h1 id="五-jwt-的几个特点">五、JWT 的几个特点</h1>
+<p>（1）JWT 默认是不加密，但也是可以加密的。生成原始 Token 以后，可以用密钥再加密一次。<br>
+（2）JWT 不加密的情况下，不能将秘密数据写入 JWT。<br>
+（3）JWT 不仅可以<code>用于认证</code>，也可以用于<code>交换信息</code>。有效使用 JWT，可以<code>降低服务器查询数据库的次数</code>。<br>
+（4）JWT 的最大缺点是，由于服务器不保存 session 状态，因此无法在使用过程中废止某个 token，或者更改 token 的权限。也就是说，一旦 JWT 签发了，在到期之前就会始终有效，除非服务器部署额外的逻辑。<br>
+（5）JWT 本身包含了认证信息，一旦泄露，任何人都可以获得该令牌的所有权限。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证。<br>
+（6）为了减少盗用，JWT 不应该使用 HTTP 协议明码传输，要使用 HTTPS 协议传输。</p>
+<p>案例：request.js</p>
+<pre><code class="language-js">import axios from 'axios'
+import global from '../../api/global'
+import router from '../../router/router'
+// 拿到token
+function getAccessToken() {
+    // 从localStorage中获取token
+    //let accessToken = localStorage.getItem('accessToken')
+    const accessToken = &quot;eyJhbGciOiJIUzI1NiJ9.eyJvcGVuSWQiOiJvVjc2QndpYVVYcGcxYUo2S1RDb3hQbWppRHg0IiwiaXNzIjoib3JhbmdlMiIsImRldmljZUlkIjoiZ2hfOGY0ODdhNjEyZmM5XzkzNzdjYjk4YWU0MDU3NzgiLCJpYXQiOjE1OTQ4MDYzMTJ9.6kS29myZlCUxQqvZOEGmhJhQ66NCwk_raB5HGRGhr7M&quot;
+    if (accessToken != null&amp;&amp; refreshToken !== undefined) {
+        return &quot;Bearer &quot; + accessToken
+    }
+}
+
+// 创建一个axios实例
+const axiosJWT = axios.create({
+    baseURL: global.API,
+    timeout: 300000,
+    headers: {
+        'Authorization': getAccessToken(),
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+    }
+})
+
+async function refreshToken() {    //之前的逻辑是去发送请求拿到刷新的token(refreshToken)
+    // instance是当前request.js中已创建的axios实例
+    // return await axiosBASIC.get('/auth/reissueToken', {
+    //   params: {
+    //     refreshToken: getRefreshToken()
+    //   }
+    // })
+    return await axiosBASIC.get('/auth/issueToken', {
+    params: {
+      openId: &quot;oV76BwiaUXpg1aJ6KTCoxPmjiDx4&quot;
+    }
+  })
+}
+
+
+// 给实例添加一个setToken方法，用于登录后将最新token动态添加到header，同时将token保存在localStorage中
+axiosJWT.setToken = (accessToken) =&gt; {
+    localStorage.setItem('accessToken', accessToken)
+    axiosJWT.defaults.headers['Authorization'] = &quot;Bearer &quot;+accessToken
+}
+
+// 是否正在刷新的标记
+let isRefreshing = false
+// 重试队列，每一项将是一个待执行的函数形式
+let requests = []
+
+
+// 响应拦截
+axiosJWT.interceptors.response.use(response =&gt; {
+        const {code} = response.data
+        // 接下来会在这里进行token过期重发逻辑处理
+        switch(code){
+            case 604:
+                //非法token！
+                break
+            case 603:
+                //缺少token！
+            case 605:
+                //accessToken已过期！
+                //获取当前失败的请求
+                const config = response.config
+                if (!isRefreshing) {
+                    isRefreshing = true
+                   return refreshToken()
+                        .then(res =&gt; {
+                            const {code} = res.data
+                            switch(code){
+                                case 200:
+                                    //refreshToken有效，刷新Token成功
+                                    //将最新的token更新到header中，同时保存在localStorage中
+                                    const {accessToken} = res.data.data
+                                    console.log('access_token====='+accessToken)
+                                    axiosJWT.setToken(accessToken)
+                                    // 刷新下之前的请求配置
+                                    config.headers['Authorization'] = &quot;Bearer &quot;+accessToken
+                                    config.baseURL = ''
+                                    //已经刷新了token，将所有队列中的请求进行重试
+                                    requests.forEach(cb =&gt; cb(accessToken))
+                                    //清空队列
+                                    requests = []
+                                    // 重试之前的请求并返回promise
+                                    return axiosJWT(config)
+                                case 500:
+                                case 606:
+                                    //refreshToken过期
+                                   router.push(&quot;/auth&quot;)
+                            }
+                        })
+                        .finally(() =&gt; {
+                            //刷新成功，恢复标志位
+                            isRefreshing = false
+                        })
+                } else {
+                    // 正在刷新token，返回一个未执行resolve的promise
+                    return new Promise((resolve) =&gt; {
+                        // 将resolve放进队列，用一个函数形式来保存，等token刷新后直接执行
+                        requests.push((accessToken) =&gt; {
+                            config.baseURL = ''
+                            config.headers['Authorization'] = &quot;Bearer &quot;+accessToken
+                            resolve(axiosJWT(config))
+                        })
+                    })
+                }
+            case 701:
+                //JWT认证失败!
+                break
+            default: 
+            return response.data
+        }
+    },error =&gt; {
+        return Promise.reject(error)
+    })
+
+export  {
+    axiosJWT,
+    axiosBASIC
+}
+</code></pre>
 ]]></content>
     </entry>
     <entry>
@@ -765,7 +1300,7 @@ console.log(b.a);   // 2
         <id>https://cutezhangq.github.io/post/vue-router-zhong-chuan-can-de-fang-shi-du-you-na-xie/</id>
         <link href="https://cutezhangq.github.io/post/vue-router-zhong-chuan-can-de-fang-shi-du-you-na-xie/">
         </link>
-        <updated>2020-08-11T13:11:46.000Z</updated>
+        <updated>2020-07-11T13:11:46.000Z</updated>
         <summary type="html"><![CDATA[<p>没事就需要翻翻vue官网，好长时间不看了。<a href="https://router.vuejs.org/zh/guide/essentials/passing-props.html#%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%BC%8F">Vue路由组件传参</a>🏃‍♀🏃<br>
 主要从this.$router.push的name和params、path和qurey；router-link :to传参来回答</p>
 ]]></summary>
@@ -942,147 +1477,748 @@ this.$attrs['name']
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[奇淫巧技]]></title>
-        <id>https://cutezhangq.github.io/post/qi-yin-qiao-ji/</id>
-        <link href="https://cutezhangq.github.io/post/qi-yin-qiao-ji/">
+        <title type="html"><![CDATA[笔试-题目整理1-2017字节]]></title>
+        <id>https://cutezhangq.github.io/post/bi-shi-zheng-li/</id>
+        <link href="https://cutezhangq.github.io/post/bi-shi-zheng-li/">
         </link>
-        <updated>2020-08-11T01:49:25.000Z</updated>
-        <summary type="html"><![CDATA[<p>🙈🙉🙊本文收录一些计算的技巧，让功能的实现不止一种！<br>
-还在持续更新中...✨<br>
-👉对数据进行奇偶判断<br>
-👉判断类型 封装（可判断所有类型）<br>
-👉判断是否存在<br>
-👉检测 某个对象 是不是 另一个对象 的 实例<br>
-👉判断一个 实例 是否属于它的 父类型</p>
+        <updated>2020-06-16T07:41:25.000Z</updated>
+        <summary type="html"><![CDATA[<p>这里收录了部分字节2017的笔试题，一起来看看叭，查漏补缺鸭😘<br>
+涉及的众多的基础知识点....</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>🙈🙉🙊本文收录一些计算的技巧，让功能的实现不止一种！<br>
-还在持续更新中...✨<br>
-👉对数据进行奇偶判断<br>
-👉判断类型 封装（可判断所有类型）<br>
-👉判断是否存在<br>
-👉检测 某个对象 是不是 另一个对象 的 实例<br>
-👉判断一个 实例 是否属于它的 父类型</p>
+        <content type="html"><![CDATA[<p>这里收录了部分字节2017的笔试题，一起来看看叭，查漏补缺鸭😘<br>
+涉及的众多的基础知识点....</p>
 <!-- more -->
-<h1 id="对数据进行奇偶判断">对数据进行奇偶判断</h1>
-<p>普通选手：</p>
-<pre><code class="language-js">const n = 11;
-if(n%2 == 1){
-   console.log('奇数')
-}else{
-    console.log('偶数')
+<p>#【1.】变量a是一个64位有符号的整数，初始值用16进制表示为：0Xf000000000000000； 变量b是一个64位有符号的整数，初始值用16进制表示为：0x7FFFFFFFFFFFFFFF。 则a-b的结果用10进制表示为多少？（）</p>
+<h2 id="答案">答案：</h2>
+<p><strong>方案1</strong><br>
+0Xf000000000000000补码为1111000000000000000000000000000000000000000000000000000000000000<br>
+0x7FFFFFFFFFFFFFFF补码为0111111111111111111111111111111111111111111111111111111111111111<br>
+a-b=a+(-b)=<br>
+1111000000000000000000000000000000000000000000000000000000000000+<br>
+1000000000000000000000000000000000000000000000000000000000000001=<br>
+10111000000000000000000000000000000000000000000000000000000000001(高位溢出舍去)<br>
+则结果为<br>
+0111000000000000000000000000000000000000000000000000000000000001=<br>
+2<sup>62+2</sup>61+2^60+1</p>
+<pre><code class="language-cmd"> ①  原码：
+
+　　原码是指将最高位作为符号位(0表示正，1表示负)，其它数字位代表数值本身的绝对值的数字表示方式。
+
+　　例如：数字6 在计算机中原码表示为：0 000 0110
+
+　　其中，第一个数字0是符号位，0表示正数，0 000110是数字6的二进制数据表示。
+
+　　数字－6 在计算机中原码表示为：1 000 0110
+
+　　以上是在8位计算机中的原码表示，如果在32位或16位计算机中，表示方法也是一样的，只是多了几个数字0而已。
+
+　　例如，在32位 计算机中数字6 的原码表示为：00000000 0000 0000 0000 0000 0000 0110
+
+　　在16位 计算机中数字6 的原码表示为：00000000 0000 0110
+</code></pre>
+<pre><code class="language-cmd">②   反码：
+
+　　反码表示规则为：如果是正数，则表示方法和原码一样；如果是负数，符号位不变，其余各位取反，则得到这个数字的反码表示形式。
+
+　　例如，数字6 在8位 计算机中的反码就是它的原码：00000110
+
+　　数字－6 在 8位计算机中的反码为：11111001
+</code></pre>
+<pre><code class="language-cmd">③   补码
+
+　　补码是计算机表示数据的一般方式，其规则为：如果是整数，则表示方法和原码一样；如果是负数，则将数字的反码加上1(相当于将原码数值位取反然后在最低位加1)。
+
+　　例如：数字6 在8位 计算机中的补码就是它的原码：00000110
+
+    数字－6 在8 位 计算机中的补码为：1111 1010
+</code></pre>
+<p><strong>方案2</strong><br>
+0x7FFFFFFFFFFFFFFF+1=0X8000000000000000，那么<br>
+a-b=0Xf000000000000000-0X8000000000000000+1<br>
+=0X7000000000000001<br>
+=16<sup>15*7+16</sup>0<em>1<br>
+=2^60</em>7+1<br>
+=2<sup>60*(2</sup>2+2<sup>1+2</sup>0)+1<br>
+=2<sup>62+2</sup>61+2^60+1</p>
+<!-- more -->
+<p>#【2.】得到的结果分别是什么？（）</p>
+<pre><code class="language-js">console.log(([])?true:false); 
+console.log(([]==false?true:false)); 
+console.log(({}==false)?true:false) 
+</code></pre>
+<h2 id="结果true-true-false">结果：true true false</h2>
+<p>题考察类型转换，三元运算符先“分清是非”，再决定今后该走哪条路，“==”运算符比较“喜欢”Number类型。下面是题目的类型转换结果：</p>
+<pre><code class="language-js">Boolean([]); //true
+Number([]); //0
+Number({}); // NaN
+Number(false); //0
+</code></pre>
+<p>因此：</p>
+<pre><code class="language-js">console.log(([])?true:fasle);// =&gt; console.log((true)?true:false);
+console.log([]==false?true:false); // =&gt; console.log(0==0?true:false);
+console.log(({}==false)?true:false); // =&gt; console.log((NaN==0)?true:false);
+</code></pre>
+<p><code>《JavaScript权威指南》的部分相关知识点</code><br>
+<strong>“==”运算符（两个操作数的类型不相同时）</strong></p>
+<ul>
+<li>如果一个值是null，另一个值是undefined，则它们相等</li>
+<li>如果一个值是数字，另一个值是字符串，先将字符串转换为数学，然后使用转换后的值进行比较。</li>
+<li>如果其中一个值是true，则将其转换为1再进行比较。如果其中的一个值是false，则将其转换为0再进行比较。</li>
+<li>如果一个值是对象，另一个值是数字或字符串，则将对象转换为原始值，再进行比较。</li>
+</ul>
+<p><strong>对象到数字的转换</strong></p>
+<ul>
+<li>如果对象具有valueOf()方法，后者返回一个原始值，则JavaScript将这个原始值转换为数字（如果需要的话）并返回一个数字。</li>
+<li>否则，如果对象具有toString()方法，后者返回一个原始值，则JavaScript将其转换并返回。（对象的toString()方法返回一个字符串直接量（作者所说的原始值），JavaScript将这个字符串转换为数字类型，并返回这个数字）。</li>
+<li>否则，JavaScript抛出一个类型错误异常。<br>
+<strong>空数组转换为数字0</strong></li>
+<li>数组继承了默认的valueOf()方法，这个方法返回一个对象而不是一个原始值，因此，数组到数学的转换则调用toString()方法。空数组转换为空字符串，空字符串转换为数字0.</li>
+</ul>
+<!-- more -->
+<p>#【3.】下列哪些是块级元素（）<br>
+input、ul、hr、li、div、form</p>
+<h2 id="答案ul-hr-li-div-form">答案：ul、hr、li、div、form</h2>
+<p><strong>input是行内替换元素</strong></p>
+<pre><code class="language-cmd"> （1）行内元素有：a b span img input select strong 
+  （2）块级元素有：div ul ol li dl dt dd h1 h2 h3 h4…p
+  （3）常见的空元素：
+  &lt;br&gt; &lt;hr&gt; &lt;img&gt; &lt;input&gt; &lt;link&gt; &lt;meta&gt;
+  鲜为人知的是：
+  &lt;area&gt; &lt;base&gt; &lt;col&gt; &lt;command&gt; &lt;embed&gt; &lt;keygen&gt; &lt;param&gt; &lt;source&gt; &lt;track&gt; &lt;wbr&gt;
+</code></pre>
+<!-- more -->
+<p>#【4.】关于跨域问题下面说法正确的是？（）</p>
+<ol>
+<li>可以利用flash的http请求，来处理跨域问题</li>
+<li>通过iframe设置document.domain可以实现跨域</li>
+<li>一般情况下，m.toutiao.com可以ajax请求www.toutiao.com域名下的接口并获得响应</li>
+<li>通过jsonp方式可以发出post请求其他域名下的接口</li>
+</ol>
+<h2 id="答案-通过iframe设置documentdomain可以实现跨域">答案: 通过iframe设置document.domain可以实现跨域</h2>
+<p>javascript中实现跨域的方式总结</p>
+<pre><code class="language-cmd">- **第一种方式：** jsonp请求；jsonp的原理是利用&lt;script&gt;标签的跨域特性，可以不受限制地从其他域中加载资源，类似的标签还有&lt;img&gt;.
+- **第二种方式：** document.domain；这种方式用在主域名相同子域名不同的跨域访问中
+- **第三种方式：** window.name；window的name属性有个特征：在一个窗口(window)的生命周期内,窗口载入的所有的页面都是共享一个window.name的，每个页面对window.name都有读写的权限，window.name是持久存在一个窗口载入过的所有页面中的，并不会因新页面的载入而进行重置。
+- **第四种方式：**  window.postMessage；window.postMessages是html5中实现跨域访问的一种新方式，可以使用它来向其它的window对象发送消息，无论这个window对象是属于同源或不同源。
+- **第五种方式：**  CORS；CORS背后的基本思想，就是使用自定义的HTTP头部让浏览器与服务器进行沟通，从而决定请求或响应是应该成功还是应该失败。
+- **第六种方式：**  Web Sockets；web sockets原理：在JS创建了web socket之后，会有一个HTTP请求发送到浏览器以发起连接。取得服务器响应后，建立的连接会使用HTTP升级从HTTP协议交换为web sockt协议。
+</code></pre>
+<pre><code class="language-cmd">JSONP的优点是：它不像XMLHttpRequest对象实现的Ajax请求那样受到同源策略的限制；它
+
+的兼容性更好，在更加古老的浏览器中都可以运行，不需要XMLHttpRequest或ActiveX的支
+
+持；并且在请求完毕后可以通过调用callback的方式回传结果。
+
+JSONP的缺点则是：它只支持GET请求而不支持POST等其它类型的HTTP请求；它只支持跨域
+
+HTTP请求这种情况，不能解决不同域的两个页面之间如何进行JavaScript调用的问题。
+</code></pre>
+<!-- more -->
+<p>#【5.】以下符合 ES6 写法的有：（）<br>
+<img src="https://cutezhangq.github.io/post-images/1596789012438.png" alt="" loading="lazy"></p>
+<h2 id="答案c">答案：C</h2>
+<p>A、Fun() 把 class 当成方法来用？ var fun = new Func() 这样用就对了<br>
+B、export 后面变量没加括号；<br>
+D、import readFile 没加括号，是导入 default 的用法，但是前面不是 export 为 default</p>
+<p>参照 export 和 import 用法：<br>
+1、<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export">export用法：</a><br>
+2、<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">import用法：</a></p>
+<pre><code class="language-js">export {name1,name2, …,nameN};
+export {variable1asname1,variable2asname2, …,nameN};
+export letname1,name2, …,nameN; // also var
+export letname1= …,name2= …, …,nameN; // also var, const
+
+export expression;
+export default expression;
+export default function (…) { … } // also class, function*
+export default function name1(…) { … } // also class, function*
+export {name1as default, … };
+
+export * from …;
+export {name1,name2, …,nameN} from …;
+export {import1asname1,import2asname2, …,nameN} from …;
+</code></pre>
+<pre><code class="language-js">import defaultMember from &quot;module-name&quot;;
+import * as name from &quot;module-name&quot;;
+import { member } from &quot;module-name&quot;;
+import { member as alias } from &quot;module-name&quot;;
+import { member1 , member2 } from &quot;module-name&quot;;
+import { member1 , member2 as alias2 , [...] } from &quot;module-name&quot;;
+import defaultMember, { member [ , [...] ] } from &quot;module-name&quot;;
+import defaultMember, * as name from &quot;module-name&quot;;
+import &quot;module-name&quot;;
+</code></pre>
+<p>#【6.】可继承的样式属性包括（）<br>
+<img src="https://cutezhangq.github.io/post-images/1596789677874.png" alt="" loading="lazy"></p>
+<h2 id="解析">解析：</h2>
+<pre><code class="language-cmd">不可继承的：display、margin、border、padding、background、height、min-height、max- height、width、min-width、max-width、overflow、position、left、right、top、 bottom、z-index、float、clear、table-layout、vertical-align、page-break-after、 page-bread-before和unicode-bidi。
+
+所有元素可继承：visibility和cursor。
+
+内联元素可继承：letter-spacing、word-spacing、white-space、line-height、color、font、 font-family、font-size、font-style、font-variant、font-weight、text- decoration、text-transform、direction。
+
+块状元素可继承：text-indent和text-align。
+
+列表元素可继承：list-style、list-style-type、list-style-position、list-style-image。
+
+表格元素可继承：border-collapse。
+</code></pre>
+<pre><code class="language-cmd">CSS中可以和不可以继承的属性
+一、无继承性的属性
+1、display：规定元素应该生成的框的类型
+2、文本属性：
+vertical-align：垂直文本对齐
+text-decoration：规定添加到文本的装饰
+text-shadow：文本阴影效果
+white-space：空白符的处理
+unicode-bidi：设置文本的方向
+3、盒子模型的属性：width、height、margin 、margin-top、margin-right、margin-bottom、margin-left、border、border-style、border-top-style、border-right-style、border-bottom-style、border-left-style、border-width、border-top-width、border-right-right、border-bottom-width、border-left-width、border-color、border-top-color、border-right-color、border-bottom-color、border-left-color、border-top、border-right、border-bottom、border-left、padding、padding-top、padding-right、padding-bottom、padding-left
+4、背景属性：background、background-color、background-image、background-repeat、background-position、background-attachment
+5、定位属性：float、clear、position、top、right、bottom、left、min-width、min-height、max-width、max-height、overflow、clip、z-index
+6、生成内容属性：content、counter-reset、counter-increment
+7、轮廓样式属性：outline-style、outline-width、outline-color、outline
+8、页面样式属性：size、page-break-before、page-break-after
+9、声音样式属性：pause-before、pause-after、pause、cue-before、cue-after、cue、play-during
+</code></pre>
+<pre><code class="language-cmd">二、有继承性的属性
+1、字体系列属性
+font：组合字体
+font-family：规定元素的字体系列
+font-weight：设置字体的粗细
+font-size：设置字体的尺寸
+font-style：定义字体的风格
+font-variant：设置小型大写字母的字体显示文本，这意味着所有的小写字母均会被转换为大写，但是所有使用小型大写字体的字母与其余文本相比，其字体尺寸更小。
+font-stretch：对当前的 font-family 进行伸缩变形。所有主流浏览器都不支持。
+font-size-adjust：为某个元素规定一个 aspect 值，这样就可以保持首选字体的 x-height。
+2、文本系列属性
+text-indent：文本缩进
+text-align：文本水平对齐
+line-height：行高
+word-spacing：增加或减少单词间的空白（即字间隔）
+letter-spacing：增加或减少字符间的空白（字符间距）
+text-transform：控制文本大小写
+direction：规定文本的书写方向
+color：文本颜色
+3、元素可见性：visibility
+4、表格布局属性：caption-side、border-collapse、border-spacing、empty-cells、table-layout
+5、列表布局属性：list-style-type、list-style-image、list-style-position、list-style
+6、生成内容属性：quotes
+7、光标属性：cursor
+8、页面样式属性：page、page-break-inside、windows、orphans
+9、声音样式属性：speak、speak-punctuation、speak-numeral、speak-header、speech-rate、volume、voice-family、pitch、pitch-range、stress、richness、、azimuth、elevation
+三、所有元素可以继承的属性
+1、元素可见性：visibility
+2、光标属性：cursor
+四、内联元素可以继承的属性
+1、字体系列属性
+2、除text-indent、text-align之外的文本系列属性
+五、块级元素可以继承的属性
+1、text-indent、text-align
+</code></pre>
+<p>#【7.】堆的数据结构能够使得堆顶总是维持最大（对于大根堆）或最小（对于小根堆），给定一个数组，对这个数组进行建堆，则平均复杂度是多少？如果只是用堆的 push 操作，则一个大根堆依次输入 3,7,2,4,1,5,8 后，得到的堆的结构示意图是下述图表中的哪个？（）<br>
+<img src="https://cutezhangq.github.io/post-images/1596849879994.png" alt="" loading="lazy"></p>
+<h1 id="正确答案-d">正确答案: D</h1>
+<p>堆的插入操作就是将元素插入到堆的最后，然后继续将其调整为堆。<br>
+<img src="https://cutezhangq.github.io/post-images/1596851015506.png" alt="" loading="lazy"></p>
+<p>#【8.】http 请求方式 get 和 post 的区别包括（）<br>
+<img src="https://cutezhangq.github.io/post-images/1596851060571.png" alt="" loading="lazy"><br>
+C . get请求Content-type只能是text/html<br>
+--错误，get的 Content-type不仅可以是 text/html，也可以是其他，如 application/json, text/plain 等等</p>
+<p>D. get请求可以跨域、post请求不能跨域<br>
+-- 错误， post一样可以跨域</p>
+<p>#【9.】下面哪些属于JavaScript的typeof运算符的可能结果：（）<br>
+symbol<br>
+NaN<br>
+boolean<br>
+null<br>
+array<br>
+undefined<br>
+string</p>
+<h1 id="正确答案-symbol-boolean-undefined-string">正确答案: symbol、boolean、undefined、string</h1>
+<p>即除了null的基本类型都可以用<code>typeof</code>，在加上Function和Symbol<br>
+<img src="https://cutezhangq.github.io/post-images/1596851314915.png" alt="" loading="lazy"></p>
+<p>#【10.】老王有两个孩子，已知至少有一个孩子是在星期二出生的男孩。问：两个孩子都是男孩的概率是多大？</p>
+<h1 id="正确答案-1327">正确答案: 13/27</h1>
+<h3 id="思维缜密的项目经理的解题思路">思维缜密的项目经理的解题思路</h3>
+<p>项目经理小李，虽然数学功底不深，编程技术不精，但有个很大的好处是处事不惊，有条不紊。看到题目之后，略加思索，就用最简单的办法弄懂了这个问题，并求出了结果。</p>
+<p>首先看如果只知道老王有两个孩子，其他信息都不知道的情况下，两个孩子都是男孩的概率显然是1/4。</p>
+<p>再来看看没有“星期二”这个条件的情况，题目变成：老王有两个孩子，已知至少有一个孩子是男孩，问两个孩子都是男孩的概率是多大？那结果显然是1/3。因为在“至少有一个男孩”这样的条件下，只有三种可能：兄妹俩、姐弟俩、兄弟俩。这三种情况是等概率的，而只有一种情况是两个男孩，因此是1/3。</p>
+<p>最后再把星期二也考虑进来。还是在上面的基础上扩展，先按照两个孩子的四种可能的性别组合进行划分，然后在每种组合里看看满足有至少一个周二男孩的情况数目：</p>
+<p>姐妹俩：不用看了，不满足至少有一个周二男孩的条件。<br>
+兄妹俩：那哥哥一定是周二出生的了，妹妹出生的星期数有7种可能。<br>
+姐弟俩：弟弟一定是周二出生，姐姐出生的星期数有7种可能。<br>
+兄弟俩：兄弟二人出生的星期数总共有7 * 7 = 49种可能，但其中有6 * 6 = 36种都不满足至少有一个人是周二出生的条件，因此实际上有49 - 36 = 13种可能。<br>
+因此，满足条件的情况（这里的情况是指综合考虑孩子的性别和出生星期数）总数为7 + 7 + 13 = 27。而其中有13中可能对应于两个孩子都是男孩。因此题目所求概率是13 / 27。</p>
+<p>没错，13 / 27就是这道题的答案，出现这样的数字是因为已知条件所提供的信息使得样本空间发生了变化（变小了一点儿）。这就是条件概率带来的影响。</p>
+<p>#【11.】下列说法正确的有：（）<br>
+<img src="https://cutezhangq.github.io/post-images/1596852716871.png" alt="" loading="lazy"><br>
+visiblity:看不见，摸的着. display:看不见，摸不着. display是dom级别的，可以渲染和重绘。 visiblity不是dom级别的，不能重绘，只能渲染</p>
+<p>#【12.】TCP断开连接的四次挥手中，第四次挥手发送的包会包含的标记，最正确的描述是？（）<br>
+<img src="https://cutezhangq.github.io/post-images/1596852798899.png" alt="" loading="lazy"><br>
+我们假设由client提出关闭，则：<br>
+第一次：FIN（client发给server）<br>
+第二次：ACK（server发给client）<br>
+第三次：FIN（server发给client ）<br>
+第四次：ACK（client发给server）<br>
+<img src="https://cutezhangq.github.io/post-images/1596853188402.png" alt="" loading="lazy"></p>
+<ul>
+<li>
+<p>FIN=1,seq=u</p>
+</li>
+<li>
+<p>ACK=1,seq=v,ack=u+1</p>
+</li>
+<li>
+<p>FIN=1,ACK=1,seq=w,ack=u+1</p>
+</li>
+<li>
+<p>ACK=1,seq=u+1,ack=w+1<br>
+<strong>TCP连接建立(“三次握手”)</strong><br>
+分为三步：</p>
+</li>
+<li>
+<p>（1）客户机的TCP向服务器的TCP发送一个连接请求报文段，其中不含应用层数据，首部中的SYN标志位被置为1。客户机会随机选择一个起始序号seq=x(连接请求报文不携带数据，但要消耗一个序号)。(SYN = 1, seq = x)</p>
+</li>
+<li>
+<p>（2）服务器的TCP收到连接请求报文段后，如同意建立连接，就向客户机发回确认，并为该TCP连接分配TCP缓存和变量。确认报文段中SYN和ACK位都被置为1，确认号字段的值为x+1，并且服务器随机产生起始序号seq = y(确认报文不携带数据，但也要消耗掉一个序号)。确认报文段同样不包含应用层数据。(SYN = 1, ACK = 1, seq = y, ack = x+1)</p>
+</li>
+<li>
+<p>(3）当客户机收到确认报文段后，还要向服务器给出确认，并且也要分配缓存和变量。报文段的ACK标志位被置1，序号字段为x+1，确认号字段为ack = y+1。该报文段可以携带数据，如果不携带数据则不消耗序号。(ACK = 1, seq = x+1, ack = y+1)</p>
+<p>在成功完成以上三步之后，TCP连接就建立了，接下来就可以传送应用层数据了。TCP提供的是<strong>全双工通信</strong>，因此通信双方的应用进程在任何时候都能发送数据。<br>
+另外，服务器端的资源是在完成第二次握手时分配的，而客户端的资源是在完成第三次握手时分配的。这使得服务器易于受到SYN洪泛攻击</p>
+</li>
+</ul>
+<p><strong>TCP连接的释放(“四次挥手”)</strong><br>
+分为四步：</p>
+<ul>
+<li>（1）客户机打算关闭连接，就向其TCP发送一个连接释放报文段，并停止再发送数据，主动关闭TCP连接，该报文段的FIN标志位被置1，seq = u，它等于前面已传送过的数据的最后一个字节的序号加1(FIN报文段即使不携带数据，也要消耗掉一个序号)。TCP是全双工的，可以想象成是一条TCP连接上有两条数据通路。当发送FIN报文时，发送FIN的一端就不能再发送数据，也就是关闭了其中一条数据通路，但对方还可以发送数据。(FIN = 1, seq = u)</li>
+<li>（2）服务器收到连接释放报文段后即发出确认，确认号是ack = u+1，而这个报文段自己的序号是v，等于它前面已传送过的数据的最后一个字节的序号加1。此时，从客户机到服务器方向的连接就释放了，TCP连接处于半关闭状态。但服务器若发送数据，客户机任要接收，即从服务器到客户机方向的连接没有关闭。(ACK = 1, seq = v, ack = u+1)</li>
+<li>（3）若服务器已经没有要向客户机发送的数据，就通知TCP释放连接，此时其发出FIN = 1的连接释放报文段。(FIN = 1, ACK = 1, seq = w, ack = u+1)</li>
+<li>（4）客户机收到连接释放报文段后，必须发出确认。在确认报文段中，ACK字段被置为1，确认号ack = w+1，序号seq = u+1。此时TCP连接还没有释放掉，必须经过时间等待计时器设置的时间2MSL后，客户机才进入到连接关闭状态。(ACK = 1, seq = u+1, ack = w+1)<br>
+因此，服务器端结束TCP连接的时间要比客户端早一些。<br>
+<img src="https://cutezhangq.github.io/post-images/1596854115032.png" alt="" loading="lazy"><br>
+客户端发送一个SYN段，并指明客户端的初始序列号，即ISN(c).<br>
+服务端发送自己的SYN段作为应答，同样指明自己的ISN(s)。为了确认客户端的SYN，将ISN(c)+1作为ACK数值。这样，每发送一个SYN，序列号就会加1. 如果有丢失的情况，则会重传。<br>
+为了确认服务器端的SYN，客户端将ISN(s)+1作为返回的ACK数值。<br>
+<img src="https://cutezhangq.github.io/post-images/1596854144489.png" alt="" loading="lazy"></li>
+</ul>
+<ol>
+<li>客户端发送一个FIN段，并包含一个希望接收者看到的自己当前的序列号K. 同时还包含一个ACK表示确认对方最近一次发过来的数据。 2. 服务端将K值加1作为ACK序号值，表明收到了上一个包。这时上层的应用程序会被告知另一端发起了关闭操作，通常这将引起应用程序发起自己的关闭操作。 3. 服务端发起自己的FIN段，ACK=K+1, Seq=L 4. 客户端确认。ACK=L+1</li>
+</ol>
+<p><strong>为什么建立连接是三次握手，而关闭连接却是四次挥手呢？</strong><br>
+这是因为服务端在LISTEN状态下，收到建立连接请求的SYN报文后，把ACK和SYN放在一个报文里发送给客户端。而关闭连接时，当收到对方的FIN报文时，仅仅表示对方不再发送数据了但是还能接收数据，己方是否现在关闭发送数据通道，需要上层应用来决定，因此，己方ACK和FIN一般都会分开发送。</p>
+<p>#【13.】页面有一个按钮button id为button1，通过原生的js如何禁用？（）</p>
+<h2 id="答案-2">答案:</h2>
+<p>document.getElementById(“button1”).setAttribute(“disabled”,”true”);<br>
+或者<br>
+document.getElementById(“button1”).disabled=true;</p>
+<h1 id="14关于下列css选择器id选择器-类选择器-伪类选择器-标签名称选择器排序正确的是">【14.】关于下列CSS选择器：ID选择器、类选择器、伪类选择器、标签名称选择器，排序正确的是：（）</h1>
+<h2 id="答案-3">答案:</h2>
+<p><code>ID选择器&gt;Class选择器=伪类&gt;标签名称选择器</code><br>
+一般来说，选择器的优先级（从上往下依次降低）是：<br>
+在属性后面使用 !important 会覆盖页面内任何位置定义的元素样式。<br>
+作为style属性写在元素内的样式<br>
+id选择器<br>
+类选择器(伪类选择器和类选择器的优先级是一样的，谁在后面谁起作用，因为我们知道后面的样式会覆盖前面的样式)<br>
+标签选择器<br>
+通配符选择器<br>
+浏览器自定义的样式 ​<br>
+<img src="https://cutezhangq.github.io/post-images/1596854884377.png" alt="" loading="lazy"><br>
+<img src="https://cutezhangq.github.io/post-images/1597415706178.png" alt="" loading="lazy"></p>
+<!-- more -->
+<h1 id="15假设-a-是一个由线程-1-和线程-2-共享的初始值为-0-的全局变量则线程-1-和线程-2-同时执行下面的代码最终-a-的结果不可能是">【15.】假设 a 是一个由线程 1 和线程 2 共享的初始值为 0 的全局变量，则线程 1 和线程 2 同时执行下面的代码，最终 a 的结果不可能是（）</h1>
+<p>boolean isOdd = false;</p>
+<p>for(int i=1;i&lt;=2;++i)<br>
+{<br>
+if（i%2==1）isOdd = true；<br>
+else isOdd = false；<br>
+a+=i*(isOdd?1:-1)；<br>
+}</p>
+<h1 id="正确答案-1">正确答案: 1</h1>
+<p>每个线程对a 均做了两次读写操作，分别是 “ +1 ” 和 “ -2 ”<br>
+而题目问了是最终a 的结果，所以 a 的结果取决于各自线程对 a 的先后读写的顺序<br>
+结论：a的可能取值为-1、0、-2<br>
+<img src="https://cutezhangq.github.io/post-images/1596856039742.png" alt="" loading="lazy"><br>
+假设两线程为A、B，设有3种情况：<br>
+1.AB不并发：此时相当于两个方法顺序执行。A执行完后a=-1，B使用-1作为a的初值，B执行完后a=-2<br>
+2.AB完全并发：此时读写冲突，相当于只有一个线程对a的读写最终生效。相同于方法只执行了一次。此时a=-1<br>
+3.AB部分并发：假设A先进行第一次读写，得到a=1;之后A的读写被B覆盖了。B使用用1作为a的初值，B执行完后a=0</p>
+<h1 id="16使用htmlcss实现如图布局border-width5px格子大小是50px50pxhover时边框变成红色需要考虑语义化">【16.】使用HTML+CSS实现如图布局，border-width:5px，格子大小是50px*50px，hover时边框变成红色，需要考虑语义化。</h1>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1596858038715.png" alt="" loading="lazy"></figure>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Document&lt;/title&gt;
+  &lt;style type=&quot;text/css&quot;&gt;
+    table {
+      /* border-collapse:separate;*/
+      border: none;
+      border-spacing: 0;
+    }
+
+    td {
+      position: relative;
+      width: 50px;
+      height: 50px;
+      border: 5px solid blue;
+      background: #fff;
+      color: green;
+      text-align: center;
+      line-height: 50px;
+      display: inline-block;
+    }
+
+    tr:not(:first-child) td {
+      margin-top: -5px;
+    }
+
+    tr td:not(:last-child) {
+      margin-right: -5px;
+    }
+
+    td:hover {
+      border-color: red;
+      cursor: pointer;      /*悬浮于连接上时，通常为手*/
+      z-index: 2;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;table&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;6&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;7&lt;/td&gt;
+      &lt;td&gt;8&lt;/td&gt;
+      &lt;td&gt;9&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/table&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre>
+<p>要设置td的display属性为inline-block<br>
+效果：<br>
+<img src="https://cutezhangq.github.io/post-images/1596858118441.png" alt="" loading="lazy"></p>
+<!-- more -->
+<h1 id="17给出一个上传文件时不用刷新页面的方案要求写出关键部分的js代码">【17.】给出一个上传文件时不用刷新页面的方案，要求写出关键部分的js代码。</h1>
+<h2 id="答案-4">答案:</h2>
+<pre><code class="language-html">&lt;input id=&quot;upload&quot; type=&quot;file&quot; /&gt;
+&lt;button id=&quot;upload-btn&quot;&gt; upload &lt;/button&gt;
+</code></pre>
+<pre><code class="language-js">document.getElementById('upload-btn').onclick = function(){
+    var input = document.getElementById('upload');
+    var file = input.files[0];
+    var formData = new FormData();
+    formData.append('file',file);
+    fetch({
+        url:'/upload',
+        mothod:'POST',
+        body:formData
+    }).then((d)=&gt;{
+        console.log('result is',d);
+        alert('上传完毕');
+    })
 }
 </code></pre>
-<p>种子选手：&amp; 位运算符的妙用，相“与”</p>
-<pre><code class="language-js">const n = 11;
-  if(n &amp; 1){    // 取代 n % 2 == 1 的判断，因为其还要转成二进制的判断
-    console.log('奇数')
-  }else{
-    console.log('偶数')
-  }
+<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1596858583685.png" alt="" loading="lazy"></figure>
+<h1 id="18设计一个todo-list页面结构如下图所示要求">【18.】设计一个TODO List，页面结构如下图所示，要求：</h1>
+<p>使用HTML与CSS完成界面开发</p>
+<p>实现添加功能：输入框中可输入任意字符，按回车后将输入字符串添加到下方列表的最后，并清空输入框</p>
+<p>实现删除功能：点击列表项后面的“X”号，可以删除该项</p>
+<p>实现模糊匹配：在输入框中输入字符后，将当前输入字符串与已添加的列表项进行模糊匹配，将匹配到的结果显示在输入框下方。如匹配不到任何列表项，列表显示空</p>
+<p>注：以上代码实现需要能在浏览器中正常显示与执行。<br>
+<img src="https://cutezhangq.github.io/post-images/1596956262981.png" alt="" loading="lazy"></p>
+<h2 id="答案-5">答案：</h2>
+<pre><code class="language-css">    body{
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        h1{
+            margin: 30px 0 0 0;
+            color: #ff5550;
+            text-align: center;
+            font-size: 60px;
+        }
+        #back{
+            width: 300px;
+            margin: 0 auto;
+            border: 1px solid #333;
+            box-shadow: 0px 0px 3px #999;
+            background-color: #fff;
+        }
+        #back input{
+            width: 100%;
+            box-sizing: border-box;
+            line-height: 30px;
+            border: none;
+            border-bottom: 1px solid #000;
+            padding: 5px 15px;
+            font-size: 18px;
+        }
+        #list_back .single{
+            position: relative;
+            border-bottom: 1px solid #000;
+        }
+        #list_back .single p{
+            width: 100%;
+            height: 30px;
+            margin: 0;
+            line-height: 30px;
+            padding: 5px 15px;
+        }
+        #list_back .single span{
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 30px;
+            text-align: center;
+            line-height: 40px;
+            font-size: 18px;
+            color: #000;
+            cursor: pointer;
+        }
 </code></pre>
-<h1 id="判断类型-封装可判断所有类型">判断类型 封装（可判断所有类型）</h1>
-<p>普通选手：</p>
-<pre><code class="language-js">  function isObjArr(value) {
-    if (Object.prototype.toString.call(value) === &quot;[object Array]&quot;) {
-      console.log('value是数组');
-    } else if (Object.prototype.toString.call(value) === '[object Object]') { //这个方法兼容性好一点
-      console.log('value是对象');
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;title&gt;TODOList&lt;/title&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;todos&lt;/h1&gt;
+&lt;div id=&quot;back&quot;&gt;
+    &lt;input id=&quot;addInput&quot; type=&quot;text&quot; name=&quot;&quot;&gt;
+    &lt;div id=&quot;list_back&quot;&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<pre><code class="language-js">  var oAddInput = document.getElementById('addInput');
+    var oList_back = document.getElementById('list_back');
+    var all = document.getElementsByClassName('single');
+    oAddInput.onkeyup = function(){
+        // alert(event.keyCode);//13
+        // alert(event.code);//Enter
+        if(event.keyCode == '13'){
+            // alert('add');
+            var oDiv = document.createElement('div');
+            var oSpan = document.createElement('span');
+            var oP = document.createElement('p');
+            oDiv.appendChild(oP);
+            oDiv.appendChild(oSpan);
+            oP.innerHTML = oAddInput.value;
+            oSpan.innerHTML = '&amp;times;';
+            oDiv.className = 'single';
+            oList_back.appendChild(oDiv);
+            oAddInput.value = '';//清空输入框
+            oSpan.onclick= function(){
+                oList_back.removeChild(this.parentNode);//绑定删除方法
+            };
+        }
+    };
+    //模糊查询
+    function select(){
+        oAddInput.addEventListener('keyup', function(e){//监听键盘抬起事件（所有键盘按钮）
+            // console.log(e.target.value);
+            var str = e.target.value;
+            var reg = new RegExp('(' + str + ')', 'g');//匹配到的文字变红色，准备工作
+            for( var i = 0; i&lt;all.length; i++ ){
+                var one = all[i].getElementsByTagName('p')[0];
+                var newStr = one.innerText.replace(reg, '&lt;font color=red&gt;$1&lt;/font&gt;');//换--&gt;红色，用innerText防止用innerHTML将标签也读取出来出错。
+                if( one.innerText.indexOf(str) == -1 ){//也选用innerHTML
+                    all[i].style.display = 'none';//匹配不到的掩藏
+                }else{
+                    one.innerHTML = newStr;//匹配到的变红
+                }
+            }
+            if(str == ''){
+                for( var i = 0; i&lt;all.length; i++ ){
+                    all[i].style.display = 'block';//输入框空时全部显示
+                }
+            }
+        });
+    }
+    select();  //函数解析完就运行
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Vuex中mutations和actions的区别]]></title>
+        <id>https://cutezhangq.github.io/post/vuex-zhong-mutations-he-actions-de-qu-bie/</id>
+        <link href="https://cutezhangq.github.io/post/vuex-zhong-mutations-he-actions-de-qu-bie/">
+        </link>
+        <updated>2020-05-22T01:55:07.000Z</updated>
+        <summary type="html"><![CDATA[<p>👉<strong>Vuex</strong> 是一个专为 Vue.js 应用程序开发的状态管理模式。👈<br>
+它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化🙆🙆🙆</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>👉<strong>Vuex</strong> 是一个专为 Vue.js 应用程序开发的状态管理模式。👈<br>
+它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化🙆🙆🙆</p>
+<!-- more -->
+<h1 id="mutation">Mutation</h1>
+<p>Mutation 更改 Vuex 的 store 中的状态的<strong>唯一</strong>方法是提交 mutation。事实上在 vuex 里面 actions 只是一个架构性的概念，并不是必须的，只要最后触发 mutation 就行。异步竞态怎么处理那是用户自己的事情。</p>
+<h1 id="action">Action</h1>
+<ul>
+<li>
+<p>Action <strong>提交的是 mutation</strong>，而不是直接变更状态。最后<strong>是mutation去修改store里的state</strong></p>
+</li>
+<li>
+<p>Action 可以包含任意<strong>异步</strong>操作。</p>
+</li>
+<li>
+<p><strong>mutation只能进行同步操作</strong>。为什么？请参考下面的例子：</p>
+</li>
+</ul>
+<pre><code class="language-js">mutations: {
+ someMutation (state) {
+   api.callAsyncMethod(() =&gt; {
+     state.count++
+   })
+ }
+}
+</code></pre>
+<p>现在想象，我们正在 debug 一个 app 并且观察 devtool 中的 mutation 日志。每一条 mutation 被记录，devtools 都需要捕捉到前一状态和后一状态的快照。<br>然而，在上面的例子中 mutation 中的异步函数中的回调让这不可能完成：因为当 mutation 触发的时候，回调函数还没有被调用，<br>devtools 不知道什么时候回调函数实际上被调用——实质上任何在回调函数中进行的状态的改变都是不可追踪的。</p>
+<p>mutation的触发通过store.commit来进行</p>
+<p>action的触发通过store.dispatch进行</p>
+<h1 id="安装">安装</h1>
+<blockquote>
+<p>npm install vuex --save</p>
+</blockquote>
+<h1 id="用法一">用法一</h1>
+<pre><code class="language-js">
+/**
+ * 创建完文件后需要去到main.js中引入成全局
+ */
+import Vue from &quot;vue&quot;;
+import Vuex from &quot;vuex&quot;;
+//使用vuex
+Vue.use(Vuex);
+const state = {
+  targetUser: {} //用户详细资料数据
+};
+ 
+const getters = {
+  //获取到用户状态,//实时监听state值的变化(最新状态)
+  targetUser: state =&gt; state.targetUser
+};
+ 
+const mutations = {
+  //自定义改变state初始值的方法
+  SET_TARGET_USER(state, targetUser) {
+    if (targetUser) {
+      state.targetUser = targetUser; //如果targetUser有内容就赋给状态信息
     } else {
-      console.log('value不是数组也不是对象')
+      //如果没内容就给targetUser赋空对象
+      state.targetUser = {};
     }
   }
-</code></pre>
-<p>种子选手：<br>
-判断 Target 的类型，单单用 typeof 并无法完全满足，这其实并不是 bug，本质原因是 JS 的万物皆对象的理论。<br>
-因此要真正完美判断时，我们需要区分对待:<br>
-* 基本类型( null ): 使用String( )，如：String(null)<br>
-* 基本类型(string / number / boolean / undefined) + function + symbol: 直接使用 typeof 即可<br>
-* 其余引用类型(Array / Date / RegExp Error): 调用toString后根据[object XXX]进行判断，本质上还是调用 valueof 进行判断。</p>
-<pre><code class="language-js"> let class2type = {}
-  'Array Date RegExp Object Error'.split(' ').forEach(e =&gt; class2type['[object ' + e + ']'] = e.toLowerCase())
-
-  function type(obj) {
-    if (obj == null) return String(obj)
-    return typeof obj === 'object' ? class2type[Object.prototype.toString.call(obj)] || 'object' : typeof obj
+};
+ 
+const actions = {
+  //这里面的方法是用来异步触发mutations里面的方法,context与store 实例具有相同方法和属性
+  // 页面定义的setGargetUser,targetUser为页面传过来的值
+  setGargetUser({ commit }, targetUser) {
+    commit(&quot;SET_TARGET_USER&quot;, targetUser);
   }
+};
 </code></pre>
-<p>这里的.call是绑定this对象指向当前的Object对象<br>
-**RegExp：**是正则表达式（regular expression）的简写。</p>
-<h1 id="判断是否存在">判断是否存在</h1>
-<pre><code class="language-js">  if(typeof a!=&quot;undefined&quot;){     //不要去使用 if(a) 因为如果 a 不存在（未声明）则会出错
-      xxx
+<p>存储页面:</p>
+<pre><code class="language-js">
+this.$store.dispatch('setGargetUser',friend)
+</code></pre>
+<p>获取页面:</p>
+<pre><code class="language-js"> computed:{
+        //  提示vuex中存入的用户详细资料
+        targetUser(){
+            return this.$store.getters.targetUser
+        }
+     },
+</code></pre>
+<p>以上方法有一个问题就是如果多人开发;会出现不利于管理,下面用一个方法定义一个常量<br>
+存储:</p>
+<pre><code class="language-js">  this.$store.dispatch('setUser',decode)
+</code></pre>
+<p>store.js</p>
+<pre><code class="language-js">
+/**
+ * 创建完文件后需要去到main.js中引入成全局
+ */
+import Vue from &quot;vue&quot;;
+import Vuex from &quot;vuex&quot;;
+// 持久存储插件
+import createPersistedState from &quot;vuex-persistedstate&quot;;
+ 
+//使用vuex
+Vue.use(Vuex);
+ 
+/**
+ * 在需要多人协作的项目中，我们可以使用常量代替mutation 事件类型。这在各种 Flux 实现中是很常见的模式。同时把这些常量放在单独的文件中可以让协作开发变得清晰。
+ *  定义存储信息
+ *
+ *    */
+ 
+const types = {
+  SET_TARGET_USER: &quot;SET_TARGET_USER&quot; //详细资料
+};
+ 
+const state = {
+  //用户初始化的状态
+  targetUser: {} //用户详细资料数据
+};
+const getters = {
+  //获取到用户状态,//实时监听state值的变化(最新状态)
+  targetUser: state =&gt; state.targetUser
+};
+const mutations = {
+  //自定义改变state初始值的方法
+ 
+  [types.SET_TARGET_USER](state, targetUser) {
+    if (targetUser) {
+      state.targetUser = targetUser; //如果targetUser有内容就赋给状态信息
+    } else {
+      //如果没内容就给targetUser赋空对象
+      state.targetUser = {};
     }
-</code></pre>
-<h1 id="检测-某个对象-是不是-另一个对象-的-实例">检测 某个对象 是不是 另一个对象 的 实例</h1>
-<p>（测试一个对象在其原型链中是否存在一个构造函数的prototype属性）</p>
-<pre><code class="language-js">  function test(){};
-  var b = new test();
-  var c = new test();
-  console.log(b instanceof test); //true   可用来判断一个变量是否是某个对象的实例
-  console.log(c == b);  //false
-</code></pre>
-<h1 id="判断一个-实例-是否属于它的-父类型">判断一个 实例 是否属于它的 父类型</h1>
-<p>instanceof 可以在 继承关系 中用来判断一个 实例 是否属于它的 父类型。</p>
-<pre><code class="language-js"> var a = new Array();  
- console.log(a instanceof Array);  //true
- console.log(a instanceof Object); //true  因为 Array 是 Object的 子类
-</code></pre>
-<h1 id="判断-对象是否为空-的三种方法">判断 对象是否为空 的三种方法：</h1>
-<pre><code class="language-js">  //方法1：JSON.stringify(xxx)=='{}'    转成字符串，看值是不是空对象
-  c = {};
-  if(JSON.stringify(c)=='{}'){
-    console.log('空对象');  //空对象
   }
-
-
-  //方法2：for in  有没有数据在它的里面
-  obj = {};
-  function abc(obj){
-    for(var a in obj){
-      console.log('不是空对象');
-    }
-    console.log('空对象');  
+};
+ 
+const actions = {
+  //这里面的方法是用来异步触发mutations里面的方法,context与store 实例具有相同方法和属性
+  setGargetUser({ commit }, targetUser) {
+    commit(types.SET_TARGET_USER, targetUser);
+    // localStorage.setItem(&quot;SET_TARGET_USER&quot;, JSON.stringify(targetUser));
   }
-  abc();  //空对象
+};
+export default new Vuex.Store({
+  state,
+  mutations,
+  getters,
+  actions,
+});
 
-
-  //方法3：Object.keys(xxx).length == 0    对象转成数组，再看数组的长度
-    //方法会返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和正常循环遍历该对象时返回的顺序一致 。
-  t = {};
-  if(Object.keys(t).length == 0){
-    console.log('空对象');    //空对象
-  }else{
-    console.log('不是空对象');
-  }
 </code></pre>
-<h1 id="apply的使用">.apply（）的使用</h1>
-<h2 id="1找出数组最大元素">（1）找出数组最大元素</h2>
-<p>JavaScript 不提供找出数组最大元素的函数。结合使用apply方法和Math.max方法，就可以返回数组的最大元素。</p>
-<pre><code class="language-js">var a = [10, 2, 4, 15, 9];
-Math.max.apply(null, a) // 15
+<p>取值:</p>
+<pre><code class="language-js">this.$store.getters.targetUser
 </code></pre>
-<h2 id="2将数组的空元素变为undefined">（2）将数组的空元素变为undefined</h2>
-<p>通过apply方法，利用Array构造函数将数组的空元素变成undefined。</p>
-<pre><code class="language-js">Array.apply(null, ['a', ,'b'])
-// [ 'a', undefined, 'b' ]
-</code></pre>
-<p>空元素与undefined的差别在于，数组的forEach方法会跳过空元素，但是不会跳过undefined。<br>
-因此，遍历内部元素的时候，会得到不同的结果。</p>
-<pre><code class="language-js">var a = ['a', , 'b'];
-
-function print(i) {
-console.log(i);
-}
-
-a.forEach(print)
-// a
-// b
-
-Array.apply(null, a).forEach(print)
-// a
-// undefined
-// b
-</code></pre>
+<p>想要获取对应的状态你就可以直接使用this.$store.state获取，当然，也可以利用vuex提供的mapState辅助函数将state映射到计算属性中去，如.</p>
 ]]></content>
     </entry>
     <entry>
@@ -1090,7 +2226,7 @@ Array.apply(null, a).forEach(print)
         <id>https://cutezhangq.github.io/post/thisapplycallbind/</id>
         <link href="https://cutezhangq.github.io/post/thisapplycallbind/">
         </link>
-        <updated>2020-08-09T07:12:03.000Z</updated>
+        <updated>2020-04-22T07:12:03.000Z</updated>
         <summary type="html"><![CDATA[<p>👉面试题：this的指向一般是由什么决定的，一般怎么改变它的指向？<br>
 🙋答：this就是<code>属性或方法</code><strong>当前</strong>所在的<code>对象</code>；可以通过将函数赋值给变量的方式改变this的指向，也可以通过<code>.call()、.apply()、.bind()</code>的方式改变this的指向...🏃‍♀</p>
 ]]></summary>
@@ -1594,729 +2730,6 @@ obj.print()
 </code></pre>
 <h2 id="3结合call方法使用">（3）结合call方法使用</h2>
 <p>利用bind方法，可以改写一些 JavaScript 原生方法的使用形式，以数组的slice方法为例。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[slot插槽]]></title>
-        <id>https://cutezhangq.github.io/post/slot-cha-cao/</id>
-        <link href="https://cutezhangq.github.io/post/slot-cha-cao/">
-        </link>
-        <updated>2020-08-07T03:04:18.000Z</updated>
-        <summary type="html"><![CDATA[<p>👉插槽，也就是slot，👈是组件的一块HTML模板，这块模板显示不显示、以及怎样显示由父组件来决定。<br>
-实际上，一个slot最核心的两个问题在这里就点出来了，是<strong>显示不显示</strong>和<strong>怎样显示</strong>。😘</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👉插槽，也就是slot，👈是组件的一块HTML模板，这块模板显示不显示、以及怎样显示由父组件来决定。<br>
-实际上，一个slot最核心的两个问题在这里就点出来了，是<strong>显示不显示</strong>和<strong>怎样显示</strong>。😘</p>
-<!-- more -->
-<p>由于插槽是一块模板，所以，对于任何一个组件，从模板种类的角度来分，其实都可以分为<strong>非插槽模板</strong>和<strong>插槽模板</strong>两大类。<br>
-非插槽模板指的是html模板，比如‘div、span、ul、table’这些，非插槽模板的显示与隐藏以及怎样显示由组件自身控制；<br>
-插槽模板是slot，它是一个空壳子，因为它的显示与隐藏以及最后用什么样的html模板显示由父组件控制。但是插槽显示的位置却由子组件自身决定，slot写在组件template的什么位置，父组件传过来的模板将来就显示在什么位置。</p>
-<h1 id="单个插槽-默认插槽-匿名插槽">单个插槽 | 默认插槽 | 匿名插槽</h1>
-<p>首先是单个插槽，单个插槽是vue的官方叫法，但是其实也可以叫它默认插槽，或者与具名插槽相对，我们可以叫它匿名插槽。因为它不用设置name属性。<br>
-单个插槽可以放置在组件的任意位置，但是就像它的名字一样，一个组件中只能有一个该类插槽。相对应的，具名插槽就可以有很多个，只要名字（name属性）不同就可以了。<br>
-下面通过一个例子来展示。<br>
-父组件：</p>
-<pre><code class="language-html">&lt;template&gt;
-    &lt;div class=&quot;father&quot;&gt;
-        &lt;h3&gt;这里是父组件&lt;/h3&gt;
-        &lt;child&gt;
-            &lt;div class=&quot;tmpl&quot;&gt;
-              &lt;span&gt;菜单1&lt;/span&gt;
-              &lt;span&gt;菜单2&lt;/span&gt;
-              &lt;span&gt;菜单3&lt;/span&gt;
-              &lt;span&gt;菜单4&lt;/span&gt;
-              &lt;span&gt;菜单5&lt;/span&gt;
-              &lt;span&gt;菜单6&lt;/span&gt;
-            &lt;/div&gt;
-        &lt;/child&gt;
-    &lt;/div&gt;
-&lt;/template&gt;
-</code></pre>
-<p>子组件：</p>
-<pre><code class="language-html">&lt;template&gt;
-    &lt;div class=&quot;child&quot;&gt;
-        &lt;h3&gt;这里是子组件&lt;/h3&gt;
-        &lt;slot&gt;&lt;/slot&gt;
-    &lt;/div&gt;
-&lt;/template&gt;
-</code></pre>
-<p>在这个例子里，因为父组件在里面写了html模板，那么子组件的匿名插槽这块模板就是下面这样。也就是说，子组件的匿名插槽被使用了，是被下面这块模板使用了。</p>
-<pre><code class="language-html">&lt;div class=&quot;tmpl&quot;&gt;
-  &lt;span&gt;菜单1&lt;/span&gt;
-  &lt;span&gt;菜单2&lt;/span&gt;
-  &lt;span&gt;菜单3&lt;/span&gt;
-  &lt;span&gt;菜单4&lt;/span&gt;
-  &lt;span&gt;菜单5&lt;/span&gt;
-  &lt;span&gt;菜单6&lt;/span&gt;
-&lt;/div&gt;
-</code></pre>
-<p>最终的渲染结果如图所示：<br>
-<img src="https://cutezhangq.github.io/post-images/1596892088251.png" alt="" loading="lazy"></p>
-<h1 id="具名插槽">具名插槽</h1>
-<p>匿名插槽没有name属性，所以是匿名插槽，那么，插槽加了name属性，就变成了具名插槽。具名插槽可以在一个组件中出现N次，出现在不同的位置。下面的例子，就是一个有两个<strong>具名插槽</strong>和<strong>单个插槽</strong>的组件，这三个插槽被父组件用同一套css样式显示了出来，不同的是内容上略有区别。<br>
-父组件：</p>
-<pre><code class="language-html">&lt;template&gt;
-  &lt;div class=&quot;father&quot;&gt;
-    &lt;h3&gt;这里是父组件&lt;/h3&gt;
-    &lt;child&gt;
-      &lt;div class=&quot;tmpl&quot; slot=&quot;up&quot;&gt;
-        &lt;span&gt;菜单1&lt;/span&gt;
-        &lt;span&gt;菜单2&lt;/span&gt;
-        &lt;span&gt;菜单3&lt;/span&gt;
-        &lt;span&gt;菜单4&lt;/span&gt;
-        &lt;span&gt;菜单5&lt;/span&gt;
-        &lt;span&gt;菜单6&lt;/span&gt;
-      &lt;/div&gt;
-      &lt;div class=&quot;tmpl&quot; slot=&quot;down&quot;&gt;
-        &lt;span&gt;菜单-1&lt;/span&gt;
-        &lt;span&gt;菜单-2&lt;/span&gt;
-        &lt;span&gt;菜单-3&lt;/span&gt;
-        &lt;span&gt;菜单-4&lt;/span&gt;
-        &lt;span&gt;菜单-5&lt;/span&gt;
-        &lt;span&gt;菜单-6&lt;/span&gt;
-      &lt;/div&gt;
-      &lt;div class=&quot;tmpl&quot;&gt;
-        &lt;span&gt;菜单-&gt;1&lt;/span&gt;
-        &lt;span&gt;菜单-&gt;2&lt;/span&gt;
-        &lt;span&gt;菜单-&gt;3&lt;/span&gt;
-        &lt;span&gt;菜单-&gt;4&lt;/span&gt;
-        &lt;span&gt;菜单-&gt;5&lt;/span&gt;
-        &lt;span&gt;菜单-&gt;6&lt;/span&gt;
-      &lt;/div&gt;
-    &lt;/child&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-</code></pre>
-<p>子组件：</p>
-<pre><code class="language-html">&lt;template&gt;
-  &lt;div class=&quot;child&quot;&gt;
-    // 具名插槽
-    &lt;slot name=&quot;up&quot;&gt;&lt;/slot&gt;
-    &lt;h3&gt;这里是子组件&lt;/h3&gt;
-    // 具名插槽
-    &lt;slot name=&quot;down&quot;&gt;&lt;/slot&gt;
-    // 匿名插槽
-    &lt;slot&gt;&lt;/slot&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-</code></pre>
-<p><img src="https://cutezhangq.github.io/post-images/1596892200490.png" alt="" loading="lazy"><br>
-可以看到，父组件通过html模板上的slot属性关联具名插槽。没有slot属性的html模板默认关联匿名插槽。</p>
-<h1 id="作用域插槽-带数据的插槽">作用域插槽 | 带数据的插槽</h1>
-<p>最后，就是我们的作用域插槽。这个稍微难理解一点。官方叫它作用域插槽，实际上，对比前面两种插槽，我们可以叫它带数据的插槽。什么意思呢，就是前面两种，都是在组件的template里面写</p>
-<pre><code class="language-cmd">匿名插槽
-&lt;slot&gt;&lt;/slot&gt;
-具名插槽
-&lt;slot name=&quot;up&quot;&gt;&lt;/slot&gt;
-</code></pre>
-<p>但是作用域插槽要求，在slot上面绑定数据。也就是你得写成大概下面这个样子。</p>
-<pre><code class="language-html">&lt;slot name=&quot;up&quot; :data=&quot;data&quot;&gt;&lt;/slot&gt;
- export default {
-    data: function(){
-      return {
-        data: ['zhangsan','lisi','wanwu','zhaoliu','tianqi','xiaoba']
-      }
-    },
-}
-</code></pre>
-<p>我们前面说了，插槽最后显示不显示是看父组件有没有在child下面写模板，像下面那样。</p>
-<pre><code class="language-cmd">&lt;child&gt;
-   html模板
-&lt;/child&gt;
-</code></pre>
-<p>可以说是子组件暴露的一个让父组件传入自定义内容的接口。<br>
-写了，插槽就总得在浏览器上显示点东西，东西就是html该有的模样，没写，插槽就是空壳子，啥都没有。<br>
-OK，我们说有html模板的情况，就是父组件会往子组件插模板的情况，那到底插一套什么样的样式呢，这由父组件的html+css共同决定，但是这套样式里面的内容呢？<br>
-<code>正因为作用域插槽绑定了一套数据，父组件可以拿来用。</code>于是，情况就变成了这样：<code>样式父组件说了算，但内容可以显示子组件插槽绑定的。</code><br>
-我们再来对比，作用域插槽跟单个插槽和具名插槽的区别，因为单个插槽和具名插槽不绑定数据，所以父组件提供的模板一般要既包括样式又包括内容，上面的例子中，你看到的文字，“菜单1”，“菜单2”都是父组件自己提供的内容；而作用域插槽，父组件只需要提供一套样式（在确实用作用域插槽绑定的数据的前提下）。<br>
-下面的例子，你就能看到，父组件提供了三种样式(分别是flex、ul、直接显示)，都没有提供数据，数据使用的都是子组件插槽自己绑定的那个数组（一堆人名的那个数组）。<br>
-父组件：</p>
-<pre><code class="language-html">&lt;template&gt;
-  &lt;div class=&quot;father&quot;&gt;
-    &lt;h3&gt;这里是父组件&lt;/h3&gt;
-    &lt;!--第一次使用：用flex展示数据--&gt;
-    &lt;child&gt;
-      &lt;template slot-scope=&quot;user&quot;&gt;          &lt;!--通过slot-scope获取子组件的信息--&gt;
-        &lt;div class=&quot;tmpl&quot;&gt;
-          &lt;span v-for=&quot;item in user.data&quot;&gt;{{item}}&lt;/span&gt;
-        &lt;/div&gt;
-      &lt;/template&gt;
-
-    &lt;/child&gt;
-
-    &lt;!--第二次使用：用列表展示数据--&gt;
-    &lt;child&gt;
-      &lt;template slot-scope=&quot;user&quot;&gt;          &lt;!--通过slot-scope获取子组件的信息--&gt;
-        &lt;ul&gt;
-          &lt;li v-for=&quot;item in user.data&quot;&gt;{{item}}&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/template&gt;
-
-    &lt;/child&gt;
-
-    &lt;!--第三次使用：直接显示数据--&gt;
-    &lt;child&gt;
-      &lt;template slot-scope=&quot;user&quot;&gt;              &lt;!--通过slot-scope获取子组件的信息--&gt;
-       {{user.data}}
-      &lt;/template&gt;
-
-    &lt;/child&gt;
-
-    &lt;!--第四次使用：不使用其提供的数据, 作用域插槽退变成匿名插槽--&gt;
-    &lt;child&gt;
-      我就是模板
-    &lt;/child&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-</code></pre>
-<p>子组件：</p>
-<pre><code class="language-html">&lt;template&gt;
-  &lt;div class=&quot;child&quot;&gt;
-
-    &lt;h3&gt;这里是子组件&lt;/h3&gt;
-    // 作用域插槽
-    &lt;slot  :data=&quot;data&quot;&gt;&lt;/slot&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
- export default {
-    data: function(){
-      return {
-        data: ['zhangsan','lisi','wanwu','zhaoliu','tianqi','xiaoba']
-      }
-    }
-}
-</code></pre>
-<p>结果如图所示：<br>
-<img src="https://cutezhangq.github.io/post-images/1596892616696.png" alt="" loading="lazy"></p>
-<h1 id="slot-scope">slot-scope</h1>
-<p><strong>父组件中在使用时：</strong></p>
-<ul>
-<li>默认插槽的话直接在子组件的标签内写入内容即可</li>
-<li>具名插槽是在默认插槽的基础上加上slot属性，值为子组件插槽name属性值</li>
-<li>作用域插槽则是通过<code>slot-scope获取子组件的信息</code>，在内容中使用。这里可以用解构语法去直接获取想要的属性</li>
-</ul>
-<h1 id="v-slot">v-slot</h1>
-<pre><code class="language-cmd">在vue2.6中，上述的API被软废弃（3.0正式废弃），取而代之的是内置指令v-slot，可以缩写为【#】
-</code></pre>
-<p>**子组件用法保持不变，**父组件中</p>
-<ul>
-<li>slot属性弃用，具名插槽通过指令参数<code>v-slot:插槽名</code>的形式传入，可以简化为 <code>#插槽名。</code></li>
-<li><code>slot-scope</code>属性弃用，作用域插槽通过<code>v-slot:xxx=&quot;slotProps&quot;</code>的slotProps来获取子组件传出的属性</li>
-<li>v-slot属性只能在 <code>&lt;template&gt;</code>上使用，但在**【只有默认插槽时】**可以在组件标签上使用</li>
-</ul>
-<pre><code class="language-html">//Parent
-&lt;template&gt;
-  &lt;child&gt;
-   &lt;!--默认插槽--&gt;
-   &lt;template v-slot&gt;
-     &lt;div&gt;默认插槽&lt;/div&gt;
-   &lt;/template&gt;
-   &lt;!--具名插槽--&gt;
-   &lt;template #header&gt;
-     &lt;div&gt;具名插槽&lt;/div&gt;
-   &lt;/template&gt;
-   &lt;!--作用域插槽--&gt;
-   &lt;template #footer=&quot;slotProps&quot;&gt;
-     &lt;div&gt;
-      {{slotProps.testProps}}
-     &lt;/div&gt;
-   &lt;/template&gt;
-  &lt;child&gt;
-&lt;/template&gt;
-</code></pre>
-<h1 id="拓展用法">拓展用法：</h1>
-<ol>
-<li>同样可以通过解构获取v-slot={user},<br>
-还可以重命名v-slot=&quot;{user: newName}&quot;和定义默认值v-slot=&quot;{user = '默认值'}&quot;</li>
-<li>插槽名可以是动态变化的 v-slot:[slotName]</li>
-</ol>
-<p><strong>注意：</strong></p>
-<ol>
-<li>默认插槽名为<code>default</code>，可以省略default直接写<code>v-slot</code>，<br>
-缩写为#时不能不写参数，写成<code>#default</code>（这点所有指令都一样，v-bind、v-on）</li>
-<li>多个插槽混用时，v-slot不能省略default</li>
-</ol>
-<h1 id="作用域插槽的原理">作用域插槽的原理</h1>
-<p>slot本质上是返回VNode的函数，一般情况下，Vue中的组件要渲染到页面上需要经过<br>
-<code>template &gt;&gt; render function &gt;&gt; VNode &gt;&gt; DOM</code>过程。 组件挂载的本质就是执行渲染函数得到VNode，至于data/props/computed这些属性都是给VNode提供数据来源。<br>
-在2.5之前，如果是普通插槽就<strong>直接是VNode</strong>的形式了，而如果是作用域插槽，由于子组件需要在父组件访问子组件的数据，所以父组件下是一个<strong>未执行的函数</strong><code>(slotScope) =&gt; return h('div', slotScope.msg)</code>，接受子组件的slotProps参数，在子组件渲染实例时会调用该函数传入数据。<br>
-在2.6之后，两者合并，普通插槽也变成一个函数，只是不接受参数了。</p>
-<h1 id="总结">总结</h1>
-<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1596938553804.png" alt="" loading="lazy"></figure>
-<h1 id="slot的使用场景">slot的使用场景</h1>
-<ul>
-<li>布局组件、</li>
-<li>表格列、</li>
-<li>下拉选项</li>
-</ul>
-<h1 id="slot-scope的使用场景">slot-scope的使用场景</h1>
-<p>想象一个场景：<br>
-<strong>当你要给同事封装一个列表组件，你就需要使用作用域插槽（注意是列表或者类似列表的组件）</strong><br>
-你开发的这个列表组件要如何使用呢？<br>
-一般来说作为列表组件的调用者，你的同事先做ajax请求，拿到一个这样的数组</p>
-<pre><code class="language-json">   todos: [
-        {
-          id: 0,
-          text: 'ziwei0',
-          isComplete: false
-        },
-        {
-          text: 'ziwei1',
-          id: 1,
-          isComplete: true
-        },
-        {
-          text: 'ziwei2',
-          id: 2,
-          isComplete: false
-        },
-        {
-          text: 'ziwei3',
-          id: 3,
-          isComplete: false
-        }
-      ]
-</code></pre>
-<p>之后会把todso传递给列表组件吧，那么列表组件内部做什么事情呢？<br>
-列表内部肯定会v-for去帮你的同事渲染这个数组嘛。 就类似element-ui里的table组件一样<br>
-问题的关键就在这里<br>
-<strong>列表组件的循环，是发生在组件内部的，所以通过 v-for=&quot;todo in todos&quot; ,列表组件很容易拿到一项todo，但列表拿到数据没用呀，列表只是一个瓜皮，它又不懂业务逻辑这个数据是你同事的业务数据，</strong><br>
-<strong>所以这个数据必须得交给组件的调用者，也就是把数据交给你的同事才对。</strong></p>
-<p>那么你怎样才能把每一项的todo数据给传递出去呢？<br>
-你会发现没有办法！</p>
-<p>无论是用$emit、vuex还是localStorage，可以考虑一下，会发现没有合适的时机，能让你把todo传递出去</p>
-<p>所以为了应对这个场景下，发明了<code>作用域插槽</code>，列表组件可以通过<code>&lt;slot :todo=&quot;todo&quot;&gt;&lt;/slot&gt;</code>传递todo出去<br>
-你的同事可以通过 slot-scope=&quot;slotsProps&quot;<code>拿到todo</code>。<br>
-回答几个疑问，其实如果你看懂上面的问题，应该可以回答下面的问题。这也是我曾经的疑问</p>
-<ul>
-<li>疑问1：一般不是我们传参数来调用组件吗？为什么组件还把数据传递回来？</li>
-</ul>
-<pre><code class="language-cmd">的确，调用ui组件时一般是我们传递配置参数给他们。
-
-但是就像elemnt-ui的table组件，你把数组传递给table后，是不是有时候需要拿到某一行的row对象
-
-并根据row对象里的字段，来判断一些内容的显示隐藏？
-
-因为循环的过程发生在table组件内部，所以table组件可以方便的获取到每一项数据，但是这些数据最终不是给组件的，而是我们自己要用的业务数据。所以也需要一个方式，让调用者能拿到自己想要的数据
-</code></pre>
-<ul>
-<li>疑问2： 既然子组件最终还要把我给他的数据，再返还给我，那我当初还干嘛给它，能不能就自己在父组件里玩？</li>
-</ul>
-<pre><code class="language-cmd">如果你不把数据给子组件当然可以。但是就等于抛弃掉了子组件的封装，只能你直接在父组件自己写一个列表
-
-毕竟你不把数据给子组件，子组件还渲染个锤子？没有父子关系的话，也就不用什么插槽了。
-
-但是咱不是为了封装后，可以复用嘛，总不能永远不用组件嘛
-</code></pre>
-<ul>
-<li>疑问3： 父组件需要子组件的数据？那不会有$emit和vuex嘛，为什么要有slot-scope？</li>
-</ul>
-<pre><code class="language-cmd">$emit和vuex是数据传递的一种方法，但是你可以尝试用$emit和vuex把todo传递给父组件。
-
-你会发现的确没有合适的钩子、时机来$emit数据
-</code></pre>
-<h1 id="26新增用法">2.6新增用法</h1>
-<h2 id="动态插槽名260新增">动态插槽名(2.6.0新增)</h2>
-<p>动态指令参数(需要自己了解)也可以用在v-slot上，来定义动态的插槽名：</p>
-<pre><code class="language-html">&lt;base-layout&gt;
-  &lt;template v-slot:[dynamicSlotName]&gt;
-    ...
-  &lt;/template&gt;
-&lt;/base-layout&gt;
-</code></pre>
-<h2 id="具名插槽的缩写260新增">具名插槽的缩写(2.6.0新增)</h2>
-<p>跟 v-on 和 v-bind 一样，v-slot 也有缩写，即把参数之前的所有内容 (v-slot:) 替换为字符 #。例如 v-slot:header 可以被重写为 #header：<br>
-原来是这样写的：</p>
-<pre><code class="language-html">&lt;div&gt;
-   &lt;template v-slot:header&gt;
-    &lt;h1&gt;Here might be a page title&lt;/h1&gt;
-   &lt;/template&gt;
-
-  &lt;p&gt;A paragraph for the main content.&lt;/p&gt;
-  &lt;p&gt;And another one.&lt;/p&gt;
-
-  &lt;template v-slot:footer&gt;
-    &lt;p&gt;Here some contact info&lt;/p&gt;
-  &lt;/template&gt;
-&lt;/div&gt;  
-</code></pre>
-<p>现在可以这样写：</p>
-<pre><code class="language-html">&lt;div&gt;
-   &lt;template #header&gt;
-    &lt;h1&gt;Here might be a page title&lt;/h1&gt;
-   &lt;/template&gt;
-
-  &lt;p&gt;A paragraph for the main content.&lt;/p&gt;
-  &lt;p&gt;And another one.&lt;/p&gt;
-
-  &lt;template #footer&gt;
-    &lt;p&gt;Here some contact info&lt;/p&gt;
-  &lt;/template&gt;
-&lt;/div&gt;
-</code></pre>
-<p>如果希望使用缩写的话，必须始终以明确插槽名取而代之：</p>
-<pre><code class="language-html">&lt;test #default=&quot;{ usertext }&quot;&gt;
-  {{ usertext.firstName }}
-&lt;/test&gt;
-</code></pre>
-<h1 id="其他示例">其他示例</h1>
-<p>插槽 prop 允许我们将插槽转换为<code>可复用</code>的模板，这些模板可以基于输入的 <code>prop</code>渲染出不同的内容。 这在设计封装数据逻辑同时允许父级组件自定义部分布局的可复用组件时是最有用的。<br>
-例如，我们要实现一个 <code>&lt;todo-list&gt;</code>组件，它是一个列表且包含布局和过滤逻辑：</p>
-<pre><code class="language-html">&lt;ul&gt;
-  &lt;li
-    v-for=&quot;todo in filteredTodos&quot;
-    v-bind:key=&quot;todo.id&quot;
-  &gt;
-    {{ todo.text }}
-  &lt;/li&gt;
-&lt;/ul&gt;
-</code></pre>
-<p>我们可以将每个<code>todo</code>作为父级组件的插槽，以此通过父级组件对其进行控制，然后将<code>todo</code> 作为一个插槽<code>prop</code>进行绑定：</p>
-<pre><code class="language-html">&lt;ul&gt;
-  &lt;li
-    v-for=&quot;todo in filteredTodos&quot;
-    v-bind:key=&quot;todo.id&quot;
-  &gt;
-    &lt;!--
-    我们为每个 todo 准备了一个插槽，
-    将 `todo` 对象作为一个插槽的 prop 传入。
-    --&gt;
-    &lt;slot name=&quot;todo&quot; v-bind:todo=&quot;todo&quot;&gt;
-      &lt;!-- 后备内容 --&gt;
-      {{ todo.text }}
-    &lt;/slot&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-</code></pre>
-<p>现在当我们使用 <code>&lt;todo-list&gt;</code>组件的时候，我们可以选择为 todo 定义一个不一样的 <code>&lt;template&gt;</code>作为替代方案，并且可以从子组件获取数据：</p>
-<pre><code class="language-html">&lt;todo-list v-bind:todos=&quot;todos&quot;&gt;
-  &lt;template v-slot:todo=&quot;{ todo }&quot;&gt;
-    &lt;span v-if=&quot;todo.isComplete&quot;&gt;✓&lt;/span&gt;
-    {{ todo.text }}
-  &lt;/template&gt;
-&lt;/todo-list&gt;
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ 消息订阅与发布]]></title>
-        <id>https://cutezhangq.github.io/post/xiao-xi-ding-yue-yu-fa-bu/</id>
-        <link href="https://cutezhangq.github.io/post/xiao-xi-ding-yue-yu-fa-bu/">
-        </link>
-        <updated>2020-08-07T03:04:04.000Z</updated>
-        <summary type="html"><![CDATA[<p>结合 Vue 源码谈谈发布-订阅模式🤞，并涉及几个核心对象如 Observer 等。看看他们在vue实例中的应用~👀</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>结合 Vue 源码谈谈发布-订阅模式🤞，并涉及几个核心对象如 Observer 等。看看他们在vue实例中的应用~👀</p>
-<!-- more -->
-<h1 id="发布订阅模式主要包含哪些内容呢">发布订阅模式主要包含哪些内容呢?</h1>
-<ul>
-<li>发布函数，发布的时候执行相应的回调</li>
-<li>订阅函数，添加订阅者,传入发布时要执行的函数,可能会携额外参数</li>
-<li>一个缓存订阅者以及订阅者的回调函数的列表</li>
-<li>取消订阅(需要分情况讨论)</li>
-</ul>
-<p>这么看下来,其实就像 JavaScript 中的事件模型,我们在DOM节点上绑定事件函数,触发的时候执行就是应用了发布-订阅模式.</p>
-<h1 id="我们先按照上面的内容自己实现一个-observer-对象如下">我们先按照上面的内容自己实现一个 Observer 对象如下:</h1>
-<pre><code class="language-js">//用于存储订阅的事件名称以及回调函数列表的键值对
-function Observer() {
-    this.cache = {}  
-}
-
-//key:订阅消息的类型的标识（名称），fn收到消息之后执行的回调函数
-Observer.prototype.on = function (key,fn) {
-    if(!this.cache[key]){
-        this.cache[key]=[]
-    }
-    this.cache[key].push(fn)
-}
-
-
-//arguments 是发布消息时候携带的参数数组
-Observer.prototype.emit = function (key) {
-    if(this.cache[key]&amp;&amp;this.cache[key].length&gt;0){
-        var fns = this.cache[key]
-    }
-    for(let i=0;i&lt;fns.length;i++){
-        Array.prototype.shift.call(arguments)
-        fns[i].apply(this,arguments)
-    }
-}
-// remove 的时候需要注意，如果你直接传入一个匿名函数fn，那么你在remove的时候是无法找到这个函数并且把它移除的，变通方式是传入一个
-//指向该函数的指针，而 订阅的时候存入的也是这个指针
-Observer.prototype.remove = function (key,fn) {
-    let fns = this.cache[key]
-    if(!fns||fns.length===0){
-        return
-    }
-    //如果没有传入fn，那么就是取消所有该事件的订阅
-    if(!fn){
-        fns=[]
-    }else {
-        fns.forEach((item,index)=&gt;{
-            if(item===fn){
-                fns.splice(index,1)
-            }
-        })
-    }
-}
-
-
-//example
-
-
-var obj = new Observer()
-obj.on('hello',function (a,b) {
-    console.log(a,b)
-})
-obj.emit('hello',1,2)
-//取消订阅事件的回调必须是具名函数
-obj.on('test',fn1 =function () {
-    console.log('fn1')
-})
-obj.on('test',fn2 = function () {
-    console.log('fn2')
-})
-obj.remove('test',fn1)
-obj.emit('test')
-</code></pre>
-<p>为什么会使用发布订阅模式呢? 它的优点在于:</p>
-<ul>
-<li>实现<strong>时间上的解耦</strong>(组件,模块之间的异步通讯)</li>
-<li><strong>对象之间的解耦</strong>,交由发布订阅的对象管理对象之间的耦合关系.</li>
-</ul>
-<h1 id="发布-订阅模式在-vue中的应用">发布-订阅模式在 Vue中的应用</h1>
-<p>发布-订阅模式又叫<code>观察者模式</code>,它定义对象间的一种<code>一对多</code>的依赖关系,当一个对象的状态发生改变时,所有依赖于它的对象都将得到通知。JavaScript开发中我们一般用事件模型来代替传统的发布-订阅模式</p>
-<h1 id="案例介绍1">案例介绍1</h1>
-<p>卖烧饼的店主可以把小明、小龙的电话记录下来,等店里有烧饼了在通知小龙小明来拿这就是所谓的发布-订阅模式，代码如下：</p>
-<pre><code class="language-js">/*烧饼店*/        
-var Sesamecakeshop={
-    clienlist:[],//缓存列表
-    addlisten:function(fn){//增加订阅者
-        this.clienlist.push(fn);
-    },
-    trigger:function(){//发布消息
-        for(var i=0,fn;fn=this.clienlist[i++];){
-            fn.apply(this,arguments);
-        }
-    }
-}
-
-/*小明发布订阅*/
-Sesamecakeshop.addlisten(function(price,taste){
-    console.log(&quot;小明发布的&quot;+price+&quot;元，&quot;+taste+&quot;味道的&quot;);
-});
-/*小龙发布订阅*/
-Sesamecakeshop.addlisten(function(price,taste){
-    console.log(&quot;小龙发布的&quot;+price+&quot;元，&quot;+taste+&quot;味道的&quot;);
-});        
-
-Sesamecakeshop.trigger(10,&quot;椒盐&quot;);
-</code></pre>
-<p>从代码中可以看出，只有小明，小龙预定了烧饼，烧饼店就可以发布消息告诉小龙与小明。但是有个问题不知道大家发现了没有。小明只喜欢椒盐味道的。而小龙只喜欢焦糖味道的。上面的代码就满足不了客户的需求，给客户一种感觉就是，不管我喜欢不喜欢，你都会发给我。如果发布比较多，客户就会感到厌烦，甚至会想删除订阅。下边是对代码进行改良大家可以看看。</p>
-<pre><code class="language-js">/*烧饼店*/        
-var Sesamecakeshop={
-    clienlist:{},/*缓存列表*/
-    /**
-     * 增加订阅者
-     * @key {String} 类型
-     * @fn {Function} 回掉函数
-     * */
-    addlisten:function(key,fn){
-        if(!this.clienlist[key]){
-            this.clienlist[key]=[];
-        }
-        this.clienlist[key].push(fn);
-    },
-    /**
-     * 发布消息
-     * */
-    trigger:function(){
-        var key=[].shift.call(arguments),//取出消息类型
-            fns=this.clienlist[key];//取出该类型的对应的消息集合
-        if(!fns || fns.length===0){
-            return false;
-        }
-        for(var i=0,fn;fn=fns[i++];){
-            fn.apply(this,arguments);
-        }
-    },
-    /**
-     * 删除订阅
-     * @key {String} 类型
-     * @fn {Function} 回掉函数
-     * */
-    remove:function(key,fn){
-        var fns=this.clienlist[key];//取出该类型的对应的消息集合
-        if(!fns){//如果对应的key没有订阅直接返回
-            return false;
-        }
-        if(!fn){//如果没有传入具体的回掉，则表示需要取消所有订阅
-            fns &amp;&amp; (fns.length=0);
-        }else{
-            for(var l=fns.length-1;l&gt;=0;l--){//遍历回掉函数列表
-                if(fn===fns[l]){
-                    fns.splice(l,1);//删除订阅者的回掉
-                }
-            }
-        }
-    }
-}
-
-/*小明发布订阅*/
-Sesamecakeshop.addlisten(&quot;焦糖&quot;,fn1=function(price,taste){
-    console.log(&quot;小明发布的&quot;+price+&quot;元，&quot;+taste+&quot;味道的&quot;);
-});
-/*小龙发布订阅*/
-Sesamecakeshop.addlisten(&quot;椒盐&quot;,function(price,taste){
-    console.log(&quot;小龙发布的&quot;+price+&quot;元，&quot;+taste+&quot;味道的&quot;);
-});        
-
-Sesamecakeshop.trigger(&quot;椒盐&quot;,10,&quot;椒盐&quot;);
-
-Sesamecakeshop.remove(&quot;焦糖&quot;,fn1);//注意这里是按照地址引用的。如果传入匿名函数则删除不了        
-
-Sesamecakeshop.trigger(&quot;焦糖&quot;,40,&quot;焦糖&quot;);
-
-</code></pre>
-<p>删除的时候需要注意的是，如果订阅的时候传递的是匿名函数，删除的时候如果传入的也是匿名函数。则删除不了。因为删除时候是按照地址引用删除的。传进去的两个匿名函数，对应的地址引用是不同的。</p>
-<h1 id="案例介绍2">案例介绍2</h1>
-<p>比如咱们常见的用户身份分别有不同的功能，超级管理员拥有最高权限，可以删除修改任意用户。而普通用户则只能修改自己的账户信息。首先是用户身份验证，验证通过之后对应功能才可以显示。</p>
-<pre><code class="language-js">//登录发布-订阅模式
-login={
-    clienlist:{},/*缓存列表*/
-    /**
-     * 增加订阅者
-     * @key {String} 类型
-     * @fn {Function} 回掉函数
-     * */
-    addlisten:function(key,fn){
-        if(!this.clienlist[key]){
-            this.clienlist[key]=[];
-        }
-        this.clienlist[key].push(fn);
-    },
-    /**
-     * 发布消息
-     * */
-    trigger:function(){
-        var key=[].shift.call(arguments),//取出消息类型
-            fns=this.clienlist[key];//取出该类型的对应的消息集合
-        if(!fns || fns.length===0){
-            return false;
-        }
-        for(var i=0,fn;fn=fns[i++];){
-            fn.apply(this,arguments);
-        }
-    }
-}
-//超级管理员修改所有用户
-var editall=(function(){
-    login.addlisten(&quot;loginsucc&quot;,function(data){
-        editall.setview(data);
-    });
-    return{
-        setview:function(data){
-            console.log(data);
-            console.log(&quot;超级管理员修改所有用户&quot;);
-        }
-    }
-})();
-
-//仅仅修改自己
-var editOwn=(function(){
-    login.addlisten(&quot;loginsucc&quot;,function(data){
-        editOwn.setview(data);
-    });
-    return{
-        setview:function(data){
-            console.log(data);
-            console.log(&quot;仅仅修改自己&quot;);
-        }
-    }
-})();
-</code></pre>
-<p>发布-订阅模式简单封装</p>
-<pre><code class="language-js">var _Event=(function(){
-    var clienlist={},
-    addlisten,trigger,remove;
-    /**
-     * 增加订阅者
-     * @key {String} 类型
-     * @fn {Function} 回掉函数
-     * */
-    addlisten=function(key,fn){
-        if(!clienlist[key]){
-            clienlist[key]=[];
-        }
-        clienlist[key].push(fn);
-    };
-    /**
-     * 发布消息
-     * */
-    trigger=function(){
-        var key=[].shift.call(arguments),//取出消息类型
-            fns=clienlist[key];//取出该类型的对应的消息集合
-        if(!fns || fns.length===0){
-            return false;
-        }
-        for(var i=0,fn;fn=fns[i++];){
-            fn.apply(this,arguments);
-        }
-    };
-    /**
-     * 删除订阅
-     * @key {String} 类型
-     * @fn {Function} 回掉函数
-     * */
-    remove=function(key,fn){
-        var fns=clienlist[key];//取出该类型的对应的消息集合
-        if(!fns){//如果对应的key没有订阅直接返回
-            return false;
-        }
-        if(!fn){//如果没有传入具体的回掉，则表示需要取消所有订阅
-            fns &amp;&amp; (fns.length=0);
-        }else{
-            for(var l=fns.length-1;l&gt;=0;l--){//遍历回掉函数列表
-                if(fn===fns[l]){
-                    fns.splice(l,1);//删除订阅者的回掉
-                }
-            }
-        }
-    };
-    return{
-        addlisten:addlisten,
-        trigger:trigger,
-        remove:remove
-    }
-})();
-
-
-_Event.addlisten(&quot;jianbing&quot;,function(d,all){
-    console.log(&quot;发布的消息来自：&quot;+d+&quot;，具体信息：&quot;+all);
-});
-_Event.addlisten(&quot;jianbing&quot;,function(d,all){
-    console.log(&quot;发布的消息来自：&quot;+d+&quot;，具体信息：&quot;+all);
-})
-_Event.trigger(&quot;yyyy&quot;,&quot;xxx&quot;,&quot;前端工程师&quot;)
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1596872061540.png" alt="" loading="lazy"></figure>
-<h1 id="总结">总结</h1>
-<p>发布-订阅模式就是常说的观察者模式，在实际开发中非常有用。它的优点是为时间是解耦，为对象之间解构，它的应用非常广泛，既可以在异步编程中也可以帮助我们完成更松的解耦。发布-订阅模式还可以帮助我们实现设计模式，从架构上来看，无论MVC还是MVVC都少不了发布-订阅模式的参与。然而发布-订阅模式也存在一些缺点，创建订阅本身会消耗一定的时间与内存，也许当你订阅一个消息之后，之后可能就不会发生。发布-订阅模式虽然它弱化了对象与对象之间的关系，但是如果过度使用，对象与对象的必要联系就会被深埋，会导致程序难以跟踪与维护。</p>
-<!-- more -->
-<h1 id="订阅发布模式和观察者模式的区别">订阅发布模式和观察者模式的区别</h1>
-<p><strong>发布订阅模式属于广义上的观察者模式</strong><br>
-发布订阅模式是最常用的一种观察者模式的实现，并且从解耦和重用角度来看，更优于典型的观察者模式</p>
-<p><strong>发布订阅模式多了个事件通道</strong><br>
-在观察者模式中，观察者需要直接订阅目标事件；在目标发出内容改变的事件后，直接接收事件并作出响应<br>
-<img src="https://cutezhangq.github.io/post-images/1596877097254.png" alt="" loading="lazy"></p>
-<p>在发布订阅模式中，发布者和订阅者之间多了一个发布通道；一方面从发布者接收事件，另一方面向订阅者发布事件；订阅者需要从事件通道订阅事件<br>
-以此避免发布者和订阅者之间产生依赖关系<br>
-<img src="https://cutezhangq.github.io/post-images/1596877130031.png" alt="" loading="lazy"></p>
-<p>总结起来就是，一个是紧密耦合，一个是松散耦合。优缺点也很明显，紧密耦合的方式简单直接，扩展性差，而且要求两端同时存在。松散耦合不直接产生依赖，更容易扩展，懒加载的时候会有优势，但稍显复杂。</p>
-<h2 id="从代码看区别">从代码看区别</h2>
-<p>需求：数据打包下载功能</p>
 ]]></content>
     </entry>
 </feed>
