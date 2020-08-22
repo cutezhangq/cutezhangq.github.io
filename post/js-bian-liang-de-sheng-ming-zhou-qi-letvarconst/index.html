@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597928527014">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1598084363510">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -26,10 +26,7 @@
 
     <meta name="description" content="👉具体let、var、consts的区别可见es6中内容👈，这里简要介绍了它们的区别
 主要围绕生命周期、作用域来看🙌
-
-变量的生命周期
-当引擎（如：浏览器中的js引擎）访问变量的时候，它们的生命周期包括下面几个阶段：
-1.声明 阶段：..." />
+变量提升：JavaScript引擎的工作方式是，先解析代码，获取所有被声明的变量，然后再一行一行地运行。这造成的结果..." />
     <meta name="keywords" content="js" />
   </head>
   <body>
@@ -39,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597928527014" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1598084363510" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -113,7 +110,8 @@
             
             <div class="post-content" v-pre>
               <p>👉具体let、var、consts的区别可见es6中内容👈，这里简要介绍了它们的区别<br>
-主要围绕生命周期、作用域来看🙌</p>
+主要围绕生命周期、作用域来看🙌<br>
+<strong>变量提升</strong>：JavaScript引擎的工作方式是，先解析代码，获取所有被声明的变量，然后再一行一行地运行。这造成的结果，就是所有的变量的声明语句，都会被提升到代码的头部，这就叫做变量提升<code>（hoisting）</code></p>
 <!-- more -->
 <h1 id="变量的生命周期">变量的生命周期</h1>
 <p>当引擎（如：浏览器中的js引擎）访问变量的时候，它们的生命周期包括下面几个阶段：<br>
@@ -193,6 +191,79 @@ const：不会分预配内存空间，栈内存分配变量时也会做同样的
 <pre><code>let只是创建过程中提升，初始化过程并没有提升，所以会产生暂时性死区。
 var的创建和初始化过程都提升了，所以赋值前访问会得到undefined
 </code></pre>
+<h1 id="例题">例题</h1>
+<pre><code class="language-js">
+var a= 1;
+function f() {
+  console.log(a);
+  var a = 2;
+}
+f();
+//undefined
+</code></pre>
+<p>我们可以大致把JavaScript在浏览器中运行的过程分为两个阶段<code>预解释阶段</code>（有人说准确的说法是应该是Parser，我们以预解释方便理解） <code>执行阶段</code>,在JavaScript引擎对JavaScript代码进行执行之前,需要进行预先处理,然后再对处理后的代码进行执行。</p>
+<h2 id="javascript预解释阶段">JavaScript预解释阶段</h2>
+<blockquote>
+<p>我们平时书写的JavaScript代码并不是JavaScript执行的代码(V8引擎读取一行执行一行这种理解是错误的),它需要预解释后,再由引擎进行执行.</p>
+</blockquote>
+<p>以上例中的var a = 2;为例,我们一般人的理解为声明了一个值为2的变量a,但是在JavaScript引擎处理时却分为了两个步骤:</p>
+<blockquote>
+<p>读取var a后,在当前作用域中查找是否有相同声明,如果没有就在当前作用域集合中创建一个名为a的变量,否则忽略此声明继续进行解析.</p>
+</blockquote>
+<blockquote>
+<p>接下来,V8引擎会处理a = 2的赋值操作,首先会询问当前作用域中是否有名为a的变量,如果有进行赋值,否则继续向上级作用域询问.</p>
+</blockquote>
+<h2 id="javascript执行环境">JavaScript执行环境</h2>
+<p>我们上面提到的所谓javascript预解释正是创建函数的<code>执行环境</code>（又称<code>“执行上下文”</code>），只有搞定了javascript的执行环境我们才能搞清楚一段代码在执行过后为什么产生这样的结果。</p>
+<p>我们用一段伪代码表示创立的执行环境</p>
+<pre><code class="language-js">executionContextObj = {
+    'scopeChain': { /* 变量对象 + 所有父级执行上下文中的变量对象 */ },
+    'variableObject': { /*  函数参数 / 参数, 内部变量以及函数声明 */ },
+    'this': {}
+}
+</code></pre>
+<p>作用域链(scopeChain)包括下面提到的变量对象(variableObject)和所有父级执行上下文中的变量对象.</p>
+<p>变量对象(variableObject)是与执行上下文相关的数据作用域,一个与上下文相关的特殊对象，其中存储了在上下文中定义的变量和函数声明:</p>
+<ul>
+<li>变量</li>
+<li>函数声明</li>
+<li>函数的形参</li>
+</ul>
+<p>在有了这些基板概念之后我们可以梳理一下<strong>js引擎创建执行的过程</strong>:</p>
+<ul>
+<li>
+<p>创建阶段</p>
+<ul>
+<li>创建Scope chain</li>
+<li>创建variableObject</li>
+<li>设置this</li>
+</ul>
+</li>
+<li>
+<p>执行阶段</p>
+<ul>
+<li>变量的值、函数的引用</li>
+<li>执行代码</li>
+</ul>
+</li>
+</ul>
+<!-- more -->
+<p>而<strong>变量对象的创建细节</strong>如下:</p>
+<ul>
+<li>根据函数的参数，创建并初始化arguments object</li>
+<li>扫描函数内部代码，查找函数声明（Function declaration）
+<ul>
+<li>对于所有找到的函数声明，将函数名和函数引用存入变量对象中</li>
+<li>如果变量对象中已经有同名的函数，那么就进行覆盖</li>
+</ul>
+</li>
+<li>扫描函数内部代码，查找变量声明（Variable declaration）
+<ul>
+<li>对于所有找到的变量声明，将变量名存入变量对象中，并初始化为&quot;undefined&quot;</li>
+<li>如果变量名称跟已经声明的形式参数或函数相同，则变量声明不会干扰已经存在的这类属性</li>
+</ul>
+</li>
+</ul>
 
             </div>
             

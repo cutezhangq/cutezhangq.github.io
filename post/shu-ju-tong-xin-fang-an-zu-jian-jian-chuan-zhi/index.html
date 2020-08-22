@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1597928527014">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1598084363510">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -39,7 +39,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1597928527014" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1598084363510" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -245,6 +245,7 @@ closeCom(msg) {
 <!-- more -->
 <h1 id="二-emit-on-事件总线bus或者叫eventbus-适用于-父子-隔代-兄弟组件通信">二、 <code>$emit / $on</code>    事件总线：$bus或者叫EventBus     适用于 父子、隔代、兄弟组件通信</h1>
 <h2 id="写法一将bus总线挂载到原型上用的时候直接thisbus即可使用发送-接收">写法一：将<code>$bus</code>总线挂载到原型上，用的时候直接this.$bus即可使用（发送、接收）</h2>
+<p><code>原理：</code>将事件总线定义到原型上，所有的组件都是Vue实例对象的子对象，所有组件都继承了Vue的实例对象，实例对象的原型上绑定了事件总线，那么所有继承它的组件就都可以使用了。</p>
 <pre><code class="language-js">写法一：
 main.js
     Vue.prototype.$bus = new Vue()
@@ -761,6 +762,13 @@ title: '我是子组件2'
 <!-- more -->
 <h1 id="八-slot">八、slot</h1>
 <p>详情见相关文章</p>
+<h1 id="组件通信的高级方式">组件通信的高级方式</h1>
+<p><code>深度原生事件/自定义事件</code><br>
+<code>v-model</code><br>
+<code>属性修饰符.sync</code><br>
+<code>$attrs与$listeners</code><br>
+<code>$children与$parent</code><br>
+<code>作用域插槽slot-scope</code></p>
 
             </div>
             

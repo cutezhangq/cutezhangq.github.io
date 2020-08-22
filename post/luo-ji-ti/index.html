@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>小程序 | cutezhangq</title>
+<title>逻辑题 | cutezhangq</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -12,13 +12,27 @@
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
 
 <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 
 
-    <meta name="description" content="温故知新">
+    <meta name="description" content="这里收录一些小的逻辑题或算法题👀，啊啊啊，血的教训😰，思考方式很重要
+
+关于取火柴棒问题取胜方法的一些思考
+取火柴棒游戏的问题叙述:
+桌上有n根火柴棒,甲乙两人按照如下规则轮流取走这些火柴棒:
+
+1.每次只允许取走1~2根火柴棒;
+2...." />
+    <meta name="keywords" content="" />
   </head>
   <body>
     <div id="app" class="main">
@@ -92,43 +106,43 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: 小程序</h2>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://cutezhangq.github.io/post/mpvue-xing-neng-you-hua-ji-qiao/">
-                  <h2 class="post-title">mpvue性能优化技巧</h2>
-                </a>
-                <div class="post-date">
-                  2020-04-07
-                </div>
-                <div class="post-abstract">
-                  <p>👀性能优化十分重要，本文通过一下几个方面来介绍了小程序的优化：<br>
-👉压缩图片、<br>
-👉移除无用的库、<br>
-👉开启Vue.config._mpTrace = true、<br>
-👉精简data、<br>
-👉静态图片放进static、<br>
-👉swiper优化、<br>
-👉vuex使用注意事项、<br>
-👉善用storage、<br>
-👉动画优化</p>
+          <div class="post-detail">
+            <h2 class="post-title">逻辑题</h2>
+            <div class="post-date">2020-08-21</div>
+            
+            <div class="post-content" v-pre>
+              <p>这里收录一些小的逻辑题或算法题👀，啊啊啊，血的教训😰，思考方式很重要</p>
+<!-- more -->
+<h1 id="关于取火柴棒问题取胜方法的一些思考">关于取火柴棒问题取胜方法的一些思考</h1>
+<p>取火柴棒游戏的问题叙述:<br>
+桌上有<strong>n根</strong>火柴棒,甲乙<strong>两人</strong>按照如下规则轮流取走这些火柴棒:</p>
+<ul>
+<li>1.<code>每次只允许取走1~2根火柴棒</code>;</li>
+<li>2.<code>最后一次取走火柴棒的人获胜</code>;</li>
+</ul>
 
-                </div>
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/bi-shi-ti-mu-zheng-li-2/">
+                  <h3 class="post-title">
+                    笔试-题目整理2-2020bilibili 
+                  </h3>
+                </a>
               </div>
-              
-                <a class="right" href="https://cutezhangq.github.io/post/mpvue-xing-neng-you-hua-ji-qiao/">
-                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/mpvue-xing-neng-you-hua-ji-qiao.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
+            
 
-          <div class="pagination-container">
-  
-  
-</div>
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
 
         </div>
       </div>
@@ -154,6 +168,29 @@ var app = new Vue({
     hljs.initHighlightingOnLoad()
   </script>
 
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: '',
+        admin: [''],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 
