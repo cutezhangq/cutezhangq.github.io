@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1598084363510">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1598413938085">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -41,7 +41,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1598084363510" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1598413938085" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -110,6 +110,9 @@
             <h2 class="post-title">逻辑题</h2>
             <div class="post-date">2020-08-21</div>
             
+              <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/luo-ji-ti.jpg')">
+              </div>
+            
             <div class="post-content" v-pre>
               <p>这里收录一些小的逻辑题或算法题👀，啊啊啊，血的教训😰，思考方式很重要</p>
 <!-- more -->
@@ -120,6 +123,227 @@
 <li>1.<code>每次只允许取走1~2根火柴棒</code>;</li>
 <li>2.<code>最后一次取走火柴棒的人获胜</code>;</li>
 </ul>
+<p>若甲先取,且甲想要取胜,那么可以考虑如下一种策略(我们姑且就称之为<code>策略A</code>吧):</p>
+<pre><code class="language-cmd">甲先取,之后乙取,若乙取1个火柴棒,那么之后甲就取2个火柴棒;若乙取2个火柴棒,则甲取1个火柴棒,
+总之就是保证甲+乙=3,那么,就产生了如下3种情况:
+</code></pre>
+<h2 id="1n3k1k是整数">1)n=3k+1,k是整数:</h2>
+<p>这种情况下,甲要取胜,方法为:<code>先取1个火柴棒</code>(这是最后一个1),那么还剩下3k个火柴棒,之后采取策略A.这样,就能<code>保证每回合都取走3个</code>,且甲取后一次.以此类推,甲就一定能取胜.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">|</th>
+<th style="text-align:center">|</th>
+<th style="text-align:center">|</th>
+<th style="text-align:center">|</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">M</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">M</td>
+</tr>
+<tr>
+<td style="text-align:center">M</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center">M</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>|</th>
+<th>|</th>
+<th>|</th>
+<th>|</th>
+<th>|</th>
+<th>|</th>
+<th>|</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M</td>
+<td>Y</td>
+<td>Y</td>
+<td>M</td>
+<td>Y</td>
+<td>M</td>
+<td>M</td>
+</tr>
+<tr>
+<td>M</td>
+<td>Y</td>
+<td>M</td>
+<td>M</td>
+<td>Y</td>
+<td>Y</td>
+<td>M</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2n3k2k是整数">2)n=3k+2,k是整数:</h2>
+<p>这种情况下,甲要取胜,方法为:<code>先取2个火柴棒</code>,那么还剩下3k个火柴棒,之后采取策略A.这样,就能<code>保证每回合都取走3个</code>,且甲取后一次.以此类推,甲就一定能取胜.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">|</th>
+<th style="text-align:center">|</th>
+<th style="text-align:center">|</th>
+<th style="text-align:center">|</th>
+<th style="text-align:center">|</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">M</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center">M</td>
+</tr>
+<tr>
+<td style="text-align:center">M</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">M</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>|</th>
+<th>|</th>
+<th>|</th>
+<th>|</th>
+<th>|</th>
+<th>|</th>
+<th>|</th>
+<th>|</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M</td>
+<td>M</td>
+<td>Y</td>
+<td>M</td>
+<td>M</td>
+<td>Y</td>
+<td>Y</td>
+<td>M</td>
+</tr>
+<tr>
+<td>M</td>
+<td>M</td>
+<td>Y</td>
+<td>Y</td>
+<td>M</td>
+<td>Y</td>
+<td>M</td>
+<td>M</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3n3kk是整数">3)n=3k,k是整数;</h2>
+<p>这种情况下,<code>甲要么先取1个,要么先取2个</code>.剩下的就是:<code>3k-1或者3k-2</code>;而3k-1=(3k+2)-3; 3k-2=(3k+1)-3 在这种情况下,甲是必输的.因为这个问题可以<code>等价于</code><strong>乙先取3k-1或3k-2个火柴棒</strong>,也就是3k+2或3k+1个火柴棒,这与上述1),2)的情况是一样的.所以,这种情况下,<code>甲必输</code></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">|</th>
+<th style="text-align:center">|</th>
+<th style="text-align:center">|</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">M</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center">Y</td>
+</tr>
+<tr>
+<td style="text-align:center">M</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">Y</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">|</th>
+<th style="text-align:center">|</th>
+<th style="text-align:center">|</th>
+<th style="text-align:center">|</th>
+<th style="text-align:center">|</th>
+<th style="text-align:center">|</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">M</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">Y</td>
+</tr>
+<tr>
+<td style="text-align:center">M</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center">Y</td>
+</tr>
+</tbody>
+</table>
+<h3 id="总结">总结:</h3>
+<p>在甲先取的情况下,胜负如下</p>
+<ul>
+<li>1)若n=3k+1或者n=3k+2</li>
+</ul>
+<p>甲采取策略A必胜</p>
+<ul>
+<li>2)若n=3k</li>
+</ul>
+<p>乙一定能用策略A取得胜利,亦即乙必胜.</p>
+<h2 id="进一步推广取火柴棒问题描述如下">进一步推广取火柴棒问题,描述如下:</h2>
+<p>桌上有<code>n个</code>火柴棒,甲乙两人按照如下规则轮流取走这些火柴棒:</p>
+<p><code>1)每次只允许取走1~m个火柴棒;</code></p>
+<p><code>2)最后一次取走火柴棒的人获胜;</code></p>
+<p>我们可以从上面的推理中类推出此问题的解,取胜方法策略为(我们姑且称之为<code>策略B</code>):</p>
+<p>若甲先取,且甲想取胜</p>
+<p>甲先取若干个火柴棒,之后乙取,若乙取1个火柴棒,那么之后甲就取m个火柴棒;若乙取2个火柴棒,则甲取m-1个火柴棒......总之就是保证<code>甲+乙=m+1</code>,那么,就产生了如下m+1种情况:</p>
+<h2 id="1nm1k1k是整数">1)n=(m+1)*k+1,k是整数;</h2>
+<p>甲先取1个火柴棒,那么还剩下(m+1)*k个火柴棒,之后采取策略B,这样,就能保证每回合都取走m+1个,且甲取后一次.以此类推,甲就一定能取胜.</p>
+<h2 id="2nm1k2k是整数">2)n=(m+1)*k+2,k是整数:</h2>
+<p>甲先取2个火柴棒,那么还剩下(m+1)*k个火柴棒,之后采取策略B,这样,就能保证每回合都取走m+1个,且甲取后一次.以此类推,甲就一定能取胜.</p>
+<h2 id="">......</h2>
+<h2 id="mnm1kmk是整数">m)n=(m+1)*k+m,k是整数:</h2>
+<p>甲先取m个火柴棒,那么还剩下(m+1)*k个火柴棒,之后采取策略B,这样,就能保证每回合都取走m+1个,且甲取后一次.以此类推,甲就一定能取胜.</p>
+<p>m+1)n=(m+1)*k,k是整数:</p>
+<p>这种情况下,甲要么先取1个,要么先取2个,要么先取3个,......要么先取m个,那么分别还剩下:(m+1)*k-1,(m+1)*k-2,(m+1)*k-3,......,(m+1)*k-m个火柴棒,亦即<code>[(m+1)*k+m]-(m+1),......,[(m+1)*k+1]-(m+1)</code>个火柴棒.这相当于上面的1)~m)这m种情况,只不过先取的是乙,这种情况下,乙必胜.</p>
+<h3 id="总结-2">总结:</h3>
+<p>甲先取,且甲想取胜</p>
+<ul>
+<li>1)若n=(m+1)*k+1,(m+1)*k+2,......,(m+1)*k+m</li>
+</ul>
+<p>采取上述策略,甲一定能取得胜利</p>
+<ul>
+<li>2)若n=(m+1)*k</li>
+</ul>
+<p>乙采取上述策略,乙一定能取得胜利.</p>
+<blockquote>
+<p>从上面的结论,我们可以看到,只有一种情况下,乙是必胜的,那就是n=(m+1)*k,其余都是甲必胜,可见,甲必胜的概率随着m的增加而不断变大,同时,我们也可以看出,先手者胜率高.</p>
+</blockquote>
+<p>👉考察了<code>逆向来思考</code>能力【反向逆推法】，数据之间产生关系（相加）规律，</p>
 
             </div>
             
