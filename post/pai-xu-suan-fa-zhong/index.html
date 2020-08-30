@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>排序算法（中） | cutezhangq</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1598771465722">
+<link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="前端常见的排序算法，共有10种😘
+
+（四）：希尔排序
+算法介绍
+希尔排序，也称递减增量排序算法，是插入排序的一种更高效的改进版本。
+希尔排序算法的步骤描述如下：
+选择一个增量序列 t1，t2，……，tk，其中 ti &gt; tj, tk..." />
+    <meta name="keywords" content="算法" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://cutezhangq.github.io">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1598771465722" class="site-logo">
+        <h1 class="site-title">cutezhangq</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/cutezhangq" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://cutezhangq.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">排序算法（中）</h2>
+            <div class="post-date">2020-08-30</div>
+            
+              <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/pai-xu-suan-fa-zhong.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>前端常见的排序算法，共有10种😘</p>
+<!-- more -->
+<h1 id="四希尔排序">（四）：希尔排序</h1>
+<h3 id="算法介绍">算法介绍</h3>
+<p>希尔排序，也称<code>递减增量排序</code>算法，是插入排序的一种更高效的改进版本。<br>
+希尔排序算法的步骤描述如下：<br>
+选择一个增量序列 t1，t2，……，tk，其中 ti &gt; tj, tk = 1；按增量序列个数 k，对序列进行 k 趟排序；<br>
+每趟排序，根据对应的增量 ti，将待排序列分割成若干长度为 m 的子序列，分别对各子表进行直接插入排序。<br>
+仅增量因子为 1 时，整个序列作为一个表来处理，表长度即为整个序列的长度。</p>
+<h3 id="思路">思路</h3>
+<p>通过某个增量 gap，将整个序列分给若干组，从后往前进行组内成员的比较和交换，随后逐步缩小增量至 1。希尔排序类似于插入排序，只是一开始向前移动的步数从 1 变成了 gap。</p>
+<h3 id="算法阐释">算法阐释</h3>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1598771169898.png" alt="" loading="lazy"></figure>
+<h3 id="算法图解">算法图解</h3>
+<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1598771176444.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://cutezhangq.github.io/post-images/1598771191151.png" alt="" loading="lazy"></figure>
+<pre><code class="language-js"> //希尔排序
+    function shellSort(arr) {
+      var len = arr.length,
+        temp,
+        gap = 1; //增量因子——————步长
+      while (gap &lt; len / 3) { //动态定义间隔序列
+        gap = gap * 3 + 1;
+      }
+      //逐步缩小增量
+      for (gap; gap &gt; 0; gap = Math.floor(gap / 3)) {
+        //类直接插入排序算法
+        for (var i = gap; i &lt; len; i++) {
+          temp = arr[i];
+          for (var j = i - gap; j &gt;= 0 &amp;&amp; arr[j] &gt; temp; j -= gap) {
+            arr[j + gap] = arr[j];    //记录后裔，查找插入位置
+          }
+          arr[j + gap] = temp;     //插入
+        }
+      }
+      return arr;
+    }
+
+  const testArr = [11,4,6,52,3,20,1,9,2,5,19,3,6,21]
+  console.log('————希尔排序——————',shellSort(testArr));
+  //————希尔排序—————— (14) [1, 2, 3, 3, 4, 5, 6, 6, 9, 11, 19, 20, 21, 52]
+</code></pre>
+<p>第一层循环里面的两层嵌套循环算法，其实就是「直接插入排序」，<br>
+不同就在于多了一个变量 gap，但其实当 gap === 1 时，那就跟上一节的算法，是完全一样的。</p>
+<h3 id="算法实现总结">算法实现总结</h3>
+<p>希尔排序的关键不是简单地按 1 为增量进行分组排序后，再合并整体排序；<br>
+而是<code>选好一个初始化增量，不断地递减增量，每次递减之间都需要经过一次直接插入排序，使得排序的效率提高。</code><br>
+另外只要最终增量为 1，则任何增量序列都可以工作，因为最终当增量为 1 时，算法就变为「直接插入排序」，这就保证了数据一定会被排序。</p>
+<p><img src="https://cutezhangq.github.io/post-images/1598771270434.png" alt="" loading="lazy"><br>
+综上所述，希尔排序算法的出现，我们终于突破了慢速排序的时代，也即超越了时间复杂度为 O(n²)。</p>
+<h3 id="性能比较">性能比较</h3>
+<p>在数据量相当的情况下：发现 拆半插入排序 &gt;= 单向冒泡排序性能 &gt; 双向冒泡排序性能 &gt; 插入排序 &gt; <code>希尔排序</code> &gt;选择排序 &gt; 大于普通冒泡性能。（产生时间具体取决于所使用的系统）</p>
+<h1 id="五归并排序">（五）：归并排序</h1>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://cutezhangq.github.io/tag/KFImbiYP6/" class="tag">
+                    算法
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/pai-xu-suan-fa-shang/">
+                  <h3 class="post-title">
+                    排序算法（上）
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: '',
+        admin: [''],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

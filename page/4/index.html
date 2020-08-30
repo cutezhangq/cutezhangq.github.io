@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1598754481615">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1598771465722">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -28,7 +28,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1598754481615" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1598771465722" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -93,6 +93,53 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://cutezhangq.github.io/post/new-yun-suan-fu-de-zhi-xing-guo-cheng/">
+                  <h2 class="post-title"> new运算符的执行过程</h2>
+                </a>
+                <div class="post-date">
+                  2019-05-15
+                </div>
+                <div class="post-abstract">
+                  <p>new运算符的执行过程基本可以描述为：<br>
+👉	创建一个空对象obj<br>
+👉	并将这个空对象obj的__proto__连接到构造函数的原型上。链接到原型: obj.<strong>proto</strong> = Con.prototype<br>
+👉	绑定this:  apply，创建属性和方法。  用apply绑定对象的this指向（obj作为this的上下文）Con.apply(obj,arguments)<br>
+👉	返回新对象this或者叫创建的对象obj(如果构造函数有自己 retrun 时，则返回该值)</p>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://cutezhangq.github.io/post/new-yun-suan-fu-de-zhi-xing-guo-cheng/">
+                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/new-yun-suan-fu-de-zhi-xing-guo-cheng.jpg')">
+                  </div>
+                </a>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://cutezhangq.github.io/post/git/">
+                  <h2 class="post-title">Git使用</h2>
+                </a>
+                <div class="post-date">
+                  2019-03-22
+                </div>
+                <div class="post-abstract">
+                  <p>这里收录了👉最常用的Git命令👈，包括从初始化到提交，从克隆到合并等一系列命令操作！并简要讲解了git的工作原理！😘<br>
+麻麻再也不用担心我丢代码啦🙆，不过命令还是要小心使用哦🏃‍♀</p>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://cutezhangq.github.io/post/git/">
+                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/git.jpg')">
+                  </div>
+                </a>
+              
+            </article>
           
             <article class="post-item">
               <div class="left">

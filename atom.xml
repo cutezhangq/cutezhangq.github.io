@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cutezhangq.github.io</id>
     <title>cutezhangq</title>
-    <updated>2020-08-30T02:28:13.443Z</updated>
+    <updated>2020-08-30T07:11:34.214Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cutezhangq.github.io"/>
     <link rel="self" href="https://cutezhangq.github.io/atom.xml"/>
@@ -11,11 +11,83 @@
     <icon>https://cutezhangq.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, cutezhangq</rights>
     <entry>
+        <title type="html"><![CDATA[排序算法（下）]]></title>
+        <id>https://cutezhangq.github.io/post/pai-xu-suan-fa-xia/</id>
+        <link href="https://cutezhangq.github.io/post/pai-xu-suan-fa-xia/">
+        </link>
+        <updated>2020-09-01T07:03:26.000Z</updated>
+        <content type="html"><![CDATA[<p>前端常见的排序算法，共有10种😘</p>
+<!-- more -->]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[排序算法（中）]]></title>
+        <id>https://cutezhangq.github.io/post/pai-xu-suan-fa-zhong/</id>
+        <link href="https://cutezhangq.github.io/post/pai-xu-suan-fa-zhong/">
+        </link>
+        <updated>2020-08-30T07:01:58.000Z</updated>
+        <summary type="html"><![CDATA[<p>前端常见的排序算法，共有10种😘</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>前端常见的排序算法，共有10种😘</p>
+<!-- more -->
+<h1 id="四希尔排序">（四）：希尔排序</h1>
+<h3 id="算法介绍">算法介绍</h3>
+<p>希尔排序，也称<code>递减增量排序</code>算法，是插入排序的一种更高效的改进版本。<br>
+希尔排序算法的步骤描述如下：<br>
+选择一个增量序列 t1，t2，……，tk，其中 ti &gt; tj, tk = 1；按增量序列个数 k，对序列进行 k 趟排序；<br>
+每趟排序，根据对应的增量 ti，将待排序列分割成若干长度为 m 的子序列，分别对各子表进行直接插入排序。<br>
+仅增量因子为 1 时，整个序列作为一个表来处理，表长度即为整个序列的长度。</p>
+<h3 id="思路">思路</h3>
+<p>通过某个增量 gap，将整个序列分给若干组，从后往前进行组内成员的比较和交换，随后逐步缩小增量至 1。希尔排序类似于插入排序，只是一开始向前移动的步数从 1 变成了 gap。</p>
+<h3 id="算法阐释">算法阐释</h3>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1598771169898.png" alt="" loading="lazy"></figure>
+<h3 id="算法图解">算法图解</h3>
+<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1598771176444.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://cutezhangq.github.io/post-images/1598771191151.png" alt="" loading="lazy"></figure>
+<pre><code class="language-js"> //希尔排序
+    function shellSort(arr) {
+      var len = arr.length,
+        temp,
+        gap = 1; //增量因子——————步长
+      while (gap &lt; len / 3) { //动态定义间隔序列
+        gap = gap * 3 + 1;
+      }
+      //逐步缩小增量
+      for (gap; gap &gt; 0; gap = Math.floor(gap / 3)) {
+        //类直接插入排序算法
+        for (var i = gap; i &lt; len; i++) {
+          temp = arr[i];
+          for (var j = i - gap; j &gt;= 0 &amp;&amp; arr[j] &gt; temp; j -= gap) {
+            arr[j + gap] = arr[j];    //记录后裔，查找插入位置
+          }
+          arr[j + gap] = temp;     //插入
+        }
+      }
+      return arr;
+    }
+
+  const testArr = [11,4,6,52,3,20,1,9,2,5,19,3,6,21]
+  console.log('————希尔排序——————',shellSort(testArr));
+  //————希尔排序—————— (14) [1, 2, 3, 3, 4, 5, 6, 6, 9, 11, 19, 20, 21, 52]
+</code></pre>
+<p>第一层循环里面的两层嵌套循环算法，其实就是「直接插入排序」，<br>
+不同就在于多了一个变量 gap，但其实当 gap === 1 时，那就跟上一节的算法，是完全一样的。</p>
+<h3 id="算法实现总结">算法实现总结</h3>
+<p>希尔排序的关键不是简单地按 1 为增量进行分组排序后，再合并整体排序；<br>
+而是<code>选好一个初始化增量，不断地递减增量，每次递减之间都需要经过一次直接插入排序，使得排序的效率提高。</code><br>
+另外只要最终增量为 1，则任何增量序列都可以工作，因为最终当增量为 1 时，算法就变为「直接插入排序」，这就保证了数据一定会被排序。</p>
+<p><img src="https://cutezhangq.github.io/post-images/1598771270434.png" alt="" loading="lazy"><br>
+综上所述，希尔排序算法的出现，我们终于突破了慢速排序的时代，也即超越了时间复杂度为 O(n²)。</p>
+<h3 id="性能比较">性能比较</h3>
+<p>在数据量相当的情况下：发现 拆半插入排序 &gt;= 单向冒泡排序性能 &gt; 双向冒泡排序性能 &gt; 插入排序 &gt; <code>希尔排序</code> &gt;选择排序 &gt; 大于普通冒泡性能。（产生时间具体取决于所使用的系统）</p>
+<h1 id="五归并排序">（五）：归并排序</h1>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[排序算法（上）]]></title>
         <id>https://cutezhangq.github.io/post/pai-xu-suan-fa-shang/</id>
         <link href="https://cutezhangq.github.io/post/pai-xu-suan-fa-shang/">
         </link>
-        <updated>2020-08-30T02:18:15.000Z</updated>
+        <updated>2020-08-27T02:18:15.000Z</updated>
         <summary type="html"><![CDATA[<p>前端常见的排序算法，共有10种😘</p>
 ]]></summary>
         <content type="html"><![CDATA[<p>前端常见的排序算法，共有10种😘</p>
@@ -149,6 +221,177 @@ console.log('————改进版冒泡排序——————',bubbleSort2(te
 <code>单向冒泡排序性能 &gt; 双向冒泡排序性能 &gt; 大于普通冒泡性能。</code>（产生时间具体取决于所使用的系统）</p>
 <h3 id="时间度复杂度分析">时间度复杂度分析:</h3>
 <figure data-type="image" tabindex="3"><img src="https://cutezhangq.github.io/post-images/1598754429691.png" alt="" loading="lazy"></figure>
+<!-- more -->
+<h1 id="二选择排序">（二）：选择排序</h1>
+<h3 id="算法介绍">算法介绍</h3>
+<p>打个比方，喜欢短线炒股的朋友，习惯短时间内不断地买进卖出，通过价差来实现盈利。<br>
+但是通常如此频繁操作，即使失误不多，也会因为操作的手续费和印花税而获利较少。<br>
+另外一种长线炒股的朋友，习惯长时间持有，不断地观察和判断，时机一到便果断买进或卖出，交易次数少，收益颇丰。<br>
+上一节说的冒泡排序就类似于短线炒股，不断地比较之后进行交换，完成排序。<br>
+而本节所要讲解的简单选择排序，类似于长线炒股，虽然也在不断地观察比较，但是会在合适的时机进行交换，并且只移动一次就完成相应关键字的排序定位工作。这就是选择排序法的初步思想。<br>
+<code>依次找到剩余元素的 最小值或者最大值，放置在 末尾或者开头。</code></p>
+<h3 id="算法图示">算法图示：</h3>
+<ul>
+<li>第一趟：如下图，先选择1和9，比较，1&lt;9，所以将1放在前面，9放在后面，然后再拿着9和剩下的数组中比较；</li>
+<li>第二趟：在剩下的数组中找到最小值，是2，拿2和9比较，2&lt;9，将2放前面，9放在原来2的位置，然后再拿着9和剩下的数组中比较；</li>
+<li>第三趟：在剩下的数组中找到最小值，是3，拿3和9比较，3&lt;9，将3放前面，9放在原来3的位置，然后再拿着3和剩下的数组中比较；</li>
+<li>第四趟：在剩下的数组中找到最小值，是4，拿4和3比较，4&gt;3，依旧将3放前面，4放在3的后面位置，然后再拿着4和剩下的数组中比较；</li>
+<li>第五趟：在剩下的数组中找到最小值，是5，拿5和4比较，5&gt;4，依旧将4放前面，5放在4的后面位置（与7交互），然后再拿着7和剩下的数组中比较；</li>
+<li>第六趟： 在剩下的数组中找到最小值，是5，拿5和7比较，5&lt;7，将5放前面，7放在原来5的位置，然后再拿着5和剩下的数组中比较；</li>
+<li>第七趟：在剩下的数组中找到最小值，是6，拿6和5比较，6&gt;5，依旧将5放前面，6放在5的后面位置，然后再拿着6和剩下的数组中比较；</li>
+<li>第八趟：在剩下的数组中找到最小值，是7，拿7和6比较，7&gt;6，依旧将6放前面，7放在6的后面位置，然后再拿着8和剩下的数组中比较；</li>
+<li>第九趟：在剩下的数组中找到最小值，是9，拿9和8比较，9&gt;8，依旧将8放前面，9放在8的后面位置，剩下数组为空</li>
+<li>排序结束.....</li>
+</ul>
+<figure data-type="image" tabindex="4"><img src="https://cutezhangq.github.io/post-images/1598770578518.png" alt="" loading="lazy"></figure>
+<p>选择排序是一种简单直观的排序算法，无论什么数据进去都是 O(n²) 的时间复杂度。选择排序算法的步骤描述如下：</p>
+<ul>
+<li>首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置。</li>
+<li>再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。</li>
+<li>重复第二步，直到所有元素均排序完毕。</li>
+</ul>
+<pre><code class="language-js">//选择排序算法
+  function selectionSort(arr) {
+    var len = arr.length;
+    var minIndex, temp;
+    for (var i = 0; i &lt; len - 1; i++) {
+        minIndex = i; //最小数的索引
+        for (var j = i + 1; j &lt; len; j++) {   //依次查找剩余元素
+            if (arr[j] &lt; arr[minIndex]) {     // 寻找最小的数
+                minIndex = j;                 // 将最小数的索引保存
+            }
+        }
+        temp = arr[i];    //将选出的元素放到末尾
+        arr[i] = arr[minIndex];
+        arr[minIndex] = temp;
+    }
+    return arr;
+}   
+
+
+const testArr = [11,4,6,52,3,20,1,9,2,5,19,3,6,21]
+console.log('————选择排序——————',selectionSort(testArr));
+ //(14) [1, 2, 3, 3, 4, 5, 6, 6, 9, 11, 19, 20, 21, 52]
+
+</code></pre>
+<h3 id="复杂度分析">复杂度分析</h3>
+<figure data-type="image" tabindex="5"><img src="https://cutezhangq.github.io/post-images/1598770628327.png" alt="" loading="lazy"></figure>
+<h3 id="性能比较-2">性能比较</h3>
+<p>对于等量的数据进行性能比价，发现单向冒泡排序性能 &gt; 双向冒泡排序性能 &gt; <code>选择排序</code> &gt; 大于普通冒泡性能。（产生时间具体取决于所使用的系统）</p>
+<h3 id="提示">提示</h3>
+<p>选择排序是时间复杂度上表现最稳定的算法之一，因为最快、最慢时间复杂度都是O(n²)，用选择排序数据量越小越好</p>
+<!-- more -->
+<h1 id="三直接插入排序">（三）：直接插入排序</h1>
+<h3 id="算法介绍-2">算法介绍</h3>
+<p>我们都应该玩过扑克牌了，游戏期间玩家们基本上都是一边摸牌一边理牌，会把牌面值小的牌放到左边，牌面值大的牌放到右边，以升序进行排序（当然也有喜欢降序排序的玩家）。<br>
+而理牌期间，我们习惯从左往右看牌面值大小，两两比较，将牌抽出，插入到合理的位置。<br>
+这里我们理牌的方法，就是「直接插入排序法」。<br>
+直接插入排序法的基本操作是<code>将一个元素插入到已经排好序的数组中，从而得到一个新的、Unicode 值递增的数组。</code></p>
+<h3 id="算法图示-2">算法图示：</h3>
+<figure data-type="image" tabindex="6"><img src="https://cutezhangq.github.io/post-images/1598770756271.png" alt="" loading="lazy"></figure>
+<h3 id="分析">分析：</h3>
+<p>它的工作原理是通过构建有序序列，对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。<br>
+插入排序算法的步骤描述如下：<br>
+将第一待排序序列第一个元素看做一个有序序列，把第二个元素到最后一个元素当成是未排序序列。<br>
+从头到尾依次扫描未排序序列，将扫描到的每个元素插入有序序列的适当位置。<br>
+（如果待插入的元素与有序序列中的某个元素相等，则将待插入元素插入到相等元素的后面。）</p>
+<pre><code class="language-js">  //插入排序
+  function insertionSort(arr){
+    var len = arr.length;
+    var preIndex, current;
+    for (var i = 1; i &lt; len; i++) {
+      preIndex = i - 1;   //前一个元素下标
+      current = arr[i];   //当前元素
+      while(preIndex &gt;= 0 &amp;&amp; arr[preIndex] &gt; current) {
+        arr[preIndex+1] = arr[preIndex];  //将前一个元素往后挪动一位
+        preIndex--;     //继续循环遍历
+      }
+      arr[preIndex+1] = current;    //之前preIndex--了，所以这里要+1
+    }
+    return arr;
+  }
+
+
+ const testArr = [11,4,6,52,3,20,1,9,2,5,19,3,6,21]
+ console.log('————选择排序——————',insertionSort(testArr));
+ //————选择排序—————— (14) [1, 2, 3, 3, 4, 5, 6, 6, 9, 11, 19, 20, 21, 52]
+</code></pre>
+<pre><code class="language-js"> var insertSort2 = function(arr){
+  var i, j, m, mCnt=0;    //m:更小的元素    mCnt:移动的次数
+  var len = arr.length;
+
+  for (i=1; i&lt;len; i++) {
+    if (arr[i] &lt; arr[i-1]) {    //后面的元素比前面的更小
+      // 将更小的那个元素保存起来
+      m = arr[i];
+      for (j=i-1; arr[j]&gt;m; j--) {
+        //将前一个元素往后挪动一位
+        arr[j+1] = arr[j];
+        mCnt++;
+      }
+      // console.log('移动了 '+mCnt+' 次');
+      mCnt = 0;
+      // 直接插入
+      arr[j+1] = m;
+    }
+  }
+
+  return arr;
+};
+
+
+console.log(insertSort2([5,4,3,2,1])) 
+//(5) [1, 2, 3, 4, 5]
+console.log(insertSort2([3, 2, 1, 7, 8, 9, 0]))
+//(7) [0, 1, 2, 3, 7, 8, 9]
+</code></pre>
+<h3 id="复杂度分析-2">复杂度分析</h3>
+<figure data-type="image" tabindex="7"><img src="https://cutezhangq.github.io/post-images/1598770822597.png" alt="" loading="lazy"></figure>
+<h2 id="优化拆半插入排序">优化：拆半插入排序</h2>
+<pre><code class="language-js">//优化：拆半插入排序实现
+  //在直接插入排序的基础上，在插入的时候运用了折半查找法查找要插入的位置，再进行插入。
+  let array = [11,4,6,52,3,20,1,9,2,5,19,3,6,21];
+  for (let i = 0; i &lt; 10; i++) {
+      let number = Math.floor(Math.random() * 10);
+      array.push(number);
+  }
+  let res = this.binsertSort(array);
+  console.log(res);
+   /**
+     * 拆半插入排序
+     */
+  function binsertSort(arr) {
+      let low, high, j, temp;
+      for (let i = 1; i &lt; arr.length; i++) {
+          if (arr[i] &lt; arr[i - 1]) {
+              temp = arr[i];
+              low = 0;
+              high = i - 1;
+              while (low &lt;= high) {
+                  let mid = Math.floor((low + high) / 2);
+                  if (temp &gt; arr[mid]) {
+                      low = mid + 1;
+                  } else {
+                      high = mid - 1;
+                  }
+              }
+              for (j = i; j &gt; low; --j) {
+                  arr[j] = arr[j - 1];
+              }
+              arr[j] = temp;
+          }
+          console.log(`第${i}次循环`, arr);
+      }
+      return arr;
+  }
+
+//(24) [0, 1, 2, 2, 3, 3, 3, 4, 4, 5, 5, 5, 6, 6, 6, 7, 8, 8, 9, 11, 19, 20, 21, 52]
+
+</code></pre>
+<h3 id="性能比较表示性能相差不大">性能比较&gt;=表示性能相差不大</h3>
+<p>在数据量相当的情况下：发现拆半插入排序 &gt;= 单向冒泡排序性能 &gt; 双向冒泡排序性能 &gt; <code>插入排序</code> &gt; 选择排序 &gt; 大于普通冒泡性能。（产生时间具体取决于所使用的系统）</p>
+<h3 id="提示-2">提示</h3>
+<p>插入排序的代码实现虽然没有冒泡排序和选择排序那么简单粗暴，但它的原理应该是最容易理解的了。</p>
 ]]></content>
     </entry>
     <entry>
@@ -1865,772 +2108,6 @@ return axiosJWT(config)	// 重试之前的请求并返回promise
 <li><code>open_id</code>：通过这个授权码code获取该用户的openid（将这个授权码code发送给后台以后，后台用code去请求openid，openid是唯一的，可以通过这个openid在数据库中绑定用户）</li>
 <li><code>taken</code>:（后台生成，有时间限制，由open_id组成）</li>
 </ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[vue-router中传参的方式都有哪些]]></title>
-        <id>https://cutezhangq.github.io/post/vue-router-zhong-chuan-can-de-fang-shi-du-you-na-xie/</id>
-        <link href="https://cutezhangq.github.io/post/vue-router-zhong-chuan-can-de-fang-shi-du-you-na-xie/">
-        </link>
-        <updated>2020-07-11T13:11:46.000Z</updated>
-        <summary type="html"><![CDATA[<p>没事就需要翻翻vue官网，好长时间不看了。<a href="https://router.vuejs.org/zh/guide/essentials/passing-props.html#%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%BC%8F">Vue路由组件传参</a>🏃‍♀🏃<br>
-主要从this.$router.push的name和params、path和qurey；router-link :to传参来回答</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>没事就需要翻翻vue官网，好长时间不看了。<a href="https://router.vuejs.org/zh/guide/essentials/passing-props.html#%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%BC%8F">Vue路由组件传参</a>🏃‍♀🏃<br>
-主要从this.$router.push的name和params、path和qurey；router-link :to传参来回答</p>
-<!-- more -->
-<h1 id="常用的传递方式">常用的传递方式</h1>
-<h1 id="一-编程式的导航-routerpush">一、编程式的导航 router.push</h1>
-<h2 id="直接传拼接">直接传（拼接）</h2>
-<pre><code class="language-js">//组件调用
-this.$router.push({path: `/describe/${id}`})
-//路由配置
-{
-    path: '/describe/:id',
-    name: 'Describe',
-    component: Describe
-}
-//Describe组件获取
-this.$route.query.id
-</code></pre>
-<h2 id="query传参get请求">query传参——get请求</h2>
-<p>传递的参数会拼接在url上</p>
-<pre><code class="language-js"> //组件调用
-this.$router.push({
- path: '/describe',
- query: {
-            id: id
-        }
-})
-//路由配置
-{
-    path: '/describe',
-    name: 'Describe',
-    component: Describe
-}
-//Describe组件获取
-this.$route.query.id
-</code></pre>
-<p>（注：以上两种方式都会把参数放置在 this.$route.query 中）</p>
-<h2 id="params传参post请求">params传参——post请求</h2>
-<p>params传参<br>
-（注：这里的路由匹配方式：通过路由属性中的name来确定匹配的路由。如果提供了 path，params 会被忽略）</p>
-<p>params传参不会拼接在url上，但存在一个问题-------如果强制刷新页面会丢失参数</p>
-<pre><code class="language-js">//组件调用
-this.$router.push({
-    name: 'Describe',
-    params: {
-                id: id
-            }
-})
-//路由配置
-{
-     path: '/describe',
-     name: 'Describe',
-     component: Describe
-}
-//Describe组件获用
-this.$route.params.id
-</code></pre>
-<h1 id="新发现">新发现</h1>
-<p>现在的路由传参的方式没有改变，上述内容依然有效。组件内获取的方式增加了props方式接收，可以把参数传到props里了，功能更强大了。</p>
-<p>如果在组件内要用props接收路由上的参数可以分为三种方式</p>
-<h2 id="布尔模式">布尔模式</h2>
-<p>如果<code>props</code> 被设置为<code>true</code>，<code>route.params</code>将会被设置为组件属性。</p>
-<pre><code class="language-js">//组件调用
-//路由传递方式只能使用params传递参数
-this.$router.push(
-    name: 'Describe',
-    params: {
-                id: id
-            }
-})
-//路由配置
-{
-     path: '/describe',
-     name: 'Describe',
-     component: Describe,
-     props: ture
-}
-//组件获取
-const Describe= {
-  props: ['id'],
-  template: '&lt;div&gt;User {{ id }}&lt;/div&gt;'
-}
-</code></pre>
-<h2 id="对象模式">对象模式</h2>
-<p>如果<code>props</code>是一个对象，它会被按原样设置为组件属性。当<code>props</code>是静态的时候有用。</p>
-<pre><code class="language-js">const router = new VueRouter({
-  routes: [
-    { 
-        path: '/promotion/from-newsletter', 
-        component: Promotion, 
-        props: { 
-            newsletterPopup: false
-             } 
-        }
-  ]
-})
-</code></pre>
-<p>案例：</p>
-<pre><code class="language-js">// 对于包含命名视图的路由，你必须分别为每个命名视图添加 `props` 选项：
-//组件配置
-{
-  path: '/describe/:id',
-  components: { default: Describe, sidebar: Sidebar },
-  props: { default: true, sidebar: false }
-}
-//单文件组件在props中获取
-const Describe= {
-    props: ['id'],
-    template: '&lt;div&gt;describe{{ id }}&lt;/div&gt;'
-}
- //方式二 (这里需要注意如果在props中声明了id，这里方式获取会报undefined。)
-this.$attrs['id']
-</code></pre>
-<h2 id="函数模式">函数模式</h2>
-<p>你可以创建一个函数返回<code>props</code>。这样你便可以将参数转换成另一种类型，将静态值与基于路由的值结合等等。</p>
-<pre><code class="language-js">const router = new VueRouter({
-  routes: [
-    { 
-        path: '/search', 
-        component: SearchUser, 
-        props: (route) =&gt; ({ 
-            query: route.query.q 
-            }) 
-        }
-  ]
-})
-</code></pre>
-<p><code>URL /search?q=vue</code>会将<code>{query: 'vue'}</code> 作为属性传递给<code>SearchUser</code>组件。</p>
-<p>请尽可能保持 <code>props</code> 函数为无状态的，因为它只会在路由发生变化时起作用。如果你需要状态来定义 <code>props</code>，请使用包装组件，这样 Vue 才可以对状态变化做出反应。</p>
-<pre><code class="language-js">//组件调用（这里只能把参数放置在query中）
- this.$router.push({
-     path: '/describe',
-     query: {
-                id: id
-            }
-})
-  //路由设置
- { 
-    path: '/describe', 
-    component: describe, 
-    props: (route) =&gt; ({ name: route.query.name}) 
- }
- //组价获取
- //方式一
- props:{
-     name:''
- }
- this.name
- //方式二 (这里需要注意如果在props中声明了name，这里方式获取会报undefined。)
-this.$attrs['name']
-</code></pre>
-<h1 id="总结">总结</h1>
-<p>布尔模式需要用命名路由访问并把参数放置在<code>params</code>中，否则接收不到。<br>
-对象路由需要使用path拼接或者放置在<code>query</code>中，否则接收不到。<br>
-对象路由静态参数无所谓。<br>
-对象模式和函数模式返回的都是一个对象，如果在<code>props</code>中接收则直接<code>this.key</code>访问。若没有在<code>props</code>中接收则通过<code>this.$attrs.key</code>访问</p>
-<h1 id="二-声明式的导航">二、声明式的导航</h1>
-<p>声明式的导航和编程式的一样，这里就不在过多介绍，给几个例子大家对照编程式理解，例子如下：</p>
-<h3 id="字符串">字符串</h3>
-<pre><code class="language-html">&lt;router-link to=“news”&gt;click to news page&lt;/router-link&gt;
-</code></pre>
-<h3 id="命名路由">命名路由</h3>
-<pre><code class="language-html">&lt;router-link :to=&quot;{ name: ‘news’, params: { userId: 1111}}&quot;&gt;click to news page&lt;/router-link&gt;
-</code></pre>
-<h3 id="查询参数">查询参数</h3>
-<pre><code class="language-html">&lt;router-link :to=&quot;{ path: ‘/news’, query: { userId: 1111}}&quot;&gt;click to news page&lt;/router-link&gt;
-</code></pre>
-<h1 id="总结-2">总结</h1>
-<p>1.命名路由搭配params，刷新页面参数会丢失<br>
-2.查询参数搭配query，刷新页面数据不会丢失<br>
-3.接受参数使用this.$router后面就是搭配路由的名称就能获取到参数的值</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[笔试-题目整理1-2017字节]]></title>
-        <id>https://cutezhangq.github.io/post/bi-shi-zheng-li/</id>
-        <link href="https://cutezhangq.github.io/post/bi-shi-zheng-li/">
-        </link>
-        <updated>2020-06-16T07:41:25.000Z</updated>
-        <summary type="html"><![CDATA[<p>这里收录了部分字节2017的笔试题，一起来看看叭，查漏补缺鸭😘<br>
-涉及的众多的基础知识点....</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>这里收录了部分字节2017的笔试题，一起来看看叭，查漏补缺鸭😘<br>
-涉及的众多的基础知识点....</p>
-<!-- more -->
-<p>#【1.】变量a是一个64位有符号的整数，初始值用16进制表示为：0Xf000000000000000； 变量b是一个64位有符号的整数，初始值用16进制表示为：0x7FFFFFFFFFFFFFFF。 则a-b的结果用10进制表示为多少？（）</p>
-<h2 id="答案">答案：</h2>
-<p><strong>方案1</strong><br>
-0Xf000000000000000补码为1111000000000000000000000000000000000000000000000000000000000000<br>
-0x7FFFFFFFFFFFFFFF补码为0111111111111111111111111111111111111111111111111111111111111111<br>
-a-b=a+(-b)=<br>
-1111000000000000000000000000000000000000000000000000000000000000+<br>
-1000000000000000000000000000000000000000000000000000000000000001=<br>
-10111000000000000000000000000000000000000000000000000000000000001(高位溢出舍去)<br>
-则结果为<br>
-0111000000000000000000000000000000000000000000000000000000000001=<br>
-2<sup>62+2</sup>61+2^60+1</p>
-<pre><code class="language-cmd"> ①  原码：
-
-　　原码是指将最高位作为符号位(0表示正，1表示负)，其它数字位代表数值本身的绝对值的数字表示方式。
-
-　　例如：数字6 在计算机中原码表示为：0 000 0110
-
-　　其中，第一个数字0是符号位，0表示正数，0 000110是数字6的二进制数据表示。
-
-　　数字－6 在计算机中原码表示为：1 000 0110
-
-　　以上是在8位计算机中的原码表示，如果在32位或16位计算机中，表示方法也是一样的，只是多了几个数字0而已。
-
-　　例如，在32位 计算机中数字6 的原码表示为：00000000 0000 0000 0000 0000 0000 0110
-
-　　在16位 计算机中数字6 的原码表示为：00000000 0000 0110
-</code></pre>
-<pre><code class="language-cmd">②   反码：
-
-　　反码表示规则为：如果是正数，则表示方法和原码一样；如果是负数，符号位不变，其余各位取反，则得到这个数字的反码表示形式。
-
-　　例如，数字6 在8位 计算机中的反码就是它的原码：00000110
-
-　　数字－6 在 8位计算机中的反码为：11111001
-</code></pre>
-<pre><code class="language-cmd">③   补码
-
-　　补码是计算机表示数据的一般方式，其规则为：如果是整数，则表示方法和原码一样；如果是负数，则将数字的反码加上1(相当于将原码数值位取反然后在最低位加1)。
-
-　　例如：数字6 在8位 计算机中的补码就是它的原码：00000110
-
-    数字－6 在8 位 计算机中的补码为：1111 1010
-</code></pre>
-<p><strong>方案2</strong><br>
-0x7FFFFFFFFFFFFFFF+1=0X8000000000000000，那么<br>
-a-b=0Xf000000000000000-0X8000000000000000+1<br>
-=0X7000000000000001<br>
-=16<sup>15*7+16</sup>0<em>1<br>
-=2^60</em>7+1<br>
-=2<sup>60*(2</sup>2+2<sup>1+2</sup>0)+1<br>
-=2<sup>62+2</sup>61+2^60+1</p>
-<!-- more -->
-<p>#【2.】得到的结果分别是什么？（）</p>
-<pre><code class="language-js">console.log(([])?true:false); 
-console.log(([]==false?true:false)); 
-console.log(({}==false)?true:false) 
-</code></pre>
-<h2 id="结果true-true-false">结果：true true false</h2>
-<p>题考察类型转换，三元运算符先“分清是非”，再决定今后该走哪条路，“==”运算符比较“喜欢”Number类型。下面是题目的类型转换结果：</p>
-<pre><code class="language-js">Boolean([]); //true
-Number([]); //0
-Number({}); // NaN
-Number(false); //0
-</code></pre>
-<p>因此：</p>
-<pre><code class="language-js">console.log(([])?true:fasle);// =&gt; console.log((true)?true:false);
-console.log([]==false?true:false); // =&gt; console.log(0==0?true:false);
-console.log(({}==false)?true:false); // =&gt; console.log((NaN==0)?true:false);
-</code></pre>
-<p><code>《JavaScript权威指南》的部分相关知识点</code><br>
-<strong>“==”运算符（两个操作数的类型不相同时）</strong></p>
-<ul>
-<li>如果一个值是null，另一个值是undefined，则它们相等</li>
-<li>如果一个值是数字，另一个值是字符串，先将字符串转换为数学，然后使用转换后的值进行比较。</li>
-<li>如果其中一个值是true，则将其转换为1再进行比较。如果其中的一个值是false，则将其转换为0再进行比较。</li>
-<li>如果一个值是对象，另一个值是数字或字符串，则将对象转换为原始值，再进行比较。</li>
-</ul>
-<p><strong>对象到数字的转换</strong></p>
-<ul>
-<li>如果对象具有valueOf()方法，后者返回一个原始值，则JavaScript将这个原始值转换为数字（如果需要的话）并返回一个数字。</li>
-<li>否则，如果对象具有toString()方法，后者返回一个原始值，则JavaScript将其转换并返回。（对象的toString()方法返回一个字符串直接量（作者所说的原始值），JavaScript将这个字符串转换为数字类型，并返回这个数字）。</li>
-<li>否则，JavaScript抛出一个类型错误异常。<br>
-<strong>空数组转换为数字0</strong></li>
-<li>数组继承了默认的valueOf()方法，这个方法返回一个对象而不是一个原始值，因此，数组到数学的转换则调用toString()方法。空数组转换为空字符串，空字符串转换为数字0.</li>
-</ul>
-<!-- more -->
-<p>#【3.】下列哪些是块级元素（）<br>
-input、ul、hr、li、div、form</p>
-<h2 id="答案ul-hr-li-div-form">答案：ul、hr、li、div、form</h2>
-<p><strong>input是行内替换元素</strong></p>
-<pre><code class="language-cmd"> （1）行内元素有：a b span img input select strong 
-  （2）块级元素有：div ul ol li dl dt dd h1 h2 h3 h4…p
-  （3）常见的空元素：
-  &lt;br&gt; &lt;hr&gt; &lt;img&gt; &lt;input&gt; &lt;link&gt; &lt;meta&gt;
-  鲜为人知的是：
-  &lt;area&gt; &lt;base&gt; &lt;col&gt; &lt;command&gt; &lt;embed&gt; &lt;keygen&gt; &lt;param&gt; &lt;source&gt; &lt;track&gt; &lt;wbr&gt;
-</code></pre>
-<!-- more -->
-<p>#【4.】关于跨域问题下面说法正确的是？（）</p>
-<ol>
-<li>可以利用flash的http请求，来处理跨域问题</li>
-<li>通过iframe设置document.domain可以实现跨域</li>
-<li>一般情况下，m.toutiao.com可以ajax请求www.toutiao.com域名下的接口并获得响应</li>
-<li>通过jsonp方式可以发出post请求其他域名下的接口</li>
-</ol>
-<h2 id="答案-通过iframe设置documentdomain可以实现跨域">答案: 通过iframe设置document.domain可以实现跨域</h2>
-<p>javascript中实现跨域的方式总结</p>
-<pre><code class="language-cmd">- **第一种方式：** jsonp请求；jsonp的原理是利用&lt;script&gt;标签的跨域特性，可以不受限制地从其他域中加载资源，类似的标签还有&lt;img&gt;.
-- **第二种方式：** document.domain；这种方式用在主域名相同子域名不同的跨域访问中
-- **第三种方式：** window.name；window的name属性有个特征：在一个窗口(window)的生命周期内,窗口载入的所有的页面都是共享一个window.name的，每个页面对window.name都有读写的权限，window.name是持久存在一个窗口载入过的所有页面中的，并不会因新页面的载入而进行重置。
-- **第四种方式：**  window.postMessage；window.postMessages是html5中实现跨域访问的一种新方式，可以使用它来向其它的window对象发送消息，无论这个window对象是属于同源或不同源。
-- **第五种方式：**  CORS；CORS背后的基本思想，就是使用自定义的HTTP头部让浏览器与服务器进行沟通，从而决定请求或响应是应该成功还是应该失败。
-- **第六种方式：**  Web Sockets；web sockets原理：在JS创建了web socket之后，会有一个HTTP请求发送到浏览器以发起连接。取得服务器响应后，建立的连接会使用HTTP升级从HTTP协议交换为web sockt协议。
-</code></pre>
-<pre><code class="language-cmd">JSONP的优点是：它不像XMLHttpRequest对象实现的Ajax请求那样受到同源策略的限制；它
-
-的兼容性更好，在更加古老的浏览器中都可以运行，不需要XMLHttpRequest或ActiveX的支
-
-持；并且在请求完毕后可以通过调用callback的方式回传结果。
-
-JSONP的缺点则是：它只支持GET请求而不支持POST等其它类型的HTTP请求；它只支持跨域
-
-HTTP请求这种情况，不能解决不同域的两个页面之间如何进行JavaScript调用的问题。
-</code></pre>
-<!-- more -->
-<p>#【5.】以下符合 ES6 写法的有：（）<br>
-<img src="https://cutezhangq.github.io/post-images/1596789012438.png" alt="" loading="lazy"></p>
-<h2 id="答案c">答案：C</h2>
-<p>A、Fun() 把 class 当成方法来用？ var fun = new Func() 这样用就对了<br>
-B、export 后面变量没加括号；<br>
-D、import readFile 没加括号，是导入 default 的用法，但是前面不是 export 为 default</p>
-<p>参照 export 和 import 用法：<br>
-1、<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export">export用法：</a><br>
-2、<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">import用法：</a></p>
-<pre><code class="language-js">export {name1,name2, …,nameN};
-export {variable1asname1,variable2asname2, …,nameN};
-export letname1,name2, …,nameN; // also var
-export letname1= …,name2= …, …,nameN; // also var, const
-
-export expression;
-export default expression;
-export default function (…) { … } // also class, function*
-export default function name1(…) { … } // also class, function*
-export {name1as default, … };
-
-export * from …;
-export {name1,name2, …,nameN} from …;
-export {import1asname1,import2asname2, …,nameN} from …;
-</code></pre>
-<pre><code class="language-js">import defaultMember from &quot;module-name&quot;;
-import * as name from &quot;module-name&quot;;
-import { member } from &quot;module-name&quot;;
-import { member as alias } from &quot;module-name&quot;;
-import { member1 , member2 } from &quot;module-name&quot;;
-import { member1 , member2 as alias2 , [...] } from &quot;module-name&quot;;
-import defaultMember, { member [ , [...] ] } from &quot;module-name&quot;;
-import defaultMember, * as name from &quot;module-name&quot;;
-import &quot;module-name&quot;;
-</code></pre>
-<p>#【6.】可继承的样式属性包括（）<br>
-<img src="https://cutezhangq.github.io/post-images/1596789677874.png" alt="" loading="lazy"></p>
-<h2 id="解析">解析：</h2>
-<pre><code class="language-cmd">不可继承的：display、margin、border、padding、background、height、min-height、max- height、width、min-width、max-width、overflow、position、left、right、top、 bottom、z-index、float、clear、table-layout、vertical-align、page-break-after、 page-bread-before和unicode-bidi。
-
-所有元素可继承：visibility和cursor。
-
-内联元素可继承：letter-spacing、word-spacing、white-space、line-height、color、font、 font-family、font-size、font-style、font-variant、font-weight、text- decoration、text-transform、direction。
-
-块状元素可继承：text-indent和text-align。
-
-列表元素可继承：list-style、list-style-type、list-style-position、list-style-image。
-
-表格元素可继承：border-collapse。
-</code></pre>
-<pre><code class="language-cmd">CSS中可以和不可以继承的属性
-一、无继承性的属性
-1、display：规定元素应该生成的框的类型
-2、文本属性：
-vertical-align：垂直文本对齐
-text-decoration：规定添加到文本的装饰
-text-shadow：文本阴影效果
-white-space：空白符的处理
-unicode-bidi：设置文本的方向
-3、盒子模型的属性：width、height、margin 、margin-top、margin-right、margin-bottom、margin-left、border、border-style、border-top-style、border-right-style、border-bottom-style、border-left-style、border-width、border-top-width、border-right-right、border-bottom-width、border-left-width、border-color、border-top-color、border-right-color、border-bottom-color、border-left-color、border-top、border-right、border-bottom、border-left、padding、padding-top、padding-right、padding-bottom、padding-left
-4、背景属性：background、background-color、background-image、background-repeat、background-position、background-attachment
-5、定位属性：float、clear、position、top、right、bottom、left、min-width、min-height、max-width、max-height、overflow、clip、z-index
-6、生成内容属性：content、counter-reset、counter-increment
-7、轮廓样式属性：outline-style、outline-width、outline-color、outline
-8、页面样式属性：size、page-break-before、page-break-after
-9、声音样式属性：pause-before、pause-after、pause、cue-before、cue-after、cue、play-during
-</code></pre>
-<pre><code class="language-cmd">二、有继承性的属性
-1、字体系列属性
-font：组合字体
-font-family：规定元素的字体系列
-font-weight：设置字体的粗细
-font-size：设置字体的尺寸
-font-style：定义字体的风格
-font-variant：设置小型大写字母的字体显示文本，这意味着所有的小写字母均会被转换为大写，但是所有使用小型大写字体的字母与其余文本相比，其字体尺寸更小。
-font-stretch：对当前的 font-family 进行伸缩变形。所有主流浏览器都不支持。
-font-size-adjust：为某个元素规定一个 aspect 值，这样就可以保持首选字体的 x-height。
-2、文本系列属性
-text-indent：文本缩进
-text-align：文本水平对齐
-line-height：行高
-word-spacing：增加或减少单词间的空白（即字间隔）
-letter-spacing：增加或减少字符间的空白（字符间距）
-text-transform：控制文本大小写
-direction：规定文本的书写方向
-color：文本颜色
-3、元素可见性：visibility
-4、表格布局属性：caption-side、border-collapse、border-spacing、empty-cells、table-layout
-5、列表布局属性：list-style-type、list-style-image、list-style-position、list-style
-6、生成内容属性：quotes
-7、光标属性：cursor
-8、页面样式属性：page、page-break-inside、windows、orphans
-9、声音样式属性：speak、speak-punctuation、speak-numeral、speak-header、speech-rate、volume、voice-family、pitch、pitch-range、stress、richness、、azimuth、elevation
-三、所有元素可以继承的属性
-1、元素可见性：visibility
-2、光标属性：cursor
-四、内联元素可以继承的属性
-1、字体系列属性
-2、除text-indent、text-align之外的文本系列属性
-五、块级元素可以继承的属性
-1、text-indent、text-align
-</code></pre>
-<p>#【7.】堆的数据结构能够使得堆顶总是维持最大（对于大根堆）或最小（对于小根堆），给定一个数组，对这个数组进行建堆，则平均复杂度是多少？如果只是用堆的 push 操作，则一个大根堆依次输入 3,7,2,4,1,5,8 后，得到的堆的结构示意图是下述图表中的哪个？（）<br>
-<img src="https://cutezhangq.github.io/post-images/1596849879994.png" alt="" loading="lazy"></p>
-<h1 id="正确答案-d">正确答案: D</h1>
-<p>堆的插入操作就是将元素插入到堆的最后，然后继续将其调整为堆。<br>
-<img src="https://cutezhangq.github.io/post-images/1596851015506.png" alt="" loading="lazy"></p>
-<p>#【8.】http 请求方式 get 和 post 的区别包括（）<br>
-<img src="https://cutezhangq.github.io/post-images/1596851060571.png" alt="" loading="lazy"><br>
-C . get请求Content-type只能是text/html<br>
---错误，get的 Content-type不仅可以是 text/html，也可以是其他，如 application/json, text/plain 等等</p>
-<p>D. get请求可以跨域、post请求不能跨域<br>
--- 错误， post一样可以跨域</p>
-<p>#【9.】下面哪些属于JavaScript的typeof运算符的可能结果：（）<br>
-symbol<br>
-NaN<br>
-boolean<br>
-null<br>
-array<br>
-undefined<br>
-string</p>
-<h1 id="正确答案-symbol-boolean-undefined-string">正确答案: symbol、boolean、undefined、string</h1>
-<p>即除了null的基本类型都可以用<code>typeof</code>，在加上Function和Symbol<br>
-<img src="https://cutezhangq.github.io/post-images/1596851314915.png" alt="" loading="lazy"></p>
-<p>#【10.】老王有两个孩子，已知至少有一个孩子是在星期二出生的男孩。问：两个孩子都是男孩的概率是多大？</p>
-<h1 id="正确答案-1327">正确答案: 13/27</h1>
-<h3 id="思维缜密的项目经理的解题思路">思维缜密的项目经理的解题思路</h3>
-<p>项目经理小李，虽然数学功底不深，编程技术不精，但有个很大的好处是处事不惊，有条不紊。看到题目之后，略加思索，就用最简单的办法弄懂了这个问题，并求出了结果。</p>
-<p>首先看如果只知道老王有两个孩子，其他信息都不知道的情况下，两个孩子都是男孩的概率显然是1/4。</p>
-<p>再来看看没有“星期二”这个条件的情况，题目变成：老王有两个孩子，已知至少有一个孩子是男孩，问两个孩子都是男孩的概率是多大？那结果显然是1/3。因为在“至少有一个男孩”这样的条件下，只有三种可能：兄妹俩、姐弟俩、兄弟俩。这三种情况是等概率的，而只有一种情况是两个男孩，因此是1/3。</p>
-<p>最后再把星期二也考虑进来。还是在上面的基础上扩展，先按照两个孩子的四种可能的性别组合进行划分，然后在每种组合里看看满足有至少一个周二男孩的情况数目：</p>
-<p>姐妹俩：不用看了，不满足至少有一个周二男孩的条件。<br>
-兄妹俩：那哥哥一定是周二出生的了，妹妹出生的星期数有7种可能。<br>
-姐弟俩：弟弟一定是周二出生，姐姐出生的星期数有7种可能。<br>
-兄弟俩：兄弟二人出生的星期数总共有7 * 7 = 49种可能，但其中有6 * 6 = 36种都不满足至少有一个人是周二出生的条件，因此实际上有49 - 36 = 13种可能。<br>
-因此，满足条件的情况（这里的情况是指综合考虑孩子的性别和出生星期数）总数为7 + 7 + 13 = 27。而其中有13中可能对应于两个孩子都是男孩。因此题目所求概率是13 / 27。</p>
-<p>没错，13 / 27就是这道题的答案，出现这样的数字是因为已知条件所提供的信息使得样本空间发生了变化（变小了一点儿）。这就是条件概率带来的影响。</p>
-<p>#【11.】下列说法正确的有：（）<br>
-<img src="https://cutezhangq.github.io/post-images/1596852716871.png" alt="" loading="lazy"><br>
-visiblity:看不见，摸的着. display:看不见，摸不着. display是dom级别的，可以渲染和重绘。 visiblity不是dom级别的，不能重绘，只能渲染</p>
-<p>#【12.】TCP断开连接的四次挥手中，第四次挥手发送的包会包含的标记，最正确的描述是？（）<br>
-<img src="https://cutezhangq.github.io/post-images/1596852798899.png" alt="" loading="lazy"><br>
-我们假设由client提出关闭，则：<br>
-第一次：FIN（client发给server）<br>
-第二次：ACK（server发给client）<br>
-第三次：FIN（server发给client ）<br>
-第四次：ACK（client发给server）<br>
-<img src="https://cutezhangq.github.io/post-images/1596853188402.png" alt="" loading="lazy"></p>
-<ul>
-<li>
-<p>FIN=1,seq=u</p>
-</li>
-<li>
-<p>ACK=1,seq=v,ack=u+1</p>
-</li>
-<li>
-<p>FIN=1,ACK=1,seq=w,ack=u+1</p>
-</li>
-<li>
-<p>ACK=1,seq=u+1,ack=w+1<br>
-<strong>TCP连接建立(“三次握手”)</strong><br>
-分为三步：</p>
-</li>
-<li>
-<p>（1）客户机的TCP向服务器的TCP发送一个连接请求报文段，其中不含应用层数据，首部中的SYN标志位被置为1。客户机会随机选择一个起始序号seq=x(连接请求报文不携带数据，但要消耗一个序号)。(SYN = 1, seq = x)</p>
-</li>
-<li>
-<p>（2）服务器的TCP收到连接请求报文段后，如同意建立连接，就向客户机发回确认，并为该TCP连接分配TCP缓存和变量。确认报文段中SYN和ACK位都被置为1，确认号字段的值为x+1，并且服务器随机产生起始序号seq = y(确认报文不携带数据，但也要消耗掉一个序号)。确认报文段同样不包含应用层数据。(SYN = 1, ACK = 1, seq = y, ack = x+1)</p>
-</li>
-<li>
-<p>(3）当客户机收到确认报文段后，还要向服务器给出确认，并且也要分配缓存和变量。报文段的ACK标志位被置1，序号字段为x+1，确认号字段为ack = y+1。该报文段可以携带数据，如果不携带数据则不消耗序号。(ACK = 1, seq = x+1, ack = y+1)</p>
-<p>在成功完成以上三步之后，TCP连接就建立了，接下来就可以传送应用层数据了。TCP提供的是<strong>全双工通信</strong>，因此通信双方的应用进程在任何时候都能发送数据。<br>
-另外，服务器端的资源是在完成第二次握手时分配的，而客户端的资源是在完成第三次握手时分配的。这使得服务器易于受到SYN洪泛攻击</p>
-</li>
-</ul>
-<p><strong>TCP连接的释放(“四次挥手”)</strong><br>
-分为四步：</p>
-<ul>
-<li>（1）客户机打算关闭连接，就向其TCP发送一个连接释放报文段，并停止再发送数据，主动关闭TCP连接，该报文段的FIN标志位被置1，seq = u，它等于前面已传送过的数据的最后一个字节的序号加1(FIN报文段即使不携带数据，也要消耗掉一个序号)。TCP是全双工的，可以想象成是一条TCP连接上有两条数据通路。当发送FIN报文时，发送FIN的一端就不能再发送数据，也就是关闭了其中一条数据通路，但对方还可以发送数据。(FIN = 1, seq = u)</li>
-<li>（2）服务器收到连接释放报文段后即发出确认，确认号是ack = u+1，而这个报文段自己的序号是v，等于它前面已传送过的数据的最后一个字节的序号加1。此时，从客户机到服务器方向的连接就释放了，TCP连接处于半关闭状态。但服务器若发送数据，客户机任要接收，即从服务器到客户机方向的连接没有关闭。(ACK = 1, seq = v, ack = u+1)</li>
-<li>（3）若服务器已经没有要向客户机发送的数据，就通知TCP释放连接，此时其发出FIN = 1的连接释放报文段。(FIN = 1, ACK = 1, seq = w, ack = u+1)</li>
-<li>（4）客户机收到连接释放报文段后，必须发出确认。在确认报文段中，ACK字段被置为1，确认号ack = w+1，序号seq = u+1。此时TCP连接还没有释放掉，必须经过时间等待计时器设置的时间2MSL后，客户机才进入到连接关闭状态。(ACK = 1, seq = u+1, ack = w+1)<br>
-因此，服务器端结束TCP连接的时间要比客户端早一些。<br>
-<img src="https://cutezhangq.github.io/post-images/1596854115032.png" alt="" loading="lazy"><br>
-客户端发送一个SYN段，并指明客户端的初始序列号，即ISN(c).<br>
-服务端发送自己的SYN段作为应答，同样指明自己的ISN(s)。为了确认客户端的SYN，将ISN(c)+1作为ACK数值。这样，每发送一个SYN，序列号就会加1. 如果有丢失的情况，则会重传。<br>
-为了确认服务器端的SYN，客户端将ISN(s)+1作为返回的ACK数值。<br>
-<img src="https://cutezhangq.github.io/post-images/1596854144489.png" alt="" loading="lazy"></li>
-</ul>
-<ol>
-<li>客户端发送一个FIN段，并包含一个希望接收者看到的自己当前的序列号K. 同时还包含一个ACK表示确认对方最近一次发过来的数据。 2. 服务端将K值加1作为ACK序号值，表明收到了上一个包。这时上层的应用程序会被告知另一端发起了关闭操作，通常这将引起应用程序发起自己的关闭操作。 3. 服务端发起自己的FIN段，ACK=K+1, Seq=L 4. 客户端确认。ACK=L+1</li>
-</ol>
-<p><strong>为什么建立连接是三次握手，而关闭连接却是四次挥手呢？</strong><br>
-这是因为服务端在LISTEN状态下，收到建立连接请求的SYN报文后，把ACK和SYN放在一个报文里发送给客户端。而关闭连接时，当收到对方的FIN报文时，仅仅表示对方不再发送数据了但是还能接收数据，己方是否现在关闭发送数据通道，需要上层应用来决定，因此，己方ACK和FIN一般都会分开发送。</p>
-<p>#【13.】页面有一个按钮button id为button1，通过原生的js如何禁用？（）</p>
-<h2 id="答案-2">答案:</h2>
-<p>document.getElementById(“button1”).setAttribute(“disabled”,”true”);<br>
-或者<br>
-document.getElementById(“button1”).disabled=true;</p>
-<h1 id="14关于下列css选择器id选择器-类选择器-伪类选择器-标签名称选择器排序正确的是">【14.】关于下列CSS选择器：ID选择器、类选择器、伪类选择器、标签名称选择器，排序正确的是：（）</h1>
-<h2 id="答案-3">答案:</h2>
-<p><code>ID选择器&gt;Class选择器=伪类&gt;标签名称选择器</code><br>
-一般来说，选择器的优先级（从上往下依次降低）是：<br>
-在属性后面使用 !important 会覆盖页面内任何位置定义的元素样式。<br>
-作为style属性写在元素内的样式<br>
-id选择器<br>
-类选择器(伪类选择器和类选择器的优先级是一样的，谁在后面谁起作用，因为我们知道后面的样式会覆盖前面的样式)<br>
-标签选择器<br>
-通配符选择器<br>
-浏览器自定义的样式 ​<br>
-<img src="https://cutezhangq.github.io/post-images/1596854884377.png" alt="" loading="lazy"><br>
-<img src="https://cutezhangq.github.io/post-images/1597415706178.png" alt="" loading="lazy"></p>
-<!-- more -->
-<h1 id="15假设-a-是一个由线程-1-和线程-2-共享的初始值为-0-的全局变量则线程-1-和线程-2-同时执行下面的代码最终-a-的结果不可能是">【15.】假设 a 是一个由线程 1 和线程 2 共享的初始值为 0 的全局变量，则线程 1 和线程 2 同时执行下面的代码，最终 a 的结果不可能是（）</h1>
-<p>boolean isOdd = false;</p>
-<p>for(int i=1;i&lt;=2;++i)<br>
-{<br>
-if（i%2==1）isOdd = true；<br>
-else isOdd = false；<br>
-a+=i*(isOdd?1:-1)；<br>
-}</p>
-<h1 id="正确答案-1">正确答案: 1</h1>
-<p>每个线程对a 均做了两次读写操作，分别是 “ +1 ” 和 “ -2 ”<br>
-而题目问了是最终a 的结果，所以 a 的结果取决于各自线程对 a 的先后读写的顺序<br>
-结论：a的可能取值为-1、0、-2<br>
-<img src="https://cutezhangq.github.io/post-images/1596856039742.png" alt="" loading="lazy"><br>
-假设两线程为A、B，设有3种情况：<br>
-1.AB不并发：此时相当于两个方法顺序执行。A执行完后a=-1，B使用-1作为a的初值，B执行完后a=-2<br>
-2.AB完全并发：此时读写冲突，相当于只有一个线程对a的读写最终生效。相同于方法只执行了一次。此时a=-1<br>
-3.AB部分并发：假设A先进行第一次读写，得到a=1;之后A的读写被B覆盖了。B使用用1作为a的初值，B执行完后a=0</p>
-<h1 id="16使用htmlcss实现如图布局border-width5px格子大小是50px50pxhover时边框变成红色需要考虑语义化">【16.】使用HTML+CSS实现如图布局，border-width:5px，格子大小是50px*50px，hover时边框变成红色，需要考虑语义化。</h1>
-<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1596858038715.png" alt="" loading="lazy"></figure>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-
-&lt;head&gt;
-  &lt;meta charset=&quot;UTF-8&quot;&gt;
-  &lt;title&gt;Document&lt;/title&gt;
-  &lt;style type=&quot;text/css&quot;&gt;
-    table {
-      /* border-collapse:separate;*/
-      border: none;
-      border-spacing: 0;
-    }
-
-    td {
-      position: relative;
-      width: 50px;
-      height: 50px;
-      border: 5px solid blue;
-      background: #fff;
-      color: green;
-      text-align: center;
-      line-height: 50px;
-      display: inline-block;
-    }
-
-    tr:not(:first-child) td {
-      margin-top: -5px;
-    }
-
-    tr td:not(:last-child) {
-      margin-right: -5px;
-    }
-
-    td:hover {
-      border-color: red;
-      cursor: pointer;      /*悬浮于连接上时，通常为手*/
-      z-index: 2;
-    }
-  &lt;/style&gt;
-&lt;/head&gt;
-
-&lt;body&gt;
-  &lt;table&gt;
-    &lt;tr&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;4&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
-      &lt;td&gt;6&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;7&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;9&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/table&gt;
-&lt;/body&gt;
-
-&lt;/html&gt;
-</code></pre>
-<p>要设置td的display属性为inline-block<br>
-效果：<br>
-<img src="https://cutezhangq.github.io/post-images/1596858118441.png" alt="" loading="lazy"></p>
-<!-- more -->
-<h1 id="17给出一个上传文件时不用刷新页面的方案要求写出关键部分的js代码">【17.】给出一个上传文件时不用刷新页面的方案，要求写出关键部分的js代码。</h1>
-<h2 id="答案-4">答案:</h2>
-<pre><code class="language-html">&lt;input id=&quot;upload&quot; type=&quot;file&quot; /&gt;
-&lt;button id=&quot;upload-btn&quot;&gt; upload &lt;/button&gt;
-</code></pre>
-<pre><code class="language-js">document.getElementById('upload-btn').onclick = function(){
-    var input = document.getElementById('upload');
-    var file = input.files[0];
-    var formData = new FormData();
-    formData.append('file',file);
-    fetch({
-        url:'/upload',
-        mothod:'POST',
-        body:formData
-    }).then((d)=&gt;{
-        console.log('result is',d);
-        alert('上传完毕');
-    })
-}
-</code></pre>
-<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1596858583685.png" alt="" loading="lazy"></figure>
-<h1 id="18设计一个todo-list页面结构如下图所示要求">【18.】设计一个TODO List，页面结构如下图所示，要求：</h1>
-<p>使用HTML与CSS完成界面开发</p>
-<p>实现添加功能：输入框中可输入任意字符，按回车后将输入字符串添加到下方列表的最后，并清空输入框</p>
-<p>实现删除功能：点击列表项后面的“X”号，可以删除该项</p>
-<p>实现模糊匹配：在输入框中输入字符后，将当前输入字符串与已添加的列表项进行模糊匹配，将匹配到的结果显示在输入框下方。如匹配不到任何列表项，列表显示空</p>
-<p>注：以上代码实现需要能在浏览器中正常显示与执行。<br>
-<img src="https://cutezhangq.github.io/post-images/1596956262981.png" alt="" loading="lazy"></p>
-<h2 id="答案-5">答案：</h2>
-<pre><code class="language-css">    body{
-            margin: 0;
-            background-color: #f5f5f5;
-        }
-        h1{
-            margin: 30px 0 0 0;
-            color: #ff5550;
-            text-align: center;
-            font-size: 60px;
-        }
-        #back{
-            width: 300px;
-            margin: 0 auto;
-            border: 1px solid #333;
-            box-shadow: 0px 0px 3px #999;
-            background-color: #fff;
-        }
-        #back input{
-            width: 100%;
-            box-sizing: border-box;
-            line-height: 30px;
-            border: none;
-            border-bottom: 1px solid #000;
-            padding: 5px 15px;
-            font-size: 18px;
-        }
-        #list_back .single{
-            position: relative;
-            border-bottom: 1px solid #000;
-        }
-        #list_back .single p{
-            width: 100%;
-            height: 30px;
-            margin: 0;
-            line-height: 30px;
-            padding: 5px 15px;
-        }
-        #list_back .single span{
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 30px;
-            text-align: center;
-            line-height: 40px;
-            font-size: 18px;
-            color: #000;
-            cursor: pointer;
-        }
-</code></pre>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot;&gt;
-    &lt;title&gt;TODOList&lt;/title&gt;
-    &lt;style type=&quot;text/css&quot;&gt;
-    &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;h1&gt;todos&lt;/h1&gt;
-&lt;div id=&quot;back&quot;&gt;
-    &lt;input id=&quot;addInput&quot; type=&quot;text&quot; name=&quot;&quot;&gt;
-    &lt;div id=&quot;list_back&quot;&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;
-    
-&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<pre><code class="language-js">  var oAddInput = document.getElementById('addInput');
-    var oList_back = document.getElementById('list_back');
-    var all = document.getElementsByClassName('single');
-    oAddInput.onkeyup = function(){
-        // alert(event.keyCode);//13
-        // alert(event.code);//Enter
-        if(event.keyCode == '13'){
-            // alert('add');
-            var oDiv = document.createElement('div');
-            var oSpan = document.createElement('span');
-            var oP = document.createElement('p');
-            oDiv.appendChild(oP);
-            oDiv.appendChild(oSpan);
-            oP.innerHTML = oAddInput.value;
-            oSpan.innerHTML = '&amp;times;';
-            oDiv.className = 'single';
-            oList_back.appendChild(oDiv);
-            oAddInput.value = '';//清空输入框
-            oSpan.onclick= function(){
-                oList_back.removeChild(this.parentNode);//绑定删除方法
-            };
-        }
-    };
-    //模糊查询
-    function select(){
-        oAddInput.addEventListener('keyup', function(e){//监听键盘抬起事件（所有键盘按钮）
-            // console.log(e.target.value);
-            var str = e.target.value;
-            var reg = new RegExp('(' + str + ')', 'g');//匹配到的文字变红色，准备工作
-            for( var i = 0; i&lt;all.length; i++ ){
-                var one = all[i].getElementsByTagName('p')[0];
-                var newStr = one.innerText.replace(reg, '&lt;font color=red&gt;$1&lt;/font&gt;');//换--&gt;红色，用innerText防止用innerHTML将标签也读取出来出错。
-                if( one.innerText.indexOf(str) == -1 ){//也选用innerHTML
-                    all[i].style.display = 'none';//匹配不到的掩藏
-                }else{
-                    one.innerHTML = newStr;//匹配到的变红
-                }
-            }
-            if(str == ''){
-                for( var i = 0; i&lt;all.length; i++ ){
-                    all[i].style.display = 'block';//输入框空时全部显示
-                }
-            }
-        });
-    }
-    select();  //函数解析完就运行
-</code></pre>
 ]]></content>
     </entry>
 </feed>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>面试 | cutezhangq</title>
+<title>排序算法（下） | cutezhangq</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -12,13 +12,21 @@
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
 
 <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 
 
-    <meta name="description" content="温故知新">
+    <meta name="description" content="前端常见的排序算法，共有10种😘
+" />
+    <meta name="keywords" content="算法" />
   </head>
   <body>
     <div id="app" class="main">
@@ -92,78 +100,46 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: 面试</h2>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://cutezhangq.github.io/post/bi-shi-ti-mu-zheng-li-2/">
-                  <h2 class="post-title">笔试-题目整理2-2020bilibili </h2>
-                </a>
-                <div class="post-date">
-                  2020-08-14
-                </div>
-                <div class="post-abstract">
-                  <p>这里收录了部分bilibili 2020的笔试题，一起来看看叭，查漏补缺鸭😘<br>
-涉及的众多的基础知识点....</p>
-
-                </div>
+          <div class="post-detail">
+            <h2 class="post-title">排序算法（下）</h2>
+            <div class="post-date">2020-09-01</div>
+            
+              <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/pai-xu-suan-fa-xia.jpg')">
               </div>
-              
-                <a class="right" href="https://cutezhangq.github.io/post/bi-shi-ti-mu-zheng-li-2/">
-                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/bi-shi-ti-mu-zheng-li-2.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://cutezhangq.github.io/post/bi-shi-zheng-li/">
-                  <h2 class="post-title">笔试-题目整理1-2017字节</h2>
-                </a>
-                <div class="post-date">
-                  2020-06-16
-                </div>
-                <div class="post-abstract">
-                  <p>这里收录了部分字节2017的笔试题，一起来看看叭，查漏补缺鸭😘<br>
-涉及的众多的基础知识点....</p>
-
-                </div>
+            
+            <div class="post-content" v-pre>
+              <p>前端常见的排序算法，共有10种😘</p>
+<!-- more -->
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://cutezhangq.github.io/tag/KFImbiYP6/" class="tag">
+                    算法
+                  </a>
+                
               </div>
-              
-                <a class="right" href="https://cutezhangq.github.io/post/bi-shi-zheng-li/">
-                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/bi-shi-zheng-li.jpg')">
-                  </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/pai-xu-suan-fa-zhong/">
+                  <h3 class="post-title">
+                    排序算法（中）
+                  </h3>
                 </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://cutezhangq.github.io/post/interview-question/">
-                  <h2 class="post-title">面试题</h2>
-                </a>
-                <div class="post-date">
-                  2020-04-01
-                </div>
-                <div class="post-abstract">
-                  <p>收录了常见的面试题呀，涵盖了从Js到es再到vue的各类题目，快戳进来看看鸭...🙋🙋‍♂</p>
-
-                </div>
               </div>
-              
-                <a class="right" href="https://cutezhangq.github.io/post/interview-question/">
-                  <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/interview-question.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
+            
 
-          <div class="pagination-container">
-  
-  
-</div>
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
 
         </div>
       </div>
@@ -189,6 +165,29 @@ var app = new Vue({
     hljs.initHighlightingOnLoad()
   </script>
 
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: '',
+        admin: [''],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 
