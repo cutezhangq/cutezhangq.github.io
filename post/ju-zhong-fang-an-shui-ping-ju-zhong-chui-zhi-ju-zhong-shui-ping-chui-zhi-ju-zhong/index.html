@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1598413938085">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1598754481615">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -41,7 +41,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1598413938085" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1598754481615" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -194,6 +194,194 @@
 </code></pre>
 <h1 id="水平方向居中">水平方向居中</h1>
 <figure data-type="image" tabindex="3"><img src="https://cutezhangq.github.io/post-images/1596963470968.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://cutezhangq.github.io/post-images/1598452869638.png" alt="" loading="lazy"></figure>
+<h2 id="行内元素">行内元素</h2>
+<pre><code class="language-css">.parent {
+    text-align: center;
+}
+</code></pre>
+<h2 id="块级元素">块级元素</h2>
+<h3 id="121-块级元素一般居中方法">1.2.1 块级元素一般居中方法</h3>
+<pre><code class="language-css">.son {
+    margin: 0 auto;
+}
+</code></pre>
+<h3 id="122-子元素含-float不推荐fit-content失效">1.2.2 子元素含 float(不推荐，fit-content失效)</h3>
+<pre><code class="language-css">.parent{
+    width:fit-content;
+    margin:0 auto;
+}
+
+.son {
+    float: left;
+}
+</code></pre>
+<h3 id="123-flex-弹性盒子">1.2.3 Flex 弹性盒子</h3>
+<p>1） flex 2012版</p>
+<pre><code class="language-css">.parent {
+    display: flex;
+    justify-content: center;
+}
+</code></pre>
+<p>2）flex 2009版</p>
+<pre><code class="language-css">.parent {
+    display: box;
+    box-orient: horizontal;
+    box-pack: center;
+}
+</code></pre>
+<h3 id="124-绝对定位">1.2.4 绝对定位</h3>
+<p>1）transform</p>
+<pre><code class="language-css">.son {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+</code></pre>
+<p>2）left: 50%</p>
+<pre><code class="language-css">.son {
+    position: absolute;
+    width: 宽度;
+    left: 50%;
+    margin-left: -0.5*宽度
+}
+</code></pre>
+<p>3）left/right: 0</p>
+<pre><code class="language-css">.son {
+    position: absolute;
+    width: 宽度;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+</code></pre>
+<h1 id="小结">小结</h1>
+<p>以上是 CSS 水平居中的 8 种方法。</p>
+<h1 id="二-垂直居中">二、垂直居中</h1>
+<h2 id="21-行内元素">2.1 行内元素</h2>
+<pre><code class="language-css">.parent {
+    height: 高度;
+}
+
+.son {
+    line-height: 高度;
+}
+</code></pre>
+<p><code>注：① 子元素 line-height 值为父元素 height 值。② 单行文本。</code></p>
+<h2 id="22-块级元素">2.2 块级元素</h2>
+<h3 id="221-行内块级元素">2.2.1 行内块级元素</h3>
+<pre><code class="language-css">.parent::after, .son{
+    display:inline-block;
+    vertical-align:middle;
+}
+.parent::after{
+    content:'';
+    height:100%;
+}
+</code></pre>
+<p><code>适应 IE7。</code></p>
+<h3 id="222-table">2.2.2 table</h3>
+<pre><code class="language-css">.parent {
+  display: table;
+}
+.son {
+  display: table-cell;
+  vertical-align: middle;
+}
+</code></pre>
+<p>优点</p>
+<ul>
+<li>元素高度可以动态改变, 不需再CSS中定义, 如果父元素没有足够空间时, 该元素内容也不会被截断。</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>IE6~7, 甚至IE8 beta中无效。</li>
+</ul>
+<h3 id="223-flex-弹性盒子">2.2.3 Flex 弹性盒子</h3>
+<p>1）flex 2012版</p>
+<pre><code class="language-css">.parent {
+    display: flex;
+    align-items: center;
+}
+</code></pre>
+<p>优点</p>
+<ul>
+<li>内容块的宽高任意, 优雅的溢出。</li>
+<li>可用于更复杂高级的布局技术中。</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>IE8/IE9不支持。</li>
+<li>需要浏览器厂商前缀。</li>
+<li>渲染上可能会有一些问题。</li>
+</ul>
+<p>2）flex 2009版</p>
+<pre><code class="language-css">.parent {
+    display: box;
+    box-orien: vertical;
+    box-pack: center;
+}
+</code></pre>
+<p>优点</p>
+<ul>
+<li>实现简单, 扩展性强。</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>兼容性差, 不支持IE。</li>
+</ul>
+<h3 id="224-绝对定位">2.2.4 绝对定位</h3>
+<p>1）transform</p>
+<pre><code class="language-css">.son {
+    position: absolute;
+    top: 50%;
+    transform: translate( 0, -50%);
+}
+</code></pre>
+<p>优点</p>
+<ul>
+<li>代码少。</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>IE8不支持, 属性需要追加浏览器厂商前缀, 可能干扰其他 transform 效果, 某些情形下会出现文本或元素边界渲染模糊的现象。</li>
+</ul>
+<p>2）top: 50%</p>
+<pre><code class="language-css">.son {
+    position: absolute;
+    top: 50%;
+    height: 高度;
+    margin-top: -0.5高度;
+}
+</code></pre>
+<p>优点</p>
+<ul>
+<li>适用于所有浏览器。</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>父元素空间不够时, 子元素可能不可见(当浏览器窗口缩小时,滚动条不出现时).如果子元素设置了overflow:auto, 则高度不够时, 会出现滚动条。</li>
+</ul>
+<p>3）top/bottom: 0;</p>
+<pre><code class="language-css">.son {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+}
+</code></pre>
+<p>优点</p>
+<ul>
+<li>简单。</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>没有足够空间时, 子元素会被截断, 但不会有滚动条。</li>
+</ul>
+<figure data-type="image" tabindex="5"><img src="https://cutezhangq.github.io/post-images/1598454174974.png" alt="" loading="lazy"></figure>
+<p><code>flex</code><br>
+<code>绝对定位</code><br>
+同时适用于水平居中和垂直居中。</p>
 <!-- more -->
 <h1 id="10种-水平垂直居中对齐方式">10种 水平垂直居中对齐方式</h1>
 <p>测试代码</p>

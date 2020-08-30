@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1598413938085">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1598754481615">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -34,7 +34,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1598413938085" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1598754481615" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -347,7 +347,8 @@ export  {
 }
 </code></pre>
 <h1 id="六-什么是单点登录">六、什么是单点登录</h1>
-<p>单点登录的英文名叫做：Single Sign On（简称SSO）。<br>
+<p><img src="https://cutezhangq.github.io/post-images/1598427024701.jpg" alt="" loading="lazy"><br>
+单点登录的英文名叫做：Single Sign On（简称SSO）。<br>
 在初学/以前的时候，一般我们就单系统，所有的功能都在同一个系统上。<br>
 <img src="https://cutezhangq.github.io/post-images/1598356039400.png" alt="" loading="lazy"></p>
 <p>后来，我们为了合理利用资源和降低耦合性，于是把单系统拆分成多个子系统。<br>
@@ -529,6 +530,12 @@ return axiosJWT(config)	// 重试之前的请求并返回promise
 <li>code = null：<code>window.location.href = sysConst.OAUTH2 //请求腾讯OAuth服务器</code></li>
 </ul>
 </li>
+</ul>
+<p>通过code拿到open_id，进而拿到Token(由open_id构成)——&gt;open_id不过期，code与Token均会过期</p>
+<ul>
+<li><code>code</code>：授权码，由微信授权生成（有时间限制，并且只能使用一次）</li>
+<li><code>open_id</code>：通过这个授权码code获取该用户的openid（将这个授权码code发送给后台以后，后台用code去请求openid，openid是唯一的，可以通过这个openid在数据库中绑定用户）</li>
+<li><code>taken</code>:（后台生成，有时间限制，由open_id组成）</li>
 </ul>
 
             </div>
