@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1598872707245">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1599053213810">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -40,7 +40,7 @@ b.a=2
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1598872707245" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1599053213810" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -190,6 +190,23 @@ b.a = 2;
 console.log(obj.a); // 0
 console.log(b.a);   // 2 
 </code></pre>
+<p>或者：</p>
+<pre><code class="language-js">const person = [{name: 'Messi'}];
+const person1 = person.map(item =&gt;
+  ({...item, name: 'Kane'})
+)
+console.log(person, person1);
+// [{name: 'Messi'}] [{name: 'Kane'}]
+</code></pre>
+<p>的确被成功复制了,但是之所以我们称它为<code>浅复制</code>,是因为这种复制只能复制一层,在多层嵌套的情况下依然会出现副作用。</p>
+<pre><code class="language-js">const person = [{name: 'Messi', info: {age: 30}}];
+const person1 = person.map(item =&gt;
+  ({...item, name: 'Kane'})
+)
+console.log(person[0].info === person1[0].info); // true
+</code></pre>
+<p>上述代码表明当利用<code>...</code>浅复制产生新的<code>person1</code>后其中嵌套的<code>info属性</code>依然与原始的<code>person</code>的<code>info属性</code>指向同一个堆内存对象,这种情况依然会产生副作用.<br>
+我们可以发现<code>...</code>虽然可以解决浅层嵌套的问题,但是依然对多层嵌套的引用类型无能为力.</p>
 <p>基本数据类型：存放的就是 实际的数据，可直接复制<br>
 克隆数据：对象/数组</p>
 <h1 id="如何深拷贝一个数组">如何深拷贝一个数组？</h1>
@@ -209,8 +226,8 @@ console.log(b.a);   // 2
 </ul>
 <h1 id="浅拷贝对象数组特点">浅拷贝（对象/数组）：特点：</h1>
 <ul>
-<li>拷贝的引用，<br>
-= 修改拷贝后的数据会影响原数据</li>
+<li>拷贝的引用，</li>
+<li>修改拷贝后的数据会影响原数据</li>
 </ul>
 <h1 id="深拷贝特点">深拷贝：特点：</h1>
 <ul>

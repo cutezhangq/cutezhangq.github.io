@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1598872707245">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1599053213810">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -40,7 +40,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1598872707245" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1599053213810" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -240,6 +240,22 @@ Array.apply(null, a).forEach(print)
 // a
 // undefined
 // b
+</code></pre>
+<h1 id="如何判断是否是数组">如何判断是否是数组？</h1>
+<p>es6中加入了新的判断方法：<code>.isArray()</code></p>
+<pre><code class="language-js">  value = []
+  if (Array.isArray(value)) {
+    console.log('是数组')
+  } else {
+    console.log('NO')
+  }
+</code></pre>
+<p>在考虑兼容性的情况下可以用toString的方法：</p>
+<pre><code class="language-js">  if (!Array.isArray) {
+    Array.isArray = function (arg) {
+      return Object.prototype.toString.call(arg) === '[object Array]'
+    }
+  }
 </code></pre>
 
             </div>
