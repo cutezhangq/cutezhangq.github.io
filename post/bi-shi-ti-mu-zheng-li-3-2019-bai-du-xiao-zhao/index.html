@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>笔试-题目整理3-2019百度校招  | cutezhangq</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1599226733703">
+<link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="这里收录了部分百度 2019的笔试题，一起来看看叭，查漏补缺鸭😘
+涉及的众多的基础知识点....
+
+1、TCP和UDP说法错误的是（）
+答案：UDP是面向字节流的协议
+其他说法是正确的：
+
+TCP的头部消息较UDP来说更全面
+TCP是端对..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://cutezhangq.github.io">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1599226733703" class="site-logo">
+        <h1 class="site-title">cutezhangq</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/cutezhangq" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://cutezhangq.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">笔试-题目整理3-2019百度校招 </h2>
+            <div class="post-date">2020-09-03</div>
+            
+            <div class="post-content" v-pre>
+              <p>这里收录了部分百度 2019的笔试题，一起来看看叭，查漏补缺鸭😘<br>
+涉及的众多的基础知识点....</p>
+<!-- more -->
+<h1 id="1-tcp和udp说法错误的是">1、TCP和UDP说法错误的是（）</h1>
+<h2 id="答案udp是面向字节流的协议">答案：UDP是面向字节流的协议</h2>
+<p>其他说法是正确的：</p>
+<ul>
+<li>TCP的头部消息较UDP来说更全面</li>
+<li>TCP是端对端的不支持广播、多播</li>
+<li>TCP可以用在远程登陆方面，UDP可以用在语音通话方面</li>
+</ul>
+<h2 id="解析">解析：</h2>
+<p>tcp才是面向字节流的协议，UDP 为应用程序提供了一种无需建立连接就可以发送封装的 IP 数据报的方法。Internet 的传输层有两个主要协议，互为补充。<code>无连接的是 UDP，它除了给应用程序发送数据包功能并允许它们在所需的层次上架构自己的协议之外，几乎没有做什么特别的事情。面向连接的是 TCP，该协议几乎做了所有的事情。</code></p>
+<h1 id="2-下面关于进程三态模型说法错误的是">2、下面关于进程三态模型说法错误的是（）</h1>
+<h2 id="答案阻塞状态可以直接转换为执行状态">答案：阻塞状态可以直接转换为执行状态</h2>
+<p>其他说法是正确的：</p>
+<ul>
+<li>就绪状态和执行状态可以互相转换</li>
+<li>就绪状态转换为执行状态进行了进程调度</li>
+<li>阻塞状态可以直接转换为就绪状态</li>
+</ul>
+<p><code>就绪→执行(调度发生)，执行→就绪(中断) 执行→阻塞(发生等待) 阻塞→就绪</code></p>
+<h1 id="3-http是hyper-text-transfer-protocol超文本传输协议的缩写-以下那个不是http协议的请求方法">3、HTTP是Hyper Text Transfer Protocol（超文本传输协议）的缩写。以下那个不是HTTP协议的请求方法（）。</h1>
+<h2 id="分析">分析：</h2>
+<p>可以通过 <code>GET、 POST、 PUT、 PATCH、 DELETE</code>等方式对服务端的资源进行操作。其中，GET 用于查询资源，POST 用于创建资源，PUT 用于更新服务端的资源的全部信息，PATCH 用于更新服务端的资源的部分信息，DELETE 用于删除服务端的资源。</p>
+<h1 id="4-序列912173050206065419构造为堆后堆所对应的的中序遍历序列可能为">4、序列{9,12,17,30,50,20,60,65,4,19}构造为堆后，堆所对应的的中序遍历序列可能为（）</h1>
+<h2 id="答案651230950194201760">答案：65,12,30,9,50,19,4,20,17,60</h2>
+<p>先将序列构造成堆（最大堆或最小堆），根据堆的特点可知，这是一个完全二叉树，再中序遍历这个完全二叉树</p>
+<h3 id="堆大顶堆小顶堆中序遍历前序遍历后续遍历序列">堆（大顶堆，小顶堆），中序遍历，前序遍历，后续遍历序列</h3>
+<p><strong>堆的概念：</strong></p>
+<ul>
+<li>堆中某个节点的值总是不大于或不小于其父节点的值；</li>
+<li>堆总是一棵完全二叉树。</li>
+</ul>
+<h5 id="一-序列构造成堆">一、序列构造成堆：</h5>
+<p><strong>堆构造原则：</strong> 先固定已稳定的堆，再 安照从上到下，从左到右的原则堆积。<br>
+<strong>小顶堆原理：</strong> 每个结点的值都小于其左孩子和右孩子结点的值</p>
+<p><img src="https://cutezhangq.github.io/post-images/1599103887418.png" alt="" loading="lazy"><br>
+<img src="https://cutezhangq.github.io/post-images/1599113363569.png" alt="" loading="lazy"></p>
+<p>大顶堆</p>
+<p>原理与小顶堆相似：每个结点的值都大于其左孩子和右孩子结点的值</p>
+<h5 id="二-堆所对应的的中序遍历序列">二、堆所对应的的中序遍历序列</h5>
+<p>中序遍历：<code>左中右</code>     对构造成功的 小顶堆<br>
+<img src="https://cutezhangq.github.io/post-images/1599115030579.png" alt="" loading="lazy"></p>
+<h2 id="二叉树遍历先序-中序-后序">二叉树遍历(先序、中序、后序)</h2>
+<p>先序：考察到一个节点后，即刻输出该节点的值，并继续遍历其左右子树。<code>(根左右)</code></p>
+<p>中序：考察到一个节点后，将其暂存，遍历完左子树后，再输出该节点的值，然后遍历右子树。<code>(左根右)</code></p>
+<p>后序：考察到一个节点后，将其暂存，遍历完左右子树后，再输出该节点的值。<code>(左右根)</code></p>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1599115339852.png" alt="" loading="lazy"></figure>
+<p>如图1所示，三种遍历方法(人工)得到的结果分别是：(x序中的x决定的是<code>根</code>的位置)</p>
+<ul>
+<li>先序：1 2 4 6 7 8 3 5</li>
+<li>中序：4 7 6 8 2 1 3 5</li>
+<li>后序：7 8 6 4 2 5 3 1</li>
+</ul>
+<h1 id="5-下面程序的时间复杂度为多少">5、下面程序的时间复杂度为多少</h1>
+<pre><code class="language-js">int i,j,a;
+for(i=1;i&lt;n.i++)
+{
+   for(j=1;j&lt;n;j*=2)
+   {
+       a = i+j;
+       cout&lt;&lt;a&lt;&lt;endl;
+    }
+}
+</code></pre>
+<h2 id="答案onlog2n">答案：O(n*log2(n))</h2>
+<h1 id="6-数据结构中如果存在二维数组qq的行下标取值为2-5q的列下标取值为1-8对于q中的元素用相邻的6个字节存储存储器按字节编址数组q的字节为">6、数据结构中，如果存在二维数组Q，Q的行下标取值为2-5，Q的列下标取值为1-8，对于Q中的元素用相邻的6个字节存储，存储器按字节编址，数组Q的字节为（）</h1>
+<h2 id="答案204">答案：204</h2>
+<h1 id="7-前缀表达式ab-cdefgh的中缀表达式是">7、前缀表达式+^A*B-CD/E/F+GH的中缀表达式是（）。</h1>
+<h2 id="答案abc-defgh">答案：A^(B*(C-D))+(E⁄F)⁄((G+H))</h2>
+<p>可用栈实现。若为字母就入栈；若为运算符就将栈顶两个字母弹出，加上运算符计算后再将得到的代数表达式入栈，依次进行，最后栈中留下中缀表达式形式。</p>
+<h1 id="8-嵌入多媒体文本的html的写法正确的是">8、嵌入多媒体文本的HTML的写法正确的是()</h1>
+<h2 id="答案">答案：</h2>
+<p><code>&lt;embed src=”#”&gt;&lt;/embed&gt;</code></p>
+<p>src: 一般是把资源嵌入到文本里<br>
+href： 一般是与某个资源建立连接<br>
+<code>&lt;embed&gt;</code>标签定义嵌入的内容，比如插件。</p>
+<pre><code class="language-html">&lt;embed src=&quot;/i/helloworld.swf&quot; /&gt;
+</code></pre>
+<h1 id="9-ahtml文档扩展名为html或htm-bhtml文档必须包括head和body部分以下说法正确的是">9、a:HTML文档扩展名为.html或.htm; b:HTML文档必须包括head和body部分,以下说法正确的是（）</h1>
+<h2 id="答案只有a说法正确">答案：只有a说法正确；</h2>
+<h2 id="html文档可以省略这三个htmlheadbody标签">html文档可以省略这三个html,head,body标签！！！</h2>
+<ol>
+<li>例子</li>
+</ol>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+ddd
+
+</code></pre>
+<ul>
+<li><code>虽然缺少了html标签，body标签，head标签，依旧会被正确解析</code>为:</li>
+</ul>
+<pre><code class="language-html">&lt;html&gt;
+    &lt;head&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        ddd
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h1 id="11-关于html的描述不推荐的是">11、关于HTML的描述，不推荐的是</h1>
+<h2 id="答案可以使用center标签来设置元素居中">答案：可以使用center标签来设置元素居中；</h2>
+<p>其他说法是正确的：</p>
+<ul>
+<li>在页面顶部必须加入DOCTYPE声明；</li>
+<li>尽量将js引用放到HTML页面底部；</li>
+<li>使用table标签来处理数据相关的展示；</li>
+</ul>
+<h1 id="12-svg图形与canvas的区别错误的是">12、SVG图形与canvas的区别错误的是</h1>
+<h2 id="答案canvas绘制的图形能被搜索引擎抓取">答案：canvas绘制的图形能被搜索引擎抓取；</h2>
+<p>其他说法是正确的：</p>
+<ul>
+<li>canvas是HTML5提供的新元素;</li>
+<li>canvas绘制的是标量图，svg绘制的是矢量图；</li>
+<li>canvas绘制图形通常是JavaScript实现，svg图形通常通过html标签来实现；</li>
+</ul>
+<h1 id="13-html5新增的表单元素不包括">13、HTML5新增的表单元素不包括</h1>
+<h2 id="答案password">答案：password；</h2>
+<p>其他说法是正确的：</p>
+<ul>
+<li>color；</li>
+<li>data；</li>
+<li>number;</li>
+</ul>
+<p>**表单控：**color ,  calendar  ,  date ,  datetime, datetime-local,  time, mouth , week, email, url , search,range, tel<br>
+**新的表单元素： **datalist ， keygen， output</p>
+<h1 id="14-transition与animation的区别说法错误的是">14、transition与animation的区别说法错误的是</h1>
+<h2 id="答案animation需要事件触发来达到动画的效果">答案：animation需要事件触发来达到动画的效果；</h2>
+<p>其他说法是正确的：</p>
+<ul>
+<li>transition着重属性的变化，而animation重点是在创建帧，让不同帧在不同时间点发生不同变化；</li>
+<li>animation可以实现复杂的动画；</li>
+<li>animation通过@keyframe控制当前帧的属性；<br>
+解析：<br>
+animation可以一帧一帧执行 不需要事件的触发</li>
+</ul>
+<h1 id="15-在面向对象技术中多态性是指">15、在面向对象技术中，多态性是指（）</h1>
+<h2 id="答案针对一消息不同对象可以以适合自身的方式加以响应">答案：针对一消息，不同对象可以以适合自身的方式加以响应</h2>
+<p><strong>多态</strong>是面向对象的重要特性,简单点说:“一个接口，多种实现”，指一个基类中派生出了不同的子类，且每个子类在继承了同样的方法名的同时又对父类的方法做了不同的实现，这就是同一种事物表现出的多种形态。<br>
+在面向对象方法中一般是这样表述多态性：向不同的对象发送<strong>同一条消息</strong>，不同的对象在接收时会产生不同的行为（即方法）。 也就是说，<strong>每个对象可以用自己的方式去响应共同的消息。</strong></p>
+<h1 id="16-replacenew-regexp-gi-的执行结果是">16、'\\\'.replace(new RegExp('\\\\', 'gi'), '/') 的执行结果是？</h1>
+<h2 id="答案-2">答案：/\</h2>
+<p>在字符串里面， 字符串\ 是需要进行转义的，所以字符串\得写为'\'<br>
+在正则表达式中，正则表达式\也是需要进行转义的，所以正则表达式表达式\得写为/\/<br>
+所以，题目得意思是：<br>
+在字符串\\中全局匹配，忽略大小写，把匹配到的字符串\换成字符串/<br>
+<img src="https://cutezhangq.github.io/post-images/1599204430768.png" alt="" loading="lazy"></p>
+<pre><code class="language-js">  let a = '\\\\\\'.replace(new RegExp('\\\\\\\\', 'gi'), '/');
+  console.log('题目结果：',a);   //  结果：  /\
+  let b = '\\\\\\';
+  //在字符串里面， 字符串\ 是需要进行转义的，所以字符串\得写为'\\';所以 6个\的结果表示的是 \\\
+  console.log('\\\\\\结果：',b) //  结果： \\\
+//   在正则表达式中，正则表达式\也是需要进行转义的，所以正则表达式表达式\得写为/\\/
+//   所以，题目得意思是：
+//   在字符串\\\中全局匹配，忽略大小写，把匹配到的字符串\\换成字符串/
+  let c = '\\\\\\\\';
+  console.log('\\\\\\\\结果：',c) //  结果： \\\\
+
+  let reg = new RegExp(c,'gi');     
+            //  /.../g: global 的意思，找到之後會繼續往後配對
+            //  /.../i: case insensitive不区分大小写 的意思
+  console.log(reg);    // 结果： /\\\\/gi
+  let newa = a.replace(reg, '/');   // 把匹配到的字符串\\换成字符串/  ,/\\\\/表示正则\\
+  console.log(newa);  //  结果：  /\
+</code></pre>
+<h1 id="17-执行下列语句后变量name的值为">17、执行下列语句后，变量name的值为</h1>
+<pre><code class="language-js">var name = '1';
+new Promise(function (resolve, reject) {
+    resolve();
+    reject();
+}).then(function () {
+    name = '2';
+}).catch(function () {
+    name = '3';
+});
+    name = '4';
+</code></pre>
+<h2 id="答案2">答案：2</h2>
+<p>new Promise是异步的，所以它会在最后执行。然后resolve和reject两种状态只会触发一种，先调用resolve方法，就不会调用reject方法，接着执行then后面的回调函数，所以最后name为2；看顺序效果的话可以在每个name后面打印一下即可，代码如下</p>
+<pre><code class="language-js">  var name = '1';
+  console.log(name);
+  new Promise(function (resolve, reject) {
+    resolve();
+    reject();
+  }).then(function () {
+    name = '2';
+    console.log(name);
+
+  }).catch(function () {
+    name = '3';
+    console.log(name);
+
+  });
+  name = '4';
+  console.log(name);
+
+  // 1
+  // 4
+  // 2
+</code></pre>
+<p>先执行宏任务<br>
+var name = 1<br>
+resolve() // 我理解为return，所以reject不会执行<br>
+然后 name = 4<br>
+然后是微任务<br>
+name = 2<br>
+所以最后name为2</p>
+<!-- more -->
+<p>先执行宏任务<br>
+var name = 1<br>
+resolve() // 我理解为return，所以reject不会执行<br>
+然后 name = 4<br>
+然后是微任务<br>
+name = 2<br>
+所以最后name为2</p>
+<h1 id="18-执行下列语句后变量a的值为">18、执行下列语句后，变量a的值为</h1>
+<pre><code class="language-js">var a = [].push(...[1, 2, 3]);
+</code></pre>
+<h2 id="答案3">答案：3</h2>
+<p>push() 方法可向数组的末尾添加一个或多个元素，并<code>返回新的长度</code>。</p>
+<h1 id="19-根据如下代码setsize的值为">19、根据如下代码，set.size的值为</h1>
+<pre><code class="language-js">var set = new Set([0, 2, 2, 0, 0, 5, 9, {}, {}, NaN, NaN]);
+</code></pre>
+<h2 id="答案7">答案：7</h2>
+<p>两个空值为不同元素，NaN为相同元素，还有四个不同的数字。</p>
+<p>ES6 提出“Same-value equality”<code>（同值相等）</code>算法<br>
+不同之处只有两个：一是<code>+0不等于-0</code>，二是<code>NaN等于自身</code>。<br>
+set使得NaN和NaN对比是相等的，解决了===在NaN上的bug</p>
+<pre><code class="language-js">  var set = new Set([0, 2, 2, 0, 0, 5, 9, {}, {}, NaN, NaN,[],[],undefined,undefined,String,String,Number,Number,null,null,Boolean,Boolean]);
+  console.log(set);
+// 0: 0
+// 1: 2
+// 2: 5
+// 3: 9
+// 4: Object
+// 5: Object
+// 6: NaN
+
+// 7: Array(0)
+// 8: Array(0)
+// 9: undefined
+// 10: function String() { [native code] }
+// 11: function Number() { [native code] }
+// 12: null
+// 13: function Boolean() { [native code] }
+</code></pre>
+<p>注意<code>NaN</code>特殊：为相同元素，<code>{ }</code>和<code>[ ]</code>特殊：为不同元素，其余的（基本类型，包括Object，Array）都为相同元素，被去重了</p>
+<pre><code class="language-js">var set2 = new Set([Array,Array,Object,Object])
+console.log(set2);
+// 0: function Array() { [native code] }
+// 1: function Object() { [native code] }
+</code></pre>
+<pre><code class="language-js">console.log(NaN === NaN)  //false
+console.log({} === {} )   //false
+console.log([] === [])    //false
+console.log(undefined === undefined)  //true
+console.log(null === null)            //true
+console.log(Number === Number)        //true
+console.log(String === String)        //true
+console.log(Boolean === Boolean)      //true
+
+console.log(Object === Object)    //true
+console.log(Array === Array)      //true
+</code></pre>
+<h1 id="20-下列说法中错误的是">20、下列说法中错误的是</h1>
+<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1599210844901.png" alt="" loading="lazy"></figure>
+<p>事件触发顺序则是先捕获后冒泡.</p>
+<h1 id="21-下列说法中正确的是">21、下列说法中正确的是</h1>
+<h2 id="答案调用date构造函数而不传参数时得到的对象自动获得当前时间">答案：调用Date构造函数而不传参数时，得到的对象自动获得当前时间</h2>
+<p>其他错误的描述：</p>
+<ul>
+<li>JSONP不是一种跨域技术</li>
+<li>调用setInterval方法后得到的返回值为undefined</li>
+<li>所有的RegExp实例对象都可以调用match方法</li>
+</ul>
+<p>SetInterval返回的是定时器的ID，可以利用clearInterval（定时器Id）来清除这个定时器</p>
+<pre><code class="language-js">var intervalID = window.setInterval(myCallback, 500, 'Parameter 1', 'Parameter 2');
+var intervalID2 = window.setInterval(myCallback, 1500, 'Parameter 1', 'Parameter 2');
+function myCallback(a, b)
+{
+ // Your code here
+ // Parameters are purely optional.
+ console.log(a);
+ console.log(b);
+}
+console.log(intervalID)  // 1
+console.log(intervalID)  // 1
+console.log(intervalID2) // 2
+</code></pre>
+<pre><code class="language-js">'a1b2c3'.search(/\d/g);  
+var r = 'aaa123456'.match(/\d/);
+var r = 'aaa123456'.match(/\d/g);
+</code></pre>
+<p><strong>match()<strong>方法将检索</strong>字符串</strong>，以找到一个或多个与regexp匹配的文本。但<strong>regexp</strong><code>是否具有标志 g</code>对结果影响很大。</p>
+<p>如果regexp<code>没有</code>标志g，那么match()方法就只能在字符串中<code>执行一次</code>匹配。如果没有找到任何匹配的文本，match() 将返回null。否则它将返回一个数组，其中存放了与它找到的匹配文本有关的信息。</p>
+<p>如果regexp具有标志g则match()方法将执行全局检索，找到字符串中的所有匹配子字符串<br>
+若没有找到任何匹配的子串，则返回 null。</p>
+<h1 id="23-执行下列语句后变量name1的值为">23、执行下列语句后，变量name1的值为</h1>
+<pre><code class="language-js">var name = 'tom';
+function getMethod() {
+var result = function () {
+return name;
+};
+var name = 'jerry';
+return result;
+}
+var getName = getMethod();
+var name1 = getName();
+</code></pre>
+<h2 id="答案jerry">答案：jerry</h2>
+<p>这道题考的是闭包，赋给getName的事指向函数result的指针，result是闭包，可以读取getMethod的私有变量，因此返回值为jerry</p>
+<h1 id="24-以下关于os的说法正确的是">24、以下关于OS的说法正确的是</h1>
+<h2 id="答案-3">答案：</h2>
+<ul>
+<li>多道批处理系统的特点：资源利用率高、系统吞吐量大、平均周转时间长、无交互能力</li>
+<li>分时系统具有多路性、独立性、及时性、交互性</li>
+<li>操作系统的基本特征：并发、共享、虚拟、异步</li>
+</ul>
+<p>在OS中通过<code>时分复用</code>和<code>空分复用</code>实现“虚拟”<br>
+复用和虚拟相比较，复用所分割的是实际存在的物理资源，而虚拟则实现假想的同类资源。虚拟技术解决某类物</p>
+<h1 id="25-下面说法不正确的是">25、下面说法不正确的是？</h1>
+<h2 id="答案-4">答案：</h2>
+<ul>
+<li>若(u，v)是连通网络的一条最小权值的边，则不论采用何种方法构造该网络的最小生成树， 所构造出最小生成树一定包含(u，v)这条边。</li>
+<li>单向哈希表的特征包括：把固定的信息转化成任意长度信息输出</li>
+<li>树的后序遍历序列等同于该树对应的二叉树的后序序列，先序遍历序列等同于该树先序序列</li>
+</ul>
+<p>表述正确的是：对于静态表的顺序查找法，若在表头设置监视哨，则正确的查找方式为从第n个元素往开始前查找该数据元素</p>
+<p>解析：<br>
+任意长度计算成固定长度的哈希值<br>
+A.如果(u，v)是连通网络的唯一的一条最小权值的边，那么一定包含(u，v)这条边<br>
+D.树的先序对应二叉树的先序，树的后序对应二叉树的中序</p>
+<h1 id="26-面向对象程序设计方法的优点包含">26、面向对象程序设计方法的优点包含：</h1>
+<h2 id="答案可重用性-可扩展性-易于管理和维护">答案：可重用性、可扩展性、易于管理和维护</h2>
+<h1 id="27-假定需要在-nodejs-环境中执行一些用户上传的自定义代码在没有做任何沙盒等安全措施的前提下存在哪些安全隐患">27、假定需要在 node.js 环境中执行一些用户上传的自定义代码，在没有做任何沙盒等安全措施的前提下，存在哪些安全隐患？</h1>
+<h2 id="答案-5">答案：</h2>
+<ul>
+<li>大量的同步计算造成进程卡死</li>
+<li>执行 process.exit(1) 造成进程直接退出</li>
+<li>执行 require('child_process').spwan()，直接调用系统程序，造成系统层面的危害</li>
+</ul>
+<p>不存在的隐患：<br>
+自定义代码抛出的异常无法被捕获</p>
+<h1 id="28-关于-nodejs-中的模块化规范以下说法正确的有哪些">28、关于 node.js 中的模块化规范，以下说法正确的有哪些？</h1>
+<h2 id="答案-6">答案：</h2>
+<ul>
+<li>require 加载模块是一个同步的过程</li>
+<li>require 函数可以在代码的任意位置执行</li>
+<li>exports 或 module.exports 其中一个一旦重新赋值，exports 将失效</li>
+</ul>
+<p>不正确的：模块最终导出的是 exports，而不是 module.exports<br>
+<strong>解析：</strong><br>
+ES6标准发布后，module成为标准，标准的使用时以export指令导出接口，以import引入模块，但是在以往的node模块中，我们采用的是CommonJS规范，使用require引入模块，使用module.exports导出接口<br>
+exports和module.exports都对</p>
+<pre><code class="language-js">  // { foo:'bar' }
+  exports.foo = 'bar'
+
+  // { foo:'bar',a:123 }
+  module.exports.a = 123
+
+  // 将exports的引用改变了
+  exports = {
+    a: 456
+  }
+
+  // { foo:'foo',a:123 }
+  module.exports.foo = 'foo'
+
+  // 无效
+  exports.a = 567
+
+  exports = module.exports
+
+  // { foo: 'foo', a: 123, c: 789 }
+  exports.c = 789
+</code></pre>
+<h1 id="29-下面选项中属于node定时器的是">29、下面选项中属于Node定时器的是？</h1>
+<h2 id="答案-7">答案：</h2>
+<ul>
+<li>setTimeout()</li>
+<li>setInterval()</li>
+<li>setImmediate()</li>
+<li>process.nextTick()</li>
+</ul>
+<h1 id="30-以下代码能在不同环境下不考虑兼容性问题正确判断变量a-是数组的有">30、以下代码能在不同环境下（不考虑兼容性问题）正确判断变量a = [] 是数组的有：</h1>
+<h2 id="答案arrayisarraya-objectprototypetostringcalla-object-array">答案：Array.isArray(a)、Object.prototype.toString.call(a) === '[object Array]'</h2>
+<p>不能判断的：a instanceof Array、typeof a === 'array'</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/pai-xu-suan-fa-xia/">
+                  <h3 class="post-title">
+                    排序算法（下）
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: '',
+        admin: [''],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
