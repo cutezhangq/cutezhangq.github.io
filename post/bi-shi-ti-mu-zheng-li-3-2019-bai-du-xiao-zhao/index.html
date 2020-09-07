@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1599226733703">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1599483867243">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -33,7 +33,7 @@
 
 TCP的头部消息较UDP来说更全面
 TCP是端对..." />
-    <meta name="keywords" content="" />
+    <meta name="keywords" content="面试" />
   </head>
   <body>
     <div id="app" class="main">
@@ -42,7 +42,7 @@ TCP是端对..." />
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1599226733703" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1599483867243" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -110,6 +110,9 @@ TCP是端对..." />
           <div class="post-detail">
             <h2 class="post-title">笔试-题目整理3-2019百度校招 </h2>
             <div class="post-date">2020-09-03</div>
+            
+              <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/bi-shi-ti-mu-zheng-li-3-2019-bai-du-xiao-zhao.jpg')">
+              </div>
             
             <div class="post-content" v-pre>
               <p>这里收录了部分百度 2019的笔试题，一起来看看叭，查漏补缺鸭😘<br>
@@ -499,9 +502,115 @@ exports和module.exports都对</p>
 </ul>
 <h1 id="30-以下代码能在不同环境下不考虑兼容性问题正确判断变量a-是数组的有">30、以下代码能在不同环境下（不考虑兼容性问题）正确判断变量a = [] 是数组的有：</h1>
 <h2 id="答案arrayisarraya-objectprototypetostringcalla-object-array">答案：Array.isArray(a)、Object.prototype.toString.call(a) === '[object Array]'</h2>
-<p>不能判断的：a instanceof Array、typeof a === 'array'</p>
+<p>不能判断的：a instanceof Array、typeof a === 'array'<br>
+instanceof操作符的问题在于，它假定只有一个全局环境。如果网页中包含多个框架，那实际上就存在两个以上不同的全局执行环境，从而存在两个以上不同版本的Array构造函数。<br>
+如果你从一个框架向另一个框架传入一个数组，那么传入的数组与在第二个框架中原生创建的数组分别具有各自不同的构造函数。</p>
+<pre><code class="language-js">  var iframe = document.createElement('iframe');
+  document.body.appendChild(iframe);
+
+  var arr = [1, 2, 3];
+  xArray = window.frames[0].Array; //iframe中的构造函数
+  var arrx = new xArray(4, 5, 6);
+
+  console.log(arrx instanceof Array); //false
+  console.log(arrx.constructor == Array); // false
+
+  console.log(Array.prototype == xArray.prototype); //false
+  console.log(arr instanceof xArray); //false
+
+  console.log(arrx.constructor === Array); // false
+  console.log(arr.constructor === Array); // true
+  console.log(arrx.constructor === xArray); // true
+  console.log(Array.isArray(arrx)); //true
+</code></pre>
+<h1 id="31-用js实现一个用户行收集器功能如下">31、用js实现一个用户行收集器，功能如下：</h1>
+<p>1，收集用户在页面中的所有click行为，并使用log方法发送日志，包含触发事件的节点xpath信息</p>
+<p>2，xpath需包含tagName、id、class、同级同名节点索引(从1开始)，如</p>
+<pre><code class="language-html">&lt;body&gt;
+  &lt;div id=“container”&gt;
+    &lt;p&gt;something&lt;/p&gt;
+    &lt;a id=“link1” class=“link-class”&gt;&lt;/a&gt;
+    &lt;a id=“link2” class=“link-class current”&gt;target link&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+</code></pre>
+<p>点击target link时，xpath为 <code>body[1]/div[1][@id=“container”]/a[2][@id=“link2”][contains(@class, “link-class&quot;)][contains(@class, “current&quot;)]</code><br>
+3，不侵入、不影响其他业务代码的执行</p>
+<!-- more -->
+<pre><code class="language-cmd">回答得分占比：
+写出根节点全局捕获阶段代理事件（20%）
+写出由目标找到根节点递归方法（20%）
+写出获取id、className方法（20%）
+写出获取同级同名阶段索引方法（20%）
+写出拼接xpath方法（20%）
+</code></pre>
+<h2 id="答案-8">答案：</h2>
+<pre><code class="language-js">  // 遍历深度树形结构
+  var obody = document.getElementsByTagName('body')[0];
+  obody.addEventListener('click', function (e) {
+    console.log(getXPath(e.target));
+  })
+  function getXPath(target) {
+            if (target.nodeName == 'BODY') return 'body[1]';
+            var index = 1;
+             
+            var str = '';
+            var tempTarget = target;
+            var nodeName = target.nodeName;
+            var id = target.id;
+            var classList = target.classList;
+            // 这是在前面一个才可以，如果前面不是一样的标签，再前面有就不可以了
+            // while (tempTarget.previousElementSilbling != null &amp;&amp; tempTarget.previousElementSilbling.nodeName == nodeName) {
+            //     index++;
+            //     // 当前一个节点存在且和自己是同一个标签，index++
+            //     // 然后把target转到前面的标签（即计算有多少个相同的标签）
+            //     tempTarget = tempTarget.previousElementSilbling;
+            // }
+            
+            // 当前面有兄弟节点时，就可以往前
+            while(tempTarget.previousElementSibling!=null)
+            {
+                 //如果前一个节点的node和要找的nodeName一样则index++，把target赋予前一个点
+                if(tempTarget.previousElementSibling.nodeName == nodeName)
+                {
+                    index++;
+                    console.log(index);
+                } 
+                // 无论前面的标签是否和自身一样，但是一直往前，比较是否和自身的nodeName一样
+                tempTarget = tempTarget.previousElementSibling;
+            }
+             
+            // 然后就str就是所在的位置
+            str = '/' + nodeName.toLowerCase() + '[' + index + '][@id=&quot;' + id + '&quot;]';
+            classList.forEach(function (ele, index, self) {
+                str += '[contains(@class,&quot;' + ele + '&quot;)]';
+            })
+            return getXPath(target.parentNode) + str;
+        }
+</code></pre>
+<h1 id="32-web-worker为web内容在后台线程中运行脚本提供了一种简单的方法-请列举出web-worker的常用api并列举至少1个web-worker的常见用途">32、Web Worker为Web内容在后台线程中运行脚本提供了一种简单的方法。请列举出Web worker的常用API并列举至少1个Web Worker的常见用途。</h1>
+<h2 id="答案-9">答案：</h2>
+<pre><code class="language-cmd">回答得分占比：
+
+能回答出Web Worker常用API（2个以上），得50%；
+
+能例举多个Web Worker的应用场景，根据例举情况：1个得30%，2个及以上得50%。
+</code></pre>
+<p>postMessage(data) -&gt; 子线程与主线程之间互相通信使用的方法，传递的data为任意值;<br>
+terminate() -&gt; 主线程中终止worker，此后无法再利用其进行消息传递;<br>
+onmessage -&gt; 当有消息发送时，触发该事件；并且消息发送是双向，消息内容可通过data来获取;<br>
+大数据的处理：这里所说的大数据处理，并不是指数据量非常大，而是要从计算量来看，通常用时不能控制在毫秒级内的运算都可以考虑放在web worker中执行。<br>
+高频的用户交互：高频的用户交互适用于根据用户的输入习惯、历史记录以及缓存等信息来协助用户完成输入的纠错、校正功能等类似场景，用户频繁输入的响应处理同样可以考虑放在web worker中执行。</p>
 
             </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://cutezhangq.github.io/tag/gEYVGztSN/" class="tag">
+                    面试
+                  </a>
+                
+              </div>
             
             
               <div class="next-post">
