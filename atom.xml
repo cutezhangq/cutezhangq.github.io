@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cutezhangq.github.io</id>
     <title>cutezhangq</title>
-    <updated>2020-09-07T13:04:36.414Z</updated>
+    <updated>2020-09-08T13:40:29.223Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cutezhangq.github.io"/>
     <link rel="self" href="https://cutezhangq.github.io/atom.xml"/>
@@ -2301,6 +2301,21 @@ return this.firstName + ' ' + this.lastName
 }
 })
 </code></pre>
+<h1 id="computed和watch有什么区别">computed和watch有什么区别?</h1>
+<p><code>computed:</code></p>
+<ul>
+<li>computed是计算属性,也就是计算值,它更多用于计算值的场景</li>
+<li>computed具有缓存性,computed的值在getter执行后是会缓存的，只有在它依赖的属性值改变之后，下一次获取computed的值时才会重新调用对应的getter来计算</li>
+<li>computed适用于计算比较消耗性能的计算场景</li>
+</ul>
+<p><code>watch:</code></p>
+<ul>
+<li>更多的是「观察」的作用,类似于某些数据的监听回调,用于观察props $emit或者本组件的值,当数据变化时来执行回调进行后续操作</li>
+<li>无缓存性，页面重新渲染时值不变化也会执行</li>
+</ul>
+<p><strong>小结:</strong><br>
+当我们要进行数值计算,而且依赖于其他数据，那么把这个数据设计为computed<br>
+如果你需要在某个数据变化时做一些事情，使用watch来观察这个数据变化</p>
 ]]></content>
     </entry>
     <entry>
