@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1599572321133">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1599742743046">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -40,7 +40,7 @@ b.a=2
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1599572321133" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1599742743046" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -135,6 +135,55 @@ b.a = 2;
 console.log(obj.a); // 1
 console.log(b.a);   // 2 
 </code></pre>
+<blockquote>
+<p>1.他无法实现对函数 、RegExp等特殊对象的克隆</p>
+</blockquote>
+<blockquote>
+<p>2.会抛弃对象的constructor,所有的构造函数会指向Object</p>
+</blockquote>
+<blockquote>
+<p>3.对象有循环引用,会报错</p>
+</blockquote>
+<pre><code class="language-js">// 构造函数
+function person(pname) {
+  this.name = pname;
+}
+
+const Messi = new person('Messi');
+
+// 函数
+function say() {
+  console.log('hi');
+};
+
+const oldObj = {
+  a: say,
+  b: new Array(1),
+  c: new RegExp('ab+c', 'i'),
+  d: Messi
+};
+
+const newObj = JSON.parse(JSON.stringify(oldObj));
+
+// 无法复制函数
+console.log(newObj.a, oldObj.a); // undefined [Function: say]
+// 稀疏数组复制错误
+console.log(newObj.b[0], oldObj.b[0]); // null undefined
+// 无法复制正则对象
+console.log(newObj.c, oldObj.c); // {} /ab+c/i
+// 构造函数指向错误
+console.log(newObj.d.constructor, oldObj.d.constructor); // [Function: Object] [Function: person]
+
+</code></pre>
+<p>我们可以看到在对函数、正则对象、稀疏数组等对象克隆时会发生意外，构造函数指向也会发生错误。</p>
+<pre><code class="language-js">const oldObj = {};
+
+oldObj.a = oldObj;
+
+const newObj = JSON.parse(JSON.stringify(oldObj));
+console.log(newObj.a, oldObj.a); // TypeError: Converting circular structure to JSON
+</code></pre>
+<p>对象的循环引用会抛出错误.</p>
 <h1 id="2-进行对象的遍历复制">2、进行对象的遍历复制</h1>
 <p>进行对象的遍历复制，对对象的每一条属性进行复制，这样就能进行对象的深度克隆<br>
 如何实现深拷贝?<br>
@@ -219,6 +268,90 @@ console.log(person[0].info === person1[0].info); // true
   console.log(arr_0)  // [1, 3, {name: &quot;hhh&quot;}]
   console.log(arr_1)  // [1, 6, {name: &quot;hhh&quot;}]
 </code></pre>
+<h1 id="其他深拷贝的方法">其他深拷贝的方法</h1>
+<pre><code class="language-js">/**
+* deep clone
+* @param  {[type]} parent object 需要进行克隆的对象
+* @return {[type]}        深克隆后的对象
+*/
+const clone = parent =&gt; {
+  // 维护两个储存循环引用的数组
+  const parents = [];
+  const children = [];
+
+  const _clone = parent =&gt; {
+    if (parent === null) return null;
+    if (typeof parent !== 'object') return parent;
+
+    let child, proto;
+
+    if (isType(parent, 'Array')) {
+      // 对数组做特殊处理
+      child = [];
+    } else if (isType(parent, 'RegExp')) {
+      // 对正则对象做特殊处理
+      child = new RegExp(parent.source, getRegExp(parent));
+      if (parent.lastIndex) child.lastIndex = parent.lastIndex;
+    } else if (isType(parent, 'Date')) {
+      // 对Date对象做特殊处理
+      child = new Date(parent.getTime());
+    } else {
+      // 处理对象原型
+      proto = Object.getPrototypeOf(parent);
+      // 利用Object.create切断原型链
+      child = Object.create(proto);
+    }
+
+    // 处理循环引用
+    const index = parents.indexOf(parent);
+
+    if (index != -1) {
+      // 如果父数组存在本对象,说明之前已经被引用过,直接返回此对象
+      return children[index];
+    }
+    parents.push(parent);
+    children.push(child);
+
+    for (let i in parent) {
+      // 递归
+      child[i] = _clone(parent[i]);
+    }
+
+    return child;
+  };
+  return _clone(parent);
+};
+</code></pre>
+<p>测试</p>
+<pre><code class="language-js">function person(pname) {
+  this.name = pname;
+}
+
+const Messi = new person('Messi');
+
+function say() {
+  console.log('hi');
+}
+
+const oldObj = {
+  a: say,
+  c: new RegExp('ab+c', 'i'),
+  d: Messi,
+};
+
+oldObj.b = oldObj;
+
+
+const newObj = clone(oldObj);
+console.log(newObj.a, oldObj.a); // [Function: say] [Function: say]
+console.log(newObj.b, oldObj.b); // { a: [Function: say], c: /ab+c/i, d: person { name: 'Messi' }, b: [Circular] } { a: [Function: say], c: /ab+c/i, d: person { name: 'Messi' }, b: [Circular] }
+console.log(newObj.c, oldObj.c); // /ab+c/i /ab+c/i
+console.log(newObj.d.constructor, oldObj.d.constructor); // [Function: person] [Function: person]
+
+</code></pre>
+<p>当然,我们这个深克隆还不算完美,例如Buffer对象、Promise、Set、Map可能都需要我们做特殊处理，另外对于确保没有循环引用的对象，我们可以省去对循环引用的特殊处理，因为这很消耗时间，不过一个基本的深克隆函数我们已经实现了。</p>
+<h1 id="总结">总结</h1>
+<p>实现一个完整的深克隆是由许多坑要踩的,npm上一些库的实现也不够完整,在生产环境中最好用lodash的深克隆实现.</p>
 <h1 id="浅拷贝深拷贝-区别">浅拷贝/深拷贝 区别：</h1>
 <ul>
 <li>拷贝 产生了新的数据     ：深拷贝</li>
