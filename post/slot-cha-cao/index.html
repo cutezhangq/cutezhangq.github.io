@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600160893964">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600388552331">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -37,7 +37,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600160893964" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600388552331" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -295,21 +295,36 @@ OK，我们说有html模板的情况，就是父组件会往子组件插模板�
 </code></pre>
 <p>结果如图所示：<br>
 <img src="https://cutezhangq.github.io/post-images/1596892616696.png" alt="" loading="lazy"></p>
-<h1 id="slot-scope">slot-scope</h1>
+<h1 id="slot-scope-插槽的作用域">slot-scope 插槽的作用域</h1>
 <p><strong>父组件中在使用时：</strong></p>
 <ul>
-<li>默认插槽的话直接在子组件的标签内写入内容即可</li>
-<li>具名插槽是在默认插槽的基础上加上slot属性，值为子组件插槽name属性值</li>
-<li>作用域插槽则是通过<code>slot-scope获取子组件的信息</code>，在内容中使用。这里可以用解构语法去直接获取想要的属性</li>
+<li>默认插槽的话直接在子组件的标签内写入内容即可（写入的内容就都是传入插槽内的了）</li>
+<li>具名插槽是在默认插槽的基础上加上slot属性，值为子组件插槽name属性值（通过这种方式确定是哪一个具名插槽，从而将内容插入相应的插槽中）</li>
+<li>作用域插槽则是通过<code>slot-scope获取子组件的信息</code>，在内容中使用。这里可以用<code>解构语法</code>去直接获取想要的属性</li>
 </ul>
+<pre><code class="language-html">// Parent.vue
+&lt;child&gt;
+  &lt;!-- 默认插槽 --&gt;
+  &lt;div&gt;默认插槽&lt;/div&gt;  
+  &lt;!-- 具名插槽 --&gt;
+  &lt;div slot=&quot;header&quot;&gt;具名插槽header&lt;/div&gt;
+  &lt;!-- 作用域插槽 --&gt;
+  &lt;div slot=&quot;footer&quot; slot-scope=&quot;slotProps&quot;&gt;
+    {{slotProps.testProps}}
+  &lt;/div&gt;
+&lt;/child&gt;
+</code></pre>
+<p>渲染结果为<br>
+<img src="https://cutezhangq.github.io/post-images/1600306344336.png" alt="" loading="lazy"></p>
 <h1 id="v-slot">v-slot</h1>
 <pre><code class="language-cmd">在vue2.6中，上述的API被软废弃（3.0正式废弃），取而代之的是内置指令v-slot，可以缩写为【#】
 </code></pre>
-<p>**子组件用法保持不变，**父组件中</p>
+<p><strong>子组件用法保持不变</strong><br>
+,父组件中</p>
 <ul>
 <li>slot属性弃用，具名插槽通过指令参数<code>v-slot:插槽名</code>的形式传入，可以简化为 <code>#插槽名。</code></li>
 <li><code>slot-scope</code>属性弃用，作用域插槽通过<code>v-slot:xxx=&quot;slotProps&quot;</code>的slotProps来获取子组件传出的属性</li>
-<li>v-slot属性只能在 <code>&lt;template&gt;</code>上使用，但在**【只有默认插槽时】**可以在组件标签上使用</li>
+<li>v-slot属性只能在 <code>&lt;template&gt;</code>上使用，但在 <strong>【只有默认插槽时】</strong> 可以在组件标签上使用</li>
 </ul>
 <pre><code class="language-html">//Parent
 &lt;template&gt;
@@ -384,7 +399,7 @@ OK，我们说有html模板的情况，就是父组件会往子组件插模板�
         }
       ]
 </code></pre>
-<p>之后会把todso传递给列表组件吧，那么列表组件内部做什么事情呢？<br>
+<p>之后会把todos传递给列表组件吧，那么列表组件内部做什么事情呢？<br>
 列表内部肯定会v-for去帮你的同事渲染这个数组嘛。 就类似element-ui里的table组件一样<br>
 问题的关键就在这里<br>
 <strong>列表组件的循环，是发生在组件内部的，所以通过 v-for=&quot;todo in todos&quot; ,列表组件很容易拿到一项todo，但列表拿到数据没用呀，列表只是一个瓜皮，它又不懂业务逻辑这个数据是你同事的业务数据，</strong><br>
@@ -398,13 +413,15 @@ OK，我们说有html模板的情况，就是父组件会往子组件插模板�
 <ul>
 <li>疑问1：一般不是我们传参数来调用组件吗？为什么组件还把数据传递回来？</li>
 </ul>
-<pre><code class="language-cmd">的确，调用ui组件时一般是我们传递配置参数给他们。
+<pre><code class="language-cmd">- 的确，调用ui组件时一般是我们传递配置参数给他们。
 
-但是就像elemnt-ui的table组件，你把数组传递给table后，是不是有时候需要拿到某一行的row对象
+- 但是就像elemnt-ui的table组件，你把数组传递给table后，是不是有时候需要拿到某一行的row对象
 
-并根据row对象里的字段，来判断一些内容的显示隐藏？
+- 并根据row对象里的字段，来判断一些内容的显示隐藏？
 
-因为循环的过程发生在table组件内部，所以table组件可以方便的获取到每一项数据，但是这些数据最终不是给组件的，而是我们自己要用的业务数据。所以也需要一个方式，让调用者能拿到自己想要的数据
+- 因为循环的过程发生在table组件内部，所以table组件可以方便的获取到每一项数据，
+但是这些数据最终不是给组件的，而是我们自己要用的业务数据。
+所以也需要一个方式，让调用者能拿到自己想要的数据
 </code></pre>
 <ul>
 <li>疑问2： 既然子组件最终还要把我给他的数据，再返还给我，那我当初还干嘛给它，能不能就自己在父组件里玩？</li>
@@ -415,6 +432,14 @@ OK，我们说有html模板的情况，就是父组件会往子组件插模板�
 
 但是咱不是为了封装后，可以复用嘛，总不能永远不用组件嘛
 </code></pre>
+<p>例如：在vue中使用element-ui中的table组件，需要将获取到的数据传入<code>封装好的table标签子组件</code>中，但是在具体使用时，获取表中内容并显示出来</p>
+<pre><code class="language-html">     &lt;el-table-column prop=&quot;university,campus+dormitory,room&quot; label=&quot;详细地址&quot; align=&quot;center&quot;&gt;
+                    &lt;template slot-scope=&quot;scope&quot;&gt;
+                        {{scope.row.university}} {{scope.row.dormitory}} {{scope.row.room}}
+                    &lt;/template&gt;
+    &lt;/el-table-column&gt;
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1600309637647.png" alt="" loading="lazy"></figure>
 <ul>
 <li>疑问3： 父组件需要子组件的数据？那不会有$emit和vuex嘛，为什么要有slot-scope？</li>
 </ul>
