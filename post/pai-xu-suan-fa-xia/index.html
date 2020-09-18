@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600388552331">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600412799405">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -27,7 +27,9 @@
     <meta name="description" content="前端常见的排序算法，共有10种😘
 
 （八）：计数排序算法
-" />
+算法介绍
+计数排序的核心在于将输入的数据值转化为键存储在额外开辟的数组空间中。（不用像之前的排序进行两两比较！）
+作为一种线性时间复杂度的排序，计数排序要求输入的数据必须是有确定范..." />
     <meta name="keywords" content="算法" />
   </head>
   <body>
@@ -37,7 +39,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600388552331" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600412799405" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -113,6 +115,256 @@
               <p>前端常见的排序算法，共有10种😘</p>
 <!-- more -->
 <h1 id="八计数排序算法">（八）：计数排序算法</h1>
+<p>算法介绍<br>
+计数排序的核心在于将输入的数据值转化为键存储在额外开辟的数组空间中。（不用像之前的排序进行两两比较！）<br>
+作为一种线性时间复杂度的排序，计数排序要求输入的数据必须是有确定范围的整数。<br>
+<img src="https://cutezhangq.github.io/post-images/1600412446763.png" alt="" loading="lazy"></p>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1600412453421.png" alt="" loading="lazy"></figure>
+<pre><code class="language-js">方法一：
+ //计数排序
+function countingSort(arr, maxValue) {     //数列的最大值
+    var bucket = new Array(maxValue+1),   //bucket 桶
+        sortedIndex = 0;
+        arrLen = arr.length,
+        bucketLen = maxValue + 1;    //保证数组的最后一个下标是Max
+ 
+    for (var i = 0; i &lt; arrLen; i++) {
+        if (!bucket[arr[i]]) {
+            bucket[arr[i]] = 0;
+        }
+        bucket[arr[i]]++;
+    }
+ 
+    for (var j = 0; j &lt; bucketLen; j++) {
+        while(bucket[j] &gt; 0) {
+            arr[sortedIndex++] = j;
+            bucket[j]--;
+        }
+    }
+ 
+    return arr;
+}
+
+
+const testArr = [11,4,6,52,3,20,1,9,2,5,19,3,6,21]
+console.log('————计数排序—————',countingSort(testArr,50));
+//————计数排序————— (14) [1, 2, 3, 3, 4, 5, 6, 6, 9, 11, 19, 20, 21, 21]
+console.log('————计数排序2—————',countingSort(testArr,90));
+//————计数排序2————— (14) [1, 2, 3, 3, 4, 5, 6, 6, 9, 11, 19, 20, 21, 52]
+console.log('————计数排序3—————',countingSort(testArr,10));
+//————计数排序3————— (14) [1, 2, 3, 3, 4, 5, 6, 6, 9, 5, 19, 3, 6, 21]
+</code></pre>
+<pre><code class="language-js">方法二：
+let array = [];
+    for (let i = 0; i &lt; 10; i++) {
+        let number = Math.floor(Math.random() * 10);
+        array.push(number);
+    }
+    console.log(array);
+    let res = this.countingSort(array);
+    console.log(res);
+
+
+ /**
+     * 计数排序
+     */
+   function countingSort(nums) {
+        let arr = [];
+        let max = Math.max(...nums);
+        let min = Math.min(...nums);
+        // 装桶
+        for (let i = 0, len = nums.length; i &lt; len; i++) {
+            let temp = nums[i];
+            arr[temp] = arr[temp] + 1 || 1;
+            console.log(`装桶键为${temp}-值为${arr[temp]}`, arr);
+        }
+        let index = 0;
+        // 还原原数组
+        for (let i = min; i &lt;= max; i++) {
+            while (arr[i] &gt; 0) {
+                nums[index++] = i;
+                arr[i]--;
+            }
+        }
+        return nums;
+    }
+
+ const testArr = [11,4,6,52,3,20,1,9,2,5,19,3,6,21]
+ console.log('————计数排序—————',countingSort(testArr,50));
+ //————计数排序————— (14) [1, 2, 3, 3, 4, 5, 6, 6, 9, 11, 19, 20, 21, 52]
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1600412502646.png" alt="" loading="lazy"></figure>
+<h2 id="性能比较">性能比较</h2>
+<p>在数据量相当的情况下：发现拆半插入排序 &gt;= 单向冒泡排序性能 &gt; 双向冒泡排序性能 &gt; 插入排序 &gt; 计数排序 &gt; 希尔排序 &gt; 归并排序 &gt; 选择排序 &gt;= 快速排序1 &gt; 快速排序2 &gt; 大于普通冒泡性能。（产生时间具体取决于所使用的系统）</p>
+<h2 id="计数排序的缺点">计数排序的缺点：</h2>
+<ul>
+<li>1.当数列最大最小值差距过大时，并不适用计数排序。比如给定20个随机整数，范围在0到1亿之间，这时候如果使用计数排序，需要创建长度1亿的数组。不但严重浪费空间，而且时间复杂度也随之升高。</li>
+<li>2.当数列元素不是整数，并不适用计数排序。如果数列中的元素都是小数，比如25.213，或是0.00000001这样子，则无法创建对应的统计数组。这样显然无法进行计数排序。</li>
+</ul>
+<!-- more -->
+<h1 id="九桶排序">（九）：桶排序</h1>
+<h3 id="思路">思路</h3>
+<p>取 n 个桶，根据数组的最大值和最小值确认每个桶存放的数的区间，将数组元素插入到相应的桶里，最后再合并各个桶。<br>
+桶排序是计数排序的升级版。<br>
+它利用了函数的映射关系，高效与否的关键就在于这个映射函数的确定。<br>
+为了使桶排序更加高效，我们需要做到这两点：</p>
+<ul>
+<li>在额外空间充足的情况下，尽量增大桶的数量。</li>
+<li>使用的映射函数能够将输入的N个数据均匀的分配到K个桶中。<br>
+<img src="https://cutezhangq.github.io/post-images/1600412600033.png" alt="" loading="lazy"></li>
+</ul>
+<figure data-type="image" tabindex="3"><img src="https://cutezhangq.github.io/post-images/1600412604358.png" alt="" loading="lazy"></figure>
+<pre><code class="language-js">  //桶排序
+  function bucketSort(arr, bucketSize) {
+    if (arr.length === 0) {
+      return arr;
+    }
+
+    var i;
+    var minValue = arr[0];
+    var maxValue = arr[0];
+    for (i = 1; i &lt; arr.length; i++) {
+      if (arr[i] &lt; minValue) {
+          minValue = arr[i];                // 输入数据的最小值
+      } else if (arr[i] &gt; maxValue) {
+          maxValue = arr[i];                // 输入数据的最大值
+      }
+    }
+
+    //桶的初始化
+    var DEFAULT_BUCKET_SIZE = 5;            // 设置桶的默认数量为5
+    bucketSize = bucketSize || DEFAULT_BUCKET_SIZE;
+    var bucketCount = Math.floor((maxValue - minValue) / bucketSize) + 1;   
+    var buckets = new Array(bucketCount);
+    for (i = 0; i &lt; buckets.length; i++) {
+        buckets[i] = [];
+    }
+
+     //利用映射函数将数据分配到各个桶中
+     for (i = 0; i &lt; arr.length; i++) {
+        buckets[Math.floor((arr[i] - minValue) / bucketSize)].push(arr[i]);
+    }
+ 
+    arr.length = 0;
+    for (i = 0; i &lt; buckets.length; i++) {
+        insertionSort(buckets[i]);                      // 对每个桶进行排序，这里使用了插入排序
+        for (var j = 0; j &lt; buckets[i].length; j++) {
+            arr.push(buckets[i][j]);                      
+        }
+    }
+ 
+    return arr;
+
+  }
+
+ const testArr = [11,4,6,52,3,20,1,9,2,5,19,3,6,21]
+ console.log('————桶排序——————',bucketSort(testArr));
+ //————桶排序—————— (14) [1, 2, 3, 3, 4, 5, 6, 6, 9, 11, 19, 20, 21, 52]
+
+</code></pre>
+<pre><code class="language-js"> //插入排序
+   function insertionSort(arr){
+    var len = arr.length;
+    var preIndex, current;
+    for (var i = 1; i &lt; len; i++) {
+      preIndex = i - 1;   //前一个元素下标
+      current = arr[i];   //当前元素
+      while(preIndex &gt;= 0 &amp;&amp; arr[preIndex] &gt; current) {
+        arr[preIndex+1] = arr[preIndex];  //将前一个元素往后挪动一位
+        preIndex--;     //继续循环遍历
+      }
+      arr[preIndex+1] = current;    //之前preIndex--了，所以这里要+1
+    }
+    return arr;
+  }
+</code></pre>
+<h3 id="性能比较-2">性能比较</h3>
+<p>在数据量相当的情况下：<br>
+发现拆半插入排序 &gt;= 单向冒泡排序性能 &gt; 双向冒泡排序性能 &gt; 插入排序 &gt; 计数排序 &gt; 桶排序 &gt; 希尔排序 &gt; 归并排序 &gt; 选择排序 &gt;= 快速排序1 &gt; 快速排序2 &gt; 大于普通冒泡性能。（产生时间具体取决于所使用的系统）<br>
+<img src="https://cutezhangq.github.io/post-images/1600412663233.png" alt="" loading="lazy"></p>
+<!-- more -->
+<h1 id="十基数排序">（十）：基数排序</h1>
+<p>算法介绍<br>
+基数排序是一种非比较型整数排序算法，其原理是将整数按位数切割成不同的数字，然后按每个位数分别比较。<br>
+由于整数也可以表达字符串（比如名字或日期）和特定格式的浮点数，<br>
+所以基数排序也不是只能使用于整数。思路<br>
+使用十个桶 0-9，把每个数从低位到高位根据位数放到相应的桶里，以此循环最大值的位数次。但只能排列正整数，因为遇到负号和小数点无法进行比较。<br>
+基数排序有两种方法：</p>
+<ul>
+<li>MSD 从高位开始进行排序</li>
+<li>LSD 从低位开始进行排序<br>
+基数排序 vs 计数排序 vs 桶排序：<br>
+这三种排序算法都利用了桶的概念，但对桶的使用方法上有明显差异：</li>
+<li>基数排序：根据键值的每位数字来分配桶</li>
+<li>计数排序：每个桶只存储单一键值</li>
+<li>桶排序：每个桶存储一定范围的数值</li>
+</ul>
+<figure data-type="image" tabindex="4"><img src="https://cutezhangq.github.io/post-images/1600412719685.png" alt="" loading="lazy"></figure>
+<pre><code class="language-js"> let array = [];
+    for (let i = 0; i &lt; 10; i++) {
+      let number = Math.floor(Math.random() * 10);
+      array.push(number);
+    }
+    console.log(array);
+    let res = this.radixSort(array);
+    console.log(res);
+    /**
+     * 基数排序
+     */
+    function radixSort(nums) {
+      // 计算位数
+      function getDigits(n) {
+        let sum = 0;
+        while (n) {
+          sum++;
+          n = parseInt(n / 10);
+        }
+        return sum;
+      }
+      // 第一维表示位数即0-9，第二维表示里面存放的值
+      let arr = Array.from(Array(10)).map(() =&gt; Array());
+      let max = Math.max(...nums);
+      let maxDigits = getDigits(max);
+      for (let i = 0, len = nums.length; i &lt; len; i++) {
+        // 用0把每一个数都填充成相同的位数
+        nums[i] = (nums[i] + '').padStart(maxDigits, 0);
+        // 先根据个位数把每一个数放到相应的桶里
+        let temp = nums[i][nums[i].length - 1];
+        arr[temp].push(nums[i]);
+      }
+      console.table(arr);
+      // 循环判断每个位数
+      for (let i = maxDigits - 2; i &gt;= 0; i--) {
+        // 循环每一个桶
+        for (let j = 0; j &lt;= 9; j++) {
+          let temp = arr[j]
+          let len = temp.length;
+          // 根据当前的位数i把桶里的数放到相应的桶里
+          while (len--) {
+            let str = temp[0];
+            temp.shift();
+            arr[str[i]].push(str);
+          }
+        }
+      }
+      // 修改回原数组
+      let res = [].concat.apply([], arr);
+      nums.forEach((val, index) =&gt; {
+        nums[index] = +res[index];
+      });
+      return nums;
+    }
+
+    const testArr = [11, 4, 6, 52, 3, 20, 1, 9, 2, 5, 19, 3, 6, 21]
+    console.log('————基数排序——————', radixSort(testArr));
+    //————基数排序—————— (14) [1, 2, 3, 3, 4, 5, 6, 6, 9, 11, 19, 20, 21, 52]
+</code></pre>
+<figure data-type="image" tabindex="5"><img src="https://cutezhangq.github.io/post-images/1600412771592.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://cutezhangq.github.io/post-images/1600412777017.png" alt="" loading="lazy"></figure>
+<h3 id="性能比较-3">性能比较</h3>
+<p>在数据量相当的情况下：发现拆半插入排序 &gt;= 单向冒泡排序性能 &gt; 双向冒泡排序性能 &gt; 插入排序 &gt; 计数排序 &gt; 桶排序 &gt; 希尔排序 &gt; 基数排序 &gt;归并排序 &gt; 选择排序 &gt;= 快速排序1 &gt; 快速排序2 &gt; 大于普通冒泡性能。（产生时间具体取决于所使用的系统）<br>
+参考： https://juejin.im/post/6844904039566540808#heading-46</p>
+<figure data-type="image" tabindex="7"><img src="https://cutezhangq.github.io/post-images/1600412786362.png" alt="" loading="lazy"></figure>
 
             </div>
             

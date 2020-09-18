@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>时间复杂度、空间复杂度 | cutezhangq</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600412799405">
+<link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="我们假设计算机运行一行基础代码需要执行一次运算。
+int aFunc(void) {
+    printf(&quot;Hello, World!\n&quot;);      //  需要执行 1 次
+    return 0;     ..." />
+    <meta name="keywords" content="算法" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://cutezhangq.github.io">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600412799405" class="site-logo">
+        <h1 class="site-title">cutezhangq</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/cutezhangq" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://cutezhangq.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">时间复杂度、空间复杂度</h2>
+            <div class="post-date">2020-09-18</div>
+            
+              <div class="feature-container" style="background-image: url('https://cutezhangq.github.io/post-images/shi-jian-fu-za-du-kong-jian-fu-za-du.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>我们假设计算机运行一行基础代码需要执行一次运算。</p>
+<pre><code class="language-js">int aFunc(void) {
+    printf(&quot;Hello, World!\n&quot;);      //  需要执行 1 次
+    return 0;       // 需要执行 1 次
+}
+</code></pre>
+<p>那么上面这个方法需要执行 2 次运算</p>
+<pre><code class="language-js">int aFunc(int n) {
+    for(int i = 0; i&lt;n; i++) {         // 需要执行 (n + 1) 次
+        printf(&quot;Hello, World!\n&quot;);      // 需要执行 n 次
+    }
+    return 0;       // 需要执行 1 次
+}
+</code></pre>
+<p>这个方法需要 (n + 1 + n + 1) = 2n + 2 次运算。</p>
+<!-- more -->
+<h1 id="一-时间复杂度">一、时间复杂度</h1>
+<p>我们想要知道一个算法的「时间复杂度」，很多人首先想到的的方法就是把这个算法程序运行一遍，那么它所消耗的时间就自然而然知道了。</p>
+<p>这种方式可以吗？当然可以，不过它也有很多弊端。<br>
+这种方式非常容易受运行环境的影响，在性能高的机器上跑出来的结果与在性能低的机器上跑的结果相差会很大。而且对测试时使用的数据规模也有很大关系。再者，并我们在写算法的时候，还没有办法完整的去运行呢。</p>
+<p>因此，另一种更为通用的方法就出来了：<strong>「 大O符号表示法 」</strong>，即 T(n) = O(f(n))</p>
+<p>我们先来看个例子：</p>
+<pre><code class="language-js">for(i=1; i&lt;=n; ++i)
+{
+   j = i;
+   j++;
+}
+</code></pre>
+<p>通过「 大O符号表示法 」，这段代码的时间复杂度为：O(n) ，为什么呢?</p>
+<p>在 大O符号表示法中，时间复杂度的公式是： T(n) = O( f(n) )，其中f(n) 表示每行代码执行次数之和，而 O 表示正比例关系，这个公式的全称是：<strong>算法的渐进时间复杂度</strong>。</p>
+<p>我们继续看上面的例子，假设每行代码的执行时间都是一样的，我们用 1颗粒时间 来表示，那么这个例子的第一行耗时是1个颗粒时间，第三行的执行时间是 n个颗粒时间，第四行的执行时间也是 n个颗粒时间（第二行和第五行是符号，暂时忽略），那么总时间就是 1颗粒时间 + n颗粒时间 + n颗粒时间 ，即 (1+2n)个颗粒时间，即： T(n) = (1+2n)*颗粒时间，从这个结果可以看出，这个算法的耗时是随着n的变化而变化，因此，我们可以简化的将这个算法的时间复杂度表示为：T(n) = O(n)</p>
+<p>为什么可以这么去简化呢，因为大O符号表示法并不是用于来真实代表算法的执行时间的，它是用来表示代码执行时间的增长变化趋势的。</p>
+<p>所以上面的例子中，如果n无限大的时候，T(n) = time(1+2n)中的常量1就没有意义了，倍数2也意义不大。因此直接简化为T(n) = O(n) 就可以了。</p>
+<p>常见的时间复杂度量级有：</p>
+<ul>
+<li>常数阶O(1)</li>
+<li>对数阶O(logN)</li>
+<li>线性阶O(n)</li>
+<li>线性对数阶O(nlogN)</li>
+<li>平方阶O(n²)</li>
+<li>立方阶O(n³)</li>
+<li>K次方阶O(n^k)</li>
+<li>指数阶(2^n)</li>
+</ul>
+<p>上面<code>从上至下</code>依次的<code>时间复杂度越来越大</code>，<code>执行的效率越来越低</code>。<br>
+<img src="https://cutezhangq.github.io/post-images/1600395069750.png" alt="" loading="lazy"><br>
+从图中可见，我们应该尽可能选用多项式阶O(nk)的算法，而不希望用指数阶的算法。</p>
+<ul>
+<li>常见的算法时间复杂度由小到大依次为：<code>Ο(1)＜Ο(log2n)＜Ο(n)＜Ο(nlog2n)＜Ο(n2)＜Ο(n3)＜…＜Ο(2n)＜Ο(n!)</code></li>
+</ul>
+<p>下面选取一些较为常用的来讲解一下（没有严格按照顺序）：</p>
+<h3 id="1常数阶o1">1.常数阶O(1)</h3>
+<p>无论代码执行了多少行，只要是没有循环等复杂结构，那这个代码的时间复杂度就都是O(1)，如：</p>
+<pre><code class="language-js">int i = 1;
+int j = 2;
+++i;
+j++;
+int m = i + j;
+</code></pre>
+<p>上述代码在执行的时候，它消耗的时候并不随着某个变量的增长而增长，那么无论这类代码有多长，即使有几万几十万行，都可以用O(1)来表示它的时间复杂度。</p>
+<h3 id="2线性阶on">2.线性阶O(n)</h3>
+<p>这个在最开始的代码示例中就讲解过了，如：</p>
+<pre><code class="language-js">for(i=1; i&lt;=n; ++i)
+{
+   j = i;
+   j++;
+}
+</code></pre>
+<p>这段代码，for循环里面的代码会执行n遍，因此它消耗的时间是随着n的变化而变化的，因此这类代码都可以用O(n)来表示它的时间复杂度。</p>
+<h3 id="3对数阶ologn">3.对数阶O(logN)</h3>
+<p>还是先来看代码：</p>
+<pre><code class="language-js">int i = 1;
+while(i&lt;n)
+{
+    i = i * 2;
+}
+</code></pre>
+<p>从上面代码可以看到，在while循环里面，<code>每次都将 i 乘以 2，乘完之后，i 距离 n 就越来越近了</code>。我们试着求解一下，假设循环x次之后，i 就大于 2 了，此时这个循环就退出了，也就是说 2 的 x 次方等于 n，那么 x = log2^n<br>
+也就是说当循环 log2^n 次以后，这个代码就结束了。因此这个代码的时间复杂度为：O(logn)</p>
+<h3 id="4线性对数阶onlogn">4.线性对数阶O(nlogN)</h3>
+<p>线性对数阶O(nlogN) 其实非常容易理解，将时间复杂度为O(logn)的代码循环N遍的话，那么它的时间复杂度就是 n * O(logN)，也就是了O(nlogN)。</p>
+<p>就拿上面的代码加一点修改来举例：</p>
+<pre><code class="language-js">for(m=1; m&lt;n; m++)
+{
+    i = 1;
+    while(i&lt;n)
+    {
+        i = i * 2;
+    }
+}
+</code></pre>
+<h3 id="5平方阶on2">5.平方阶O(n²)</h3>
+<p>平方阶O(n²) 就更容易理解了，如果把 O(n) 的代码再嵌套循环一遍，它的时间复杂度就是 O(n²) 了。<br>
+举例：</p>
+<pre><code class="language-js">for(x=1; i&lt;=n; x++)
+{
+   for(i=1; i&lt;=n; i++)
+    {
+       j = i;
+       j++;
+    }
+}
+</code></pre>
+<p>这段代码其实就是嵌套了2层n循环，它的时间复杂度就是 O(n*n)，即 O(n²)<br>
+如果将其中一层循环的n改成m，即：</p>
+<pre><code class="language-js">for(x=1; i&lt;=m; x++)
+{
+   for(i=1; i&lt;=n; i++)
+    {
+       j = i;
+       j++;
+    }
+}
+</code></pre>
+<p>那它的时间复杂度就变成了 O(m*n)</p>
+<h3 id="6立方阶on3-k次方阶onk">6.立方阶O(n³)、K次方阶O(n^k)</h3>
+<p>参考上面的O(n²) 去理解就好了，O(n³)相当于三层n循环，其它的类似。</p>
+<p>除此之外，其实还有 平均时间复杂度、均摊时间复杂度、最坏时间复杂度、最好时间复杂度 的分析方法，有点复杂，这里就不展开了。</p>
+<h2 id="进阶">进阶</h2>
+<p>求该方法的时间复杂度</p>
+<pre><code class="language-js">long aFunc(int n) {
+    if (n &lt;= 1) {
+        return 1;
+    } else {
+        return aFunc(n - 1) + aFunc(n - 2);
+    }
+}
+</code></pre>
+<p>参考答案：<br>
+显然运行次数，T(0) = T(1) = 1，同时 T(n) = T(n - 1) + T(n - 2) + 1，这里的 1 是其中的加法算一次执行。<br>
+显然 T(https://cutezhangq.github.io/post-images/1600395534225.png)<br>
+通过<code>归纳证明法</code>可以证明，当 n &gt;= 1 时 T(n) &lt; (5/3)^n，同时当 n &gt; 4 时 T(n) &gt;= (3/2)^n。<br>
+所以该方法的时间复杂度可以表示为 O((5/3)^n)，简化后为 O(2^n)。<br>
+可见这个方法所需的运行时间是以指数的速度增长的。如果大家感兴趣，可以试下分别用 1，10，100 的输入大小来测试下算法的运行时间，相信大家会感受到时间复杂度的无穷魅力。</p>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1600395375150.png" alt="" loading="lazy"></figure>
+<h1 id="二-空间复杂度">二、空间复杂度</h1>
+<p>既然时间复杂度不是用来计算程序具体耗时的，那么我也应该明白，空间复杂度也不是用来计算程序实际占用的空间的。</p>
+<p>空间复杂度是对一个算法在运行过程中临时占用存储空间大小的一个量度，同样反映的是一个趋势，我们用 S(n) 来定义。</p>
+<p>空间复杂度比较常用的有：O(1)、O(n)、O(n²)，我们下面来看看：</p>
+<h3 id="1空间复杂度-o1">1.空间复杂度 O(1)</h3>
+<p>如果算法执行所需要的临时空间不随着某个变量n的大小而变化，即此算法空间复杂度为一个常量，可表示为 O(1)<br>
+举例：</p>
+<pre><code class="language-js">int i = 1;
+int j = 2;
+++i;
+j++;
+int m = i + j;
+</code></pre>
+<p>代码中的 i、j、m 所分配的空间都不随着处理数据量变化，因此它的空间复杂度 <code>S(n) = O(1)</code></p>
+<h3 id="2间复杂度-on">2.间复杂度 O(n)</h3>
+<p>我们先看一个代码：</p>
+<p>int[] m = new int[n]<br>
+for(i=1; i&lt;=n; ++i)<br>
+{<br>
+j = i;<br>
+j++;<br>
+}<br>
+这段代码中，<code>第一行new了一个数组出来，这个数据占用的大小为n</code>，这段代码的2-6行，虽然有循环，但<code>没有再分配新的空间</code>，因此，这段代码的空间复杂度<code>主要看第一行即可</code>，即 S(n) = O(n)</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://cutezhangq.github.io/tag/KFImbiYP6/" class="tag">
+                    算法
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://cutezhangq.github.io/post/bi-shi-ti-mu-zheng-li-3-2019-bai-du-xiao-zhao/">
+                  <h3 class="post-title">
+                    笔试-题目整理3-2019百度校招 
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: '',
+        admin: [''],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

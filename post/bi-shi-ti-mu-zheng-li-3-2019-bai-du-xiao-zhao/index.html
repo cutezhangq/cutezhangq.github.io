@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600388552331">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600412799405">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -42,7 +42,7 @@ TCP是端对..." />
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600388552331" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600412799405" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -137,9 +137,17 @@ TCP是端对..." />
 <li>阻塞状态可以直接转换为就绪状态</li>
 </ul>
 <p><code>就绪→执行(调度发生)，执行→就绪(中断) 执行→阻塞(发生等待) 阻塞→就绪</code></p>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1600390228474.jpg" alt="" loading="lazy"></figure>
 <h1 id="3-http是hyper-text-transfer-protocol超文本传输协议的缩写-以下那个不是http协议的请求方法">3、HTTP是Hyper Text Transfer Protocol（超文本传输协议）的缩写。以下那个不是HTTP协议的请求方法（）。</h1>
 <h2 id="分析">分析：</h2>
-<p>可以通过 <code>GET、 POST、 PUT、 PATCH、 DELETE</code>等方式对服务端的资源进行操作。其中，GET 用于查询资源，POST 用于创建资源，PUT 用于更新服务端的资源的全部信息，PATCH 用于更新服务端的资源的部分信息，DELETE 用于删除服务端的资源。</p>
+<p>可以通过 <code>GET、 POST、 PUT、 PATCH、 DELETE</code>等方式对服务端的资源进行操作。其中，</p>
+<ul>
+<li>GET 用于查询资源，（查询）</li>
+<li>POST 用于<code>创建</code>资源，（新增）</li>
+<li>PUT 用于更新服务端的资源的<code>全部信息</code>，   （全部更新）</li>
+<li><code>PATCH</code> 用于<code>更新服务端的资源</code>的<code>部分信息</code>，（局部更新）</li>
+<li>DELETE 用于删除服务端的资源。（删除）</li>
+</ul>
 <h1 id="4-序列912173050206065419构造为堆后堆所对应的的中序遍历序列可能为">4、序列{9,12,17,30,50,20,60,65,4,19}构造为堆后，堆所对应的的中序遍历序列可能为（）</h1>
 <h2 id="答案651230950194201760">答案：65,12,30,9,50,19,4,20,17,60</h2>
 <p>先将序列构造成堆（最大堆或最小堆），根据堆的特点可知，这是一个完全二叉树，再中序遍历这个完全二叉树</p>
@@ -160,10 +168,11 @@ TCP是端对..." />
 <p>中序遍历：<code>左中右</code>     对构造成功的 小顶堆<br>
 <img src="https://cutezhangq.github.io/post-images/1599115030579.png" alt="" loading="lazy"></p>
 <h2 id="二叉树遍历先序-中序-后序">二叉树遍历(先序、中序、后序)</h2>
+<p><code>先中后</code>的顺序是指<code>根节点</code>所在的顺序，其余的是按照<code>左右</code>来放置</p>
 <p>先序：考察到一个节点后，即刻输出该节点的值，并继续遍历其左右子树。<code>(根左右)</code></p>
 <p>中序：考察到一个节点后，将其暂存，遍历完左子树后，再输出该节点的值，然后遍历右子树。<code>(左根右)</code></p>
 <p>后序：考察到一个节点后，将其暂存，遍历完左右子树后，再输出该节点的值。<code>(左右根)</code></p>
-<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1599115339852.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1599115339852.png" alt="" loading="lazy"></figure>
 <p>如图1所示，三种遍历方法(人工)得到的结果分别是：(x序中的x决定的是<code>根</code>的位置)</p>
 <ul>
 <li>先序：1 2 4 6 7 8 3 5</li>
@@ -182,11 +191,17 @@ for(i=1;i&lt;n.i++)
 }
 </code></pre>
 <h2 id="答案onlog2n">答案：O(n*log2(n))</h2>
+<p>由<code>for(j=1;j&lt;n;j*=2)</code>得出<code>log2(n)</code>；<br>
+由<code>for(i=1;i&lt;n.i++)</code>得出<code>n*</code></p>
+<!-- more -->
 <h1 id="6-数据结构中如果存在二维数组qq的行下标取值为2-5q的列下标取值为1-8对于q中的元素用相邻的6个字节存储存储器按字节编址数组q的字节为">6、数据结构中，如果存在二维数组Q，Q的行下标取值为2-5，Q的列下标取值为1-8，对于Q中的元素用相邻的6个字节存储，存储器按字节编址，数组Q的字节为（）</h1>
 <h2 id="答案204">答案：204</h2>
-<h1 id="7-前缀表达式ab-cdefgh的中缀表达式是">7、前缀表达式+^A*B-CD/E/F+GH的中缀表达式是（）。</h1>
+<!-- more -->
+<h1 id="7-前缀表达式-ab-cdefgh的中缀表达式是">7、前缀表达式   +^A*B-CD/E/F+GH的中缀表达式是（）。</h1>
 <h2 id="答案abc-defgh">答案：A^(B*(C-D))+(E⁄F)⁄((G+H))</h2>
-<p>可用栈实现。若为字母就入栈；若为运算符就将栈顶两个字母弹出，加上运算符计算后再将得到的代数表达式入栈，依次进行，最后栈中留下中缀表达式形式。</p>
+<p>可用<code>栈</code>实现。若为字母就入栈；<br>
+若为运算符就将栈顶两个字母弹出，加上运算符计算后再将得到的代数表达式入栈，<br>
+依次进行，最后栈中留下中缀表达式形式。</p>
 <h1 id="8-嵌入多媒体文本的html的写法正确的是">8、嵌入多媒体文本的HTML的写法正确的是()</h1>
 <h2 id="答案">答案：</h2>
 <p><code>&lt;embed src=”#”&gt;&lt;/embed&gt;</code></p>
@@ -195,6 +210,7 @@ href： 一般是与某个资源建立连接<br>
 <code>&lt;embed&gt;</code>标签定义嵌入的内容，比如插件。</p>
 <pre><code class="language-html">&lt;embed src=&quot;/i/helloworld.swf&quot; /&gt;
 </code></pre>
+<!-- more -->
 <h1 id="9-ahtml文档扩展名为html或htm-bhtml文档必须包括head和body部分以下说法正确的是">9、a:HTML文档扩展名为.html或.htm; b:HTML文档必须包括head和body部分,以下说法正确的是（）</h1>
 <h2 id="答案只有a说法正确">答案：只有a说法正确；</h2>
 <h2 id="html文档可以省略这三个htmlheadbody标签">html文档可以省略这三个html,head,body标签！！！</h2>
@@ -216,6 +232,7 @@ ddd
     &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
+<!-- more -->
 <h1 id="11-关于html的描述不推荐的是">11、关于HTML的描述，不推荐的是</h1>
 <h2 id="答案可以使用center标签来设置元素居中">答案：可以使用center标签来设置元素居中；</h2>
 <p>其他说法是正确的：</p>
@@ -232,6 +249,7 @@ ddd
 <li>canvas绘制的是标量图，svg绘制的是矢量图；</li>
 <li>canvas绘制图形通常是JavaScript实现，svg图形通常通过html标签来实现；</li>
 </ul>
+<!-- more -->
 <h1 id="13-html5新增的表单元素不包括">13、HTML5新增的表单元素不包括</h1>
 <h2 id="答案password">答案：password；</h2>
 <p>其他说法是正确的：</p>
@@ -240,8 +258,9 @@ ddd
 <li>data；</li>
 <li>number;</li>
 </ul>
-<p>**表单控：**color ,  calendar  ,  date ,  datetime, datetime-local,  time, mouth , week, email, url , search,range, tel<br>
-**新的表单元素： **datalist ， keygen， output</p>
+<p><strong>表单控：</strong> color ,  calendar  ,  date ,  datetime, datetime-local,  time, mouth , week, email, url , search,range, tel<br>
+<strong>新的表单元素：</strong> datalist ， keygen， output</p>
+<!-- more -->
 <h1 id="14-transition与animation的区别说法错误的是">14、transition与animation的区别说法错误的是</h1>
 <h2 id="答案animation需要事件触发来达到动画的效果">答案：animation需要事件触发来达到动画的效果；</h2>
 <p>其他说法是正确的：</p>
@@ -254,8 +273,9 @@ animation可以一帧一帧执行 不需要事件的触发</li>
 </ul>
 <h1 id="15-在面向对象技术中多态性是指">15、在面向对象技术中，多态性是指（）</h1>
 <h2 id="答案针对一消息不同对象可以以适合自身的方式加以响应">答案：针对一消息，不同对象可以以适合自身的方式加以响应</h2>
-<p><strong>多态</strong>是面向对象的重要特性,简单点说:“一个接口，多种实现”，指一个基类中派生出了不同的子类，且每个子类在继承了同样的方法名的同时又对父类的方法做了不同的实现，这就是同一种事物表现出的多种形态。<br>
+<p><strong>多态</strong> 是面向对象的重要特性,<strong>“一个接口，多种实现”</strong>，指一个基类中派生出了不同的子类，且每个子类在继承了同样的方法名的同时又对父类的方法做了不同的实现，这就是同一种事物表现出的多种形态。<br>
 在面向对象方法中一般是这样表述多态性：向不同的对象发送<strong>同一条消息</strong>，不同的对象在接收时会产生不同的行为（即方法）。 也就是说，<strong>每个对象可以用自己的方式去响应共同的消息。</strong></p>
+<!-- more -->
 <h1 id="16-replacenew-regexp-gi-的执行结果是">16、'\\\'.replace(new RegExp('\\\\', 'gi'), '/') 的执行结果是？</h1>
 <h2 id="答案-2">答案：/\</h2>
 <p>在字符串里面， 字符串\ 是需要进行转义的，所以字符串\得写为'\'<br>
@@ -281,6 +301,7 @@ animation可以一帧一帧执行 不需要事件的触发</li>
   let newa = a.replace(reg, '/');   // 把匹配到的字符串\\换成字符串/  ,/\\\\/表示正则\\
   console.log(newa);  //  结果：  /\
 </code></pre>
+<!-- more -->
 <h1 id="17-执行下列语句后变量name的值为">17、执行下列语句后，变量name的值为</h1>
 <pre><code class="language-js">var name = '1';
 new Promise(function (resolve, reject) {
@@ -331,11 +352,14 @@ resolve() // 我理解为return，所以reject不会执行<br>
 然后是微任务<br>
 name = 2<br>
 所以最后name为2</p>
+<!-- more -->
 <h1 id="18-执行下列语句后变量a的值为">18、执行下列语句后，变量a的值为</h1>
 <pre><code class="language-js">var a = [].push(...[1, 2, 3]);
 </code></pre>
 <h2 id="答案3">答案：3</h2>
-<p>push() 方法可向数组的末尾添加一个或多个元素，并<code>返回新的长度</code>。</p>
+<p>push() 方法可向数组的末尾添加一个或多个元素，<br>
+并<code>返回新的长度</code>。</p>
+<!-- more -->
 <h1 id="19-根据如下代码setsize的值为">19、根据如下代码，set.size的值为</h1>
 <pre><code class="language-js">var set = new Set([0, 2, 2, 0, 0, 5, 9, {}, {}, NaN, NaN]);
 </code></pre>
@@ -344,13 +368,14 @@ name = 2<br>
 <p>ES6 提出“Same-value equality”<code>（同值相等）</code>算法<br>
 不同之处只有两个：一是<code>+0不等于-0</code>，二是<code>NaN等于自身</code>。<br>
 set使得NaN和NaN对比是相等的，解决了===在NaN上的bug</p>
-<pre><code class="language-js">  var set = new Set([0, 2, 2, 0, 0, 5, 9, {}, {}, NaN, NaN,[],[],undefined,undefined,String,String,Number,Number,null,null,Boolean,Boolean]);
+<pre><code class="language-js">var set = new Set([0, 2, 2, 0, 0, 5, 9, {}, {}, NaN, NaN,[],[],undefined
+undefined,String,String,Number,Number,null,null,Boolean,Boolean]);
   console.log(set);
 // 0: 0
 // 1: 2
 // 2: 5
 // 3: 9
-// 4: Object
+// 4: Object 
 // 5: Object
 // 6: NaN
 
@@ -362,7 +387,8 @@ set使得NaN和NaN对比是相等的，解决了===在NaN上的bug</p>
 // 12: null
 // 13: function Boolean() { [native code] }
 </code></pre>
-<p>注意<code>NaN</code>特殊：为相同元素，<code>{ }</code>和<code>[ ]</code>特殊：为不同元素，其余的（基本类型，包括Object，Array）都为相同元素，被去重了</p>
+<p>注意<code>NaN</code>特殊：为相同元素，<code>{ }</code>和<code>[ ]</code>特殊：为不同元素，<br>
+其余的（基本类型，包括Object，Array）都为相同元素，被去重了</p>
 <pre><code class="language-js">var set2 = new Set([Array,Array,Object,Object])
 console.log(set2);
 // 0: function Array() { [native code] }
@@ -380,9 +406,11 @@ console.log(Boolean === Boolean)      //true
 console.log(Object === Object)    //true
 console.log(Array === Array)      //true
 </code></pre>
+<!-- more -->
 <h1 id="20-下列说法中错误的是">20、下列说法中错误的是</h1>
-<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1599210844901.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://cutezhangq.github.io/post-images/1599210844901.png" alt="" loading="lazy"></figure>
 <p>事件触发顺序则是先捕获后冒泡.</p>
+<!-- more -->
 <h1 id="21-下列说法中正确的是">21、下列说法中正确的是</h1>
 <h2 id="答案调用date构造函数而不传参数时得到的对象自动获得当前时间">答案：调用Date构造函数而不传参数时，得到的对象自动获得当前时间</h2>
 <p>其他错误的描述：</p>
@@ -413,6 +441,7 @@ var r = 'aaa123456'.match(/\d/g);
 <p>如果regexp<code>没有</code>标志g，那么match()方法就只能在字符串中<code>执行一次</code>匹配。如果没有找到任何匹配的文本，match() 将返回null。否则它将返回一个数组，其中存放了与它找到的匹配文本有关的信息。</p>
 <p>如果regexp具有标志g则match()方法将执行全局检索，找到字符串中的所有匹配子字符串<br>
 若没有找到任何匹配的子串，则返回 null。</p>
+<!-- more -->
 <h1 id="23-执行下列语句后变量name1的值为">23、执行下列语句后，变量name1的值为</h1>
 <pre><code class="language-js">var name = 'tom';
 function getMethod() {
@@ -427,6 +456,7 @@ var name1 = getName();
 </code></pre>
 <h2 id="答案jerry">答案：jerry</h2>
 <p>这道题考的是闭包，赋给getName的事指向函数result的指针，result是闭包，可以读取getMethod的私有变量，因此返回值为jerry</p>
+<!-- more -->
 <h1 id="24-以下关于os的说法正确的是">24、以下关于OS的说法正确的是</h1>
 <h2 id="答案-3">答案：</h2>
 <ul>
@@ -436,6 +466,7 @@ var name1 = getName();
 </ul>
 <p>在OS中通过<code>时分复用</code>和<code>空分复用</code>实现“虚拟”<br>
 复用和虚拟相比较，复用所分割的是实际存在的物理资源，而虚拟则实现假想的同类资源。虚拟技术解决某类物</p>
+<!-- more -->
 <h1 id="25-下面说法不正确的是">25、下面说法不正确的是？</h1>
 <h2 id="答案-4">答案：</h2>
 <ul>
@@ -443,13 +474,17 @@ var name1 = getName();
 <li>单向哈希表的特征包括：把固定的信息转化成任意长度信息输出</li>
 <li>树的后序遍历序列等同于该树对应的二叉树的后序序列，先序遍历序列等同于该树先序序列</li>
 </ul>
-<p>表述正确的是：对于静态表的顺序查找法，若在表头设置监视哨，则正确的查找方式为从第n个元素往开始前查找该数据元素</p>
+<p>表述正确的是：</p>
+<ul>
+<li>对于静态表的顺序查找法，若在表头设置监视哨，则正确的查找方式为从第n个元素往开始前查找该数据元素</li>
+</ul>
 <p>解析：<br>
 任意长度计算成固定长度的哈希值<br>
 A.如果(u，v)是连通网络的唯一的一条最小权值的边，那么一定包含(u，v)这条边<br>
 D.树的先序对应二叉树的先序，树的后序对应二叉树的中序</p>
 <h1 id="26-面向对象程序设计方法的优点包含">26、面向对象程序设计方法的优点包含：</h1>
 <h2 id="答案可重用性-可扩展性-易于管理和维护">答案：可重用性、可扩展性、易于管理和维护</h2>
+<!-- more -->
 <h1 id="27-假定需要在-nodejs-环境中执行一些用户上传的自定义代码在没有做任何沙盒等安全措施的前提下存在哪些安全隐患">27、假定需要在 node.js 环境中执行一些用户上传的自定义代码，在没有做任何沙盒等安全措施的前提下，存在哪些安全隐患？</h1>
 <h2 id="答案-5">答案：</h2>
 <ul>
@@ -457,8 +492,11 @@ D.树的先序对应二叉树的先序，树的后序对应二叉树的中序</p
 <li>执行 process.exit(1) 造成进程直接退出</li>
 <li>执行 require('child_process').spwan()，直接调用系统程序，造成系统层面的危害</li>
 </ul>
-<p>不存在的隐患：<br>
-自定义代码抛出的异常无法被捕获</p>
+<p>不存在的隐患：</p>
+<ul>
+<li>自定义代码抛出的异常无法被捕获</li>
+</ul>
+<!-- more -->
 <h1 id="28-关于-nodejs-中的模块化规范以下说法正确的有哪些">28、关于 node.js 中的模块化规范，以下说法正确的有哪些？</h1>
 <h2 id="答案-6">答案：</h2>
 <ul>
@@ -466,8 +504,11 @@ D.树的先序对应二叉树的先序，树的后序对应二叉树的中序</p
 <li>require 函数可以在代码的任意位置执行</li>
 <li>exports 或 module.exports 其中一个一旦重新赋值，exports 将失效</li>
 </ul>
-<p>不正确的：模块最终导出的是 exports，而不是 module.exports<br>
-<strong>解析：</strong><br>
+<p>不正确的：</p>
+<ul>
+<li>模块最终导出的是 exports，而不是 module.exports</li>
+</ul>
+<p><strong>解析：</strong><br>
 ES6标准发布后，module成为标准，标准的使用时以export指令导出接口，以import引入模块，但是在以往的node模块中，我们采用的是CommonJS规范，使用require引入模块，使用module.exports导出接口<br>
 exports和module.exports都对</p>
 <pre><code class="language-js">  // { foo:'bar' }
@@ -492,6 +533,7 @@ exports和module.exports都对</p>
   // { foo: 'foo', a: 123, c: 789 }
   exports.c = 789
 </code></pre>
+<!-- more -->
 <h1 id="29-下面选项中属于node定时器的是">29、下面选项中属于Node定时器的是？</h1>
 <h2 id="答案-7">答案：</h2>
 <ul>
@@ -500,6 +542,7 @@ exports和module.exports都对</p>
 <li>setImmediate()</li>
 <li>process.nextTick()</li>
 </ul>
+<!-- more -->
 <h1 id="30-以下代码能在不同环境下不考虑兼容性问题正确判断变量a-是数组的有">30、以下代码能在不同环境下（不考虑兼容性问题）正确判断变量a = [] 是数组的有：</h1>
 <h2 id="答案arrayisarraya-objectprototypetostringcalla-object-array">答案：Array.isArray(a)、Object.prototype.toString.call(a) === '[object Array]'</h2>
 <p>不能判断的：a instanceof Array、typeof a === 'array'<br>
@@ -588,7 +631,8 @@ instanceof操作符的问题在于，它假定只有一个全局环境。如果�
             return getXPath(target.parentNode) + str;
         }
 </code></pre>
-<h1 id="32-web-worker为web内容在后台线程中运行脚本提供了一种简单的方法-请列举出web-worker的常用api并列举至少1个web-worker的常见用途">32、Web Worker为Web内容在后台线程中运行脚本提供了一种简单的方法。请列举出Web worker的常用API并列举至少1个Web Worker的常见用途。</h1>
+<h1 id="32-web-worker为web内容在后台线程中运行脚本提供了一种简单的方法">32、Web Worker为Web内容在后台线程中运行脚本提供了一种简单的方法。</h1>
+<p>请列举出Web worker的常用API并列举至少1个Web Worker的常见用途。</p>
 <h2 id="答案-9">答案：</h2>
 <pre><code class="language-cmd">回答得分占比：
 
@@ -596,11 +640,11 @@ instanceof操作符的问题在于，它假定只有一个全局环境。如果�
 
 能例举多个Web Worker的应用场景，根据例举情况：1个得30%，2个及以上得50%。
 </code></pre>
-<p>postMessage(data) -&gt; 子线程与主线程之间互相通信使用的方法，传递的data为任意值;<br>
-terminate() -&gt; 主线程中终止worker，此后无法再利用其进行消息传递;<br>
-onmessage -&gt; 当有消息发送时，触发该事件；并且消息发送是双向，消息内容可通过data来获取;<br>
-大数据的处理：这里所说的大数据处理，并不是指数据量非常大，而是要从计算量来看，通常用时不能控制在毫秒级内的运算都可以考虑放在web worker中执行。<br>
-高频的用户交互：高频的用户交互适用于根据用户的输入习惯、历史记录以及缓存等信息来协助用户完成输入的纠错、校正功能等类似场景，用户频繁输入的响应处理同样可以考虑放在web worker中执行。</p>
+<p><code>postMessage(data)</code>-&gt; 子线程与主线程之间互相通信使用的方法，传递的data为任意值;<br>
+<code>terminate()</code>-&gt; 主线程中终止worker，此后无法再利用其进行消息传递;<br>
+<code>onmessage</code>-&gt; 当有消息发送时，触发该事件；并且消息发送是双向，消息内容可通过data来获取;<br>
+<code>大数据的处理</code>：这里所说的大数据处理，并不是指数据量非常大，而是要从计算量来看，通常用时不能控制在毫秒级内的运算都可以考虑放在web worker中执行。<br>
+<code>高频的用户交互</code>：高频的用户交互适用于根据用户的输入习惯、历史记录以及缓存等信息来协助用户完成输入的纠错、校正功能等类似场景，用户频繁输入的响应处理同样可以考虑放在web worker中执行。</p>
 
             </div>
             
