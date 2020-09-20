@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cutezhangq.github.io</id>
     <title>cutezhangq</title>
-    <updated>2020-09-18T07:12:52.569Z</updated>
+    <updated>2020-09-20T08:55:54.450Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cutezhangq.github.io"/>
     <link rel="self" href="https://cutezhangq.github.io/atom.xml"/>
@@ -154,7 +154,7 @@ while(i&lt;n)
 </code></pre>
 <p>参考答案：<br>
 显然运行次数，T(0) = T(1) = 1，同时 T(n) = T(n - 1) + T(n - 2) + 1，这里的 1 是其中的加法算一次执行。<br>
-显然 T(https://cutezhangq.github.io/post-images/1600395534225.png)<br>
+显然<br>
 通过<code>归纳证明法</code>可以证明，当 n &gt;= 1 时 T(n) &lt; (5/3)^n，同时当 n &gt; 4 时 T(n) &gt;= (3/2)^n。<br>
 所以该方法的时间复杂度可以表示为 O((5/3)^n)，简化后为 O(2^n)。<br>
 可见这个方法所需的运行时间是以指数的速度增长的。如果大家感兴趣，可以试下分别用 1，10，100 的输入大小来测试下算法的运行时间，相信大家会感受到时间复杂度的无穷魅力。</p>

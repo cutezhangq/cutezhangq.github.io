@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600413163897">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600565204871">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -37,7 +37,7 @@ int aFunc(void) {
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600413163897" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600565204871" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -241,7 +241,7 @@ while(i&lt;n)
 </code></pre>
 <p>参考答案：<br>
 显然运行次数，T(0) = T(1) = 1，同时 T(n) = T(n - 1) + T(n - 2) + 1，这里的 1 是其中的加法算一次执行。<br>
-显然 T(https://cutezhangq.github.io/post-images/1600395534225.png)<br>
+显然<br>
 通过<code>归纳证明法</code>可以证明，当 n &gt;= 1 时 T(n) &lt; (5/3)^n，同时当 n &gt; 4 时 T(n) &gt;= (3/2)^n。<br>
 所以该方法的时间复杂度可以表示为 O((5/3)^n)，简化后为 O(2^n)。<br>
 可见这个方法所需的运行时间是以指数的速度增长的。如果大家感兴趣，可以试下分别用 1，10，100 的输入大小来测试下算法的运行时间，相信大家会感受到时间复杂度的无穷魅力。</p>
