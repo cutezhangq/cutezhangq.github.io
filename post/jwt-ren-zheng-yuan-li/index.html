@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600565204871">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600687772313">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -24,7 +24,9 @@
 
 
 
-    <meta name="description" content="Json web token (JWT), 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，特别适用于👉分布式站点的单点登录（SSO）场景👈。JWT的声明一般被用..." />
+    <meta name="description" content="Json web token (JWT), 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，
+特别适用于👉分布式站点的单点登录（SSO）场景👈。
+JWT的声明一般..." />
     <meta name="keywords" content="js" />
   </head>
   <body>
@@ -34,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600565204871" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600687772313" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -107,10 +109,47 @@
               </div>
             
             <div class="post-content" v-pre>
-              <p><code>Json web token (JWT)</code>, 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，特别适用于👉分布式站点的<code>单点登录（SSO）</code>场景👈。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token也可直接被用于认证，也可被加密。👀</p>
-<p>JWT认证原理（JSON Web Token）</p>
-<p>互联网服务离不开用户认证。一般流程是下面这样。🙌</p>
+              <p><code>Json web token (JWT)</code>, 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，<br>
+特别适用于👉分布式站点的<code>单点登录（SSO）</code>场景👈。<br>
+JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token也可直接被用于认证，也可被加密。</p>
 <!-- more -->
+<p>JWT认证原理（JSON Web Token）<br>
+互联网服务离不开用户认证。一般流程是下面这样。🙌<br>
+内容会涉及到Cookie 和 Session，先补充说明一下：</p>
+<h1 id="cookie-和-session-关系和区别">Cookie 和 Session 关系和区别</h1>
+<ul>
+<li>Session比Cookie安全，</li>
+<li>Session是存储在服务器端的，</li>
+<li>Cookie是存储在客户端的</li>
+</ul>
+<h2 id="什么是http">什么是HTTP</h2>
+<p><code>HTTP</code>:超文本传输协议（英文：HyperText Transfer Protocol，缩写：HTTP）是一种用于分布式、协作式和超媒体信息系统的<code>应用层协议</code>。<br>
+是<code>无状态协议</code>，说明它不能以状态来区分和管理请求和响应。也就是说，服务器<code>单从网络连接上无从知道客户身份。</code><br>
+<img src="https://cutezhangq.github.io/post-images/1600651249772.png" alt="" loading="lazy"></p>
+<h2 id="什么是cookie">什么是cookie</h2>
+<p>Cookie翻译过来是‘ 小甜饼’，Cookie是客户端保存用户信息的一种机制，用来记录用户的一些信息，实际上Cookie是服务器在本地机器上存储的一小段文本，并随着每次请求发送到服务器。<br>
+<strong>Cookie技术通过请求和响应报文中写入Cookie信息来控制客户端的状态。</strong> Cookie会根据响应报文里的一个叫做Set-Cookie的首部字段信息，通知客户端保存Cookie。<br>
+当下客户端再向服务端发起请求时，客户端会自动在请求报文中加入Cookie值之后发送出去.之后服务端发现客户端发送过来的Cookie后，会检查是那个客户端发送过来的请求，然后对服务器上的记录，最后得到了之前的状态信息。<br>
+<img src="https://cutezhangq.github.io/post-images/1600651438617.png" alt="" loading="lazy"></p>
+<p>客户端保存了Cookie之后的发起请求<br>
+<img src="https://cutezhangq.github.io/post-images/1600651450022.png" alt="" loading="lazy"><br>
+<img src="https://cutezhangq.github.io/post-images/1600651625030.png" alt="" loading="lazy"></p>
+<p>看之后请求，请求报文里都自动发送Cookie信息了。</p>
+<h2 id="session管理和cookie应用">Session管理和Cookie应用</h2>
+<h3 id="什么是session">什么是Session</h3>
+<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1600655409253.png" alt="" loading="lazy"></figure>
+<ul>
+<li>1.客户端把信息放入报文的实体部分，通常是以POST 方法把请求发送给服务器。</li>
+<li>2.服务器会发放用以识别用户的Session ID。通过验证从客户端发送过来的信息进行验证，然后把用户的认证状态与Session ID 绑定后记录在服务器端。向客户端返回响应时，会在首部字段Set-Cookie 内写入Session ID（如PHPSESSID=l128ogl…）。你可以把Session ID 想象成一种用以区分不同用户的唯一Id。</li>
+<li>步骤三：客户端接收到从服务器端发来的Session ID 后，会将其作为Cookie 保存在本地。下次向服务器发送请求时，浏览器会自动发送Cookie，所以Session ID 也随之发送到服务器。服务器端可通过验证接收到的Session ID 验证状态。</li>
+</ul>
+<h2 id="cookie与session的区别">Cookie与Session的区别</h2>
+<ul>
+<li>cookie数据存放在客户的浏览器（客户端）上，session数据放在服务器上，但是服务端的session的实现对客户端的cookie有依赖关系的；</li>
+<li>cookie不是很安全，别人可以分析存放在本地的COOKIE并进行COOKIE欺骗，考虑到安全应当使用session；</li>
+<li>session会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能。考虑到减轻服务器性能方面，应当使用COOKIE；</li>
+<li>单个cookie在客户端的限制是3K，就是说一个站点在客户端存放的COOKIE不能超过3K；</li>
+</ul>
 <h1 id="一-传统的session认证">一、传统的Session认证</h1>
 <h2 id="流程session">流程session</h2>
 <p>认证的流程一般如下：</p>
@@ -131,8 +170,15 @@
 <p>举例来说，A 网站和 B 网站是同一家公司的关联服务。现在要求，用户只要在其中一个网站登录，再访问另一个网站就会自动登录，请问怎么实现？</p>
 <p>一种解决方案是 <code>session 数据持久化</code>，写入数据库或别的持久层。各种服务收到请求后，都向持久层请求数据。这种方案的优点是架构清晰，缺点是工程量比较大。另外，持久层万一挂了，就会单点失败。</p>
 <p>另一种方案是服务器索性不保存 session 数据了，所有数据都<code>保存在客户端</code>，每次请求都发回服务器。<code>JWT</code>就是这种方案的一个代表。</p>
+<h1 id="token">Token</h1>
+<p>token有<code>令牌</code>的含义</p>
+<ul>
+<li>用来作为身份验证，让电脑系统的用户可以访问系统资源。<br>
+<a href="https://zh.wikipedia.org/wiki/%E5%AE%89%E5%85%A8%E4%BB%A4%E7%89%8C">维基百科 Token 定义</a></li>
+</ul>
 <h1 id="二-jwt-认证">二、JWT 认证</h1>
-<h2 id="token">token</h2>
+<p>JWT即<code>JSON WEB TOKEN</code></p>
+<h2 id="token-2">token</h2>
 <p><code>JWT</code>是基于<code>token</code>的鉴权机制类似于<code>http协议</code>也是无状态的，它不需要在服务端去保留用户的认证信息或者会话信息。<br>
 这就意味着基于token认证机制的应用不需要去考虑用户在哪一台服务器登录了，这就为应用的扩展提供了便利。</p>
 <h2 id="流程">流程</h2>
@@ -157,7 +203,7 @@
 <h1 id="三-jwt-的数据结构">三、JWT 的数据结构</h1>
 <pre><code class="language-js">    const accessToken =    &quot;eyJhbGciOiJIUzI1NiJ9.eyJvcGVuSWQiOiJvVjc2QndpYVVYcGcxYUo2S1RDb3hQbWppRHg0IiwiaXNzIjoib3JhbmdlMiIsImRldmljZUlkIjoiZ2hfOGY0ODdhNjEyZmM5XzkzNzdjYjk4YWU0MDU3NzgiLCJpYXQiOjE1OTQ4MDYzMTJ9.6kS29myZlCUxQqvZOEGmhJhQ66NCwk_raB5HGRGhr7M&quot;
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1597647417511.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1597647417511.png" alt="" loading="lazy"></figure>
 <p>JWT 的三个部分依次如下:</p>
 <pre><code class="language-cmd">Header（头部）
 Payload（负载）
@@ -224,7 +270,10 @@ JWT 作为一个令牌（token），有些场合可能会放到 URL（比如 api
 （4）JWT 的最大缺点是，由于服务器不保存 session 状态，因此无法在使用过程中废止某个 token，或者更改 token 的权限。也就是说，一旦 JWT 签发了，在到期之前就会始终有效，除非服务器部署额外的逻辑。<br>
 （5）JWT 本身包含了认证信息，一旦泄露，任何人都可以获得该令牌的所有权限。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证。<br>
 （6）为了减少盗用，JWT 不应该使用 HTTP 协议明码传输，要使用 HTTPS 协议传输。</p>
-<p>案例：request.js</p>
+<!-- more -->
+<h1 id="axios如何利用promise无痛刷新token">axios如何利用promise无痛刷新token</h1>
+<p>axios就是基于promise的；无痛刷新是指token短期过期了，客户端发送请求后自动请求最新的token（即 <code>刷新token行为</code>），但这一过程是程序进行的，用户不用操作，是无感知的<code>（无痛）</code>。<br>
+案例：request.js</p>
 <pre><code class="language-js">import axios from 'axios'
 import global from '../../api/global'
 import router from '../../router/router'
@@ -353,7 +402,7 @@ export  {
 <img src="https://cutezhangq.github.io/post-images/1598356039400.png" alt="" loading="lazy"></p>
 <p>后来，我们为了合理利用资源和降低耦合性，于是把单系统拆分成多个子系统。<br>
 回顾：分布式基础知识</p>
-<figure data-type="image" tabindex="2"><img src="https://cutezhangq.github.io/post-images/1598356074130.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://cutezhangq.github.io/post-images/1598356074130.png" alt="" loading="lazy"></figure>
 <p>比如阿里系的淘宝和天猫，很明显地我们可以知道这是两个系统，但是你在使用的时候，登录了天猫，淘宝也会自动登录。<code>不需要用户重复登录</code><br>
 简单来说，<strong>单点登录就是在多个系统中，用户只需一次登录，各个系统即可感知该用户已经登录</strong>。<br>
 众所周知，HTTP是无状态的协议，这意味着服务器无法确认用户的信息。于是乎，W3C就提出了：给每一个用户都发一个通行证，无论谁访问的时候都需要携带通行证，这样服务器就可以从通行证上确认用户的信息。通行证就是<strong>Cookie</strong>。<br>
@@ -380,6 +429,11 @@ export  {
 <li>注：使用sessionStorage 是为了即时更新登录态（浏览器未关闭，第一次获取完isLogin，后面的请求就都授权了，但是当浏览器关闭了，就要重新授权）</li>
 </ul>
 </li>
+</ul>
+<h4 id="localstorage与sessionstorage区别">localStorage与sessionStorage区别</h4>
+<ul>
+<li><code>localStorage</code>生命周期是永久，这意味着除非用户主动在浏览器上清除localStorage信息，否则这些信息将永远存在。</li>
+<li><code>sessionStorage</code>生命周期为当前窗口或标签页，一旦窗口或标签页被永久关闭了，那么所有通过sessionStorage存储的数据也就被清空了。</li>
 </ul>
 <p>2、当“没有授权或需要操作设备时” 进入login.vue页面，通过路由拦截（路由守卫）</p>
 <ul>
@@ -454,6 +508,9 @@ export  {
         }
       })
 </code></pre>
+<blockquote>
+<p>OpenID是一个去<code>中心化</code>的网上<code>身份认证系统</code>。对于支持OpenID的网站，用户不需要记住像用户名和密码这样的传统验证标记。<a href="https://zh.wikipedia.org/wiki/OpenID">维基百科 openid</a></p>
+</blockquote>
 <p>通过请求后台接口，拿到返回值，响应状态码（200刷新token成功、500后台错误、606 refreshToken过期，跳转auth页面）</p>
 <ul>
 <li>200 刷新token成功（refreshToken有效）<pre><code class="language-js">//refreshToken有效，刷新Token成功
@@ -534,8 +591,8 @@ return axiosJWT(config)	// 重试之前的请求并返回promise
 <p>通过code拿到open_id，进而拿到Token(由open_id构成)——&gt;open_id不过期，code与Token均会过期</p>
 <ul>
 <li><code>code</code>：授权码，由微信授权生成（有时间限制，并且只能使用一次）</li>
-<li><code>open_id</code>：通过这个授权码code获取该用户的openid（将这个授权码code发送给后台以后，后台用code去请求openid，openid是唯一的，可以通过这个openid在数据库中绑定用户）</li>
-<li><code>taken</code>:（后台生成，有时间限制，由open_id组成）</li>
+<li><code>open_id</code>：通过这个授权码code获取该用户的openid（将这个授权码code发送给后台以后，后台用code去请求openid，openid是唯一的，可以通过这个openid在数据库中绑定用户）——<code>用户唯一身份标识</code></li>
+<li><code>taken</code>:（后台生成，有时间限制，由open_id组成）用来确定用户身份的（过期需要刷新）</li>
 </ul>
 
             </div>

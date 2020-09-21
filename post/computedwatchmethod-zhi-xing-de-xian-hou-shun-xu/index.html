@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600565204871">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600687772313">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -37,7 +37,7 @@ computed：
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600565204871" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600687772313" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -124,7 +124,7 @@ computed：
 <p>watch呢？它用于观察Vue实例上的数据变动。对应一个对象，键是观察表达式，值是对应回调。值也可以是方法名，或者是对象，包含选项。</p>
 <p>所以他们的执行顺序为：<code>默认加载的时候先computed再watch，不执行methods；等触发某一事件后，则是：先methods再watch。</code></p>
 <p>下面的例子可以做为说明。</p>
-<p>computed 属性 vs watched 属性：Vue 确实提供了一种更通用的方式来观察和响应 Vue 实例上的数据变动：watch 属性。当你有一些数据需要随着其它数据变动而变动时，你很容易滥用 watch——特别是如果你之前使用过 AngularJS。然而，通常更好的想法是使用 computed 属性而不是命令式的 watch 回调。</p>
+<p>computed 属性 vs watched 属性：Vue 确实提供了一种更通用的方式来观察和响应 Vue 实例上的数据变动：watch 属性。当你有<strong>一些数据需要随着其它数据变动而变动时</strong>，你很容易滥用 watch——特别是如果你之前使用过 AngularJS。然而，通常更好的想法是使用 **computed **属性而不是命令式的 watch 回调。</p>
 <h1 id="computed与watch的区别">computed与watch的区别</h1>
 <p>在很多情况下, computed会比watch使用起来更加方便,但是当需要在数据变化时执行异步或者开销比较大的情况下,用watch会更加合适。<br>
 例如官网提供的例子(问与答。watch观察question的值,若值有改变会执行方法getAnswer,并且根据question不同的值, answer会给出不同的回答,并且会异步调用API返回相应的值,这些都是计算属性做不到的。</p>
@@ -149,9 +149,9 @@ computed：
 </tr>
 </tbody>
 </table>
-<pre><code class="language-js">&lt;divid=&quot;demo&quot;&gt;{{ fullName }}&lt;/div&gt;
-
-使用watch方法观察数据（单个数据）
+<pre><code class="language-html">&lt;divid=&quot;demo&quot;&gt;{{ fullName }}&lt;/div&gt;
+</code></pre>
+<pre><code class="language-js">//使用watch方法观察数据（单个数据）
 var vm = new Vue({
 el: '#demo',
 data: {
@@ -169,7 +169,7 @@ this.fullName = this.firstName + ' ' + val
 }
 })
 
-使用computed方法计算数据（多个数据）
+//使用computed方法计算数据（多个数据）
 var vm = new Vue({
 el: '#demo',
 data: {
@@ -186,14 +186,14 @@ return this.firstName + ' ' + this.lastName
 <h1 id="computed和watch有什么区别">computed和watch有什么区别?</h1>
 <p><code>computed:</code></p>
 <ul>
-<li>computed是计算属性,也就是计算值,它更多用于计算值的场景</li>
-<li>computed具有缓存性,computed的值在getter执行后是会缓存的，只有在它依赖的属性值改变之后，下一次获取computed的值时才会重新调用对应的getter来计算</li>
-<li>computed适用于计算比较消耗性能的计算场景</li>
+<li>computed是计算属性,也就是计算值,它更多用于<strong>计算值的场景</strong></li>
+<li>computed具有<strong>缓存性</strong>,computed的值在getter执行后是会缓存的，只有在它依赖的属性值改变之后，下一次获取computed的值时才会重新调用对应的getter来计算</li>
+<li>computed适用于计算<strong>比较消耗性能</strong>的计算场景</li>
 </ul>
 <p><code>watch:</code></p>
 <ul>
-<li>更多的是「观察」的作用,类似于某些数据的监听回调,用于观察props $emit或者本组件的值,当数据变化时来执行回调进行后续操作</li>
-<li>无缓存性，页面重新渲染时值不变化也会执行</li>
+<li>更多的是「观察」的作用,类似于某些数据的<strong>监听回调</strong>,用于<strong>观察props $emit或者本组件的值</strong>,当数据变化时来执行回调进行后续操作</li>
+<li><strong>无缓存性</strong>，页面重新渲染时值不变化也会执行</li>
 </ul>
 <p><strong>小结:</strong><br>
 当我们要进行数值计算,而且依赖于其他数据，那么把这个数据设计为computed<br>

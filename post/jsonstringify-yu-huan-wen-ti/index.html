@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600565204871">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600687772313">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -24,10 +24,11 @@
 
 
 
-    <meta name="description" content="JSON.stringify在解析接口数据时，我们经常使用到，那么它为什么会产生“环“呢，啥是”环“和？😨
+    <meta name="description" content="JSON.stringify在解析接口数据时，我们经常使用到，那么它为什么会产生“环“呢，啥是”环“呢？😨
 🙄博主酱的脑海中一堆问号，赶快来了解下了！
 
-JSON.stringify的功能是，将一个js字面量对象转化为一个JSON格式的..." />
+“环”的产生：
+JSON.stringify的功能是，将一个js字面量对象转化为一..." />
     <meta name="keywords" content="js" />
   </head>
   <body>
@@ -37,7 +38,7 @@ JSON.stringify的功能是，将一个js字面量对象转化为一个JSON格式
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600565204871" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600687772313" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -110,15 +111,17 @@ JSON.stringify的功能是，将一个js字面量对象转化为一个JSON格式
               </div>
             
             <div class="post-content" v-pre>
-              <p>JSON.stringify在解析接口数据时，我们经常使用到，那么它为什么会产生“环“呢，啥是”环“和？😨<br>
+              <p>JSON.stringify在解析接口数据时，我们经常使用到，那么它为什么会产生“环“呢，啥是”环“呢？😨<br>
 🙄博主酱的脑海中一堆问号，赶快来了解下了！</p>
 <!-- more -->
+<h1 id="环的产生">“环”的产生：</h1>
 <p>JSON.stringify的功能是，将一个js字面量对象转化为一个JSON格式的字符串，例如：</p>
 <pre><code class="language-js">const obj = {a:1,b:2}
 JSON.stringify(obj)     //  ‘ {“a”:1,“b”:2}’
 </code></pre>
 <!-- more -->
-<p>当要转化的对象有**“环”**存在时（<strong>子节点属性赋值了父节点的引用</strong>），为了避免死循环，JSON.stringify 会抛出异常，例如：</p>
+<h1 id="jsonstringify遇到-环-会抛出异常">JSON.stringify遇到 环 会抛出异常</h1>
+<p>当要转化的对象有 <strong>“环”</strong> 存在时（<strong>子节点属性赋值了父节点的引用</strong>），为了避免死循环，JSON.stringify 会抛出异常，例如：</p>
 <pre><code class="language-js">const obj = {
   foo: {
     name: 'foo',
@@ -139,8 +142,9 @@ JSON.stringify(obj) // =&gt; TypeError: Converting circular structure to JSON �
   // 请添加代码
 }
 </code></pre>
-<p>“环”的形成是因为对象的子节点属性赋值了父节点的引用，所以我们需要记录下父节点的地址，然后再拿其子节点的属性与之前记录下的父节点地址做一个比较，当结果一致时，就形成了“环”。</p>
-<p>那么，在“环”检测器函数中，我们首先需要遍历这个对象的属性，前面提到了引用，那么我们只需对Object类型的属性进行处理即可（简单数据类型不存在引用关系）。对于Objcet类型的属性，我们先与记录下来的父节点地址做一个对比，如无匹配项，将当前属性地址记录下来，然后遍历其子节点属性，一层一层找下去。下面开始上代码：</p>
+<p>“环”的形成是因为对象的子节点属性赋值了父节点的引用，所以<strong>我们需要记录下父节点的地址</strong>，然后再<strong>拿其子节点的属性与之前记录下的父节点地址做一个比较</strong>，当结果<strong>一致</strong>时，就形成了**“环”**。</p>
+<h1 id="环检测器函数">环”检测器函数</h1>
+<p>那么，在<code>“环”检测器函数</code>中，我们首先需要<code>遍历这个对象的属性</code>，前面提到了引用，那么我们只需对Object类型的属性进行处理即可（简单数据类型不存在引用关系）。对于Objcet类型的属性，我们先与记录下来的父节点地址做一个对比，如<code>无匹配项，将当前属性地址记录下来</code>，然后<code>遍历其子节点属性，一层一层找下去</code>。下面开始上代码：</p>
 <pre><code class="language-js">function cycleDetector(obj){
     var hasCircle = false,  //  定义一个变量，标志是否有环
     cache = [];          //  定义一个数组，来保存对象类型的属性值
@@ -167,7 +171,14 @@ JSON.stringify(obj) // =&gt; TypeError: Converting circular structure to JSON �
 </code></pre>
 <p>补充：<br>
 <strong>Object.keys</strong> 返回一个所有元素为字符串的数组，其元素来自于从给定的object上面可直接枚举的属性。这些属性的顺序与手动遍历该对象属性时的一致。<br>
-<strong>测试用例</strong></p>
+<code>参数</code><br>
+obj</p>
+<ul>
+<li>要返回其枚举自身属性的对象。<br>
+<code>返回值</code></li>
+<li>一个表示给定对象的所有可枚举属性的字符串数组。</li>
+</ul>
+<p><strong>测试用例</strong></p>
 <pre><code class="language-js">/* 测试一 */
 
 const obj = {

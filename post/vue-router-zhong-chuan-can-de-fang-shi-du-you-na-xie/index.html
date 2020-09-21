@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600565204871">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600687772313">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -25,7 +25,7 @@
 
 
     <meta name="description" content="没事就需要翻翻vue官网，好长时间不看了。Vue路由组件传参🏃‍♀🏃
-主要从this.$router.push的name和params、path和qurey；router-link :to传参来回答
+主要从this.$router.push的name和params、path和query；router-link :to传参来回答
 
 常用的传递方式
 一、编程式的导航 ..." />
@@ -38,7 +38,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600565204871" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600687772313" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
             
             <div class="post-content" v-pre>
               <p>没事就需要翻翻vue官网，好长时间不看了。<a href="https://router.vuejs.org/zh/guide/essentials/passing-props.html#%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%BC%8F">Vue路由组件传参</a>🏃‍♀🏃<br>
-主要从this.$router.push的name和params、path和qurey；router-link :to传参来回答</p>
+主要从this.$router.push的name和params、path和query；router-link :to传参来回答</p>
 <!-- more -->
 <h1 id="常用的传递方式">常用的传递方式</h1>
 <h1 id="一-编程式的导航-routerpush">一、编程式的导航 router.push</h1>
@@ -269,18 +269,23 @@ this.$attrs['name']
 <h1 id="二-声明式的导航">二、声明式的导航</h1>
 <p>声明式的导航和编程式的一样，这里就不在过多介绍，给几个例子大家对照编程式理解，例子如下：</p>
 <h3 id="字符串">字符串</h3>
-<pre><code class="language-html">&lt;router-link to=“news”&gt;click to news page&lt;/router-link&gt;
+<pre><code class="language-html">&lt;router-link to=&quot;news&quot;&gt;click to news page&lt;/router-link&gt;
 </code></pre>
 <h3 id="命名路由">命名路由</h3>
-<pre><code class="language-html">&lt;router-link :to=&quot;{ name: ‘news’, params: { userId: 1111}}&quot;&gt;click to news page&lt;/router-link&gt;
+<pre><code class="language-html">&lt;router-link :to=&quot;{ name: 'news', params: { userId: 1111}}&quot;&gt;click to news page&lt;/router-link&gt;
 </code></pre>
 <h3 id="查询参数">查询参数</h3>
-<pre><code class="language-html">&lt;router-link :to=&quot;{ path: ‘/news’, query: { userId: 1111}}&quot;&gt;click to news page&lt;/router-link&gt;
+<pre><code class="language-html">&lt;router-link :to=&quot;{ path: '/news', query: { userId: 1111}}&quot;&gt;click to news page&lt;/router-link&gt;
 </code></pre>
 <h1 id="总结-2">总结</h1>
-<p>1.命名路由搭配params，刷新页面参数会丢失<br>
-2.查询参数搭配query，刷新页面数据不会丢失<br>
-3.接受参数使用this.$router后面就是搭配路由的名称就能获取到参数的值</p>
+<p>1.命名路由搭配params，刷新页面参数会丢失(相当于post请求)<br>
+2.查询参数搭配query，刷新页面数据不会丢失（相当于get请求）<br>
+3.接受参数使用<code>this.$route</code>后面就是搭配路由的名称就能获取到参数的值</p>
+<ul>
+<li>this.$route.query.type</li>
+<li>this.$route.path</li>
+</ul>
+<p>注：发送请求或跳转是<code>this.$router.push({})</code></p>
 
             </div>
             
