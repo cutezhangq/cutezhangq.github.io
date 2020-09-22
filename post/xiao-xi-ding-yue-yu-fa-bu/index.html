@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600687772313">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600780689641">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -39,7 +39,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600687772313" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600780689641" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -122,6 +122,10 @@
 <li>取消订阅(需要分情况讨论)</li>
 </ul>
 <p>这么看下来,其实就像 JavaScript 中的事件模型,我们在DOM节点上绑定事件函数,触发的时候执行就是应用了发布-订阅模式.</p>
+<ul>
+<li><code>.emit</code> 发布消息</li>
+<li><code>.on</code> 订阅消息</li>
+</ul>
 <h1 id="我们先按照上面的内容自己实现一个-observer-对象如下">我们先按照上面的内容自己实现一个 Observer 对象如下:</h1>
 <pre><code class="language-js">//用于存储订阅的事件名称以及回调函数列表的键值对
 function Observer() {
@@ -175,6 +179,8 @@ obj.on('hello',function (a,b) {
     console.log(a,b)
 })
 obj.emit('hello',1,2)
+ // 1  2
+
 //取消订阅事件的回调必须是具名函数
 obj.on('test',fn1 =function () {
     console.log('fn1')
@@ -184,6 +190,8 @@ obj.on('test',fn2 = function () {
 })
 obj.remove('test',fn1)
 obj.emit('test')
+//fn2
+  // 否则应该是fn1 fn2
 </code></pre>
 <p>为什么会使用发布订阅模式呢? 它的优点在于:</p>
 <ul>
@@ -249,7 +257,7 @@ var Sesamecakeshop={
     /**
      * 删除订阅
      * @key {String} 类型
-     * @fn {Function} 回掉函数
+     * @fn {Function} 回调函数
      * */
     remove:function(key,fn){
         var fns=this.clienlist[key];//取出该类型的对应的消息集合
@@ -407,7 +415,25 @@ _Event.trigger(&quot;yyyy&quot;,&quot;xxx&quot;,&quot;前端工程师&quot;)
 </code></pre>
 <figure data-type="image" tabindex="1"><img src="https://cutezhangq.github.io/post-images/1596872061540.png" alt="" loading="lazy"></figure>
 <h1 id="总结">总结</h1>
-<p>发布-订阅模式就是常说的观察者模式，在实际开发中非常有用。它的优点是为时间是解耦，为对象之间解构，它的应用非常广泛，既可以在异步编程中也可以帮助我们完成更松的解耦。发布-订阅模式还可以帮助我们实现设计模式，从架构上来看，无论MVC还是MVVC都少不了发布-订阅模式的参与。然而发布-订阅模式也存在一些缺点，创建订阅本身会消耗一定的时间与内存，也许当你订阅一个消息之后，之后可能就不会发生。发布-订阅模式虽然它弱化了对象与对象之间的关系，但是如果过度使用，对象与对象的必要联系就会被深埋，会导致程序难以跟踪与维护。</p>
+<p>发布-订阅模式就是常说的<strong>观察者模式</strong>，在实际开发中非常有用。<br>
+它的优点：</p>
+<ul>
+<li>为时间是解耦，为对象之间解构，</li>
+</ul>
+<p>应用广泛：</p>
+<ul>
+<li>可以在异步编程中也可以帮助我们完成更松的解耦。</li>
+<li>发布-订阅模式还可以帮助我们实现设计模式，</li>
+</ul>
+<p>架构上看：</p>
+<ul>
+<li>无论MVC还是MVVC都少不了发布-订阅模式的参与。</li>
+</ul>
+<p>一些缺点：</p>
+<ul>
+<li>创建订阅本身会消耗一定的时间与内存，也许当你订阅一个消息之后，之后可能就不会发生。</li>
+<li>发布-订阅模式虽然它弱化了对象与对象之间的关系，但是如果过度使用，对象与对象的必要联系就会被深埋，会导致程序难以跟踪与维护。</li>
+</ul>
 <!-- more -->
 <h1 id="订阅发布模式和观察者模式的区别">订阅发布模式和观察者模式的区别</h1>
 <p><strong>发布订阅模式属于广义上的观察者模式</strong><br>
@@ -418,7 +444,10 @@ _Event.trigger(&quot;yyyy&quot;,&quot;xxx&quot;,&quot;前端工程师&quot;)
 <p>在发布订阅模式中，发布者和订阅者之间多了一个发布通道；一方面从发布者接收事件，另一方面向订阅者发布事件；订阅者需要从事件通道订阅事件<br>
 以此避免发布者和订阅者之间产生依赖关系<br>
 <img src="https://cutezhangq.github.io/post-images/1596877130031.png" alt="" loading="lazy"></p>
-<p>总结起来就是，一个是紧密耦合，一个是松散耦合。优缺点也很明显，紧密耦合的方式简单直接，扩展性差，而且要求两端同时存在。松散耦合不直接产生依赖，更容易扩展，懒加载的时候会有优势，但稍显复杂。</p>
+<p>总结起来就是，一个是紧密耦合，一个是松散耦合。<br>
+优缺点：<br>
+<code>紧密耦合</code>的方式简单直接，扩展性差，而且要求两端同时存在。<br>
+<code>松散耦合</code>不直接产生依赖，更容易扩展，懒加载的时候会有优势，但稍显复杂。</p>
 <h2 id="从代码看区别">从代码看区别</h2>
 <p>需求：数据打包下载功能</p>
 
@@ -435,9 +464,9 @@ _Event.trigger(&quot;yyyy&quot;,&quot;xxx&quot;,&quot;前端工程师&quot;)
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://cutezhangq.github.io/post/interview-question/">
+                <a href="https://cutezhangq.github.io/post/mpvue-xing-neng-you-hua-ji-qiao/">
                   <h3 class="post-title">
-                    面试题
+                    mpvue性能优化技巧
                   </h3>
                 </a>
               </div>

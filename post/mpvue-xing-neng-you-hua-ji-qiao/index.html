@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1598084363510">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600780689641">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -25,12 +25,13 @@
 
 
     <meta name="description" content="👀性能优化十分重要，本文通过一下几个方面来介绍了小程序的优化：
+
 👉压缩图片、
 👉移除无用的库、
 👉开启Vue.config._mpTrace = true、
 👉精简data、
 👉静态图片放进static、
-👉swiper优化、..." />
+👉swiper优化..." />
     <meta name="keywords" content="小程序" />
   </head>
   <body>
@@ -40,7 +41,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1598084363510" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600780689641" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -113,8 +114,9 @@
               </div>
             
             <div class="post-content" v-pre>
-              <p>👀性能优化十分重要，本文通过一下几个方面来介绍了小程序的优化：<br>
-👉压缩图片、<br>
+              <p>👀性能优化十分重要，本文通过一下几个方面来介绍了小程序的优化：</p>
+<!-- more -->
+<p>👉压缩图片、<br>
 👉移除无用的库、<br>
 👉开启Vue.config._mpTrace = true、<br>
 👉精简data、<br>
@@ -149,7 +151,7 @@ App.mpType = 'app'
 </code></pre>
 <p>添加了<code>Vue.config._mpTrace</code>属性，这样就可以看到console里会打印每500ms更新的数据量。如图：<br>
 <img src="https://cutezhangq.github.io/post-images/1596676060778.webp" alt="" loading="lazy"></p>
-<p>**如果数据更新量很大，会明显感觉小程序运行卡顿，反之就流畅。**因此我们可以根据这个指标，逐步找出性能瓶颈并解决掉。</p>
+<p><strong>如果数据更新量很大，会明显感觉小程序运行卡顿，反之就流畅。</strong> 因此我们可以根据这个指标，逐步找出性能瓶颈并解决掉。</p>
 <h1 id="二-精简data">二、精简data</h1>
 <h3 id="1-过滤api返回的冗余数据">1. 过滤api返回的冗余数据</h3>
 <p>后端的api可能是需要同时为iOS，Android，H5等提供服务的，往往会有些冗余的数据小程序是用不到的。比如api返回的一个<code>文章列表</code>数据有很多字段：</p>
@@ -282,7 +284,7 @@ export default {
 <h3 id="2-问题原因">2. 问题原因</h3>
 <p>开启Vue.config._mpTrace = true后发现一个规律：</p>
 <p>当palyList数据量小时，console显示造成的数据量更新数值比较小；当playList比较大时，console显示造成的数据量更新数值比较大。(尝试将playList数据量增加到200条，每500ms的数据量更新达到800KB左右。)<br>
-到这里基本可以确定一个事实就是：**更新state中的任何一个字段，将导致整个state全量一起setData。**在我这里的例子，虽然我每次只是更新currentTime这个字段的值，但依然导致将state中的其他字段如playList,currentIndex都一起做了一次setData操作。</p>
+到这里基本可以确定一个事实就是： <strong>更新state中的任何一个字段，将导致整个state全量一起setData。</strong> 在我这里的例子，虽然我每次只是更新currentTime这个字段的值，但依然导致将state中的其他字段如playList,currentIndex都一起做了一次setData操作。</p>
 <h3 id="3-解决问题">3. 解决问题</h3>
 <p>有两个思路：</p>
 <ul>
@@ -422,6 +424,8 @@ async function getPlayList (courseId, currentAudioId) {
 <li>图片记得要压缩，图片在显示时才渲染。</li>
 <li>vuex保持数据精简，必要时可先存storage。</li>
 </ul>
+<h1 id="微信平台推荐的优化方案">微信平台推荐的优化方案</h1>
+<p>[微信官方优化方案]<a href="https://developers.weixin.qq.com/miniprogram/dev/framework/performance/tips/start.html">https://developers.weixin.qq.com/miniprogram/dev/framework/performance/tips/start.html</a></p>
 
             </div>
             

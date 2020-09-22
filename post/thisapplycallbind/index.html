@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600687772313">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600780689641">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -35,7 +35,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600687772313" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600780689641" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -464,6 +464,21 @@ Array.prototype.slice.apply({0: 1, length: 2}) // [1, undefined]
 Array.prototype.slice.apply({length: 1}) // [undefined]
 </code></pre>
 <p>上面代码的apply方法的参数都是对象，但是返回结果都是数组，这就起到了将对象转成数组的目的。从上面代码可以看到，这个方法起作用的前提是，被处理的对象必须有length属性，以及相对应的数字键。</p>
+<p><code>slice()</code>方法提取某个字符串的一部分，并返回一个新的字符串，且不会改动原字符串。</p>
+<pre><code class="language-js">const str = 'The quick brown fox jumps over the lazy dog.';
+
+console.log(str.slice(31));
+// expected output: &quot;the lazy dog.&quot;
+
+console.log(str.slice(4, 19));
+// expected output: &quot;quick brown fox&quot;
+
+console.log(str.slice(-4));
+// expected output: &quot;dog.&quot;
+
+console.log(str.slice(-9, -5));
+// expected output: &quot;lazy&quot;
+</code></pre>
 <h2 id="4绑定回调函数的对象">（4）绑定回调函数的对象</h2>
 <pre><code class="language-js">var o = new  Object();
 

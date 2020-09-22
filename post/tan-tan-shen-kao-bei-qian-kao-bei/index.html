@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600687772313">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600780689641">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -40,7 +40,7 @@ b.a=2
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600687772313" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600780689641" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -121,12 +121,66 @@ b.a=2
 </code></pre>
 <p>这时输出a你会发现，a的值同样发生了改变。<br>
 这一点在你进行数据操作时，又想保留原来数据时，你就需要深度克隆了。</p>
+<h1 id="对javascript中的5种基本数据类型进行深度克隆">对JavaScript中的5种基本数据类型进行深度克隆</h1>
+<ul>
+<li>基本数据类型的复制就是深度克隆<br>
+实现一个函数clone，可以对JavaScript中的5种主要的数据类型（包括Number、String、Object、Array、Boolean）进行值复制</li>
+</ul>
+<pre><code class="language-js"> function clone(obj){
+        var result;
+        switch(typeof obj){
+            case 'undefined':
+            break;
+            case 'string':
+            result = obj+'';
+            break;
+            case 'number':
+            result = obj-0;
+            break;
+            case 'boolean':
+            result =obj;
+            break;
+            case 'object':
+                if(obj ===null){
+                    result = null;
+                } else {
+                      //该方法返回描述某个对象数据类型的字符串，如自定义的对象没有被覆盖，则会返回“[object type]”，其中，type则是实际的对象类型。
+                  //在使用该方法检测的时候，可以使用Object.prototype.toString.call()或者Object.prototype.toString.apply()进行测试
+                  //slice(startIndex,endIndex)，从0开始索引，其中8代表从第8位（包含）开始截取（本例中代表空格后面的位置），-1代表截取到倒数第一位（不含），
+                      //所以正好截取到[object String]中的String。
+                    if(Object.prototype.toString.call(obj).slice(8,-1)==='Array'){
+                        result=[];
+                        for(var i=0;i&lt;obj.length;i++){
+                            result.push(clone(obj[i]));
+                        }
+                    }else{
+                        result={};
+                        for(var k in obj){
+                            result[k]=clone(obj[k]);
+                            }
+                        }
+                };
+                break;
+             default:
+                 result = obj;
+                 break;
+            
+        }
+        return result
+    }
+
+
+    let a = 'abcdef';
+    let b = clone(a);
+    console.log((b.concat('ghijk')).slice(4,9));  //efghi
+    console.log(a.slice(4,9));  //ef
+</code></pre>
 <h1 id="怎么深拷贝一个对象深拷贝一个对象的时候应该怎么做">怎么深拷贝一个对象？（深拷贝一个对象的时候应该怎么做？）</h1>
 <p>深度克隆的方法:</p>
-<h1 id="1-js序列化">1、js序列化</h1>
-<p>将js转换成字符串，然后再将字符串转换成js对象。<br>
-js字符串的克隆就比对象的克隆简单多了。简单的赋值操作就能完成。<br>
-深拷贝,但拷贝的数据里不能有函数，不然处理不了</p>
+<h2 id="1-js序列化">1、js序列化</h2>
+<ul>
+<li>转换成json再转换成对象实现对象的深拷贝（对象里面不包含函数的情况下使用,注意这种直接粗暴的方法只能拷贝json格式数据对象，函数会丢失）</li>
+</ul>
 <pre><code class="language-js">var obj = {a:1};
 var str = JSON.stringify(obj); //序列化对象         JSON.stringify() 方法将一个JavaScript 对象或值转换为JSON 字符串
 var newobj = JSON.parse(str); //还原
@@ -134,6 +188,9 @@ var b = newobj;
 b.a = 2;
 console.log(obj.a); // 1
 console.log(b.a);   // 2 
+c.a = 5;
+console.log(obj.a); // 1
+console.log(b.a);   // 5
 </code></pre>
 <blockquote>
 <p>1.他无法实现对函数 、RegExp等特殊对象的克隆</p>
@@ -190,7 +247,7 @@ console.log(newObj.a, oldObj.a); // TypeError: Converting circular structure to 
 浅拷贝里的数据不能有对象/数组，即使有对象/数组可以继续遍历对象/数组，拿到里面的每一项值，<br>
 一直到拿到的是基本数据类型，然后再复制，这时就是深拷贝</p>
 <pre><code class="language-js">
-function newobj(obj) {
+function newObj(obj) {
   var str, newobj = obj.constructor === Array ? [] : {};//constructor 属性返回对创建此对象的数组函数的引用。创建相同类型的空数据
   if (typeof obj !== 'object') {
     return;
@@ -207,7 +264,7 @@ function newobj(obj) {
 };
 </code></pre>
 <pre><code class="language-js">    var obj = {a:1};
-    function newobj(obj) {
+    function newObj(obj) {
       var str, newobj = obj.constructor === Array ? [] : {}; //constructor 属性返回对创建此对象的数组函数的引用。创建相同类型的空数据
       if (typeof obj !== 'object') {
         return;
@@ -223,7 +280,7 @@ function newobj(obj) {
       return newobj; //返回深度克隆后的对象
     };
 
-    var b = newobj(obj);
+    var b = newObj(obj);
     b.a = 2;
     console.log(obj.a); // 1
     console.log(b.a);   // 2 
@@ -259,7 +316,21 @@ console.log(person[0].info === person1[0].info); // true
 <p>基本数据类型：存放的就是 实际的数据，可直接复制<br>
 克隆数据：对象/数组</p>
 <h1 id="如何深拷贝一个数组">如何深拷贝一个数组？</h1>
-<h1 id="concat">concat</h1>
+<h2 id="1-for-循环实现数组的深拷贝只适应单层数组结构">1、for 循环实现数组的深拷贝(只适应单层数组结构)</h2>
+<pre><code class="language-js">var arr = [1,2,3,4,5];//只适应单层数组结构
+var arr2 = copyArr(arr)
+function copyArr(arr) {
+    let res = []
+    for (let i = 0; i &lt; arr.length; i++) {
+     res.push(arr[i])
+    }
+    return res
+}
+arr2[1] = 90;
+console.log(arr);   // [1, 2, 3, 4, 5]
+console.log(arr2);  // [1, 90, 3, 4, 5]
+</code></pre>
+<h2 id="2-concat只适应单层数组结构">2、concat(只适应单层数组结构)</h2>
 <p>concat() 方法用于合并两个或多个<strong>数组</strong>。此方法不会更改现有数组，而是返回一个新数组。</p>
 <pre><code class="language-js">//concat()    深复制
   let arr_0 = [1,3,{name:'hhh'}];
@@ -267,6 +338,20 @@ console.log(person[0].info === person1[0].info); // true
   arr_1[1] = 6
   console.log(arr_0)  // [1, 3, {name: &quot;hhh&quot;}]
   console.log(arr_1)  // [1, 6, {name: &quot;hhh&quot;}]
+</code></pre>
+<h2 id="3-slice-方法实现数组的深拷贝只适应单层数组结构">3、slice 方法实现数组的深拷贝（只适应单层数组结构）</h2>
+<pre><code class="language-js">var arr = [1,2,3,4,5]; //只适应单层数组结构
+var arr2 = arr.slice(0);
+arr2[1] = 80;
+console.log(arr)   //(5) [1, 2, 5, 4, 5]
+console.log(arr2)  //(5) [1, 80, 5, 4, 5]
+</code></pre>
+<h2 id="4-es6扩展运算符实现数组的深拷贝只适应单层数组结构">4、ES6扩展运算符实现数组的深拷贝（只适应单层数组结构）</h2>
+<pre><code class="language-js">var arr = [1,2,3,4,5] //只适应单层数组结构
+var [ ...arr2 ] = arr
+arr2[2] = 50;
+console.log(arr)   //(5) [1, 2, 5, 4, 5]
+console.log(arr2)  //(5) [1, 2, 50, 4, 5]
 </code></pre>
 <h1 id="其他深拷贝的方法">其他深拷贝的方法</h1>
 <pre><code class="language-js">/**
@@ -368,6 +453,48 @@ console.log(newObj.d.constructor, oldObj.d.constructor); // [Function: person] [
 <li>不影响原数据</li>
 </ul>
 <h1 id="常用的拷贝技术">常用的拷贝技术</h1>
+<h3 id="浅拷贝">浅拷贝</h3>
+<ul>
+<li>Object.assign()</li>
+</ul>
+<pre><code class="language-js">// Object.assign();  浅复制
+//Object.assign() 方法用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。Object.assign(target, source);
+  let obj = {username: 'kobe', age: 39, sex: {option1: '女', option2: '女'}};
+  let obj2 = obj;
+  Object.assign(obj2, obj);  
+  console.log(obj2);    //   {username: 'kobe', age: 39, sex: {option1: '男', option2: '女'}}
+  obj2.sex.option1 = '男';                    
+  console.log(obj);     //   {username: 'kobe', age: 39, sex: {option1: '男', option2: '女'}}   
+  console.log(obj2);    //  {username: 'kobe', age: 39, sex: {option1: '男', option2: '女'}}
+</code></pre>
+<p><code>Object.assign()</code>方法用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。</p>
+<pre><code class="language-js">const target = { a: 1, b: 2 };
+const source = { b: 4, c: 5 };
+
+const returnedTarget = Object.assign(target, source);
+
+console.log(target);
+// expected output: Object { a: 1, b: 4, c: 5 }
+
+console.log(returnedTarget);
+// expected output: Object { a: 1, b: 4, c: 5 }
+</code></pre>
+<p>target</p>
+<blockquote>
+<p>目标对象。</p>
+</blockquote>
+<p>sources</p>
+<blockquote>
+<p>源对象。</p>
+</blockquote>
+<ul>
+<li>是浅拷贝：<br>
+如果目标对象中的属性具有相同的键，则属性将被源对象中的属性覆盖。后面的源对象的属性将类似地覆盖前面的源对象的属性。</li>
+</ul>
+<p><code>注意，Object.assign 不会在那些source对象值为 null 或 undefined 的时候抛出错误。</code></p>
+<h3 id="深拷贝">深拷贝</h3>
+<p>具体见上面<br>
+注意：当<code>不止一层</code>时，concat、slice、es6三点运算符，就是浅拷贝了。</p>
 
             </div>
             

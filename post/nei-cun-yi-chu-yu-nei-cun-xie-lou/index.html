@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600687772313">
+<link rel="shortcut icon" href="https://cutezhangq.github.io/favicon.ico?v=1600780689641">
 <link rel="stylesheet" href="https://cutezhangq.github.io/styles/main.css">
 
 
@@ -30,8 +30,9 @@
 
 函数执行完后，函数内的局部变量没有被释放，占用内存时间会变长
 容易造成内存泄漏（内存被占用着，但用不上里面的内容）
+
 解决：
-尽..." />
+..." />
     <meta name="keywords" content="js" />
   </head>
   <body>
@@ -41,7 +42,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://cutezhangq.github.io">
-        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600687772313" class="site-logo">
+        <img src="https://cutezhangq.github.io/images/avatar.png?v=1600780689641" class="site-logo">
         <h1 class="site-title">cutezhangq</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -119,17 +120,20 @@
 <p><strong>闭包的缺点：</strong></p>
 <ol>
 <li>函数执行完后，函数内的局部变量没有被释放，占用内存时间会变长</li>
-<li>容易造成内存泄漏（内存被占用着，但用不上里面的内容）<br>
-解决：</li>
+<li>容易造成内存泄漏（内存被占用着，但用不上里面的内容）</li>
+</ol>
+<p><strong>解决：</strong></p>
+<ol>
 <li>尽量不用闭包</li>
 <li>及时释放（让内部函数成为垃圾对象--&gt;就收闭包） 即 f = null<br>
-<img src="https://cutezhangq.github.io/post-images/1596375551223.png" alt="" loading="lazy"><br>
-内存溢出与内存泄漏:内存溢出：<br>
+<img src="https://cutezhangq.github.io/post-images/1596375551223.png" alt="" loading="lazy"></li>
+</ol>
+<p>内存溢出与内存泄漏：<br>
+<strong>内存溢出：</strong><br>
 一种程序运行出现的错误。<br>
 当程序运行的内存超过了剩余的内存时，就抛出内存溢出的错误<br>
-<img src="https://cutezhangq.github.io/post-images/1596375576188.png" alt="" loading="lazy"><br>
-注：是一种抛出错误，浏览器会崩溃</li>
-</ol>
+<img src="https://cutezhangq.github.io/post-images/1596375576188.png" alt="" loading="lazy"></p>
+<p>注：是一种抛出错误，浏览器会崩溃</p>
 <p><strong>内存泄漏：</strong><br>
 占用的内存没有及时释放<br>
 内存泄漏积累多了就容易导致内存溢出<br>
@@ -152,23 +156,21 @@
 </li>
 </ul>
 <p><code>1.意外的全局变量</code><br>
-<img src="https://cutezhangq.github.io/post-images/1596375625382.png" alt="" loading="lazy"><br>
-<code>2.没有及时清理的计时器或回调函数，清理定时器</code>：clearInterval( )<br>
-<img src="https://cutezhangq.github.io/post-images/1596375657343.png" alt="" loading="lazy"><br>
-<code>3.闭包</code><br>
-<img src="https://cutezhangq.github.io/post-images/1596375936764.png" alt="" loading="lazy"><br>
-面试重点：<br>
-1.this的指向<br>
-<img src="https://cutezhangq.github.io/post-images/1596375977020.png" alt="" loading="lazy"><br>
+<img src="https://cutezhangq.github.io/post-images/1596375625382.png" alt="" loading="lazy"></p>
+<p><code>2.没有及时清理的计时器或回调函数，清理定时器</code>：clearInterval( )<br>
+<img src="https://cutezhangq.github.io/post-images/1596375657343.png" alt="" loading="lazy"></p>
+<p><code>3.闭包</code><br>
+<img src="https://cutezhangq.github.io/post-images/1596375936764.png" alt="" loading="lazy"></p>
+<h2 id="面试重点">面试重点：</h2>
+<h3 id="1this的指向">1.this的指向</h3>
+<p><img src="https://cutezhangq.github.io/post-images/1596375977020.png" alt="" loading="lazy"><br>
 输出：The window<br>
 注：不属于闭包（有函数嵌套，但没有内部函数引用外部函数）</p>
-<ol start="2">
-<li>var that = this    指定局部作用域<br>
-<img src="https://cutezhangq.github.io/post-images/1596376032467.png" alt="" loading="lazy"><br>
+<h3 id="2-var-that-this-指定局部作用域">2. var that = this    指定局部作用域</h3>
+<p><img src="https://cutezhangq.github.io/post-images/1596376032467.png" alt="" loading="lazy"><br>
 输出：My Object<br>
-注：属于闭包</li>
-</ol>
-<p>3.闭包问题</p>
+注：属于闭包</p>
+<h3 id="3闭包问题">3.闭包问题</h3>
 <pre><code class="language-js">function fun(n,o){
   console.log(o);
   return {
@@ -184,10 +186,34 @@ console.log('——————————');
 var c = fun(0).fun(1); c.fun(2);  c.fun(3); //undefined ,0 ,1 ,1
 
 </code></pre>
-<p>分析：<br>
-a中，<br>
-a.fun(1)时m=1,n=0（闭包，内部n调用外部传入的0）,然后内部的fun:function这个走完回到外面函数，将0传给o，然后console.log(o)得到 0<br>
-a.fun(2)时m=2,n=0，然后到外面函数中n=2,o=0，然后console.log(o)得到 0</p>
+<p>分析：</p>
+<ul>
+<li>
+<p>a中，</p>
+<ul>
+<li>var a = fun(0)，得到 undefined；</li>
+<li>a.fun(1)时，m=1,n=0（闭包，内部n调用外部传入的0）,然后内部的fun:function这个走完回到外面函数，将0传给o，然后console.log(o)得到 0；</li>
+<li>a.fun(2)时，m=2,n=0，然后到外面函数中n=2,o=0，然后console.log(o)得到 0；</li>
+<li>a.fun(2)时，m=3,n=0，然后到外面函数中n=2,o=0，然后console.log(o)得到 0；</li>
+</ul>
+</li>
+<li>
+<p>b中，</p>
+<ul>
+<li>fun(0)，然后console.log(o)得到 undefined；</li>
+<li>fun(0).fun(1)，n=0，m=1，此处的n是内部闭包拿到的return fun(m,n)，然后console.log(o)得到 0；</li>
+<li>fun(0).fun(1)).fun(2)，n=1，m=2，此处的n是内部闭包拿到的return fun(m,n)，然后console.log(o)得到1；</li>
+<li>fun(0).fun(1)).fun(2).fun(3)，n=2，m=3，此处的n是内部闭包拿到的return fun(m,n)，然后console.log(o)得到2；</li>
+</ul>
+</li>
+<li>
+<p>c中，</p>
+</li>
+</ul>
+<pre><code class="language-js"> var c = fun(0).fun(1);  //undefined ,0
+ c.fun(2);  // 1
+ c.fun(3);  // 1
+</code></pre>
 
             </div>
             
